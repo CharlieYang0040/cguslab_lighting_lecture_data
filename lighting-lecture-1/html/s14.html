@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Low Key & High Key (로우키 & 하이키)</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', 'Malgun Gothic', sans-serif;
+        }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            background: linear-gradient(135deg, #1a2a3a 0%, #0d1721 100%);
+            color: #ffffff;
+            overflow: hidden;
+            position: relative;
+        }
+        .header {
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 1.5rem 3rem;
+            border-bottom: 2px solid rgba(163, 198, 255, 0.4);
+            display: flex;
+            align-items: center;
+        }
+        .header-icon {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            color: #a3c6ff;
+            font-size: 1.5rem;
+        }
+        .content {
+            padding: 2rem 3rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+        .left-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .concept-box {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .concept-title {
+            font-weight: bold;
+            color: #ffcc66;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+        }
+        .concept-title i {
+            margin-right: 0.75rem;
+        }
+        .highlight {
+            color: #a3c6ff;
+            font-weight: bold;
+        }
+        .image-container {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            height: 100%;
+        }
+        .main-image {
+            width: 100%;
+            max-height: 240px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+        .caption {
+            font-size: 0.9rem;
+            color: #a3c6ff;
+            text-align: center;
+            font-style: italic;
+        }
+        .footer {
+            padding: 1rem 3rem;
+            text-align: right;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            box-sizing: border-box;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+        .list-item {
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: baseline;
+        }
+        .list-item:before {
+            content: "•";
+            color: #ffcc66;
+            font-weight: bold;
+            margin-right: 0.75rem;
+        }
+        .comparison-container {
+            display: flex;
+            width: 100%;
+            margin-top: 1rem;
+            gap: 1rem;
+        }
+        .comparison-card {
+            flex: 1;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .comparison-title {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+        .comparison-image {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-bottom: 0.75rem;
+        }
+        .comparison-desc {
+            font-size: 0.85rem;
+            text-align: center;
+        }
+        .key-bg-low {
+            background: linear-gradient(135deg, rgba(15, 15, 35, 0.7) 0%, rgba(40, 40, 80, 0.2) 100%);
+            border: 1px solid rgba(50, 50, 100, 0.3);
+        }
+        .key-bg-high {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(200, 200, 250, 0.05) 100%);
+            border: 1px solid rgba(200, 200, 250, 0.2);
+        }
+        .comparison-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            font-size: 0.85rem;
+            width: 100%;
+        }
+        .comparison-list li {
+            padding: 0.3rem 0;
+            display: flex;
+            align-items: center;
+        }
+        .comparison-list li i {
+            margin-right: 0.4rem;
+            width: 16px;
+            font-size: 0.7rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="header">
+            <div class="header-icon">
+                <i class="fas fa-adjust"></i>
+            </div>
+            <div>
+                <h1 class="text-3xl font-bold">Low Key & High Key (로우키 & 하이키)</h1>
+                <p class="text-sm opacity-70 mt-1">라이팅을 위한 비주얼 언어 11</p>
+            </div>
+        </div>
+        
+        <div class="content">
+            <div class="left-content">
+                <div class="concept-box">
+                    <div class="concept-title">
+                        <i class="fas fa-lightbulb"></i> 핵심 개념
+                    </div>
+                    <p><span class="highlight">Low Key (로우키)</span>: 전체적으로 어두운 톤이 지배하며, 그림자가 깊고 넓게 드리워진 라이팅 스타일입니다. 소량의 하이라이트가 특정 부분을 강조합니다.</p>
+                    <p class="mt-3"><span class="highlight">High Key (하이키)</span>: 전체적으로 밝은 톤이 지배하며, 그림자가 거의 없거나 매우 부드럽게 표현되는 라이팅 스타일입니다. 이미지 전체가 밝고 화사한 느낌을 줍니다.</p>
+                </div>
+                
+                <div class="concept-box">
+                    <div class="concept-title">
+                        <i class="fas fa-info-circle"></i> 두 스타일의 특징
+                    </div>
+                    <div class="list-item"><span class="highlight">Low Key</span>: 높은 대비, 깊은 그림자, 제한된 색조 범위, 어두운 배경</div>
+                    <div class="list-item"><span class="highlight">High Key</span>: 낮은 대비, 최소화된 그림자, 넓은 색조 범위, 밝은 배경</div>
+                    <div class="list-item"><span class="highlight">톤 분포</span>: 로우키는 중간~어두운 톤, 하이키는 중간~밝은 톤에 집중</div>
+                    <div class="list-item"><span class="highlight">광원 개수</span>: 로우키는 단일 또는 제한된 광원, 하이키는 여러 광원 사용</div>
+                </div>
+                
+                <div class="concept-box">
+                    <div class="concept-title">
+                        <i class="fas fa-paint-brush"></i> 감정 표현과 활용
+                    </div>
+                    <div class="list-item"><span class="highlight">Low Key</span>: 진지함, 미스터리, 극적임, 고독함, 위험, 긴장감</div>
+                    <div class="list-item"><span class="highlight">High Key</span>: 낙천적임, 순수함, 부드러움, 깨끗함, 희망, 밝음</div>
+                    <div class="list-item">장르에 따른 선택: <span class="highlight">드라마/스릴러</span> vs <span class="highlight">코미디/광고</span></div>
+                    <div class="list-item">스토리텔링 도구로 <span class="highlight">분위기 전환</span>과 <span class="highlight">감정 변화</span> 표현</div>
+                </div>
+            </div>
+            
+            <div>
+                <div class="image-container">
+                    <img src="https://www.freelancevideocollective.com/wp-content/uploads/2023/06/High-key-and-low-key-lighting-comparison.jpg" alt="로우키와 하이키 비교" class="main-image">
+                    <p class="caption">로우키와 하이키 라이팅의 시각적 비교</p>
+                    
+                    <div class="comparison-container">
+                        <div class="comparison-card key-bg-low">
+                            <div class="comparison-title" style="color: #ff6b6b;">Low Key</div>
+                            <img src="https://cdn.fstoppers.com/styles/full/s3/media/2021/02/02/high-key-low-key.jpg" alt="로우키 예시" class="comparison-image">
+                            <ul class="comparison-list">
+                                <li><i class="fas fa-circle"></i>어두운 톤 우세</li>
+                                <li><i class="fas fa-circle"></i>강한 대비</li>
+                                <li><i class="fas fa-circle"></i>깊은 그림자</li>
+                                <li><i class="fas fa-circle"></i>제한된 하이라이트</li>
+                            </ul>
+                        </div>
+                        <div class="comparison-card key-bg-high">
+                            <div class="comparison-title" style="color: #66ccff;">High Key</div>
+                            <img src="https://d26oc3sg82pgk3.cloudfront.net/files/media/edit/image/49836/article_full%403x.jpg" alt="하이키 예시" class="comparison-image">
+                            <ul class="comparison-list">
+                                <li><i class="fas fa-circle"></i>밝은 톤 우세</li>
+                                <li><i class="fas fa-circle"></i>낮은 대비</li>
+                                <li><i class="fas fa-circle"></i>최소화된 그림자</li>
+                                <li><i class="fas fa-circle"></i>풍부한 하이라이트</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            컴퓨터 그래픽스 라이팅 입문 | Low Key & High Key(로우키 & 하이키)
+        </div>
+    </div>
+</body>
+</html><script src='https://www.genspark.ai/slide-inner.js?_v=1'></script>
+    <script id="html_badge_script1">
+        window.__genspark_remove_badge_link = "https://www.genspark.ai/api/html_badge/" +
+            "remove_badge?token=To%2FBnjzloZ3UfQdcSaYfDm%2FhgSy15JVPknpRTlFjvxyGTBKwCzJd%2FrL6KzpWeV6AvlI0BI6%2BvSX%2FnG8fK57VdlIGn365URcYWiemFpNm%2Bjq2vrVNN5ynt5Rnk%2BOyCJi5h00C9s7xm7RL8tQ1BBuhjtQgNLIvfrVu1LWu%2BTPbzAffRf%2FD24V4o91nmiZNzM6vm77eg%2F2xF94SUg13yOLOiPBJSvMH0AuPBYbu2xViGZuowkvhKiyMCYmeOHlNNAGDwct%2FgV%2Bm7Hhp8OSDMBSYyencw6jE4i%2BzyOT%2FIkpyNlWr4MR5Vgc48Z89YUvT730aitRnlvW1gvrrP5qNJzhhHJBQPQ0hq3HQ4VNhSOr8rUvMVOnsPbRKx3lMvqov6B45c5MMe%2BgAgLdobZSFqURfGIGc10z57nUftOVS1ea%2BIzxCRKtPb2TK5XYQ4rDG948OmOkLI5hU3jJZm1sndgX1i5D%2BI2%2FFcSDpR7v5js8f3Gsmu%2FKu0d1GlLUH8X9sA%2BKse0YFYJxYv7Q3ZBtC3rgKVK5OblwN7bbos3peoRW3LF4MT36tZhcVhV6hLzas7CDw3CJhZZ2tcwZw8M%2BBnDiIc4%2BwZelWQgqRDzGwCrSRPc7atWW4xPN3kmNwqd0NYKcyYmcV4qOeIqHlSWICu%2Fbc6Z9PhDQxUQlM7BO5%2B2%2Bex65SI02IImyO3iB8vVC3J2D%2FiwylxZkgzP7pLV2bZFuZqTDQeHfNmA0CdX9S65Lv2%2F1GnwqkYVRl1obItTMkEQR9";
+        window.__genspark_locale = "ko-KR";
+        window.__genspark_token = "To/BnjzloZ3UfQdcSaYfDm/hgSy15JVPknpRTlFjvxyGTBKwCzJd/rL6KzpWeV6AvlI0BI6+vSX/nG8fK57VdlIGn365URcYWiemFpNm+jq2vrVNN5ynt5Rnk+OyCJi5h00C9s7xm7RL8tQ1BBuhjtQgNLIvfrVu1LWu+TPbzAffRf/D24V4o91nmiZNzM6vm77eg/2xF94SUg13yOLOiPBJSvMH0AuPBYbu2xViGZuowkvhKiyMCYmeOHlNNAGDwct/gV+m7Hhp8OSDMBSYyencw6jE4i+zyOT/IkpyNlWr4MR5Vgc48Z89YUvT730aitRnlvW1gvrrP5qNJzhhHJBQPQ0hq3HQ4VNhSOr8rUvMVOnsPbRKx3lMvqov6B45c5MMe+gAgLdobZSFqURfGIGc10z57nUftOVS1ea+IzxCRKtPb2TK5XYQ4rDG948OmOkLI5hU3jJZm1sndgX1i5D+I2/FcSDpR7v5js8f3Gsmu/Ku0d1GlLUH8X9sA+Kse0YFYJxYv7Q3ZBtC3rgKVK5OblwN7bbos3peoRW3LF4MT36tZhcVhV6hLzas7CDw3CJhZZ2tcwZw8M+BnDiIc4+wZelWQgqRDzGwCrSRPc7atWW4xPN3kmNwqd0NYKcyYmcV4qOeIqHlSWICu/bc6Z9PhDQxUQlM7BO5+2+ex65SI02IImyO3iB8vVC3J2D/iwylxZkgzP7pLV2bZFuZqTDQeHfNmA0CdX9S65Lv2/1GnwqkYVRl1obItTMkEQR9";
+    </script>
+    

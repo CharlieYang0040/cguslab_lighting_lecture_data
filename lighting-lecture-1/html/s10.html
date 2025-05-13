@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linear Motif (선적 모티프)</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', 'Malgun Gothic', sans-serif;
+        }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            background: linear-gradient(135deg, #1a2a3a 0%, #0d1721 100%);
+            color: #ffffff;
+            overflow: hidden;
+            position: relative;
+        }
+        .header {
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 1.5rem 3rem;
+            border-bottom: 2px solid rgba(163, 198, 255, 0.4);
+            display: flex;
+            align-items: center;
+        }
+        .header-icon {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            color: #a3c6ff;
+            font-size: 1.5rem;
+        }
+        .content {
+            padding: 2rem 3rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+        .left-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .concept-box {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .concept-title {
+            font-weight: bold;
+            color: #ffcc66;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+        }
+        .concept-title i {
+            margin-right: 0.75rem;
+        }
+        .highlight {
+            color: #a3c6ff;
+            font-weight: bold;
+        }
+        .image-container {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            height: 100%;
+        }
+        .main-image {
+            width: 100%;
+            max-height: 240px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+        .caption {
+            font-size: 0.9rem;
+            color: #a3c6ff;
+            text-align: center;
+            font-style: italic;
+        }
+        .footer {
+            padding: 1rem 3rem;
+            text-align: right;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            box-sizing: border-box;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+        .list-item {
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: baseline;
+        }
+        .list-item:before {
+            content: "•";
+            color: #ffcc66;
+            font-weight: bold;
+            margin-right: 0.75rem;
+        }
+        .line-types {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1.5rem;
+        }
+        .line-type {
+            text-align: center;
+            width: 23%;
+        }
+        .line-visual {
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 0.5rem;
+        }
+        .line-label {
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        .line-effect {
+            font-size: 0.7rem;
+            color: #e0e0e0;
+        }
+        .horizontal-line {
+            width: 100%;
+            height: 3px;
+            background-color: #a3c6ff;
+        }
+        .vertical-line {
+            width: 3px;
+            height: 60px;
+            background-color: #ffcc66;
+        }
+        .diagonal-line {
+            width: 80%;
+            height: 3px;
+            background-color: #ff6b6b;
+            transform: rotate(-30deg);
+        }
+        .curved-line {
+            width: 80%;
+            height: 40px;
+            border-bottom: 3px solid #66cc99;
+            border-radius: 50%;
+        }
+        .examples-container {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .example-image {
+            width: 50%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+        .example-image:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="header">
+            <div class="header-icon">
+                <i class="fas fa-vector-square"></i>
+            </div>
+            <div>
+                <h1 class="text-3xl font-bold">Linear Motif (선적 모티프)</h1>
+                <p class="text-sm opacity-70 mt-1">라이팅을 위한 비주얼 언어 7</p>
+            </div>
+        </div>
+        
+        <div class="content">
+            <div class="left-content">
+                <div class="concept-box">
+                    <div class="concept-title">
+                        <i class="fas fa-lightbulb"></i> 핵심 개념
+                    </div>
+                    <p>이미지 내에서 <span class="highlight">선</span>(실제 선 또는 암시된 선)을 두드러지게 사용하여 <span class="highlight">시선을 유도</span>하거나, <span class="highlight">형태를 정의</span>하거나, <span class="highlight">움직임</span> 또는 <span class="highlight">구조</span>를 강조하는 디자인 요소입니다.</p>
+                </div>
+                
+                <div class="concept-box">
+                    <div class="concept-title">
+                        <i class="fas fa-info-circle"></i> 추가 설명
+                    </div>
+                    <div class="list-item"><span class="highlight">수평선</span>: 안정감과 평온함을 표현</div>
+                    <div class="list-item"><span class="highlight">수직선</span>: 웅장함이나 힘을 전달</div>
+                    <div class="list-item"><span class="highlight">대각선</span>: 역동성이나 긴장감을 표현</div>
+                    <div class="list-item"><span class="highlight">곡선</span>: 부드러움이나 우아함을 전달</div>
+                    <div class="list-item">선의 종류와 방향에 따라 다양한 <span class="highlight">시각적 효과</span>와 <span class="highlight">감정</span>을 표현</div>
+                </div>
+                
+                <div class="line-types">
+                    <div class="line-type">
+                        <div class="line-visual">
+                            <div class="horizontal-line"></div>
+                        </div>
+                        <div class="line-label">수평선</div>
+                        <div class="line-effect">안정, 평화</div>
+                    </div>
+                    <div class="line-type">
+                        <div class="line-visual">
+                            <div class="vertical-line"></div>
+                        </div>
+                        <div class="line-label">수직선</div>
+                        <div class="line-effect">웅장함, 위엄</div>
+                    </div>
+                    <div class="line-type">
+                        <div class="line-visual">
+                            <div class="diagonal-line"></div>
+                        </div>
+                        <div class="line-label">대각선</div>
+                        <div class="line-effect">역동성, 긴장</div>
+                    </div>
+                    <div class="line-type">
+                        <div class="line-visual">
+                            <div class="curved-line"></div>
+                        </div>
+                        <div class="line-label">곡선</div>
+                        <div class="line-effect">우아함, 자연스러움</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div>
+                <div class="image-container">
+                    <img src="https://www.format.com/wp-content/uploads/pexels-photo-326957.jpg" alt="유도선 활용 이미지" class="main-image">
+                    <p class="caption">유도선(Leading Lines)을 활용한 시선 유도와 깊이감 표현</p>
+                    
+                    <div class="examples-container">
+                        <img src="https://www.adorama.com/alc/wp-content/uploads/2021/05/leading-lines-photography-bridge-photography-pexels.jpg" alt="선적 모티프 예시 1" class="example-image">
+                        <img src="https://images.squarespace-cdn.com/content/v1/53a2b3a1e4b0a5020bebe676/1609163175958-QUJNK8L920JO8XFKAMS5/leading-lines-in-photography-2.jpg" alt="선적 모티프 예시 2" class="example-image">
+                    </div>
+                </div>
+                
+                <div class="concept-box mt-4">
+                    <div class="concept-title">
+                        <i class="fas fa-paint-brush"></i> 실무 적용
+                    </div>
+                    <div class="list-item"><span class="highlight">유도선</span>으로 관객의 시선을 원하는 피사체로 이동</div>
+                    <div class="list-item"><span class="highlight">빛과 그림자</span>의 선을 통해 장면의 드라마와 깊이감 강화</div>
+                    <div class="list-item">건축물과 인공 구조물의 선을 활용한 <span class="highlight">공간감 표현</span></div>
+                    <div class="list-item">선과 라이팅의 조합으로 <span class="highlight">감정적 반응</span>과 <span class="highlight">이야기</span> 전달</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            컴퓨터 그래픽스 라이팅 입문 | Linear Motif(선적 모티프)
+        </div>
+    </div>
+</body>
+</html><script src='https://www.genspark.ai/slide-inner.js?_v=1'></script>
+    <script id="html_badge_script1">
+        window.__genspark_remove_badge_link = "https://www.genspark.ai/api/html_badge/" +
+            "remove_badge?token=To%2FBnjzloZ3UfQdcSaYfDnGQhSAs1LH%2BWdNu98BDWZ3wZaRvWBf9qVIZk2LhfNG7KnaQV4rXhRqIBtQyBZohnfqqr78TBPsZ7j8gdu24fdvNV9IvWi0c6UJSuM3RYh%2BKZTcnDlVN5gdZ0lYXUEHfu%2Bc%2FAgB8Wra88koHrudUCyxxlJVvTdUV%2BuT4lCvBMwwpli6mOeDTQuuAY3oviYg5emk51QqtbdJq2yV4yvUlpoeUSc8LXI2zFgU40w4NaU3Q71zbNjuHVRsS9tga%2F%2BMQ0iOxKpOUwW4GGOa0uXfQORNPETnNe06FWySuH%2F62Cy5z5F%2BRYRQD0xfFGq15bA%2B%2B6KSGe7R9AgyQmP5tes0%2FK6BVWI7%2F5oi%2FI6S9uHq4KpV1uUghOO4rohQ9QbOhQAl306Tkt%2B0a2SF1MjGY2S%2BhD13M9lmc3uyZmIKU%2FhlK%2BWVu0WhgZJLlQrvyGIbD0ork0Tb4WOBXqtYdfkrX2a9QXMwZLwWZxGrieFEAy5lMiVB%2B0qbhFnWV2Ku1Z7bJwbaIix8dcVxabD2iSgY6olyCW9hE2E4KlAvF%2Fjd51VFOaQvPDjDoQ9NSYYNnbIBCbT0XLD1YaugUzP0dqhaUKmQPti3S%2F0QXEqxx%2BfNbTPeqxyEYsHoU6yfKktGn%2BRkJBZhAQaiHBX6TJc7nB%2B1Ip2DX7%2BLbehRFXXeINU%2F37r5ivF6lqQcc1gnvDQPNN8LRUKbYEiov9BEloUCSdNBL%2F%2Fs%2B7H2Vqcen4j7vqNJPgDmpg3Xy";
+        window.__genspark_locale = "ko-KR";
+        window.__genspark_token = "To/BnjzloZ3UfQdcSaYfDnGQhSAs1LH+WdNu98BDWZ3wZaRvWBf9qVIZk2LhfNG7KnaQV4rXhRqIBtQyBZohnfqqr78TBPsZ7j8gdu24fdvNV9IvWi0c6UJSuM3RYh+KZTcnDlVN5gdZ0lYXUEHfu+c/AgB8Wra88koHrudUCyxxlJVvTdUV+uT4lCvBMwwpli6mOeDTQuuAY3oviYg5emk51QqtbdJq2yV4yvUlpoeUSc8LXI2zFgU40w4NaU3Q71zbNjuHVRsS9tga/+MQ0iOxKpOUwW4GGOa0uXfQORNPETnNe06FWySuH/62Cy5z5F+RYRQD0xfFGq15bA++6KSGe7R9AgyQmP5tes0/K6BVWI7/5oi/I6S9uHq4KpV1uUghOO4rohQ9QbOhQAl306Tkt+0a2SF1MjGY2S+hD13M9lmc3uyZmIKU/hlK+WVu0WhgZJLlQrvyGIbD0ork0Tb4WOBXqtYdfkrX2a9QXMwZLwWZxGrieFEAy5lMiVB+0qbhFnWV2Ku1Z7bJwbaIix8dcVxabD2iSgY6olyCW9hE2E4KlAvF/jd51VFOaQvPDjDoQ9NSYYNnbIBCbT0XLD1YaugUzP0dqhaUKmQPti3S/0QXEqxx+fNbTPeqxyEYsHoU6yfKktGn+RkJBZhAQaiHBX6TJc7nB+1Ip2DX7+LbehRFXXeINU/37r5ivF6lqQcc1gnvDQPNN8LRUKbYEiov9BEloUCSdNBL//s+7H2Vqcen4j7vqNJPgDmpg3Xy";
+    </script>
+    
+        
+        

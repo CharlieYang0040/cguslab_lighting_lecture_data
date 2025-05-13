@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>컴퓨터 그래픽스 라이팅 입문 - 목차</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', 'Malgun Gothic', sans-serif;
+            background-color: #f8f9fa;
+        }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            background: linear-gradient(135deg, #1a2a3a 0%, #0d1721 100%);
+            color: #ffffff;
+            overflow: hidden;
+            position: relative;
+        }
+        .header {
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 1.5rem 3rem;
+            border-bottom: 2px solid rgba(163, 198, 255, 0.4);
+        }
+        .content {
+            padding: 1.5rem 3rem;
+            display: flex;
+            flex-direction: column;
+        }
+        .topic-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+        .topic-group {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .topic-header {
+            font-weight: bold;
+            color: #a3c6ff;
+            margin-bottom: 0.75rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(163, 198, 255, 0.3);
+        }
+        .topic-item {
+            margin-bottom: 0.75rem;
+            padding: 0.5rem;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            border-radius: 4px;
+        }
+        .topic-item:hover {
+            background-color: rgba(163, 198, 255, 0.1);
+            transform: translateX(5px);
+        }
+        .topic-item i {
+            margin-right: 0.75rem;
+            width: 20px;
+            color: #ffcc66;
+            font-size: 0.9rem;
+        }
+        .topic-item span {
+            font-size: 1.05rem;
+        }
+        .topic-number {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 0.75rem;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        .footer {
+            padding: 1rem 3rem;
+            font-size: 0.9rem;
+            text-align: right;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            box-sizing: border-box;
+            color: rgba(255, 255, 255, 0.6);
+        }
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ffcc66;
+            margin-top: 0.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+        .section-title i {
+            margin-right: 0.75rem;
+        }
+        .highlight {
+            color: #a3c6ff;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="header">
+            <h1 class="text-3xl font-bold">목차</h1>
+            <p class="text-sm opacity-70 mt-1">라이팅을 위한 비주얼 언어</p>
+        </div>
+        
+        <div class="content">
+            <div class="section-title">
+                <i class="fas fa-lightbulb"></i> 1.2 라이팅을 위한 비주얼 언어
+            </div>
+            
+            <div class="topic-container">
+                <!-- 기본 요소 -->
+                <div class="topic-group">
+                    <div class="topic-header">기본 시각 요소</div>
+                    
+                    <div class="topic-item">
+                        <div class="topic-number">1</div>
+                        <i class="fas fa-adjust"></i>
+                        <span><span class="highlight">Value</span> (명암)</span>
+                    </div>
+                    
+                    <div class="topic-item">
+                        <div class="topic-number">2</div>
+                        <i class="fas fa-circle-half-stroke"></i>
+                        <span><span class="highlight">Contrast</span> (대비)</span>
+                    </div>
+                    
+                    <div class="topic-item">
+                        <div class="topic-number">3</div>
+                        <i class="fas fa-bullseye"></i>
+                        <span><span class="highlight">Focal Point</span> (초점)</span>
+                    </div>
+                    
+                    <div class="topic-item">
+                        <div class="topic-number">4</div>
+                        <i class="fas fa-image"></i>
+                        <span><span class="highlight">Sharpness</span> (선명도)</span>
+                    </div>
+                    
+                    <div class="topic-item">
+                        <div class="topic-number">5</div>
+                        <i class="fas fa-palette"></i>
+                        <span><span class="highlight">Color & Mood</span> (컬러와 분위기)</span>
+                    </div>
+                </div>
+                
+                <!-- 구성 요소 -->
+                <div class="topic-group">
+                    <div class="topic-header">구성과 형태</div>
+                    
+                    <div class="topic-item">
+                        <div class="topic-number">6</div>
+                        <i class="fas fa-object-group"></i>
+                        <span><span class="highlight">Composition</span> (구성)</span>
+                    </div>
+                    
+                    <div class="topic-item">
+                        <div class="topic-number">7</div>
+                        <i class="fas fa-vector-square"></i>
+                        <span><span class="highlight">Linear Motif</span> (선적 모티프)</span>
+                    </div>
+                    
+                    <div class="topic-item">
+                        <div class="topic-number">8</div>
+                        <i class="fas fa-shapes"></i>
+                        <span><span class="highlight">Light & Shape</span> (빛과 형태)</span>
+                    </div>
+                    
+                    <div class="topic-item">
+                        <div class="topic-number">9</div>
+                        <i class="fas fa-cube"></i>
+                        <span><span class="highlight">Depth</span> (깊이감)</span>
+                    </div>
+                    
+                    <div class="topic-item">
+                        <div class="topic-number">10</div>
+                        <i class="fas fa-moon"></i>
+                        <span><span class="highlight">Chiaro Scuro</span> (키아로스쿠로)</span>
+                    </div>
+                </div>
+                
+                <!-- 테크니컬 요소 -->
+                <div class="topic-group">
+                    <div class="topic-header">라이팅 테크닉</div>
+                    
+                    <div class="topic-item">
+                        <div class="topic-number">11</div>
+                        <i class="fas fa-adjust"></i>
+                        <span><span class="highlight">Low Key & High Key</span></span>
+                    </div>
+                    
+                    <div class="topic-item">
+                        <div class="topic-number">12</div>
+                        <i class="fas fa-lightbulb"></i>
+                        <span><span class="highlight">3 Point Lighting</span> (3점 조명)</span>
+                    </div>
+                    
+                    <div class="topic-item">
+                        <div class="topic-number">13</div>
+                        <i class="fas fa-mountain-sun"></i>
+                        <span><span class="highlight">Light & Shadow</span> (빛과 그림자)</span>
+                    </div>
+                    
+                    <div class="topic-item">
+                        <div class="topic-number">14</div>
+                        <i class="fas fa-arrows-to-dot"></i>
+                        <span><span class="highlight">Light & Direction</span> (빛과 방향)</span>
+                    </div>
+                    
+                    <div class="topic-item">
+                        <div class="topic-number">15</div>
+                        <i class="fas fa-swatchbook"></i>
+                        <span><span class="highlight">Color Palette</span> (색상 팔레트)</span>
+                    </div>
+                    
+                    <div class="topic-item">
+                        <div class="topic-number">16</div>
+                        <i class="fas fa-camera-retro"></i>
+                        <span><span class="highlight">Exposure</span> (노출)</span>
+                    </div>
+                    
+                    <div class="topic-item">
+                        <div class="topic-number">17</div>
+                        <i class="fas fa-clock"></i>
+                        <span><span class="highlight">Time of Day</span> (시간대별 라이팅)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            1주차: 라이팅 기본 개념과 비주얼 언어
+        </div>
+    </div>
+</body>
+</html><script src='https://www.genspark.ai/slide-inner.js?_v=1'></script>
+    <script id="html_badge_script1">
+        window.__genspark_remove_badge_link = "https://www.genspark.ai/api/html_badge/" +
+            "remove_badge?token=To%2FBnjzloZ3UfQdcSaYfDn36MJn0QmXvbHOQR2TyTsHdqE98eDYA0fsAE8hMIGqKQXulWKDs%2BVBGrmCm9JREqphj%2FGl4dC0IpSjy6YLCR9a4ipF1y08Ri9TDWb94Qo5zB5%2BvrCej1pDRZOxuk7Wkc59c1Badx89Ac7Lf9cTkZmcp9DHe1IWx4G19PdbFGHoN3CpFu7FB9tOQIIHnPXX4e3FK0%2FduvCUkAmwLw7f52KTNrY6ghwN%2B91xpxTaoieG98yO15llgx7qhuPwygeCuGTo%2FFnMAKlRa2rpO8tWa2AT85N%2BftUnm9t4eys6E3waS3lgRVMBS%2FUfKlZDbP8HodEv0KfzrgEJwyqrifkpgKX7XvRCWGuoTUhYXbRXAK6ZGQJ4Pi8tkOHUQmBzHkStIO3XhXOmAh8LbWcv7IKOEEuGU9UYKUHFSrsBj7VYpkn0F2tRAjbrMKniWlcMPrJggulYJALUUbs9l8IF5DDEIXZoX2LOEDH%2BPyjnI13rRQV4ko47xhtY2qVA7lA3uf%2FnLt3tzcOwDLA%2FV9E7oNDsJgDmLN4fVSBVuYNWj%2F8eCrDND19K7UwHfj9UokrAGFOjzUBqn%2BMO3uzOpk9FwSy1H5wsiz%2BZdFP%2F9kwXlDBFMw4Ul8l%2BRN7Ewv1hH%2FBTkgQ7afoBLUtjzSTk%2Bm8EFc9yMpEu6D33cxK0DVhKXrx7%2BOZzxvHxzWs5L8%2F37lUJQJoCHv7uDu53OQT3JyEZ2euq1TPeFGQqeyLza4iToQdUp%2FCZj";
+        window.__genspark_locale = "ko-KR";
+        window.__genspark_token = "To/BnjzloZ3UfQdcSaYfDn36MJn0QmXvbHOQR2TyTsHdqE98eDYA0fsAE8hMIGqKQXulWKDs+VBGrmCm9JREqphj/Gl4dC0IpSjy6YLCR9a4ipF1y08Ri9TDWb94Qo5zB5+vrCej1pDRZOxuk7Wkc59c1Badx89Ac7Lf9cTkZmcp9DHe1IWx4G19PdbFGHoN3CpFu7FB9tOQIIHnPXX4e3FK0/duvCUkAmwLw7f52KTNrY6ghwN+91xpxTaoieG98yO15llgx7qhuPwygeCuGTo/FnMAKlRa2rpO8tWa2AT85N+ftUnm9t4eys6E3waS3lgRVMBS/UfKlZDbP8HodEv0KfzrgEJwyqrifkpgKX7XvRCWGuoTUhYXbRXAK6ZGQJ4Pi8tkOHUQmBzHkStIO3XhXOmAh8LbWcv7IKOEEuGU9UYKUHFSrsBj7VYpkn0F2tRAjbrMKniWlcMPrJggulYJALUUbs9l8IF5DDEIXZoX2LOEDH+PyjnI13rRQV4ko47xhtY2qVA7lA3uf/nLt3tzcOwDLA/V9E7oNDsJgDmLN4fVSBVuYNWj/8eCrDND19K7UwHfj9UokrAGFOjzUBqn+MO3uzOpk9FwSy1H5wsiz+ZdFP/9kwXlDBFMw4Ul8l+RN7Ewv1hH/BTkgQ7afoBLUtjzSTk+m8EFc9yMpEu6D33cxK0DVhKXrx7+OZzxvHxzWs5L8/37lUJQJoCHv7uDu53OQT3JyEZ2euq1TPeFGQqeyLza4iToQdUp/CZj";
+    </script>
+    
+        
+        

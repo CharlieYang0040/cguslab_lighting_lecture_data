@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>마무리 및 다음 차시 안내</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', 'Malgun Gothic', sans-serif;
+        }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            background: linear-gradient(135deg, #1a2a3a 0%, #0d1721 100%);
+            color: #ffffff;
+            overflow: hidden;
+            position: relative;
+        }
+        .header {
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 1.5rem 3rem;
+            border-bottom: 2px solid rgba(163, 198, 255, 0.4);
+            display: flex;
+            align-items: center;
+        }
+        .header-icon {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            color: #a3c6ff;
+            font-size: 1.5rem;
+        }
+        .content {
+            padding: 2rem 3rem;
+            display: grid;
+            grid-template-columns: 3fr 2fr;
+            gap: 2rem;
+        }
+        .left-content {
+            display: flex;
+            flex-direction: column;
+        }
+        .summary-box {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .section-title {
+            font-weight: bold;
+            color: #ffcc66;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+        }
+        .section-title i {
+            margin-right: 0.75rem;
+        }
+        .highlight {
+            color: #a3c6ff;
+            font-weight: bold;
+        }
+        .right-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .info-box {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .topic-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+        .topic-item {
+            background-color: rgba(255, 255, 255, 0.07);
+            border-radius: 4px;
+            padding: 0.5rem;
+            font-size: 0.85rem;
+            text-align: center;
+            transition: all 0.2s ease;
+        }
+        .topic-item:hover {
+            background-color: rgba(163, 198, 255, 0.2);
+            transform: translateY(-2px);
+        }
+        .next-class {
+            background: linear-gradient(135deg, rgba(163, 198, 255, 0.1) 0%, rgba(255, 204, 102, 0.1) 100%);
+            border-left: 3px solid #a3c6ff;
+        }
+        .qa-box {
+            background: linear-gradient(135deg, rgba(255, 204, 102, 0.1) 0%, rgba(102, 204, 153, 0.1) 100%);
+            border-left: 3px solid #ffcc66;
+        }
+        .contact-box {
+            background: linear-gradient(135deg, rgba(102, 204, 153, 0.1) 0%, rgba(163, 198, 255, 0.1) 100%);
+            border-left: 3px solid #66cc99;
+        }
+        .icon-list-item {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+        .icon-list-item i {
+            width: 28px;
+            height: 28px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+        }
+        .footer {
+            padding: 1.5rem 3rem;
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.2);
+            font-size: 1.1rem;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .glow {
+            text-shadow: 0 0 10px rgba(163, 198, 255, 0.6);
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="header">
+            <div class="header-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <div>
+                <h1 class="text-3xl font-bold">마무리 및 다음 차시 안내</h1>
+                <p class="text-sm opacity-70 mt-1">컴퓨터 그래픽스 라이팅 입문</p>
+            </div>
+        </div>
+        
+        <div class="content">
+            <div class="left-content">
+                <div class="summary-box">
+                    <div class="section-title">
+                        <i class="fas fa-lightbulb"></i> 오늘의 핵심 개념 요약
+                    </div>
+                    <p>이번 강의에서는 라이팅을 위한 다양한 <span class="highlight">비주얼 언어</span>의 기본 개념을 살펴보았습니다.</p>
+                    
+                    <div class="topic-grid mt-4">
+                        <div class="topic-item">Value (명암)</div>
+                        <div class="topic-item">Contrast (대비)</div>
+                        <div class="topic-item">Focal Point (초점)</div>
+                        <div class="topic-item">Sharpness (선명도)</div>
+                        <div class="topic-item">Color & Mood (컬러)</div>
+                        <div class="topic-item">Composition (구성)</div>
+                        <div class="topic-item">Linear Motif (선)</div>
+                        <div class="topic-item">Light & Shape (형태)</div>
+                        <div class="topic-item">Depth (깊이감)</div>
+                        <div class="topic-item">Chiaro Scuro</div>
+                        <div class="topic-item">Low/High Key</div>
+                        <div class="topic-item">3 Point Lighting</div>
+                        <div class="topic-item">Light & Shadow</div>
+                        <div class="topic-item">Light & Direction</div>
+                        <div class="topic-item">Color Palette</div>
+                        <div class="topic-item">Time of Day</div>
+                    </div>
+                    
+                    <p class="mt-4">이러한 개념들은 <span class="highlight">컴퓨터 그래픽스</span>에서 효과적인 라이팅을 구현하기 위한 기초를 형성합니다.</p>
+                </div>
+                
+                <div class="summary-box next-class">
+                    <div class="section-title">
+                        <i class="fas fa-calendar-alt"></i> 다음 차시 예고
+                    </div>
+                    <div class="icon-list-item">
+                        <i class="fas fa-radiation"></i>
+                        <div><span class="highlight">빛의 물리적 속성</span>: 직접광과 간접광, 반사, 굴절, 산란 등에 대해 학습합니다.</div>
+                    </div>
+                    <div class="icon-list-item">
+                        <i class="fas fa-code"></i>
+                        <div><span class="highlight">실시간 라이팅</span>: 셰이더 프로그래밍과 기본적인 라이팅 계산법을 배웁니다.</div>
+                    </div>
+                    <div class="icon-list-item">
+                        <i class="fas fa-laptop-code"></i>
+                        <div><span class="highlight">실습 과제</span>: 첫 번째 라이팅 프로젝트를 시작합니다.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="right-content">
+                <div class="info-box qa-box">
+                    <div class="section-title">
+                        <i class="fas fa-question-circle"></i> Q&A 및 토론
+                    </div>
+                    <div class="icon-list-item">
+                        <i class="fas fa-comments"></i>
+                        <div>질문이나 개념에 대한 <span class="highlight">추가 설명</span>이 필요하신가요?</div>
+                    </div>
+                    <div class="icon-list-item">
+                        <i class="fas fa-users"></i>
+                        <div>다음 수업 전까지 <span class="highlight">온라인 토론 게시판</span>을 통해서도 질문 가능합니다.</div>
+                    </div>
+                    <div class="icon-list-item">
+                        <i class="fas fa-edit"></i>
+                        <div>오늘 배운 개념으로 <span class="highlight">연습 예제</span>를 풀어보세요.</div>
+                    </div>
+                </div>
+                
+                <div class="info-box contact-box">
+                    <div class="section-title">
+                        <i class="fas fa-link"></i> 자료 및 연락처
+                    </div>
+                    <div class="icon-list-item">
+                        <i class="fas fa-book"></i>
+                        <div>강의 슬라이드와 <span class="highlight">추가 학습 자료</span>는 학습 관리 시스템에서 확인 가능합니다.</div>
+                    </div>
+                    <div class="icon-list-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>질문: <span class="highlight"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="abdbd9c4cdced8d8c4d9ebdec5c2ddced9d8c2dfd285cecfde">[email&#160;protected]</a></span></div>
+                    </div>
+                    <div class="icon-list-item">
+                        <i class="fas fa-clock"></i>
+                        <div>상담 시간: <span class="highlight">월/수 14:00-16:00</span>, 또는 예약 시</div>
+                    </div>
+                </div>
+                
+                <div class="info-box">
+                    <div class="section-title">
+                        <i class="fas fa-lightbulb"></i> 마치는 말
+                    </div>
+                    <p>라이팅은 단순한 기술적 요소가 아니라 <span class="highlight">시각적 스토리텔링</span>의 핵심입니다.</p>
+                    <p class="mt-3">여러분의 프로젝트에 라이팅 개념을 적용하면서 <span class="highlight">창의적인 표현</span>을 발전시켜 나가길 바랍니다.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>감사합니다. <span class="highlight glow">다음 수업에서 뵙겠습니다!</span></p>
+        </div>
+    </div>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script></body>
+</html><script src='https://www.genspark.ai/slide-inner.js?_v=1'></script>
+    <script id="html_badge_script1">
+        window.__genspark_remove_badge_link = "https://www.genspark.ai/api/html_badge/" +
+            "remove_badge?token=To%2FBnjzloZ3UfQdcSaYfDhkKrJIEbiZf0IZQSj2h18e1nYxjEwm6ouuN4LecyW7CBYMjGo4KfR3GSmKGuKyt7ZsCw4DJC5yaHsX5pE7PUVpJ0IQlkQpiHx%2BFI%2BJDbHX0T5nLA9rKHanhKcdL3YoRH58%2Bpu63sjvwEm5SS0WO3YUDWq%2FjlWgEwsYkDS3SEnop6b66hIxDwI7TYDFtGxwyYe5uKQUBRHAEXxNgQ1Xr4%2FqNBUH9GMGr%2Br1QbOxvWHwtWLV65VBTERMDHmM5QvSNddGjIB9DDYgHC2gpBqSQ5%2FWQHkaH1ERWvVLVnIOwOdCGdmokbdB2vlm5ukv%2FjYa4mdHuVEHqtjj45vvT3ezRJJ9CDTLLenFZU3kJuv%2BpJ1zdJUrBFFjFAi1coDhqNoKfanuklVvjF416g9Z1ocra4MhNc0wckxcJAev6QABE84B8MOK9%2BlWBSOfXnhR9SbJdiPMEINotRQeYFBjrA%2FNH2Z1YVZ11D6J6cobVcyXbp%2FYPuBeM35GnaXbVgRX6dWkXBB3NcX0gPGT66o%2BHI6xOi5rVp8rtKJUoBHFA76CGtBt42I5dp9%2FOGeHafxV%2BL1wZHQ7u4AMCrF6Xwz0GjBPJEQvAjLrE%2FubJ2lUReNJoy6%2FzOoyPH%2FOm4JuCT8%2F2mxNdAoMfjog%2FTbwjpxJeduaVW0P9hmVpdd1%2FE1qM3V3xNK9GHIWFH4DaLIMrDyuHyS3QsZjjkHEBdxStQPXd1dSKHf%2BY5KJiSl87i99bRHsj%2BsOL";
+        window.__genspark_locale = "ko-KR";
+        window.__genspark_token = "To/BnjzloZ3UfQdcSaYfDhkKrJIEbiZf0IZQSj2h18e1nYxjEwm6ouuN4LecyW7CBYMjGo4KfR3GSmKGuKyt7ZsCw4DJC5yaHsX5pE7PUVpJ0IQlkQpiHx+FI+JDbHX0T5nLA9rKHanhKcdL3YoRH58+pu63sjvwEm5SS0WO3YUDWq/jlWgEwsYkDS3SEnop6b66hIxDwI7TYDFtGxwyYe5uKQUBRHAEXxNgQ1Xr4/qNBUH9GMGr+r1QbOxvWHwtWLV65VBTERMDHmM5QvSNddGjIB9DDYgHC2gpBqSQ5/WQHkaH1ERWvVLVnIOwOdCGdmokbdB2vlm5ukv/jYa4mdHuVEHqtjj45vvT3ezRJJ9CDTLLenFZU3kJuv+pJ1zdJUrBFFjFAi1coDhqNoKfanuklVvjF416g9Z1ocra4MhNc0wckxcJAev6QABE84B8MOK9+lWBSOfXnhR9SbJdiPMEINotRQeYFBjrA/NH2Z1YVZ11D6J6cobVcyXbp/YPuBeM35GnaXbVgRX6dWkXBB3NcX0gPGT66o+HI6xOi5rVp8rtKJUoBHFA76CGtBt42I5dp9/OGeHafxV+L1wZHQ7u4AMCrF6Xwz0GjBPJEQvAjLrE/ubJ2lUReNJoy6/zOoyPH/Om4JuCT8/2mxNdAoMfjog/TbwjpxJeduaVW0P9hmVpdd1/E1qM3V3xNK9GHIWFH4DaLIMrDyuHyS3QsZjjkHEBdxStQPXd1dSKHf+Y5KJiSl87i99bRHsj+sOL";
+    </script>
+    

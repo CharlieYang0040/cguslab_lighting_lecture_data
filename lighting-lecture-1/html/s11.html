@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Light & Shape (빛과 형태)</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', 'Malgun Gothic', sans-serif;
+        }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            background: linear-gradient(135deg, #1a2a3a 0%, #0d1721 100%);
+            color: #ffffff;
+            overflow: hidden;
+            position: relative;
+        }
+        .header {
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 1.5rem 3rem;
+            border-bottom: 2px solid rgba(163, 198, 255, 0.4);
+            display: flex;
+            align-items: center;
+        }
+        .header-icon {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            color: #a3c6ff;
+            font-size: 1.5rem;
+        }
+        .content {
+            padding: 2rem 3rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+        .left-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .concept-box {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .concept-title {
+            font-weight: bold;
+            color: #ffcc66;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+        }
+        .concept-title i {
+            margin-right: 0.75rem;
+        }
+        .highlight {
+            color: #a3c6ff;
+            font-weight: bold;
+        }
+        .image-container {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            height: 100%;
+        }
+        .main-image {
+            width: 100%;
+            max-height: 240px;
+            object-fit: contain;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+        .caption {
+            font-size: 0.9rem;
+            color: #a3c6ff;
+            text-align: center;
+            font-style: italic;
+        }
+        .footer {
+            padding: 1rem 3rem;
+            text-align: right;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            box-sizing: border-box;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+        .list-item {
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: baseline;
+        }
+        .list-item:before {
+            content: "•";
+            color: #ffcc66;
+            font-weight: bold;
+            margin-right: 0.75rem;
+        }
+        .examples-container {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .example-image {
+            width: 50%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+        .example-image:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+        .light-components {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1.5rem;
+        }
+        .light-component {
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 0.75rem;
+            width: 31%;
+        }
+        .component-label {
+            font-weight: bold;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            color: #ffcc66;
+        }
+        .component-desc {
+            font-size: 0.8rem;
+            color: #e0e0e0;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="header">
+            <div class="header-icon">
+                <i class="fas fa-shapes"></i>
+            </div>
+            <div>
+                <h1 class="text-3xl font-bold">Light & Shape (빛과 형태)</h1>
+                <p class="text-sm opacity-70 mt-1">라이팅을 위한 비주얼 언어 8</p>
+            </div>
+        </div>
+        
+        <div class="content">
+            <div class="left-content">
+                <div class="concept-box">
+                    <div class="concept-title">
+                        <i class="fas fa-lightbulb"></i> 핵심 개념
+                    </div>
+                    <p>빛이 물체의 표면에 닿아 <span class="highlight">형태</span>, <span class="highlight">양감</span>, <span class="highlight">질감</span>을 드러내는 방식입니다.</p>
+                    <p class="mt-3">빛의 <span class="highlight">각도</span>, <span class="highlight">강도</span>, <span class="highlight">확산 정도</span>에 따라 동일한 물체도 다르게 인식될 수 있습니다.</p>
+                </div>
+                
+                <div class="concept-box">
+                    <div class="concept-title">
+                        <i class="fas fa-info-circle"></i> 추가 설명
+                    </div>
+                    <div class="list-item">효과적인 라이팅은 물체의 <span class="highlight">3차원적 형태</span>를 명확히 인지</div>
+                    <div class="list-item">표면의 <span class="highlight">재질감</span>(매끄러움, 거칠음 등)을 사실적으로 표현</div>
+                    <div class="list-item"><span class="highlight">그림자</span>와 <span class="highlight">하이라이트</span>의 균형으로 입체감 강화</div>
+                    <div class="list-item">빛의 확산 및 <span class="highlight">반사 효과</span>가 형태 인식에 중요한 역할</div>
+                </div>
+                
+                <div class="light-components">
+                    <div class="light-component">
+                        <div class="component-label">하이라이트</div>
+                        <div class="component-desc">빛이 직접 닿아 가장 밝은 부분</div>
+                    </div>
+                    <div class="light-component">
+                        <div class="component-label">중간톤</div>
+                        <div class="component-desc">간접광이 닿는 영역</div>
+                    </div>
+                    <div class="light-component">
+                        <div class="component-label">그림자</div>
+                        <div class="component-desc">빛이 닿지 않는 어두운 부분</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div>
+                <div class="image-container">
+                    <img src="https://i.ytimg.com/vi/V3WmrWUEIJo/maxresdefault.jpg" alt="빛과 형태의 관계" class="main-image">
+                    <p class="caption">빛의 방향에 따른 형태와 입체감 표현의 변화</p>
+                    
+                    <div class="examples-container">
+                        <img src="https://academyofanimatedart.com/wp-content/uploads/2019/03/td-u-CG-lighting-shadows-light-shading-2.jpg" alt="빛과 형태 예시 1" class="example-image">
+                        <img src="https://www.clipstudio.net/wp-content/uploads/2020/11/0144_006_en-us.jpg" alt="빛과 형태 예시 2" class="example-image">
+                    </div>
+                </div>
+                
+                <div class="concept-box mt-4">
+                    <div class="concept-title">
+                        <i class="fas fa-paint-brush"></i> 실무 적용
+                    </div>
+                    <div class="list-item"><span class="highlight">단일 광원</span>으로 명확한 형태와 강한 대비 표현</div>
+                    <div class="list-item"><span class="highlight">다중 광원</span>으로 복잡한 형태와 부드러운 전환 표현</div>
+                    <div class="list-item">물체의 <span class="highlight">표면 특성</span>(금속, 유리, 직물 등)에 맞는 라이팅 적용</div>
+                    <div class="list-item">빛과 그림자의 방향성으로 <span class="highlight">시각적 무게감</span>과 <span class="highlight">안정성</span> 부여</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            컴퓨터 그래픽스 라이팅 입문 | Light & Shape(빛과 형태)
+        </div>
+    </div>
+</body>
+</html><script src='https://www.genspark.ai/slide-inner.js?_v=1'></script>
+    <script id="html_badge_script1">
+        window.__genspark_remove_badge_link = "https://www.genspark.ai/api/html_badge/" +
+            "remove_badge?token=To%2FBnjzloZ3UfQdcSaYfDqHxg85N0Z%2F7GSzTZOiDTtspcsEIO9%2BhqLlpz0KhN5eTnLM%2FKxLuSc6hajtmPxmJIGUjUXHC8zcrO55nbGHnCrBVyzP1zJsy2PIrBkWXk1zB8wBilpy5Mg3FIZM7RchVwvVrCCa9oSzaiUsfCb2dLgfpIEaxtE4oSe6IfMa7uem8mSO7IBFQlhyKqCZdDkhx97hCL93tnktsMIH0r%2FChIzgj3OUO3PA%2BYbNjUjZ0uI1FMFylBFOMW7niK9vTh3BdTrbM4R2EhNWs0Kd6AJzwMsZ8vaThvxVfKemGpnOLYb2fse%2BpZK%2FU8PqwqCAQktXR2kTJfQ0V1i8WfyMrGW%2BIMJ3Adq0d4pWsaRB9kqlts5U38X9qtCwHvM23Aa9PHMq5a4%2BWB%2B0Nbfw3F0u5XMHfdJfQQb%2Fw5JpYoUu%2FIwrkW2FiuuNLrVtEARJN%2Fd7zKnmuDEGBHNodvRlboiZMzlikSMIve950bagPSCZe1%2FhoJ8cE5Tx5Q9d5xO5IYSw8N27tzay%2FQk67bsvV3gTb5RyUnx4QQ%2FM2pckSM2QTPs8jtJq20ANwi1kkk1hPyTaoaxOlCRxZkeYXHboFP02neDdc68Qd9Sgmw6YYknb%2BN%2FdaH7rUvMZoOSZhXwnhP88M86DxKu0w2brkAkiwUUlbxhDsAdqG5yxRERY8VzfC5vzN3YCmczFD2Gld9tr01apXToZmyQ1X%2BSdYQaEsSX2fUewE1giY6Skcj2GVY%2FzN2kKyH8pv";
+        window.__genspark_locale = "ko-KR";
+        window.__genspark_token = "To/BnjzloZ3UfQdcSaYfDqHxg85N0Z/7GSzTZOiDTtspcsEIO9+hqLlpz0KhN5eTnLM/KxLuSc6hajtmPxmJIGUjUXHC8zcrO55nbGHnCrBVyzP1zJsy2PIrBkWXk1zB8wBilpy5Mg3FIZM7RchVwvVrCCa9oSzaiUsfCb2dLgfpIEaxtE4oSe6IfMa7uem8mSO7IBFQlhyKqCZdDkhx97hCL93tnktsMIH0r/ChIzgj3OUO3PA+YbNjUjZ0uI1FMFylBFOMW7niK9vTh3BdTrbM4R2EhNWs0Kd6AJzwMsZ8vaThvxVfKemGpnOLYb2fse+pZK/U8PqwqCAQktXR2kTJfQ0V1i8WfyMrGW+IMJ3Adq0d4pWsaRB9kqlts5U38X9qtCwHvM23Aa9PHMq5a4+WB+0Nbfw3F0u5XMHfdJfQQb/w5JpYoUu/IwrkW2FiuuNLrVtEARJN/d7zKnmuDEGBHNodvRlboiZMzlikSMIve950bagPSCZe1/hoJ8cE5Tx5Q9d5xO5IYSw8N27tzay/Qk67bsvV3gTb5RyUnx4QQ/M2pckSM2QTPs8jtJq20ANwi1kkk1hPyTaoaxOlCRxZkeYXHboFP02neDdc68Qd9Sgmw6YYknb+N/daH7rUvMZoOSZhXwnhP88M86DxKu0w2brkAkiwUUlbxhDsAdqG5yxRERY8VzfC5vzN3YCmczFD2Gld9tr01apXToZmyQ1X+SdYQaEsSX2fUewE1giY6Skcj2GVY/zN2kKyH8pv";
+    </script>
+    

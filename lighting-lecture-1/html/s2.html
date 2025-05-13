@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>컴퓨터 그래픽스 라이팅 입문 - 오리엔테이션</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11.6.0/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', 'Malgun Gothic', sans-serif;
+            background-color: #f8f9fa;
+        }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            background: linear-gradient(135deg, #1a2a3a 0%, #0d1721 100%);
+            color: #ffffff;
+            overflow: hidden;
+            position: relative;
+        }
+        .header {
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 1.5rem 3rem;
+            border-bottom: 2px solid rgba(163, 198, 255, 0.4);
+        }
+        .content {
+            padding: 2rem 3rem;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2.5rem;
+        }
+        .section-title {
+            font-weight: bold;
+            font-size: 1.4rem;
+            color: #a3c6ff;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+        .section-title i {
+            margin-right: 0.75rem;
+            width: 30px;
+        }
+        .section-content {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1.25rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            height: 100%;
+        }
+        .list-item {
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: baseline;
+        }
+        .list-item:before {
+            content: "•";
+            color: #a3c6ff;
+            font-weight: bold;
+            margin-right: 0.75rem;
+        }
+        .highlight {
+            color: #ffcc66;
+            font-weight: 500;
+        }
+        .diagram-container {
+            margin-top: 1rem;
+            background-color: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            padding: 1rem;
+        }
+        .footer {
+            padding: 1rem 3rem;
+            font-size: 0.9rem;
+            text-align: right;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            box-sizing: border-box;
+            color: rgba(255, 255, 255, 0.6);
+        }
+        .note {
+            font-style: italic;
+            color: #a3c6ff;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="header">
+            <h1 class="text-3xl font-bold">오리엔테이션</h1>
+            <p class="text-sm opacity-70 mt-1">컴퓨터 그래픽스 라이팅 입문</p>
+        </div>
+        
+        <div class="content">
+            <div>
+                <div class="section-title">
+                    <i class="fas fa-bullseye"></i> 강의 목표
+                </div>
+                <div class="section-content">
+                    <div class="list-item">라이팅의 <span class="highlight">기본 원리</span>와 <span class="highlight">시각적 효과</span> 이해</div>
+                    <div class="list-item">컴퓨터 그래픽스에서 빛과 그림자가 주는 <span class="highlight">미적 영향</span> 파악</div>
+                    <div class="list-item">실제 작업에 적용 가능한 <span class="highlight">실무 기술</span> 습득</div>
+                    <div class="list-item">창의적인 라이팅 <span class="highlight">표현 능력</span> 향상</div>
+                </div>
+                
+                <div class="section-title mt-6">
+                    <i class="fas fa-tasks"></i> 평가 기준
+                </div>
+                <div class="section-content">
+                    <div class="list-item">출석 및 참여도: <span class="highlight">20%</span></div>
+                    <div class="list-item">중간 과제: <span class="highlight">30%</span></div>
+                    <div class="list-item">최종 프로젝트: <span class="highlight">40%</span></div>
+                    <div class="list-item">동료 평가: <span class="highlight">10%</span></div>
+                </div>
+            </div>
+            
+            <div>
+                <div class="section-title">
+                    <i class="fas fa-book"></i> 커리큘럼
+                </div>
+                <div class="section-content">
+                    <div class="list-item"><span class="highlight">1주차:</span> 라이팅 기본 개념과 비주얼 언어</div>
+                    <div class="list-item"><span class="highlight">2-3주차:</span> 빛의 물리적 속성과 그래픽스 적용</div>
+                    <div class="list-item"><span class="highlight">4-6주차:</span> 다양한 라이팅 기법과 실습</div>
+                    <div class="list-item"><span class="highlight">7-10주차:</span> 심화 프로젝트 및 창의적 표현</div>
+                    <div class="list-item"><span class="highlight">11-12주차:</span> 포트폴리오 제작 및 발표</div>
+                </div>
+                
+                <div class="section-title mt-6">
+                    <i class="fas fa-chalkboard-teacher"></i> 진행 방식
+                </div>
+                <div class="section-content">
+                    <div class="list-item">이론 강의: 각 개념에 대한 <span class="highlight">기본 원리</span> 설명</div>
+                    <div class="list-item">데모 및 시연: 실제 <span class="highlight">적용 사례</span> 분석</div>
+                    <div class="list-item">실습 세션: 배운 기술을 <span class="highlight">직접 적용</span>하는 시간</div>
+                    <div class="list-item">피드백 라운드: <span class="highlight">토론</span>과 <span class="highlight">Q&A</span> 시간</div>
+                    <div class="note mt-3">* 실습 필요 준비물: 그래픽 소프트웨어, 노트북</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            수업 관련 자료 및 공지: 강의 홈페이지 참조
+        </div>
+    </div>
+    
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'dark'
+        });
+    </script>
+</body>
+</html><script src='https://www.genspark.ai/slide-inner.js?_v=1'></script>
+    <script id="html_badge_script1">
+        window.__genspark_remove_badge_link = "https://www.genspark.ai/api/html_badge/" +
+            "remove_badge?token=To%2FBnjzloZ3UfQdcSaYfDl7NxULCMRvg0EO4rW4eD%2F5VX6OVWecYS215TsV2wbq%2BY%2BZ70GOAIbOMFAeP95lF2LXYN%2B7dN%2BApKDCJ5lRohRNZ0FHy7j%2BUGTvf2xjcZi5f1X7jP0RFh89KV7wCx9IPfjnr%2BkZe2USE5%2FX8aBAWRoWRf1KaQKQXtjJAE6o0hlj0aaN4HV8U3wDTWAeqEhwyuLVumEx5c52xgO%2FDXIP0g9tzuoBrdqn2uxHM058fa4Ua0ChVzJqaPfolLDMnYrO3Ektogj%2BD%2BSK3%2B8D9wupzjM1JanEU%2FF1a5xSFr3byCQyWkaXDuGKjzBwVClXCQE%2BDxxntmA2uZuiDREks6qT3U0%2BFx2dFo1Aclj5UnjtNbDOlUHM%2Fd85Pgi69VJYPJAoc4QFfM1xjChy4%2F2W6EeWT%2FtXexa3UN5D5vMKWDmnyxymz6oDIygCqlSdG7%2BCwcuNqooJH9QTGVbkpKZpBwg6JOe00cGeJ2%2BTUbDhL68DD0TRe%2FNB8UCCPXGeXDjcSGV4edjYR1XfWwCi81582bYrcHOQK806AfgsnaILF5zKE9sSgTU9warEOf4fAE0Af35GfEm0uNs0lOj6kP1S8sAJlnb00FeTW38gVBZX8PSpMsIWiMZCEInxezHSDj8MsX1IqoDN2aFxHkVCwBdh0nxoFz7h8YoYoGQkvHisx8N8yNmMEcAnrnLUKJ6KA6JAo9LQt4Db36R27JpsnzKf8gn%2BcRKmO3mrIrxbFS3vmkjcPPY%2BK";
+        window.__genspark_locale = "ko-KR";
+        window.__genspark_token = "To/BnjzloZ3UfQdcSaYfDl7NxULCMRvg0EO4rW4eD/5VX6OVWecYS215TsV2wbq+Y+Z70GOAIbOMFAeP95lF2LXYN+7dN+ApKDCJ5lRohRNZ0FHy7j+UGTvf2xjcZi5f1X7jP0RFh89KV7wCx9IPfjnr+kZe2USE5/X8aBAWRoWRf1KaQKQXtjJAE6o0hlj0aaN4HV8U3wDTWAeqEhwyuLVumEx5c52xgO/DXIP0g9tzuoBrdqn2uxHM058fa4Ua0ChVzJqaPfolLDMnYrO3Ektogj+D+SK3+8D9wupzjM1JanEU/F1a5xSFr3byCQyWkaXDuGKjzBwVClXCQE+DxxntmA2uZuiDREks6qT3U0+Fx2dFo1Aclj5UnjtNbDOlUHM/d85Pgi69VJYPJAoc4QFfM1xjChy4/2W6EeWT/tXexa3UN5D5vMKWDmnyxymz6oDIygCqlSdG7+CwcuNqooJH9QTGVbkpKZpBwg6JOe00cGeJ2+TUbDhL68DD0TRe/NB8UCCPXGeXDjcSGV4edjYR1XfWwCi81582bYrcHOQK806AfgsnaILF5zKE9sSgTU9warEOf4fAE0Af35GfEm0uNs0lOj6kP1S8sAJlnb00FeTW38gVBZX8PSpMsIWiMZCEInxezHSDj8MsX1IqoDN2aFxHkVCwBdh0nxoFz7h8YoYoGQkvHisx8N8yNmMEcAnrnLUKJ6KA6JAo9LQt4Db36R27JpsnzKf8gn+cRKmO3mrIrxbFS3vmkjcPPY+K";
+    </script>

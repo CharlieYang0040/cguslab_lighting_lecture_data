@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Depth (깊이감)</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', 'Malgun Gothic', sans-serif;
+        }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            background: linear-gradient(135deg, #1a2a3a 0%, #0d1721 100%);
+            color: #ffffff;
+            overflow: hidden;
+            position: relative;
+        }
+        .header {
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 1.5rem 3rem;
+            border-bottom: 2px solid rgba(163, 198, 255, 0.4);
+            display: flex;
+            align-items: center;
+        }
+        .header-icon {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            color: #a3c6ff;
+            font-size: 1.5rem;
+        }
+        .content {
+            padding: 2rem 3rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+        .left-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .concept-box {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .concept-title {
+            font-weight: bold;
+            color: #ffcc66;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+        }
+        .concept-title i {
+            margin-right: 0.75rem;
+        }
+        .highlight {
+            color: #a3c6ff;
+            font-weight: bold;
+        }
+        .image-container {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            height: 100%;
+        }
+        .main-image {
+            width: 100%;
+            max-height: 240px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+        .caption {
+            font-size: 0.9rem;
+            color: #a3c6ff;
+            text-align: center;
+            font-style: italic;
+        }
+        .footer {
+            padding: 1rem 3rem;
+            text-align: right;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            box-sizing: border-box;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+        .list-item {
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: baseline;
+        }
+        .list-item:before {
+            content: "•";
+            color: #ffcc66;
+            font-weight: bold;
+            margin-right: 0.75rem;
+        }
+        .examples-container {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .example-image {
+            width: 50%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+        .example-image:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+        .depth-scale {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            margin-top: 1rem;
+        }
+        .depth-bar {
+            height: 35px;
+            width: 100%;
+            display: flex;
+            margin-bottom: 0.5rem;
+        }
+        .depth-element {
+            height: 100%;
+        }
+        .depth-near {
+            background: linear-gradient(to right, rgba(255,255,255,0.7), rgba(255,255,255,0.5));
+            width: 30%;
+            border-top-left-radius: 4px;
+            border-bottom-left-radius: 4px;
+        }
+        .depth-mid {
+            background: linear-gradient(to right, rgba(255,255,255,0.5), rgba(255,255,255,0.2));
+            width: 40%;
+        }
+        .depth-far {
+            background: linear-gradient(to right, rgba(255,255,255,0.2), rgba(255,255,255,0.05));
+            width: 30%;
+            border-top-right-radius: 4px;
+            border-bottom-right-radius: 4px;
+        }
+        .depth-labels {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="header">
+            <div class="header-icon">
+                <i class="fas fa-cube"></i>
+            </div>
+            <div>
+                <h1 class="text-3xl font-bold">Depth (깊이감)</h1>
+                <p class="text-sm opacity-70 mt-1">라이팅을 위한 비주얼 언어 9</p>
+            </div>
+        </div>
+        
+        <div class="content">
+            <div class="left-content">
+                <div class="concept-box">
+                    <div class="concept-title">
+                        <i class="fas fa-lightbulb"></i> 핵심 개념
+                    </div>
+                    <p>2차원의 이미지 평면에서 <span class="highlight">3차원의 공간감</span>과 <span class="highlight">원근감</span>을 느끼게 하는 시각적 효과입니다.</p>
+                    <p class="mt-3">라이팅은 깊이감을 만드는데 <span class="highlight">중요한 역할</span>을 합니다.</p>
+                    
+                    <div class="depth-scale">
+                        <div class="depth-bar">
+                            <div class="depth-element depth-near"></div>
+                            <div class="depth-element depth-mid"></div>
+                            <div class="depth-element depth-far"></div>
+                        </div>
+                        <div class="depth-labels">
+                            <span>전경 (선명함)</span>
+                            <span>중경</span>
+                            <span>원경 (흐릿함)</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="concept-box">
+                    <div class="concept-title">
+                        <i class="fas fa-info-circle"></i> 추가 설명
+                    </div>
+                    <div class="list-item"><span class="highlight">대기 원근법</span>: 멀리 있는 대상이 흐릿하고 푸르스름하게 보임</div>
+                    <div class="list-item"><span class="highlight">명암 대비</span>: 가까운 물체는 대비가 강하고 먼 물체는 약함</div>
+                    <div class="list-item"><span class="highlight">그림자의 방향과 크기</span>로 공간 깊이 표현</div>
+                    <div class="list-item"><span class="highlight">빛의 감쇠</span>: 거리에 따른 빛의 강도 변화</div>
+                </div>
+                
+                <div class="concept-box">
+                    <div class="concept-title">
+                        <i class="fas fa-magic"></i> 효과적인 기법
+                    </div>
+                    <div class="list-item"><span class="highlight">원근법</span>과 <span class="highlight">소실점</span> 활용</div>
+                    <div class="list-item"><span class="highlight">포그 효과</span>로 멀리 있는 요소 표현</div>
+                    <div class="list-item"><span class="highlight">겹침</span>을 통한 상대적 위치 표현</div>
+                    <div class="list-item"><span class="highlight">선명도</span>와 <span class="highlight">크기 변화</span>로 거리감 유도</div>
+                </div>
+            </div>
+            
+            <div>
+                <div class="image-container">
+                    <img src="https://academyofanimatedart.com/wp-content/uploads/2019/01/tdu_lighting_animation_aeriel_perspective.jpg" alt="대기 원근법 적용 예시" class="main-image">
+                    <p class="caption">대기 원근법을 활용한 깊이감과 원경 표현</p>
+                    
+                    <div class="examples-container">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/MonNatForest.jpg/1200px-MonNatForest.jpg" alt="자연의 깊이감" class="example-image">
+                        <img src="https://vanschneider.com/blog/content/images/wp-content/uploads/2020/07/art-of-3d-lighting-three-point-light-crop-web-1.jpg" alt="3D 라이팅 깊이감" class="example-image">
+                    </div>
+                </div>
+                
+                <div class="concept-box mt-4">
+                    <div class="concept-title">
+                        <i class="fas fa-paint-brush"></i> 실무 적용
+                    </div>
+                    <div class="list-item">관객을 이미지 속 <span class="highlight">공간으로 끌어들이는</span> 효과</div>
+                    <div class="list-item">깊이감은 <span class="highlight">몰입감</span>과 <span class="highlight">현실감</span>을 크게 향상</div>
+                    <div class="list-item">라이팅의 <span class="highlight">레이어링</span>으로 다양한 깊이 표현</div>
+                    <div class="list-item">원경의 <span class="highlight">컬러 밸런스</span> 조정으로 공간감 강화</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            컴퓨터 그래픽스 라이팅 입문 | Depth(깊이감)
+        </div>
+    </div>
+</body>
+</html><script src='https://www.genspark.ai/slide-inner.js?_v=1'></script>
+    <script id="html_badge_script1">
+        window.__genspark_remove_badge_link = "https://www.genspark.ai/api/html_badge/" +
+            "remove_badge?token=To%2FBnjzloZ3UfQdcSaYfDjTOT0wkZ9JcYLIBF%2Bl6KVtGOtyPAyzT%2FK4GNYxbl96Yd8yYc3AaUMXClZMd8E9LaxmqAN8r33UyeqMll8xxZoCeMkVfMBavA9q0MZGdUqBNW3dj42tZfl4om5sFthEND5R269DLr%2BhWAllvZTdfGi2AOytzDjiZXHdR%2BOs%2BAyrJ5js0BNo8D0tfIZmU1ejQnjmWBd%2FykZuy7FCmaBWFZs%2B%2By3gx7OzQIeUuRhAiOEGRxUlgRb4baZEcA%2FmMW4sSCR%2F0KOuNDHEgeWsJC0jjlp7oi7I%2BLJEy3XQU3ycV%2FT9sF2UliO4c41FTCMVfryHexQ3SV23bBSndyFSf1IInW3AVMbjp%2FRdKdO9Tvl%2FP1JS8LWy9lOrOSfdWaPg4ZlXhYYx1OhmEI%2FXTK8dRDsQ8HyuSYiQVil8nHqirdxSnSkjQLFeZm0YcKeMnDzO6QlxZ3CoGNaueP9cDbxrXq0EjI%2FIUm5CROSOxZZp97DaSu6BT9PwmrjMn4vXDYL7q6YpoSxYhHtSi1SmyXhZ29rPw%2BXq9xEwQU9XeRU%2FovfeiBqNXaB7vjyjACC5w6dT4TkgwTUtiwmoDKxwqDM%2F5QoBCPkutlRkYR%2BIFbbzwRntLe%2F9vKKTEmuxD2HZEwLimBc0V%2FLq%2FpffrpjDHToBBwvYrU72ZCVBlqTiKE%2FRZocabSD6GqWBRMJZDsFoYm5e9lCUSPjBTCU1mesDgQjSIG6s1tOOTS6QF0a%2BIho8SXqGItyVb";
+        window.__genspark_locale = "ko-KR";
+        window.__genspark_token = "To/BnjzloZ3UfQdcSaYfDjTOT0wkZ9JcYLIBF+l6KVtGOtyPAyzT/K4GNYxbl96Yd8yYc3AaUMXClZMd8E9LaxmqAN8r33UyeqMll8xxZoCeMkVfMBavA9q0MZGdUqBNW3dj42tZfl4om5sFthEND5R269DLr+hWAllvZTdfGi2AOytzDjiZXHdR+Os+AyrJ5js0BNo8D0tfIZmU1ejQnjmWBd/ykZuy7FCmaBWFZs++y3gx7OzQIeUuRhAiOEGRxUlgRb4baZEcA/mMW4sSCR/0KOuNDHEgeWsJC0jjlp7oi7I+LJEy3XQU3ycV/T9sF2UliO4c41FTCMVfryHexQ3SV23bBSndyFSf1IInW3AVMbjp/RdKdO9Tvl/P1JS8LWy9lOrOSfdWaPg4ZlXhYYx1OhmEI/XTK8dRDsQ8HyuSYiQVil8nHqirdxSnSkjQLFeZm0YcKeMnDzO6QlxZ3CoGNaueP9cDbxrXq0EjI/IUm5CROSOxZZp97DaSu6BT9PwmrjMn4vXDYL7q6YpoSxYhHtSi1SmyXhZ29rPw+Xq9xEwQU9XeRU/ovfeiBqNXaB7vjyjACC5w6dT4TkgwTUtiwmoDKxwqDM/5QoBCPkutlRkYR+IFbbzwRntLe/9vKKTEmuxD2HZEwLimBc0V/Lq/pffrpjDHToBBwvYrU72ZCVBlqTiKE/RZocabSD6GqWBRMJZDsFoYm5e9lCUSPjBTCU1mesDgQjSIG6s1tOOTS6QF0a+Iho8SXqGItyVb";
+    </script>
+    

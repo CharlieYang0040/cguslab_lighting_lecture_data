@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chiaro Scuro (키아로스쿠로)</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', 'Malgun Gothic', sans-serif;
+        }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            background: linear-gradient(135deg, #1a2a3a 0%, #0d1721 100%);
+            color: #ffffff;
+            overflow: hidden;
+            position: relative;
+        }
+        .header {
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 1.5rem 3rem;
+            border-bottom: 2px solid rgba(163, 198, 255, 0.4);
+            display: flex;
+            align-items: center;
+        }
+        .header-icon {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            color: #a3c6ff;
+            font-size: 1.5rem;
+        }
+        .content {
+            padding: 2rem 3rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+        .left-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .concept-box {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .concept-title {
+            font-weight: bold;
+            color: #ffcc66;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+        }
+        .concept-title i {
+            margin-right: 0.75rem;
+        }
+        .highlight {
+            color: #a3c6ff;
+            font-weight: bold;
+        }
+        .image-container {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            height: 100%;
+        }
+        .main-image {
+            width: 100%;
+            max-height: 280px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+        .caption {
+            font-size: 0.9rem;
+            color: #a3c6ff;
+            text-align: center;
+            font-style: italic;
+        }
+        .footer {
+            padding: 1rem 3rem;
+            text-align: right;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            box-sizing: border-box;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+        .list-item {
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: baseline;
+        }
+        .list-item:before {
+            content: "•";
+            color: #ffcc66;
+            font-weight: bold;
+            margin-right: 0.75rem;
+        }
+        .examples-container {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .example-image {
+            width: 50%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+        .example-image:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+        .contrast-demo {
+            width: 100%;
+            height: 30px;
+            background: linear-gradient(to right, #000000, #ffffff);
+            border-radius: 4px;
+            margin: 1.25rem 0;
+            position: relative;
+        }
+        .contrast-demo::before {
+            content: "Scuro";
+            position: absolute;
+            left: 10px;
+            top: -20px;
+            font-size: 0.8rem;
+            color: #ffcc66;
+        }
+        .contrast-demo::after {
+            content: "Chiaro";
+            position: absolute;
+            right: 10px;
+            top: -20px;
+            font-size: 0.8rem;
+            color: #ffcc66;
+        }
+        .origin-note {
+            font-size: 0.8rem;
+            font-style: italic;
+            color: #e0e0e0;
+            margin-top: 0.5rem;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="header">
+            <div class="header-icon">
+                <i class="fas fa-moon"></i>
+            </div>
+            <div>
+                <h1 class="text-3xl font-bold">Chiaro Scuro (키아로스쿠로)</h1>
+                <p class="text-sm opacity-70 mt-1">라이팅을 위한 비주얼 언어 10</p>
+            </div>
+        </div>
+        
+        <div class="content">
+            <div class="left-content">
+                <div class="concept-box">
+                    <div class="concept-title">
+                        <i class="fas fa-lightbulb"></i> 핵심 개념
+                    </div>
+                    <p>이탈리아어에서 유래된 용어로, <span class="highlight">빛</span>(Chiaro)과 <span class="highlight">어둠</span>(Scuro)의 극적인 대비를 사용하여 모델링 효과와 드라마틱한 분위기를 강조하는 라이팅 기법입니다.</p>
+                    
+                    <div class="contrast-demo"></div>
+                    <div class="origin-note">※ 이탈리아어 'chiaro'(밝음)와 'scuro'(어두움)에서 유래</div>
+                </div>
+                
+                <div class="concept-box">
+                    <div class="concept-title">
+                        <i class="fas fa-info-circle"></i> 추가 설명
+                    </div>
+                    <div class="list-item">피사체의 <span class="highlight">입체감을 극대화</span>하고 감정을 고조</div>
+                    <div class="list-item">장면의 특정 요소에 <span class="highlight">강한 시선을 집중</span>시키는 효과</div>
+                    <div class="list-item">주로 <span class="highlight">낮은 조명 환경</span>에서 <span class="highlight">강한 단일 광원</span> 사용</div>
+                    <div class="list-item">르네상스 후기 예술에서 발달하여 <span class="highlight">카라바조</span>와 <span class="highlight">렘브란트</span>의 작품에서 두드러짐</div>
+                </div>
+                
+                <div class="concept-box">
+                    <div class="concept-title">
+                        <i class="fas fa-paint-brush"></i> 실무 적용
+                    </div>
+                    <div class="list-item"><span class="highlight">드라마틱한 분위기</span>와 <span class="highlight">긴장감</span> 연출</div>
+                    <div class="list-item">주제나 인물의 <span class="highlight">심리적 상태</span> 표현</div>
+                    <div class="list-item">특정 요소를 <span class="highlight">강조</span>하거나 <span class="highlight">상징성</span> 부여</div>
+                    <div class="list-item">영화 <span class="highlight">누아르</span>, <span class="highlight">스릴러</span>, <span class="highlight">호러</span> 장르에서 자주 활용</div>
+                </div>
+            </div>
+            
+            <div>
+                <div class="image-container">
+                    <img src="https://cdn.prod.website-files.com/665858d6442988bba748fa67/6685606c09e0a5bc495ffd4a_Prancheta1b_946eb78dfbb6d79e09ae605f092140eb_2000.jpeg" alt="키아로스쿠로 기법" class="main-image">
+                    <p class="caption">빛과 그림자의 극적 대비를 활용한 키아로스쿠로 기법</p>
+                    
+                    <div class="examples-container">
+                        <img src="https://www.angelaedwards.co.uk/wp-content/uploads/2023/04/Der_unglaubige_Thomas_-_Michelangelo_Merisi_named_Caravaggio.jpg" alt="카라바조 작품" class="example-image">
+                        <img src="https://d26oc3sg82pgk3.cloudfront.net/files/media/edit/image/49475/article_full%403x.jpg" alt="키아로스쿠로 영화 적용" class="example-image">
+                    </div>
+                </div>
+                
+                <div class="concept-box mt-4">
+                    <div class="concept-title">
+                        <i class="fas fa-film"></i> 현대적 활용
+                    </div>
+                    <div class="list-item"><span class="highlight">영화</span>: 빛과 그림자로 등장인물의 이중성이나 내적 갈등 표현</div>
+                    <div class="list-item"><span class="highlight">게임</span>: 공포나 미스터리 분위기 조성에 활용</div>
+                    <div class="list-item"><span class="highlight">사진</span>: 인물의 특성과 감정을 강조하는 포트레이트 기법</div>
+                    <div class="list-item"><span class="highlight">애니메이션</span>: 캐릭터의 극적인 순간과 중요 장면 강조</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            컴퓨터 그래픽스 라이팅 입문 | Chiaro Scuro(키아로스쿠로)
+        </div>
+    </div>
+</body>
+</html><script src='https://www.genspark.ai/slide-inner.js?_v=1'></script>
+    <script id="html_badge_script1">
+        window.__genspark_remove_badge_link = "https://www.genspark.ai/api/html_badge/" +
+            "remove_badge?token=To%2FBnjzloZ3UfQdcSaYfDjFXjSzwq7slHKaM8RWs5L81pG6sq%2FdCpmuf%2B6MF2YvlqTVb8afnS4uIGH3nf0xCFqX6ojmGud0AJPR%2BKnn%2FkoHzkTCIyyTuyzV4FeflnZwAgGNHb0ucKiJ7U%2FY3njsfBnAugdFT%2F7zIuFRJxsl%2FRhXw%2F4eRyv%2FkG3MzI23Va8pEiz9caHhFEQq2GwfRxjRGvo08g%2FaPdKIMUGn7BFQ%2FlzQhiOBa2nVv0NJ%2BSZuDU2siGSl5aY7Tm%2FQjL%2FpoEzag4bQeKc%2FJaugdg0H3tbze0U4lvRna1IP0R6XNCinbGyTjHoCFD7b3S6Z0E5CCfnZXxaeSk6pu%2BrW4o3D6kioh1H79ufO1FvfCwlYlMJMp8Squ7oCTsq%2BSlYRkeGseGEj3qcI6ekZ9E8Sjwhd1%2Fet5Lu%2F9qROomcVJ7y1k%2BIdTp49oraMFhZi%2BVZvVYhKASPxCB4OFpSYiONqBBBwmeEDvUrGPOulUmzXEJeYgnAapikVdbkuvqVFodyxHwCQ2ltHkDCRjL6ZrkVv8ytKJZklbPmE63uQqvshzv0hA3h%2FaF0sCEYPSlhzEECB%2BQDHUd9i5m%2FfwDM8grhHJMg1n82hdVLb2OlsvX0ZY1tz0IP52xK7qxkbEFRVtPb3BAak6GszYPdA6EGQbypul9zh4o4Pj00Dzbgl8ukYcvs52Q6FzJkxt855tOfcQbXXey4WdTy8IfpMWinaOhE7IQ0vDC5CVhD%2F8%2FDupmCP86obV5bqNkhvs";
+        window.__genspark_locale = "ko-KR";
+        window.__genspark_token = "To/BnjzloZ3UfQdcSaYfDjFXjSzwq7slHKaM8RWs5L81pG6sq/dCpmuf+6MF2YvlqTVb8afnS4uIGH3nf0xCFqX6ojmGud0AJPR+Knn/koHzkTCIyyTuyzV4FeflnZwAgGNHb0ucKiJ7U/Y3njsfBnAugdFT/7zIuFRJxsl/RhXw/4eRyv/kG3MzI23Va8pEiz9caHhFEQq2GwfRxjRGvo08g/aPdKIMUGn7BFQ/lzQhiOBa2nVv0NJ+SZuDU2siGSl5aY7Tm/QjL/poEzag4bQeKc/Jaugdg0H3tbze0U4lvRna1IP0R6XNCinbGyTjHoCFD7b3S6Z0E5CCfnZXxaeSk6pu+rW4o3D6kioh1H79ufO1FvfCwlYlMJMp8Squ7oCTsq+SlYRkeGseGEj3qcI6ekZ9E8Sjwhd1/et5Lu/9qROomcVJ7y1k+IdTp49oraMFhZi+VZvVYhKASPxCB4OFpSYiONqBBBwmeEDvUrGPOulUmzXEJeYgnAapikVdbkuvqVFodyxHwCQ2ltHkDCRjL6ZrkVv8ytKJZklbPmE63uQqvshzv0hA3h/aF0sCEYPSlhzEECB+QDHUd9i5m/fwDM8grhHJMg1n82hdVLb2OlsvX0ZY1tz0IP52xK7qxkbEFRVtPb3BAak6GszYPdA6EGQbypul9zh4o4Pj00Dzbgl8ukYcvs52Q6FzJkxt855tOfcQbXXey4WdTy8IfpMWinaOhE7IQ0vDC5CVhD/8/DupmCP86obV5bqNkhvs";
+    </script>
+    

@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Palette (색상 팔레트)</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', 'Malgun Gothic', sans-serif;
+        }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            background: linear-gradient(135deg, #1a2a3a 0%, #0d1721 100%);
+            color: #ffffff;
+            overflow: hidden;
+            position: relative;
+        }
+        .header {
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 1.5rem 3rem;
+            border-bottom: 2px solid rgba(163, 198, 255, 0.4);
+            display: flex;
+            align-items: center;
+        }
+        .header-icon {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            color: #a3c6ff;
+            font-size: 1.5rem;
+        }
+        .content {
+            padding: 2rem 3rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+        .left-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .concept-box {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .concept-title {
+            font-weight: bold;
+            color: #ffcc66;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+        }
+        .concept-title i {
+            margin-right: 0.75rem;
+        }
+        .highlight {
+            color: #a3c6ff;
+            font-weight: bold;
+        }
+        .image-container {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            height: 100%;
+        }
+        .main-image {
+            width: 100%;
+            max-height: 250px;
+            object-fit: contain;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+        .caption {
+            font-size: 0.9rem;
+            color: #a3c6ff;
+            text-align: center;
+            font-style: italic;
+        }
+        .footer {
+            padding: 1rem 3rem;
+            text-align: right;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            box-sizing: border-box;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+        .list-item {
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: baseline;
+        }
+        .list-item:before {
+            content: "•";
+            color: #ffcc66;
+            font-weight: bold;
+            margin-right: 0.75rem;
+        }
+        .color-schemes {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-top: 1.5rem;
+            width: 100%;
+        }
+        .scheme-card {
+            background-color: rgba(255, 255, 255, 0.07);
+            border-radius: 6px;
+            padding: 0.75rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .scheme-title {
+            font-weight: bold;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            color: #ffffff;
+        }
+        .scheme-colors {
+            display: flex;
+            width: 100%;
+            height: 20px;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 0.5rem;
+        }
+        .color-segment {
+            flex: 1;
+            height: 100%;
+        }
+        .scheme-desc {
+            font-size: 0.8rem;
+            color: #e0e0e0;
+            text-align: center;
+        }
+        .secondary-image {
+            width: 100%;
+            max-height: 160px;
+            object-fit: contain;
+            border-radius: 4px;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="header">
+            <div class="header-icon">
+                <i class="fas fa-swatchbook"></i>
+            </div>
+            <div>
+                <h1 class="text-3xl font-bold">Color Palette (색상 팔레트)</h1>
+                <p class="text-sm opacity-70 mt-1">라이팅을 위한 비주얼 언어 15</p>
+            </div>
+        </div>
+        
+        <div class="content">
+            <div class="left-content">
+                <div class="concept-box">
+                    <div class="concept-title">
+                        <i class="fas fa-lightbulb"></i> 핵심 개념
+                    </div>
+                    <p>특정 이미지나 디자인 프로젝트 전체에 걸쳐 일관되게 사용되는 <span class="highlight">색상들의 조합</span>입니다.</p>
+                    <p class="mt-3">색상 팔레트는 <span class="highlight">브랜드 아이덴티티</span>, <span class="highlight">감성적 분위기</span>, <span class="highlight">시각적 조화</span>를 구축하는 데 핵심적인 역할을 합니다.</p>
+                </div>
+                
+                <div class="concept-box">
+                    <div class="concept-title">
+                        <i class="fas fa-info-circle"></i> 추가 설명
+                    </div>
+                    <div class="list-item">잘 구성된 색상 팔레트는 <span class="highlight">시각적 통일감</span>을 부여</div>
+                    <div class="list-item"><span class="highlight">메시지 전달력</span>을 높이고 <span class="highlight">사용자의 감정</span>에 영향</div>
+                    <div class="list-item"><span class="highlight">주조색</span>, <span class="highlight">보조색</span>, <span class="highlight">강조색</span> 등을 조화롭게 구성</div>
+                    <div class="list-item">라이팅의 <span class="highlight">색온도</span>와 함께 전체적인 분위기 결정</div>
+                </div>
+                
+                <div class="color-schemes">
+                    <div class="scheme-card">
+                        <div class="scheme-title">보색 (Complementary)</div>
+                        <div class="scheme-colors">
+                            <div class="color-segment" style="background-color: #ff6b6b;"></div>
+                            <div class="color-segment" style="background-color: #6b8fff;"></div>
+                        </div>
+                        <div class="scheme-desc">색상환의 반대편에 위치한 색상들</div>
+                    </div>
+                    <div class="scheme-card">
+                        <div class="scheme-title">유사색 (Analogous)</div>
+                        <div class="scheme-colors">
+                            <div class="color-segment" style="background-color: #ff6b6b;"></div>
+                            <div class="color-segment" style="background-color: #ffa76b;"></div>
+                            <div class="color-segment" style="background-color: #ffcc6b;"></div>
+                        </div>
+                        <div class="scheme-desc">색상환에서 인접한 색상들</div>
+                    </div>
+                    <div class="scheme-card">
+                        <div class="scheme-title">삼각 배색 (Triadic)</div>
+                        <div class="scheme-colors">
+                            <div class="color-segment" style="background-color: #ff6b6b;"></div>
+                            <div class="color-segment" style="background-color: #6bff6b;"></div>
+                            <div class="color-segment" style="background-color: #6b6bff;"></div>
+                        </div>
+                        <div class="scheme-desc">색상환에서 등간격으로 위치한 세 색상</div>
+                    </div>
+                    <div class="scheme-card">
+                        <div class="scheme-title">단색 (Monochromatic)</div>
+                        <div class="scheme-colors">
+                            <div class="color-segment" style="background-color: #203060;"></div>
+                            <div class="color-segment" style="background-color: #3a5699;"></div>
+                            <div class="color-segment" style="background-color: #6b8fff;"></div>
+                            <div class="color-segment" style="background-color: #b5c8ff;"></div>
+                        </div>
+                        <div class="scheme-desc">동일한 색상의 명도와 채도 변화</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div>
+                <div class="image-container">
+                    <img src="https://public-images.interaction-design.org/literature/articles/materials/2-ixdf-triadic-color-combinations.jpg" alt="색상 조화 원리" class="main-image">
+                    <p class="caption">다양한 유형의 색상 조화 원리</p>
+                    
+                    <img src="https://www.colorsexplained.com/wp-content/uploads/2021/08/seven-color-harmonies.jpg" alt="색상 스키마 유형" class="secondary-image">
+                    <p class="caption">주요 색상 스키마 유형과 특징</p>
+                </div>
+                
+                <div class="concept-box mt-4">
+                    <div class="concept-title">
+                        <i class="fas fa-paint-brush"></i> 실무 적용
+                    </div>
+                    <div class="list-item"><span class="highlight">장면의 분위기</span>와 <span class="highlight">감정적 반응</span>을 위한 색상 계획</div>
+                    <div class="list-item"><span class="highlight">라이팅 색상</span>과 <span class="highlight">환경 요소</span>의 조화로운 결합</div>
+                    <div class="list-item"><span class="highlight">스토리텔링</span>과 <span class="highlight">내러티브 전개</span>에 따른 색상 변화</div>
+                    <div class="list-item">영화, 게임의 <span class="highlight">장면별 색상 테마</span> 설정과 전환</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            컴퓨터 그래픽스 라이팅 입문 | Color Palette(색상 팔레트)
+        </div>
+    </div>
+</body>
+</html><script src='https://www.genspark.ai/slide-inner.js?_v=1'></script>
+    <script id="html_badge_script1">
+        window.__genspark_remove_badge_link = "https://www.genspark.ai/api/html_badge/" +
+            "remove_badge?token=To%2FBnjzloZ3UfQdcSaYfDrhi%2FzKod%2BuB%2F77LP7ECACSS%2BoTfGZbMLV56r3zq13MQrx4%2FrT49OavcsrHEAmq5CVKJXu6vlBOEUl2dpQAMvxW8m6ZMeFOK4b3UlocxNqkHAKNapvlohfPqpyWjd1PgZ%2BrIyCiuPPJcGM%2FqVPUEoyh1rwpwW9pd9ZxdBIGIdJaGQt7qdMo%2FYNCcpg36vqnRx%2BIvdH4bnkWB40k7QnIAwKG2gSOBNlGEalU3Y9Zx1%2BW%2F8cWClE%2FLU10zTijlmimkTmnBfN44Ccr%2BdhlDoixXnKyWzs6HQqmhLcardEhAHhe648j7oGI7r9wKc0dZxVrqKvmyJiN%2FLxyx3dbl45j%2FMyhdpttuYdx5tLt7%2FTDMUhqi3zBKR%2B4XH9sJIfgVHOu8QyK6FsSMSvxK1OpLq3rJOMgiPNLc1QA7%2BxxhcF76TxHyFQmiAzmwNUPtDuFzsauUFDqzh6l8LXuzjWaOpqpsp4M2y7fC5WG%2Bbw8BkGYXyAvRUes3crBD6ymVyQSjo2XKEQXRhu6LnMge%2FimGFQR%2BLguzNBPwVpfaMjpF7sHubExPks1sGCExQaidKliGQ6FmcEhuIPHsUCbKiPVSC3EjdFpjB%2B65HPWR2GaWg7C1R%2FXhfdQqmxs7OAPKB9KFGe2FJnZ%2FDpBeS8PRg5%2FXeXtGDWSkIYBtikxskjOqwpFb0Jx6%2BX0p%2FZYYFkuwO4VOTVTyIcsB8n910T%2FOfzgqRaJLKcazrHRXMvC2nhEQlE2n3W%2BF";
+        window.__genspark_locale = "ko-KR";
+        window.__genspark_token = "To/BnjzloZ3UfQdcSaYfDrhi/zKod+uB/77LP7ECACSS+oTfGZbMLV56r3zq13MQrx4/rT49OavcsrHEAmq5CVKJXu6vlBOEUl2dpQAMvxW8m6ZMeFOK4b3UlocxNqkHAKNapvlohfPqpyWjd1PgZ+rIyCiuPPJcGM/qVPUEoyh1rwpwW9pd9ZxdBIGIdJaGQt7qdMo/YNCcpg36vqnRx+IvdH4bnkWB40k7QnIAwKG2gSOBNlGEalU3Y9Zx1+W/8cWClE/LU10zTijlmimkTmnBfN44Ccr+dhlDoixXnKyWzs6HQqmhLcardEhAHhe648j7oGI7r9wKc0dZxVrqKvmyJiN/Lxyx3dbl45j/MyhdpttuYdx5tLt7/TDMUhqi3zBKR+4XH9sJIfgVHOu8QyK6FsSMSvxK1OpLq3rJOMgiPNLc1QA7+xxhcF76TxHyFQmiAzmwNUPtDuFzsauUFDqzh6l8LXuzjWaOpqpsp4M2y7fC5WG+bw8BkGYXyAvRUes3crBD6ymVyQSjo2XKEQXRhu6LnMge/imGFQR+LguzNBPwVpfaMjpF7sHubExPks1sGCExQaidKliGQ6FmcEhuIPHsUCbKiPVSC3EjdFpjB+65HPWR2GaWg7C1R/XhfdQqmxs7OAPKB9KFGe2FJnZ/DpBeS8PRg5/XeXtGDWSkIYBtikxskjOqwpFb0Jx6+X0p/ZYYFkuwO4VOTVTyIcsB8n910T/OfzgqRaJLKcazrHRXMvC2nhEQlE2n3W+F";
+    </script>
+    

@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color & Mood (컬러와 분위기)</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', 'Malgun Gothic', sans-serif;
+        }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            background: linear-gradient(135deg, #1a2a3a 0%, #0d1721 100%);
+            color: #ffffff;
+            overflow: hidden;
+            position: relative;
+        }
+        .header {
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 1.5rem 3rem;
+            border-bottom: 2px solid rgba(163, 198, 255, 0.4);
+            display: flex;
+            align-items: center;
+        }
+        .header-icon {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            color: #a3c6ff;
+            font-size: 1.5rem;
+        }
+        .content {
+            padding: 2rem 3rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+        .left-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .concept-box {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .concept-title {
+            font-weight: bold;
+            color: #ffcc66;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+        }
+        .concept-title i {
+            margin-right: 0.75rem;
+        }
+        .highlight {
+            color: #a3c6ff;
+            font-weight: bold;
+        }
+        .image-container {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            height: 100%;
+        }
+        .main-image {
+            width: 100%;
+            max-height: 220px;
+            object-fit: contain;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+        .caption {
+            font-size: 0.9rem;
+            color: #a3c6ff;
+            text-align: center;
+            font-style: italic;
+        }
+        .color-spectrum {
+            width: 100%;
+            height: 40px;
+            background: linear-gradient(to right, 
+                #ff0000, #ff7f00, #ffff00, /* 따뜻한 색 */
+                #00ff00, #0000ff, #8b00ff  /* 차가운 색 */
+            );
+            border-radius: 4px;
+            margin: 1rem 0;
+        }
+        .color-labels {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            font-size: 0.8rem;
+            margin-top: 0.25rem;
+        }
+        .footer {
+            padding: 1rem 3rem;
+            text-align: right;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            box-sizing: border-box;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+        .list-item {
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: baseline;
+        }
+        .list-item:before {
+            content: "•";
+            color: #ffcc66;
+            font-weight: bold;
+            margin-right: 0.75rem;
+        }
+        .color-mood-container {
+            display: flex;
+            gap: 1rem;
+            width: 100%;
+            margin-top: 1rem;
+        }
+        .color-group {
+            flex: 1;
+            background-color: rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            padding: 1rem;
+            position: relative;
+        }
+        .warm {
+            background: linear-gradient(135deg, rgba(255,100,50,0.2) 0%, rgba(255,200,100,0.1) 100%);
+            border: 1px solid rgba(255,150,50,0.3);
+        }
+        .cool {
+            background: linear-gradient(135deg, rgba(50,100,255,0.2) 0%, rgba(100,200,255,0.1) 100%);
+            border: 1px solid rgba(50,150,255,0.3);
+        }
+        .color-title {
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 0.75rem;
+            font-size: 1.1rem;
+        }
+        .color-examples {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+            justify-content: center;
+        }
+        .color-circle {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+        }
+        .emotion-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            justify-content: center;
+        }
+        .emotion-tag {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="header">
+            <div class="header-icon">
+                <i class="fas fa-palette"></i>
+            </div>
+            <div>
+                <h1 class="text-3xl font-bold">Color & Mood (컬러와 분위기)</h1>
+                <p class="text-sm opacity-70 mt-1">라이팅을 위한 비주얼 언어 5</p>
+            </div>
+        </div>
+        
+        <div class="content">
+            <div class="left-content">
+                <div class="concept-box">
+                    <div class="concept-title">
+                        <i class="fas fa-lightbulb"></i> 핵심 개념
+                    </div>
+                    <p>색상의 선택과 조합은 이미지의 <span class="highlight">전체적인 분위기</span>와 <span class="highlight">감성적 반응</span>을 결정짓는 강력한 도구입니다.</p>
+                    <p class="mt-3">각 색상은 <span class="highlight">고유한 심리적 연관성</span>을 가지며, 이를 활용해 특정 <span class="highlight">분위기를 연출</span>합니다.</p>
+                    
+                    <div class="color-spectrum"></div>
+                    <div class="color-labels">
+                        <span>따뜻한 색상 (Warm)</span>
+                        <span>차가운 색상 (Cool)</span>
+                    </div>
+                </div>
+                
+                <div class="concept-box">
+                    <div class="concept-title">
+                        <i class="fas fa-info-circle"></i> 추가 설명
+                    </div>
+                    <div class="list-item">색의 <span class="highlight">채도</span>, <span class="highlight">명도</span>, <span class="highlight">색조합</span>(유사색, 보색 등) 조절로 감정 유도</div>
+                    <div class="list-item">라이팅의 <span class="highlight">색온도</span>가 전체적인 컬러와 무드에 영향</div>
+                    <div class="list-item">색상을 통한 <span class="highlight">스토리텔링</span>과 <span class="highlight">심리적 깊이</span> 강화</div>
+                    <div class="list-item"><span class="highlight">문화적 맥락</span>에 따라 색상의 의미가 달라질 수 있음</div>
+                </div>
+                
+                <div class="concept-box">
+                    <div class="concept-title">
+                        <i class="fas fa-paint-brush"></i> 실무 적용
+                    </div>
+                    <div class="list-item">의도한 <span class="highlight">감정 반응</span>을 위한 색상 계획</div>
+                    <div class="list-item">장면의 <span class="highlight">시간대</span>와 <span class="highlight">환경</span>에 맞는 색온도 설정</div>
+                    <div class="list-item">캐릭터와 감정 표현을 위한 <span class="highlight">색상 심리학</span> 활용</div>
+                </div>
+            </div>
+            
+            <div>
+                <div class="image-container">
+                    <img src="https://cdn.bandinews.com/news/photo/202408/291_737_2357.jpg" alt="색온도와 분위기" class="main-image">
+                    <p class="caption">따뜻한 색과 차가운 색이 주는 분위기의 차이</p>
+                    
+                    <div class="color-mood-container">
+                        <div class="color-group warm">
+                            <div class="color-title">따뜻한 색상 (Warm)</div>
+                            <div class="color-examples">
+                                <div class="color-circle" style="background-color: #ff3333;"></div>
+                                <div class="color-circle" style="background-color: #ff9933;"></div>
+                                <div class="color-circle" style="background-color: #ffcc33;"></div>
+                            </div>
+                            <div class="emotion-tags">
+                                <div class="emotion-tag">활기</div>
+                                <div class="emotion-tag">열정</div>
+                                <div class="emotion-tag">따뜻함</div>
+                                <div class="emotion-tag">친근함</div>
+                            </div>
+                        </div>
+                        <div class="color-group cool">
+                            <div class="color-title">차가운 색상 (Cool)</div>
+                            <div class="color-examples">
+                                <div class="color-circle" style="background-color: #3366ff;"></div>
+                                <div class="color-circle" style="background-color: #33cccc;"></div>
+                                <div class="color-circle" style="background-color: #6633cc;"></div>
+                            </div>
+                            <div class="emotion-tags">
+                                <div class="emotion-tag">차분함</div>
+                                <div class="emotion-tag">신비로움</div>
+                                <div class="emotion-tag">전문성</div>
+                                <div class="emotion-tag">안정감</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <img src="https://blog.kakaocdn.net/dn/mBs6g/btqRok8XZzd/aHJDK0iKmkKFkZGtFZxk4K/img.png" alt="색상과 감정의 관계" class="main-image mt-4">
+                    <p class="caption">색상과 연관된 감정과 심리적 효과</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            컴퓨터 그래픽스 라이팅 입문 | Color & Mood(컬러와 분위기)
+        </div>
+    </div>
+</body>
+</html><script src='https://www.genspark.ai/slide-inner.js?_v=1'></script>
+    <script id="html_badge_script1">
+        window.__genspark_remove_badge_link = "https://www.genspark.ai/api/html_badge/" +
+            "remove_badge?token=To%2FBnjzloZ3UfQdcSaYfDm9go2QKNRCiwRwFEu6OIzRKFZSYt%2FlmdHdRhxC8WAjyuIgp2T0a9em55hm2zlddFENTkDWGqMmIaZuNZ1qDGHI3pvxv5RZSQE85WJLmkNxJhslUvac1XJ%2Bc845e%2BrlX1%2FRO%2Fp%2FTzVrxU6R6jwYTI8dBkV1Rmu4h8n%2Bl0eMw4Jdg9WlxZyXWv%2F82Ozrj%2BOE6nSOx6%2BuVubfi2Ca9w5CsMYgn67Ak8LkiUTawcarwn0XdkOBLtGolgDEo74BkADE8Z29bcMCgkYBqDJ7cI4alyxZBHqAY58G0jOyMQ1U%2BpXLw%2FnQPrHNJKnEuSOhdzs6b66qrImr53Ko2OWJnvIPzGcCqba7aoJnvIPdpS2vLvNmulZyzdx%2BY7X%2B%2B2wHdnep4i7JGYJm5b%2FytD9nHLpZqPxQ6ApXERQDg47%2BIYvgQ94PzbiM%2Fx4A9CSo0VTTV9jCD4YUlYaTHHmVYpu5p%2FGvTyJIy7wALs4ZSbUgq4fno44zNAQ5klzxrnZG8syXnQVVEi22bpwKBCVDMen9t5LcfOxvzE0eUHQFeBKWQfISGdvRH1Y1h4WJ%2BTKsUUQSZM55yemFJAimJzv4aPg0S5%2FOZNyRaZROXZwi0RdPOFp1doEMVShvL3iqKCBHXa7d2jqsWqwfqYysZ7htbHzVvZruK1eOHe5JPwEJglfMrw4Ki8PSWTE7fNF00XAzDFyIhQ%2BRHSaka3W7PPMC8fnd9h1RtLwWlxbI%2BNCuwRr33loZkelzY";
+        window.__genspark_locale = "ko-KR";
+        window.__genspark_token = "To/BnjzloZ3UfQdcSaYfDm9go2QKNRCiwRwFEu6OIzRKFZSYt/lmdHdRhxC8WAjyuIgp2T0a9em55hm2zlddFENTkDWGqMmIaZuNZ1qDGHI3pvxv5RZSQE85WJLmkNxJhslUvac1XJ+c845e+rlX1/RO/p/TzVrxU6R6jwYTI8dBkV1Rmu4h8n+l0eMw4Jdg9WlxZyXWv/82Ozrj+OE6nSOx6+uVubfi2Ca9w5CsMYgn67Ak8LkiUTawcarwn0XdkOBLtGolgDEo74BkADE8Z29bcMCgkYBqDJ7cI4alyxZBHqAY58G0jOyMQ1U+pXLw/nQPrHNJKnEuSOhdzs6b66qrImr53Ko2OWJnvIPzGcCqba7aoJnvIPdpS2vLvNmulZyzdx+Y7X++2wHdnep4i7JGYJm5b/ytD9nHLpZqPxQ6ApXERQDg47+IYvgQ94PzbiM/x4A9CSo0VTTV9jCD4YUlYaTHHmVYpu5p/GvTyJIy7wALs4ZSbUgq4fno44zNAQ5klzxrnZG8syXnQVVEi22bpwKBCVDMen9t5LcfOxvzE0eUHQFeBKWQfISGdvRH1Y1h4WJ+TKsUUQSZM55yemFJAimJzv4aPg0S5/OZNyRaZROXZwi0RdPOFp1doEMVShvL3iqKCBHXa7d2jqsWqwfqYysZ7htbHzVvZruK1eOHe5JPwEJglfMrw4Ki8PSWTE7fNF00XAzDFyIhQ+RHSaka3W7PPMC8fnd9h1RtLwWlxbI+NCuwRr33loZkelzY";
+    </script>
+    
+        
+        

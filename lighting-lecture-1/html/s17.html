@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Light & Direction (빛과 방향)</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', 'Malgun Gothic', sans-serif;
+        }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            background: linear-gradient(135deg, #1a2a3a 0%, #0d1721 100%);
+            color: #ffffff;
+            overflow: hidden;
+            position: relative;
+        }
+        .header {
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 1.5rem 3rem;
+            border-bottom: 2px solid rgba(163, 198, 255, 0.4);
+            display: flex;
+            align-items: center;
+        }
+        .header-icon {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            color: #a3c6ff;
+            font-size: 1.5rem;
+        }
+        .content {
+            padding: 2rem 3rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+        .left-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .concept-box {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .concept-title {
+            font-weight: bold;
+            color: #ffcc66;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+        }
+        .concept-title i {
+            margin-right: 0.75rem;
+        }
+        .highlight {
+            color: #a3c6ff;
+            font-weight: bold;
+        }
+        .image-container {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            height: 100%;
+        }
+        .main-image {
+            width: 100%;
+            max-height: 260px;
+            object-fit: contain;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+        .caption {
+            font-size: 0.9rem;
+            color: #a3c6ff;
+            text-align: center;
+            font-style: italic;
+        }
+        .footer {
+            padding: 1rem 3rem;
+            text-align: right;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            box-sizing: border-box;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+        .list-item {
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: baseline;
+        }
+        .list-item:before {
+            content: "•";
+            color: #ffcc66;
+            font-weight: bold;
+            margin-right: 0.75rem;
+        }
+        .light-directions {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-top: 1rem;
+            width: 100%;
+        }
+        .direction-card {
+            background-color: rgba(255, 255, 255, 0.07);
+            border-radius: 6px;
+            padding: 0.75rem;
+            display: flex;
+            flex-direction: column;
+        }
+        .direction-title {
+            font-weight: bold;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+        }
+        .direction-icon {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 0.5rem;
+            font-size: 0.8rem;
+        }
+        .direction-desc {
+            font-size: 0.85rem;
+            color: #e0e0e0;
+        }
+        .secondary-image {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-bottom: 0.75rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="header">
+            <div class="header-icon">
+                <i class="fas fa-arrows-to-dot"></i>
+            </div>
+            <div>
+                <h1 class="text-3xl font-bold">Light & Direction (빛과 방향)</h1>
+                <p class="text-sm opacity-70 mt-1">라이팅을 위한 비주얼 언어 14</p>
+            </div>
+        </div>
+        
+        <div class="content">
+            <div class="left-content">
+                <div class="concept-box">
+                    <div class="concept-title">
+                        <i class="fas fa-lightbulb"></i> 핵심 개념
+                    </div>
+                    <p>빛이 피사체를 비추는 <span class="highlight">방향</span>에 따라 하이라이트와 그림자의 위치 및 형태가 결정되며, 이는 피사체의 <span class="highlight">입체감</span>, <span class="highlight">질감</span>, 그리고 전체적인 <span class="highlight">분위기</span>에 큰 영향을 미칩니다.</p>
+                </div>
+                
+                <div class="light-directions">
+                    <div class="direction-card">
+                        <div class="direction-title">
+                            <div class="direction-icon" style="color: #ffcc66;">
+                                <i class="fas fa-arrow-right"></i>
+                            </div>
+                            정면광 (Front Light)
+                        </div>
+                        <div class="direction-desc">디테일을 숨기고 평면적으로 보일 수 있으나, 색상을 잘 드러냅니다.</div>
+                    </div>
+                    <div class="direction-card">
+                        <div class="direction-title">
+                            <div class="direction-icon" style="color: #66ccff;">
+                                <i class="fas fa-arrow-left"></i>
+                            </div>
+                            측면광 (Side Light)
+                        </div>
+                        <div class="direction-desc">질감과 입체감을 가장 잘 살려주며, 강한 그림자로 드라마틱한 효과를 줍니다.</div>
+                    </div>
+                    <div class="direction-card">
+                        <div class="direction-title">
+                            <div class="direction-icon" style="color: #66cc99;">
+                                <i class="fas fa-arrow-down"></i>
+                            </div>
+                            상단광 (Top Light)
+                        </div>
+                        <div class="direction-desc">자연광과 유사하며, 때로는 위엄이나 신성함을 표현합니다.</div>
+                    </div>
+                    <div class="direction-card">
+                        <div class="direction-title">
+                            <div class="direction-icon" style="color: #ff6b6b;">
+                                <i class="fas fa-arrow-up"></i>
+                            </div>
+                            하단광 (Bottom Light)
+                        </div>
+                        <div class="direction-desc">부자연스럽고 극적인, 때로는 기괴한 느낌을 줍니다.</div>
+                    </div>
+                    <div class="direction-card">
+                        <div class="direction-title">
+                            <div class="direction-icon" style="color: #ff66cc;">
+                                <i class="fas fa-reply"></i>
+                            </div>
+                            역광 (Back Light)
+                        </div>
+                        <div class="direction-desc">실루엣을 만들거나 가장자리를 빛나게 하여 피사체를 돋보이게 합니다.</div>
+                    </div>
+                    <div class="direction-card">
+                        <div class="direction-title">
+                            <div class="direction-icon" style="color: #ff9966;">
+                                <i class="fas fa-arrows-up-to-line"></i>
+                            </div>
+                            림 라이트 (Rim Light)
+                        </div>
+                        <div class="direction-desc">피사체의 윤곽을 따라 빛나는 선을 만들어 배경과 분리시킵니다.</div>
+                    </div>
+                </div>
+                
+                <div class="concept-box">
+                    <div class="concept-title">
+                        <i class="fas fa-paint-brush"></i> 실무 적용
+                    </div>
+                    <div class="list-item">의도한 <span class="highlight">감정과 분위기</span>에 적합한 빛의 방향 선택</div>
+                    <div class="list-item">피사체의 <span class="highlight">특성</span>과 <span class="highlight">형태</span>를 가장 효과적으로 표현하는 방향 고려</div>
+                    <div class="list-item">여러 방향의 빛을 <span class="highlight">조합</span>하여 복합적 효과 연출</div>
+                    <div class="list-item">방향에 따른 <span class="highlight">색온도 변화</span>와 <span class="highlight">그림자 관계</span> 활용</div>
+                </div>
+            </div>
+            
+            <div>
+                <div class="image-container">
+                    <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjm91_rKaZFY6UHj9E6bcGohqPvq_nRMMPNDTuRbL6TnWA5P0ZB5qqJ0SAnTaDi7EtePMQW1MeNdW1ejGXknaLaZmHFMNrgxvFZd47DmgiyGJmbm3xX4V2VMdsHlHYMjVX7Di13-UvfDk_Y/s1600/directional-lighting.jpg" alt="빛의 방향에 따른 효과" class="main-image">
+                    <p class="caption">빛의 방향에 따른 피사체의 모습과 분위기 변화</p>
+                    
+                    <img src="https://www.lensrentals.com/blog/media/2021/05/Light-Direction-Guide-Zach-Sutton.jpg" alt="다양한 조명 방향" class="secondary-image">
+                    <p class="caption">다양한 각도에서의 조명이 인물에 미치는 영향</p>
+                    
+                    <img src="https://photovideocreative.com/wordpress/wp-content/uploads/2017/04/Orientations-lumi%C3%A8re-1.jpg" alt="빛 방향 예시" class="secondary-image mt-2">
+                    <p class="caption">방향에 따른 명암과 감정 표현의 차이</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            컴퓨터 그래픽스 라이팅 입문 | Light & Direction(빛과 방향)
+        </div>
+    </div>
+</body>
+</html><script src='https://www.genspark.ai/slide-inner.js?_v=1'></script>
+    <script id="html_badge_script1">
+        window.__genspark_remove_badge_link = "https://www.genspark.ai/api/html_badge/" +
+            "remove_badge?token=To%2FBnjzloZ3UfQdcSaYfDvW%2BV4PMQ8AiAVg6Ex1OyCtscal3BQGoaWjIhGAOvswmI4lV0m5v%2B5sDbcWirmYVKEYZNej9%2FTGlH2qk7En3MDHQxaT9VTokSn6i7p%2BXYLFUjNx%2B3mquhWKXjiSTKXda2pOhU65t02AYlyEkV%2FLzxV03Tuk6w9bSwedc2bJ9GhhIIw0DtWpyFH4af6WWWDabS37wiszpDmZ6DQ%2FPMFdH3%2BZS52VYaTYkNYP1DlxpG8Pj%2BjI24bcGW3bW5rflmrEX0WFRnkdE1s0sndHKwVrfQe1en6TUNNvp4k5KNTAl6lbtxLiW05Zzv2SPSUr24ys01BTnrNjhCaZz30C5IfzL%2BuWMZ82Ier6iGsyzM9MSUZWQB5hFcAcLPYnk5DIFhkJPB5dU1g2TgywVC983rkVrMwbyY%2FXWAR8oDaGEiuXPEOKXp906bF5CxEwU2apWp43JsKrv8orOEbo4Vbf%2FnMAPFj1ySKRXwcrpMNgiQb%2FX%2BNuhvng6xMa18IL5GM2BjW05yeYuTAT%2FR0c3TuzLM%2Fg1G93%2FpGBAkDMNlS4pPrl1CM0IXwKlupNqpCaO2Ir9Gj3nvJs0Z0%2BV9P76d2NeLH8%2BxGeMgdEmj6x5QSpr6lpsLSbPPEbGUYILohHV3%2BxFNzsh%2Fsy%2FYJvLquIHZbCXdIpQJkSKWwI7NuAKAorafKde4z6I6uBdmlEaoNvHZzyy4nmo%2Ffz2WQZrZyhGkoYgrFc2r4g%2FeLDrhY1MNRofIHM4rUrW";
+        window.__genspark_locale = "ko-KR";
+        window.__genspark_token = "To/BnjzloZ3UfQdcSaYfDvW+V4PMQ8AiAVg6Ex1OyCtscal3BQGoaWjIhGAOvswmI4lV0m5v+5sDbcWirmYVKEYZNej9/TGlH2qk7En3MDHQxaT9VTokSn6i7p+XYLFUjNx+3mquhWKXjiSTKXda2pOhU65t02AYlyEkV/LzxV03Tuk6w9bSwedc2bJ9GhhIIw0DtWpyFH4af6WWWDabS37wiszpDmZ6DQ/PMFdH3+ZS52VYaTYkNYP1DlxpG8Pj+jI24bcGW3bW5rflmrEX0WFRnkdE1s0sndHKwVrfQe1en6TUNNvp4k5KNTAl6lbtxLiW05Zzv2SPSUr24ys01BTnrNjhCaZz30C5IfzL+uWMZ82Ier6iGsyzM9MSUZWQB5hFcAcLPYnk5DIFhkJPB5dU1g2TgywVC983rkVrMwbyY/XWAR8oDaGEiuXPEOKXp906bF5CxEwU2apWp43JsKrv8orOEbo4Vbf/nMAPFj1ySKRXwcrpMNgiQb/X+Nuhvng6xMa18IL5GM2BjW05yeYuTAT/R0c3TuzLM/g1G93/pGBAkDMNlS4pPrl1CM0IXwKlupNqpCaO2Ir9Gj3nvJs0Z0+V9P76d2NeLH8+xGeMgdEmj6x5QSpr6lpsLSbPPEbGUYILohHV3+xFNzsh/sy/YJvLquIHZbCXdIpQJkSKWwI7NuAKAorafKde4z6I6uBdmlEaoNvHZzyy4nmo/fz2WQZrZyhGkoYgrFc2r4g/eLDrhY1MNRofIHM4rUrW";
+    </script>
+    

@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sharpness (선명도)</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', 'Malgun Gothic', sans-serif;
+        }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            background: linear-gradient(135deg, #1a2a3a 0%, #0d1721 100%);
+            color: #ffffff;
+            overflow: hidden;
+            position: relative;
+        }
+        .header {
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 1.5rem 3rem;
+            border-bottom: 2px solid rgba(163, 198, 255, 0.4);
+            display: flex;
+            align-items: center;
+        }
+        .header-icon {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            color: #a3c6ff;
+            font-size: 1.5rem;
+        }
+        .content {
+            padding: 2rem 3rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+        .left-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .concept-box {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .concept-title {
+            font-weight: bold;
+            color: #ffcc66;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+        }
+        .concept-title i {
+            margin-right: 0.75rem;
+        }
+        .highlight {
+            color: #a3c6ff;
+            font-weight: bold;
+        }
+        .image-container {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            height: 100%;
+        }
+        .main-image {
+            width: 100%;
+            max-height: 220px;
+            object-fit: contain;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+        .caption {
+            font-size: 0.9rem;
+            color: #a3c6ff;
+            text-align: center;
+            font-style: italic;
+        }
+        .examples-container {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            width: 100%;
+        }
+        .example-image {
+            width: 50%;
+            height: 140px;
+            object-fit: cover;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+        .example-image:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+        .footer {
+            padding: 1rem 3rem;
+            text-align: right;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            box-sizing: border-box;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+        .list-item {
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: baseline;
+        }
+        .list-item:before {
+            content: "•";
+            color: #ffcc66;
+            font-weight: bold;
+            margin-right: 0.75rem;
+        }
+        .comparison-container {
+            display: flex;
+            width: 100%;
+            margin-bottom: 1rem;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .comparison-side {
+            width: 50%;
+            position: relative;
+            padding: 10px;
+        }
+        .comparison-side img {
+            width: 100%;
+            border-radius: 4px;
+        }
+        .comparison-label {
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.6);
+            color: #ffffff;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        .divider {
+            width: 2px;
+            background: rgba(163, 198, 255, 0.6);
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="header">
+            <div class="header-icon">
+                <i class="fas fa-image"></i>
+            </div>
+            <div>
+                <h1 class="text-3xl font-bold">Sharpness (선명도)</h1>
+                <p class="text-sm opacity-70 mt-1">라이팅을 위한 비주얼 언어 4</p>
+            </div>
+        </div>
+        
+        <div class="content">
+            <div class="left-content">
+                <div class="concept-box">
+                    <div class="concept-title">
+                        <i class="fas fa-lightbulb"></i> 핵심 개념
+                    </div>
+                    <p>이미지의 <span class="highlight">디테일</span>이 얼마나 명확하고 뚜렷하게 표현되는지를 나타내는 요소입니다.</p>
+                    <p class="mt-3">선명도는 이미지의 <span class="highlight">가장자리</span>와 <span class="highlight">미세한 질감</span>을 얼마나 잘 구분해내는지를 결정합니다.</p>
+                </div>
+                
+                <div class="concept-box">
+                    <div class="concept-title">
+                        <i class="fas fa-info-circle"></i> 추가 설명
+                    </div>
+                    <div class="list-item"><span class="highlight">적절한 선명도</span>는 이미지에 현실감과 전문성을 더함</div>
+                    <div class="list-item"><span class="highlight">과도한 선명도</span>는 부자연스럽고 거친 느낌을 줄 수 있음</div>
+                    <div class="list-item">빛의 <span class="highlight">종류</span>와 <span class="highlight">방향</span>이 피사체의 질감과 선명도에 영향</div>
+                    <div class="list-item">선명도 조절은 <span class="highlight">대비</span>와 <span class="highlight">피사체 강조</span>에 도움</div>
+                </div>
+                
+                <div class="concept-box">
+                    <div class="concept-title">
+                        <i class="fas fa-paint-brush"></i> 실무 적용
+                    </div>
+                    <div class="list-item">제품 렌더링: <span class="highlight">재질과 디테일</span>을 부각</div>
+                    <div class="list-item">캐릭터: <span class="highlight">텍스처</span>와 <span class="highlight">표면 특성</span> 강조</div>
+                    <div class="list-item">환경: <span class="highlight">원거리 식별성</span>과 <span class="highlight">시각적 위계</span> 설정</div>
+                </div>
+            </div>
+            
+            <div>
+                <div class="image-container">
+                    <div class="comparison-container">
+                        <div class="comparison-side">
+                            <img src="https://blog.kakaocdn.net/dn/dbAafa/btqCBwucbi4/bk5eGJlGgxfjgNHl9j69h0/img.png" alt="선명도 비교">
+                        </div>
+                    </div>
+                    <p class="caption">선명도 수준에 따른 이미지 디테일의 차이</p>
+                    
+                    <div class="examples-container">
+                        <img src="https://blog.kakaocdn.net/dn/cdUs3n/btqCym7nTNL/0m3qU9wQQTE9DBW5qFoIZK/img.png" alt="선명도 세부 적용 예시" class="example-image">
+                        <img src="https://blog.kakaocdn.net/dn/bWiCIp/btqCz45ZAS1/7ma3YRX2QcoMvG4kK01efk/img.png" alt="선명도 효과 적용 예시" class="example-image">
+                    </div>
+                </div>
+                
+                <div class="concept-box mt-4">
+                    <div class="concept-title">
+                        <i class="fas fa-sliders-h"></i> 선명도에 영향을 미치는 요소
+                    </div>
+                    <div class="list-item"><span class="highlight">빛의 방향성</span>: 직사광선과 확산광에 따른 엣지 강조</div>
+                    <div class="list-item"><span class="highlight">반사와 굴절</span>: 표면 질감 및 윤곽선 선명도 결정</div>
+                    <div class="list-item"><span class="highlight">DOF(피사계 심도)</span>: 초점 영역과 비초점 영역의 구분</div>
+                    <div class="list-item"><span class="highlight">표면 재질</span>: 물체의 물리적 특성에 따른 선명도 차이</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            컴퓨터 그래픽스 라이팅 입문 | Sharpness(선명도)
+        </div>
+    </div>
+</body>
+</html><script src='https://www.genspark.ai/slide-inner.js?_v=1'></script>
+    <script id="html_badge_script1">
+        window.__genspark_remove_badge_link = "https://www.genspark.ai/api/html_badge/" +
+            "remove_badge?token=To%2FBnjzloZ3UfQdcSaYfDkVCe%2B5ETasMpITSwd55pCG9rUtBIlgYKwv19HnU47r5yVKaE7G7hRTFQNFyNZA7w19EY2t0gZ5eO4ZkyAQCqNTVJG%2FQF5%2FLQGebJ30puLkVAsJ%2BSHzXcAsbd366ce2YaFAT%2F3rKE3Kvt81mt4%2Fo%2BgMwq0jIbRJX64yuE0pPpDEP7V0ycv2dEOWiDUJZEhf8iVnZ6ic5jumg2U35cTkETgbjLGM2UQ7rYkidZnpMD58zb4kJ%2F2QGvUl5yLiGT5cUdmROBXLqIxDkI0orfZgTzSI5tvJ2hW8nObXOhMCkO8QO4%2FtlW%2F1QZwUBWQTxugozIK7xE1g5CzASqLMhMo4QVSEx4jCA7AVUoIfdvm6AYT0FXPeaRCH1dX%2BQKqOuf8iTc0qpB4e1FhA4O%2FSrF%2FvPxXBgs0YOyDZkygphhCUI0rfQEbXoSc4IJ60WCw9GjK4lDePFO7qf7qEtFBLevsVM4cfbciQWc5tsplX9EIFNW0fJKBNW8m1%2BwEIDihBZuKLb%2FOv9eIYuZC%2FTt2OxUKHfpKIUnu4Zy6JbN%2BmPTkWS9kbFu4bdIesbv122XvCvmGPweRJSCzg8m%2FEXXKYUnLcudQrcZ9nu%2BmPsi3Vh3KODMtUy4q2Nn6Cdqln9htPupG%2BEHb0XwnjuO6AbFUlImoltNdlWnopT%2B8N9hwx32ecrR%2F5yFUWskiql6EZ2Q0AAdxrsB0JSFqTK7cqfyiFrQ6VFxd4NmiQ9ElItRJ4QRJnOZpAR";
+        window.__genspark_locale = "ko-KR";
+        window.__genspark_token = "To/BnjzloZ3UfQdcSaYfDkVCe+5ETasMpITSwd55pCG9rUtBIlgYKwv19HnU47r5yVKaE7G7hRTFQNFyNZA7w19EY2t0gZ5eO4ZkyAQCqNTVJG/QF5/LQGebJ30puLkVAsJ+SHzXcAsbd366ce2YaFAT/3rKE3Kvt81mt4/o+gMwq0jIbRJX64yuE0pPpDEP7V0ycv2dEOWiDUJZEhf8iVnZ6ic5jumg2U35cTkETgbjLGM2UQ7rYkidZnpMD58zb4kJ/2QGvUl5yLiGT5cUdmROBXLqIxDkI0orfZgTzSI5tvJ2hW8nObXOhMCkO8QO4/tlW/1QZwUBWQTxugozIK7xE1g5CzASqLMhMo4QVSEx4jCA7AVUoIfdvm6AYT0FXPeaRCH1dX+QKqOuf8iTc0qpB4e1FhA4O/SrF/vPxXBgs0YOyDZkygphhCUI0rfQEbXoSc4IJ60WCw9GjK4lDePFO7qf7qEtFBLevsVM4cfbciQWc5tsplX9EIFNW0fJKBNW8m1+wEIDihBZuKLb/Ov9eIYuZC/Tt2OxUKHfpKIUnu4Zy6JbN+mPTkWS9kbFu4bdIesbv122XvCvmGPweRJSCzg8m/EXXKYUnLcudQrcZ9nu+mPsi3Vh3KODMtUy4q2Nn6Cdqln9htPupG+EHb0XwnjuO6AbFUlImoltNdlWnopT+8N9hwx32ecrR/5yFUWskiql6EZ2Q0AAdxrsB0JSFqTK7cqfyiFrQ6VFxd4NmiQ9ElItRJ4QRJnOZpAR";
+    </script>
+    
+        
+        
