@@ -44,6 +44,8 @@
 
             canvas.width = iframeRect.width;
             canvas.height = iframeRect.height;
+            canvas.style.width = iframeRect.width + 'px';
+            canvas.style.height = iframeRect.height + 'px';
             const calculatedLeft = iframeRect.left - presentationContainerRect.left;
             const calculatedTop = iframeRect.top - presentationContainerRect.top;
             canvas.style.left = calculatedLeft + 'px';
@@ -100,7 +102,7 @@
     // --- Drawing Event Handlers ---
     function getMousePos(e) {
         const rect = canvas.getBoundingClientRect(); 
-        let scale = 1;
+        let scale = 1; // 이 변수는 현재 좌표 계산에 사용되지 않지만, 로그 출력을 위해 남겨둡니다.
         const iframe = document.querySelector('#slide-container iframe');
         if (iframe && iframe.dataset.scaleFactor) {
             scale = parseFloat(iframe.dataset.scaleFactor);
@@ -108,10 +110,10 @@
         
         const x_raw = e.clientX - rect.left;
         const y_raw = e.clientY - rect.top;
-        const final_x = x_raw / scale;
-        const final_y = y_raw / scale;
+        const final_x = x_raw;
+        const final_y = y_raw;
 
-        console.log(`[drawing.js getMousePos] clientX/Y: (${e.clientX}, ${e.clientY}), canvasRect L/T: (${rect.left}, ${rect.top}), scale: ${scale}, raw x/y: (${x_raw.toFixed(2)}, ${y_raw.toFixed(2)}), final x/y: (${final_x.toFixed(2)}, ${final_y.toFixed(2)})`);
+        console.log(`[drawing.js getMousePos] clientX/Y: (${e.clientX}, ${e.clientY}), canvasRect L/T/W/H: (${rect.left.toFixed(2)}, ${rect.top.toFixed(2)}, ${rect.width.toFixed(2)}, ${rect.height.toFixed(2)}), canvas W/H attrs: (${canvas.width}, ${canvas.height}), scaleFactor: ${scale.toFixed(4)}, raw x/y: (${x_raw.toFixed(2)}, ${y_raw.toFixed(2)}), final x/y: (${final_x.toFixed(2)}, ${final_y.toFixed(2)})`);
 
         return {
             x: final_x,
@@ -121,16 +123,20 @@
     
     function getTouchPos(touchEvent) {
         const rect = canvas.getBoundingClientRect();
-        let scale = 1;
-        const iframe = document.querySelector('#slide-container iframe');
-        if (iframe && iframe.dataset.scaleFactor) {
-            scale = parseFloat(iframe.dataset.scaleFactor);
-        }
+        // let scale = 1; // 더 이상 scale 변수 필요 없음 (getMousePos와 동일하게 로그용으로 남길 수 있음)
+        // const iframe = document.querySelector('#slide-container iframe');
+        // if (iframe && iframe.dataset.scaleFactor) {
+        //     scale = parseFloat(iframe.dataset.scaleFactor);
+        // }
 
         if (touchEvent.touches && touchEvent.touches.length > 0) {
+            const x_raw = touchEvent.touches[0].clientX - rect.left;
+            const y_raw = touchEvent.touches[0].clientY - rect.top;
+            // 로그 추가 (필요하다면 getMousePos와 유사하게 scaleFactor 등 포함)
+            // console.log(`[drawing.js getTouchPos] raw x/y: (${x_raw.toFixed(2)}, ${y_raw.toFixed(2)}), canvasRect W/H: (${rect.width.toFixed(2)}, ${rect.height.toFixed(2)})`);
             return {
-                x: (touchEvent.touches[0].clientX - rect.left) / scale,
-                y: (touchEvent.touches[0].clientY - rect.top) / scale
+                x: x_raw,
+                y: y_raw
             };
         }
         return { x: 0, y: 0 }; 

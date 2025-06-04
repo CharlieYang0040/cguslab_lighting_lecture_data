@@ -26,6 +26,8 @@
             align-items: center;
             overflow: hidden;
             background-color: #000;
+            padding: 60px;
+            box-sizing: border-box;
         }
         .slide-frame {
             position: relative;
@@ -45,14 +47,14 @@
         }
         .controls {
             position: fixed;
-            bottom: 20px;
+            bottom: 10px;
             left: 50%;
             transform: translateX(-50%);
             z-index: 1000;
             display: flex;
-            gap: 1rem;
+            gap: 0.5rem;
             background: rgba(0, 0, 0, 0.7);
-            padding: 0.5rem 1rem;
+            padding: 0.3rem 0.8rem;
             border-radius: 9999px;
             backdrop-filter: blur(5px);
         }
@@ -61,8 +63,8 @@
             border: none;
             color: white;
             cursor: pointer;
-            padding: 0.5rem;
-            font-size: 1.2rem;
+            padding: 0.3rem;
+            font-size: 1rem;
             opacity: 0.7;
             transition: all 0.2s;
         }
@@ -75,10 +77,10 @@
         }
         .slide-number {
             color: white;
-            font-size: 0.9rem;
-            padding: 0.5rem;
+            font-size: 0.8rem;
+            padding: 0.3rem;
             opacity: 0.7;
-            min-width: 60px;
+            min-width: 50px;
             text-align: center;
         }
         .progress-bar {
@@ -134,8 +136,18 @@
         }
         @media (max-width: 768px) {
             .controls {
-                bottom: 10px;
-                padding: 0.3rem 0.8rem;
+                bottom: 5px;
+                padding: 0.2rem 0.6rem;
+                gap: 0.3rem;
+            }
+            .control-btn {
+                font-size: 0.9rem;
+                padding: 0.25rem;
+            }
+            .slide-number {
+                font-size: 0.7rem;
+                padding: 0.25rem;
+                min-width: 40px;
             }
             .slide-info {
                 top: 10px;
@@ -147,6 +159,63 @@
                 right: 10px;
             }
         }
+
+        /* 슬라이드 목록 사이드바 스타일 시작 */
+        #slide-list-sidebar {
+            position: fixed;
+            top: 0;
+            right: -280px; /* 초기에는 화면 밖에 숨김 (너비 + 여유) */
+            width: 260px;   /* 사이드바 너비 */
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            padding: 20px;
+            box-shadow: -5px 0 15px rgba(0,0,0,0.2);
+            overflow-y: auto;
+            transition: right 0.3s ease-in-out;
+            z-index: 1005; /* 다른 컨트롤들보다 위에 오도록 */
+            color: white;
+        }
+        #slide-list-sidebar.visible {
+            right: 0; /* 화면 안으로 보이도록 */
+        }
+        #slide-list-sidebar h3 {
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            padding-bottom: 10px;
+        }
+        #slide-list-sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        #slide-list-sidebar li a {
+            display: block;
+            padding: 8px 0px;
+            color: #eee;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.2s, color 0.2s;
+            font-size: 0.95em;
+        }
+        #slide-list-sidebar li a:hover,
+        #slide-list-sidebar li a.current-slide-link {
+            background-color: rgba(255, 255, 255, 0.15);
+            color: #fff;
+            padding-left: 10px; /* 호버 시 약간 들여쓰기 효과 */
+        }
+        #slide-list-trigger { /* 오른쪽 가장자리 마우스 감지 영역 */
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 15px; /* 감지 영역 너비 */
+            height: 100vh;
+            z-index: 1004; /* 사이드바 바로 아래 */
+            /* background-color: rgba(255,0,0,0.1);  개발 중 확인용 */
+        }
+        /* 슬라이드 목록 사이드바 스타일 끝 */
     </style>
 </head>
 <body>
@@ -176,6 +245,14 @@
         </button>
     </div>
 
+    <div id="slide-list-trigger"></div>
+    <div id="slide-list-sidebar">
+        <h3>슬라이드 목록</h3>
+        <ul id="slide-list-items">
+            <!-- 슬라이드 목록이 여기에 동적으로 추가됩니다 -->
+        </ul>
+    </div>
+
     <div id="drawing-toolbar">
         <button id="pen-tool" title="펜"><i class="fas fa-pen"></i></button>
         <button id="eraser-tool" title="지우개"><i class="fas fa-eraser"></i></button>
@@ -194,6 +271,10 @@
         const slideInfo = document.getElementById('slide-info');
         const fullscreenBtn = document.getElementById('fullscreen-btn');
 
+        const slideListSidebar = document.getElementById('slide-list-sidebar');
+        const slideListItems = document.getElementById('slide-list-items');
+        const slideListTrigger = document.getElementById('slide-list-trigger');
+
         // const NATIVE_WIDTH = 1280; // 더 이상 사용하지 않음
         // const NATIVE_HEIGHT = 720; // 더 이상 사용하지 않음
 
@@ -203,6 +284,14 @@
                 if(iframeElement) iframeElement.style.opacity = '1'; // 보이도록 시도
                 return;
             }
+
+            // Get padding of the presentation-container
+            const presentationContainer = document.getElementById('presentation-container');
+            const computedStyle = window.getComputedStyle(presentationContainer);
+            const paddingLeft = parseFloat(computedStyle.paddingLeft) || 0;
+            const paddingRight = parseFloat(computedStyle.paddingRight) || 0;
+            const paddingTop = parseFloat(computedStyle.paddingTop) || 0;
+            const paddingBottom = parseFloat(computedStyle.paddingBottom) || 0;
 
             let slideNativeWidth = 0;
             let slideNativeHeight = 0;
@@ -241,11 +330,11 @@
             iframeElement.style.width = slideNativeWidth + 'px';
             iframeElement.style.height = slideNativeHeight + 'px';
 
-            const containerWidth = container.offsetWidth;
-            const containerHeight = container.offsetHeight;
+            const containerWidth = presentationContainer.offsetWidth - paddingLeft - paddingRight;
+            const containerHeight = presentationContainer.offsetHeight - paddingTop - paddingBottom;
 
-            if (containerWidth === 0 || containerHeight === 0) {
-                console.warn('[adaptIframeScale] Container dimensions are zero. Cannot calculate scale.');
+            if (containerWidth <= 0 || containerHeight <= 0) {
+                console.warn('[adaptIframeScale] Container dimensions (after padding) are zero or negative. Cannot calculate scale.', `CW: ${containerWidth}, CH: ${containerHeight}`);
                 iframeElement.style.opacity = '1';
                 return;
             }
@@ -257,7 +346,7 @@
 
             const scaleX = containerWidth / slideNativeWidth;
             const scaleY = containerHeight / slideNativeHeight;
-            const scaleFactor = Math.min(scaleX, scaleY, 1); // 1보다 크게 확대하지 않음
+            const scaleFactor = Math.min(scaleX, scaleY); // 1보다 크게 확대 허용
 
             console.log(`[adaptIframeScale] Container: ${containerWidth}x${containerHeight}, Native: ${slideNativeWidth}x${slideNativeHeight}, ScaleFactor: ${scaleFactor}`);
 
@@ -326,6 +415,7 @@
             slides = existingSlides;
             if (slides.length > 0) {
                 updateSlideInfo();
+                populateSlideList();
                 loadSlide(0);
             } else {
                 slideInfo.textContent = '슬라이드 파일을 찾을 수 없습니다.';
@@ -336,6 +426,36 @@
             slideNumber.textContent = `${currentSlide + 1} / ${slides.length}`;
             slideInfo.textContent = `현재 슬라이드: ${slides[currentSlide]}`;
             progressBar.style.width = `${((currentSlide + 1) / slides.length) * 100}%`;
+            updateSlideListUI();
+        }
+
+        function populateSlideList() {
+            slideListItems.innerHTML = ''; // 기존 목록 초기화
+            slides.forEach((slideFile, index) => {
+                const listItem = document.createElement('li');
+                const link = document.createElement('a');
+                link.href = '#';
+                link.textContent = `${index + 1}. ${slideFile.replace('.html', '')}`;
+                link.dataset.slideIndex = index;
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    loadSlide(index);
+                    slideListSidebar.classList.remove('visible'); // 목록에서 선택 후 사이드바 숨김
+                });
+                listItem.appendChild(link);
+                slideListItems.appendChild(listItem);
+            });
+        }
+
+        function updateSlideListUI() {
+            const currentLinks = slideListItems.querySelectorAll('a');
+            currentLinks.forEach(link => {
+                if (parseInt(link.dataset.slideIndex) === currentSlide) {
+                    link.classList.add('current-slide-link');
+                } else {
+                    link.classList.remove('current-slide-link');
+                }
+            });
         }
 
         function loadSlide(index) {
@@ -443,6 +563,15 @@
 
         // 슬라이드 목록 로드 시작
         loadSlideList();
+
+        // 슬라이드 목록 사이드바 보이기/숨기기 로직
+        slideListTrigger.addEventListener('mouseenter', () => {
+            slideListSidebar.classList.add('visible');
+        });
+
+        slideListSidebar.addEventListener('mouseleave', () => {
+            slideListSidebar.classList.remove('visible');
+        });
     </script>
     <script>
         // Make current slide ID accessible to drawing.js
