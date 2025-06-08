@@ -56,6 +56,7 @@
             background: rgba(0, 0, 0, 0.7);
             padding: 0.3rem 0.8rem;
             border-radius: 9999px;
+            -webkit-backdrop-filter: blur(5px);
             backdrop-filter: blur(5px);
         }
         .control-btn {
@@ -105,6 +106,7 @@
             cursor: pointer;
             opacity: 0.7;
             transition: all 0.2s;
+            -webkit-backdrop-filter: blur(5px);
             backdrop-filter: blur(5px);
         }
         .fullscreen-btn:hover {
@@ -132,6 +134,7 @@
             background: rgba(0, 0, 0, 0.7);
             padding: 0.5rem 1rem;
             border-radius: 4px;
+            -webkit-backdrop-filter: blur(5px);
             backdrop-filter: blur(5px);
         }
         @media (max-width: 768px) {
@@ -168,6 +171,7 @@
             width: 260px;   /* 사이드바 너비 */
             height: 100vh;
             background-color: rgba(0, 0, 0, 0.85);
+            -webkit-backdrop-filter: blur(8px);
             backdrop-filter: blur(8px);
             padding: 20px;
             box-shadow: -5px 0 15px rgba(0,0,0,0.2);
@@ -221,7 +225,7 @@
 <body>
     <div class="progress-bar" id="progress-bar"></div>
     <div class="slide-info" id="slide-info">슬라이드 로딩 중...</div>
-    <button class="fullscreen-btn" id="fullscreen-btn">
+    <button class="fullscreen-btn" id="fullscreen-btn" title="전체화면 토글">
         <i class="fas fa-expand"></i>
     </button>
     
@@ -233,14 +237,14 @@
     </div>
     
     <div class="controls">
-        <button class="control-btn" id="prev-btn">
+        <button class="control-btn" id="prev-btn" title="이전 슬라이드">
             <i class="fas fa-chevron-left"></i>
         </button>
         <span class="slide-number" id="slide-number">0 / 0</span>
-        <button class="control-btn" id="next-btn">
+        <button class="control-btn" id="next-btn" title="다음 슬라이드">
             <i class="fas fa-chevron-right"></i>
         </button>
-        <button class="control-btn" id="toggle-draw-mode">
+        <button class="control-btn" id="toggle-draw-mode" title="그리기 모드 토글">
             <i class="fas fa-paint-brush"></i>
         </button>
     </div>
