@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Butterfly Light 기법</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(90deg, #f9a826, #ffd07b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 10px rgba(249, 168, 38, 0.3);
+            text-align: center;
+        }
+        .definition-card {
+            background: rgba(249, 168, 38, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            border: 2px solid rgba(249, 168, 38, 0.3);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .definition-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(249, 168, 38, 0.4);
+            border-color: #f9a826;
+        }
+        .feature-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(8px);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+            position: relative;
+        }
+        .feature-card:hover {
+            transform: translateX(10px);
+            background: rgba(255, 255, 255, 0.12);
+        }
+        .feature-glamour {
+            border-left-color: #ffd07b;
+        }
+        .feature-beauty {
+            border-left-color: #ffb84d;
+        }
+        .feature-soft {
+            border-left-color: #ff9f1a;
+        }
+        .feature-flattering {
+            border-left-color: #f9a826;
+        }
+        .image-container {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        .image-container:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        .technique-tip {
+            background: rgba(249, 168, 38, 0.15);
+            border-radius: 10px;
+            border: 1px solid rgba(249, 168, 38, 0.3);
+            position: relative;
+        }
+        .highlight-text {
+            color: #ffd07b;
+            font-weight: 600;
+        }
+        .butterfly-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(249, 168, 38, 0.2);
+            color: #f9a826;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin: 0 auto 15px;
+            transition: all 0.3s ease;
+        }
+        .definition-card:hover .butterfly-icon {
+            transform: rotate(360deg) scale(1.2);
+            background: rgba(249, 168, 38, 0.4);
+        }
+        .floating-butterfly-lights {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 1;
+        }
+        .butterfly-beam {
+            position: absolute;
+            width: 4px;
+            height: 80px;
+            background: linear-gradient(to bottom, rgba(249, 168, 38, 0.8), transparent);
+            border-radius: 50%;
+            animation: butterflyPulse 3s infinite ease-in-out;
+            filter: blur(1px);
+        }
+        .butterfly-beam:nth-child(1) { top: 15%; left: 50%; animation-delay: 0s; transform: translateX(-50%); }
+        .butterfly-beam:nth-child(2) { top: 20%; left: 45%; animation-delay: 0.5s; transform: rotate(15deg); }
+        .butterfly-beam:nth-child(3) { top: 20%; left: 55%; animation-delay: 0.5s; transform: rotate(-15deg); }
+        .butterfly-beam:nth-child(4) { top: 25%; left: 50%; animation-delay: 1s; transform: translateX(-50%) rotate(45deg); height: 60px; }
+        @keyframes butterflyPulse {
+            0%, 100% { opacity: 0.3; transform: scaleY(1); }
+            50% { opacity: 0.9; transform: scaleY(1.2); }
+        }
+        .setup-step {
+            display: flex;
+            align-items: center;
+            padding: 8px 0;
+            transition: all 0.2s ease;
+        }
+        .setup-step:hover {
+            background: rgba(249, 168, 38, 0.1);
+            border-radius: 8px;
+            padding-left: 10px;
+        }
+        .step-number {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: #f9a826;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        .butterfly-shadow-demo {
+            position: relative;
+            background: radial-gradient(circle at center, rgba(249, 168, 38, 0.1), transparent);
+            border-radius: 15px;
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .face-outline {
+            width: 60px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 30px 30px 20px 20px;
+            position: relative;
+            border: 2px solid #f9a826;
+            animation: faceGlow 3s infinite ease-in-out;
+        }
+        .face-outline::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: 15px;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 2px solid #f9a826;
+            background: rgba(255, 255, 255, 0.05);
+        }
+        .butterfly-shadow {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 12px solid rgba(249, 168, 38, 0.6);
+            animation: shadowPulse 2s infinite ease-in-out;
+        }
+        @keyframes faceGlow {
+            0%, 100% { box-shadow: 0 0 10px rgba(249, 168, 38, 0.5); }
+            50% { box-shadow: 0 0 25px rgba(249, 168, 38, 0.8); }
+        }
+        @keyframes shadowPulse {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+        .practical-note {
+            background: linear-gradient(45deg, rgba(249, 168, 38, 0.1), rgba(255, 208, 123, 0.1));
+            border-radius: 8px;
+            border: 1px solid rgba(249, 168, 38, 0.2);
+        }
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        .before-after {
+            text-align: center;
+            position: relative;
+        }
+        .before-after::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            background: linear-gradient(45deg, #f9a826, #ffd07b);
+            border-radius: 12px;
+            z-index: -1;
+            opacity: 0.3;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container p-8 relative">
+        <!-- 배경 버터플라이 라이팅 효과 -->
+        <div class="floating-butterfly-lights">
+            <div class="butterfly-beam"></div>
+            <div class="butterfly-beam"></div>
+            <div class="butterfly-beam"></div>
+            <div class="butterfly-beam"></div>
+        </div>
+        
+        <!-- 제목 섹션 -->
+        <div class="text-center mb-6 z-10 relative">
+            <h1 class="section-title mb-3">
+                <i class="fas fa-bug mr-3 text-yellow-400"></i>
+                Butterfly Light 기법
+            </h1>
+            <p class="text-lg opacity-80">코 아래 <span class="highlight-text">나비 모양 그림자</span>를 만드는 <span class="highlight-text">글래머 라이팅</span> 기법</p>
+        </div>
+        
+        <!-- 메인 콘텐츠 -->
+        <div class="grid grid-cols-12 gap-6 z-10 relative">
+            <!-- 왼쪽: 정의 및 특징 -->
+            <div class="col-span-7">
+                <!-- 정의 카드 -->
+                <div class="definition-card p-6 mb-6">
+                    <div class="butterfly-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <h2 class="text-xl font-bold text-center mb-4">
+                        <span class="highlight-text">Butterfly Light</span> 정의 및 효과
+                    </h2>
+                    <p class="text-center text-sm mb-4 opacity-90">
+                        피사체의 <span class="highlight-text">정면 위쪽에서 조명</span>을 비춰 코 아래에 
+                        <span class="highlight-text">나비 날개 모양의 대칭적인 그림자</span>를 만드는 포트레이트 라이팅 기법
+                    </p>
+                    <div class="grid grid-cols-2 gap-4 text-xs">
+                        <div class="text-center">
+                            <div class="w-8 h-8 mx-auto bg-yellow-500 bg-opacity-20 rounded-full flex items-center justify-center mb-2">
+                                <i class="fas fa-star text-yellow-400"></i>
+                            </div>
+                            <p><span class="highlight-text">글래머 효과</span><br>부드럽고 세련된 느낌</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="w-8 h-8 mx-auto bg-yellow-500 bg-opacity-20 rounded-full flex items-center justify-center mb-2">
+                                <i class="fas fa-heart text-yellow-400"></i>
+                            </div>
+                            <p><span class="highlight-text">얼굴 보정</span><br>결점 숨김 효과</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 특징 및 활용 -->
+                <div class="space-y-3">
+                    <h3 class="text-lg font-bold mb-4 flex items-center">
+                        <i class="fas fa-palette mr-2 text-yellow-400"></i>
+                        주요 특징 및 활용
+                    </h3>
+                    
+                    <div class="feature-card feature-glamour p-4">
+                        <div class="flex items-center">
+                            <div class="w-8 h-8 bg-yellow-500 bg-opacity-20 rounded-full flex items-center justify-center mr-3">
+                                <i class="fas fa-gem text-yellow-400 text-sm"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-sm">글래머 포트레이트 (Glamour Portrait)</h4>
+                                <p class="text-xs opacity-80">뷰티, 패션 사진에서 <span class="highlight-text">세련되고 매력적인</span> 인상 연출</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-card feature-beauty p-4">
+                        <div class="flex items-center">
+                            <div class="w-8 h-8 bg-yellow-500 bg-opacity-20 rounded-full flex items-center justify-center mr-3">
+                                <i class="fas fa-magic text-yellow-400 text-sm"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-sm">얼굴 결점 보정 (Flattering Effect)</h4>
+                                <p class="text-xs opacity-80">주름, 잡티 등을 <span class="highlight-text">자연스럽게 가려주는</span> 효과</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-card feature-soft p-4">
+                        <div class="flex items-center">
+                            <div class="w-8 h-8 bg-yellow-500 bg-opacity-20 rounded-full flex items-center justify-center mr-3">
+                                <i class="fas fa-cloud text-yellow-400 text-sm"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-sm">부드러운 조명 (Soft Lighting)</h4>
+                                <p class="text-xs opacity-80">전체적으로 <span class="highlight-text">균등하고 평면적인</span> 조명 분포</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-card feature-flattering p-4">
+                        <div class="flex items-center">
+                            <div class="w-8 h-8 bg-yellow-500 bg-opacity-20 rounded-full flex items-center justify-center mr-3">
+                                <i class="fas fa-balance-scale text-yellow-400 text-sm"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-sm">대칭적 구조 (Symmetrical Structure)</h4>
+                                <p class="text-xs opacity-80">좌우 <span class="highlight-text">균형 잡힌 조명</span>으로 안정감 제공</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 오른쪽: 실습 가이드 및 예시 -->
+            <div class="col-span-5 space-y-4">
+                <!-- 실제 예시 이미지 -->
+                <div class="image-container p-3">
+                    <h4 class="font-bold text-sm mb-3 text-center">
+                        <i class="fas fa-image mr-2"></i>
+                        Butterfly Light 적용 예시
+                    </h4>
+                    <img src="https://petapixel.com/assets/uploads/2023/01/butterfly-lighting-featured.jpg" 
+                         alt="Butterfly Light 예시" 
+                         class="w-full h-28 object-cover rounded-lg mb-2">
+                    <p class="text-xs opacity-80 text-center">전문적인 Butterfly Light 포트레이트</p>
+                </div>
+                
+                <!-- 버터플라이 섀도우 데모 -->
+                <div class="technique-tip p-4">
+                    <h4 class="font-bold text-sm mb-3 text-center">
+                        <i class="fas fa-eye mr-2"></i>
+                        나비 그림자 효과
+                    </h4>
+                    <div class="butterfly-shadow-demo">
+                        <div class="face-outline">
+                            <div class="butterfly-shadow"></div>
+                        </div>
+                    </div>
+                    <p class="text-xs text-center mt-2 opacity-80">
+                        코 아래 형성되는 <span class="highlight-text">나비 모양 그림자</span>
+                    </p>
+                </div>
+                
+                <!-- 실습 단계 -->
+                <div class="technique-tip p-4">
+                    <h4 class="font-bold text-sm mb-3 flex items-center">
+                        <i class="fas fa-list-ol mr-2 text-yellow-400"></i>
+                        실습 단계
+                    </h4>
+                    <div class="space-y-2 text-xs">
+                        <div class="setup-step">
+                            <div class="step-number">1</div>
+                            <span>피사체 <span class="highlight-text">정면 위쪽</span>에 메인 라이트 배치</span>
+                        </div>
+                        <div class="setup-step">
+                            <div class="step-number">2</div>
+                            <span>조명 각도를 <span class="highlight-text">45도 내외</span>로 조정</span>
+                        </div>
+                        <div class="setup-step">
+                            <div class="step-number">3</div>
+                            <span>코 아래 <span class="highlight-text">나비 그림자</span> 확인</span>
+                        </div>
+                        <div class="setup-step">
+                            <div class="step-number">4</div>
+                            <span>필요시 <span class="highlight-text">리플렉터</span>로 그림자 완화</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 비교 예시 -->
+                <div class="technique-tip p-3">
+                    <h4 class="font-bold text-xs mb-3 text-center">
+                        <i class="fas fa-balance-scale mr-1"></i>
+                        조명 각도별 비교
+                    </h4>
+                    <div class="comparison-grid text-xs">
+                        <div class="before-after">
+                            <img src="https://shotkit.com/wp-content/uploads/2021/02/butterfly-lighting.jpg" 
+                                 alt="올바른 Butterfly Light" 
+                                 class="w-full h-16 object-cover rounded mb-1">
+                            <p class="text-green-400 font-semibold">✓ 올바른 각도</p>
+                        </div>
+                        <div class="before-after">
+                            <img src="https://www.adorama.com/alc/wp-content/uploads/2024/06/butterfly_lighting_Feature.jpg" 
+                                 alt="Butterfly Light 셋업" 
+                                 class="w-full h-16 object-cover rounded mb-1">
+                            <p class="text-yellow-400 font-semibold">⚡ 라이팅 셋업</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 하단 실용적 팁 -->
+        <div class="mt-6 z-10 relative">
+            <div class="practical-note p-4">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h4 class="font-bold text-sm mb-2 flex items-center">
+                            <i class="fas fa-lightbulb mr-2 text-yellow-400"></i>
+                            실용적 활용 팁
+                        </h4>
+                        <div class="grid grid-cols-3 gap-4 text-xs">
+                            <div class="flex items-center">
+                                <i class="fas fa-check mr-2 text-green-400"></i>
+                                <span><span class="highlight-text">여성 모델</span>에게 특히 효과적</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-check mr-2 text-green-400"></i>
+                                <span>패션, 뷰티 사진에서 <span class="highlight-text">활용도 높음</span></span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-check mr-2 text-green-400"></i>
+                                <span>조명이 너무 높으면 <span class="highlight-text">눈에 그림자</span> 주의</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-right text-xs opacity-70">
+                        <i class="fas fa-info-circle mr-1 text-yellow-400"></i>
+                        <span class="highlight-text">Paramount Lighting</span>이라고도 불림
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>역광 활용 예시 - 신비로운 실루엣 효과</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+            overflow: hidden;
+        }
+        .slide {
+            width: 1280px;
+            min-height: 720px;
+            background: linear-gradient(135deg, #1a2a6c, #3a1a6c);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        .slide-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            border-bottom: 2px solid rgba(255,255,255,0.2);
+        }
+        .example-card {
+            background: rgba(255,255,255,0.08);
+            border-radius: 1rem;
+            padding: 1rem;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        .example-card:hover {
+            background: rgba(255,255,255,0.15);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        .image-container {
+            border-radius: 0.75rem;
+            overflow: hidden;
+            border: 2px solid rgba(255,255,255,0.2);
+            height: 180px;
+            position: relative;
+        }
+        .image-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            display: flex;
+            align-items: flex-end;
+            padding: 1rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .example-card:hover .image-overlay {
+            opacity: 1;
+        }
+        .technique-box {
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            margin-top: 1rem;
+        }
+        .technique-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.75rem;
+            background: rgba(255,255,255,0.1);
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        .technique-item:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateX(5px);
+        }
+        .technique-item:last-child {
+            margin-bottom: 0;
+        }
+        .technique-icon {
+            width: 32px;
+            height: 32px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 0.75rem;
+            flex-shrink: 0;
+        }
+        .page-number {
+            position: absolute;
+            bottom: 1rem;
+            right: 1rem;
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+        .studio-badge {
+            position: absolute;
+            top: 0.75rem;
+            left: 0.75rem;
+            background: rgba(255,255,255,0.9);
+            color: #1f2937;
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            z-index: 10;
+        }
+        .lighting-indicator {
+            position: absolute;
+            top: 0.75rem;
+            right: 0.75rem;
+            background: rgba(139, 92, 246, 0.9);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            z-index: 10;
+        }
+        .backlight-glow {
+            position: absolute;
+            right: -100px;
+            top: 0;
+            width: 200px;
+            height: 100%;
+            background: linear-gradient(270deg, rgba(139, 92, 246, 0.3), rgba(139, 92, 246, 0));
+            z-index: 0;
+        }
+        .cinema-badge {
+            background: linear-gradient(45deg, #dc2626, #b91c1c);
+        }
+        .animation-badge {
+            background: linear-gradient(45deg, #7c3aed, #5b21b6);
+        }
+        .silhouette-effect {
+            animation: silhouetteGlow 3s ease-in-out infinite alternate;
+        }
+        @keyframes silhouetteGlow {
+            0% { box-shadow: 0 0 20px rgba(139, 92, 246, 0.3); }
+            100% { box-shadow: 0 0 40px rgba(139, 92, 246, 0.6); }
+        }
+    </style>
+</head>
+<body>
+    <div class="slide p-8 flex flex-col">
+        <!-- Backlight visual effect -->
+        <div class="backlight-glow"></div>
+        
+        <!-- Slide Header -->
+        <div class="slide-title pb-4 mb-6 flex items-center relative z-10">
+            <i class="fas fa-moon mr-4 text-purple-300"></i>
+            <span>역광 활용 예시 - 신비로운 실루엣 효과</span>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex flex-1 space-x-6 relative z-10">
+            <!-- Left Column: Professional Examples -->
+            <div class="w-3/5 space-y-4">
+                <div class="text-lg font-semibold text-purple-200 mb-4 flex items-center">
+                    <i class="fas fa-crown mr-3"></i>
+                    <span>전문 작품 사례</span>
+                </div>
+
+                <!-- Example Grid -->
+                <div class="grid grid-cols-2 gap-4">
+                    <!-- Lord of the Rings -->
+                    <div class="example-card silhouette-effect">
+                        <div class="image-container relative">
+                            <img src="https://static1.cbrimages.com/wordpress/wp-content/uploads/2024/03/nazgul-on-horse-silhouette.jpg" alt="반지의 제왕 실루엣" class="object-cover h-full w-full">
+                            <div class="studio-badge cinema-badge">LORD OF THE RINGS</div>
+                            <div class="lighting-indicator">
+                                <i class="fas fa-horse-head"></i>
+                            </div>
+                            <div class="image-overlay">
+                                <span class="text-sm font-medium">아이코닉한 실루엣</span>
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <h4 class="font-bold text-purple-200">반지의 제왕</h4>
+                            <p class="text-sm text-gray-300 mt-1">나즈굴의 위협적인 실루엣으로 공포와 신비감 극대화</p>
+                        </div>
+                    </div>
+
+                    <!-- Interstellar -->
+                    <div class="example-card">
+                        <div class="image-container relative">
+                            <img src="https://www.subtraction.com/wp-content/uploads/2014/11/2014-11-07-interstellar.jpg" alt="인터스텔라 역광" class="object-cover h-full w-full">
+                            <div class="studio-badge cinema-badge">INTERSTELLAR</div>
+                            <div class="lighting-indicator">
+                                <i class="fas fa-rocket"></i>
+                            </div>
+                            <div class="image-overlay">
+                                <span class="text-sm font-medium">우주의 웅장함</span>
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <h4 class="font-bold text-purple-200">인터스텔라</h4>
+                            <p class="text-sm text-gray-300 mt-1">우주 공간의 웅장함과 고독감을 역광으로 표현</p>
+                        </div>
+                    </div>
+
+                    <!-- LOTR Hobbit Scene -->
+                    <div class="example-card">
+                        <div class="image-container relative">
+                            <img src="https://atolkienistperspective.wordpress.com/wp-content/uploads/2015/02/hobbits-hiding-from-nazgul.jpg" alt="호빗 역광 장면" class="object-cover h-full w-full">
+                            <div class="studio-badge cinema-badge">LOTR</div>
+                            <div class="lighting-indicator">
+                                <i class="fas fa-user-secret"></i>
+                            </div>
+                            <div class="image-overlay">
+                                <span class="text-sm font-medium">긴장감 조성</span>
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <h4 class="font-bold text-purple-200">호빗의 숨기기</h4>
+                            <p class="text-sm text-gray-300 mt-1">어둠 속에서 빛으로 긴장감과 위험을 암시</p>
+                        </div>
+                    </div>
+
+                    <!-- Pixar Rim Light -->
+                    <div class="example-card">
+                        <div class="image-container relative">
+                            <img src="https://shotkit.com/wp-content/uploads/2022/09/Rim-light-portrait.jpg" alt="림 라이트 포트레이트" class="object-cover h-full w-full">
+                            <div class="studio-badge animation-badge">PORTRAIT</div>
+                            <div class="lighting-indicator">
+                                <i class="fas fa-user-circle"></i>
+                            </div>
+                            <div class="image-overlay">
+                                <span class="text-sm font-medium">림 라이트 기법</span>
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <h4 class="font-bold text-purple-200">림 라이트 포트레이트</h4>
+                            <p class="text-sm text-gray-300 mt-1">캐릭터 윤곽선을 강조하여 깊이감과 입체감 부여</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Technique Guide -->
+            <div class="w-2/5">
+                <div class="text-lg font-semibold text-purple-200 mb-4 flex items-center">
+                    <i class="fas fa-magic mr-3"></i>
+                    <span>역광 마스터하기</span>
+                </div>
+
+                <div class="technique-box">
+                    <h3 class="text-xl font-bold mb-4 flex items-center">
+                        <i class="fas fa-sparkles mr-3"></i>
+                        <span>시네마틱 기법</span>
+                    </h3>
+
+                    <div class="space-y-3">
+                        <div class="technique-item">
+                            <div class="technique-icon">
+                                <i class="fas fa-circle"></i>
+                            </div>
+                            <div>
+                                <div class="font-bold">180도 배치</div>
+                                <div class="text-sm">피사체 정반대편에서 빛을 비춤</div>
+                            </div>
+                        </div>
+
+                        <div class="technique-item">
+                            <div class="technique-icon">
+                                <i class="fas fa-border-all"></i>
+                            </div>
+                            <div>
+                                <div class="font-bold">림 라이트</div>
+                                <div class="text-sm">가장자리에 얇은 빛의 테두리 생성</div>
+                            </div>
+                        </div>
+
+                        <div class="technique-item">
+                            <div class="technique-icon">
+                                <i class="fas fa-user-alt-slash"></i>
+                            </div>
+                            <div>
+                                <div class="font-bold">실루엣 효과</div>
+                                <div class="text-sm">강한 역광으로 완전한 실루엣 연출</div>
+                            </div>
+                        </div>
+
+                        <div class="technique-item">
+                            <div class="technique-icon">
+                                <i class="fas fa-eye"></i>
+                            </div>
+                            <div>
+                                <div class="font-bold">분위기 연출</div>
+                                <div class="text-sm">신비롭고 극적인 장면 분위기 조성</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Advanced Tips -->
+                <div class="mt-4 bg-gray-800 bg-opacity-50 p-4 rounded-lg">
+                    <h4 class="font-bold text-purple-200 mb-3 flex items-center">
+                        <i class="fas fa-star mr-2"></i>
+                        <span>프로 팁</span>
+                    </h4>
+                    <div class="space-y-3 text-sm">
+                        <div class="flex items-start">
+                            <i class="fas fa-check-circle mr-2 text-green-400 mt-1"></i>
+                            <span><strong>블렌더:</strong> Sun Light를 피사체 뒤쪽에 배치하고 강도 조절</span>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fas fa-check-circle mr-2 text-green-400 mt-1"></i>
+                            <span><strong>대비 조절:</strong> 전면에 약한 Fill Light로 완전한 어둠 방지</span>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fas fa-check-circle mr-2 text-green-400 mt-1"></i>
+                            <span><strong>색상 활용:</strong> 따뜻한/차가운 색상으로 감정적 임팩트 강화</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Reference -->
+                <div class="mt-4 bg-gradient-to-r from-purple-600 to-indigo-600 p-3 rounded-lg">
+                    <div class="font-bold text-center mb-2">빠른 참조</div>
+                    <div class="grid grid-cols-2 gap-2 text-xs">
+                        <div class="bg-black bg-opacity-30 p-2 rounded text-center">
+                            <div class="font-bold">실루엣</div>
+                            <div>강한 역광</div>
+                        </div>
+                        <div class="bg-black bg-opacity-30 p-2 rounded text-center">
+                            <div class="font-bold">림 라이트</div>
+                            <div>부드러운 역광</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Page Number -->
+        <div class="page-number">8 / 13</div>
+    </div>
+</body>
+</html>

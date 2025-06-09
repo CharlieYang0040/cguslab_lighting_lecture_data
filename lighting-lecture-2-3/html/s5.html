@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>USD 실습 단계별 가이드</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+            overflow-x: hidden;
+        }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            margin: 0 auto;
+            position: relative;
+        }
+        .animated-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 80%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(168, 85, 247, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 40% 40%, rgba(34, 197, 94, 0.05) 0%, transparent 50%);
+            animation: pulse 4s ease-in-out infinite alternate;
+        }
+        @keyframes pulse {
+            0% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+        .title-gradient {
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .step-card {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(168, 85, 247, 0.1) 100%);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .step-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(59, 130, 246, 0.5);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.2);
+        }
+        .step-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, #3b82f6, #8b5cf6);
+        }
+        .step-number {
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        @keyframes glow {
+            0% { box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3); }
+            100% { box-shadow: 0 6px 25px rgba(59, 130, 246, 0.5); }
+        }
+        .screenshot-frame {
+            border: 2px solid rgba(59, 130, 246, 0.4);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+        .screenshot-frame:hover {
+            border-color: rgba(168, 85, 247, 0.6);
+            transform: scale(1.02);
+        }
+        .workflow-arrow {
+            color: #3b82f6;
+            font-size: 1.5rem;
+            animation: bounce 2s infinite;
+        }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-4px); }
+            60% { transform: translateY(-2px); }
+        }
+        .icon-glow {
+            filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.5));
+        }
+        .progress-dots {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(156, 163, 175, 0.3);
+        }
+        .dot.active {
+            background: #3b82f6;
+            box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+        }
+        .tip-box {
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.1) 0%, rgba(59, 130, 246, 0.1) 100%);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            border-left: 4px solid #22c55e;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container relative">
+        <div class="animated-bg"></div>
+        
+        <!-- Main Content -->
+        <div class="relative z-10 px-12 py-8">
+            
+            <!-- Header Section -->
+            <div class="mb-6">
+                <div class="flex items-center mb-3">
+                    <div class="step-number rounded-full w-10 h-10 flex items-center justify-center text-white font-bold text-lg mr-4">
+                        실습
+                    </div>
+                    <h1 class="title-gradient text-4xl font-black">USD 워크플로우 실습 가이드</h1>
+                </div>
+                <p class="text-gray-400 text-lg ml-14">Maya/Houdini → USD Export → USDView Analysis</p>
+            </div>
+            
+            <!-- Workflow Steps -->
+            <div class="grid grid-cols-3 gap-6 mb-6">
+                
+                <!-- Step 1: Maya Setup -->
+                <div class="step-card rounded-xl p-4">
+                    <div class="flex items-center mb-3">
+                        <div class="step-number rounded-full w-8 h-8 flex items-center justify-center text-white font-bold text-sm mr-3">1</div>
+                        <h3 class="text-lg font-bold text-white">Maya 씬 준비</h3>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <img src="https://help.autodesk.com/cloudhelp/2024/ENU/Maya-USD/images/usd_maya_createstagefromfilewindow.png" 
+                             alt="Maya USD Stage Creation" 
+                             class="w-full h-20 object-cover rounded-lg screenshot-frame">
+                    </div>
+                    
+                    <div class="space-y-2 text-sm">
+                        <div class="flex items-center text-gray-300">
+                            <i class="fas fa-check text-green-400 mr-2"></i>
+                            <span>3D 모델 준비 및 확인</span>
+                        </div>
+                        <div class="flex items-center text-gray-300">
+                            <i class="fas fa-check text-green-400 mr-2"></i>
+                            <span>Material 및 Texture 적용</span>
+                        </div>
+                        <div class="flex items-center text-gray-300">
+                            <i class="fas fa-check text-green-400 mr-2"></i>
+                            <span>계층 구조 정리</span>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center mt-3">
+                        <i class="fas fa-arrow-right workflow-arrow"></i>
+                    </div>
+                </div>
+                
+                <!-- Step 2: USD Export -->
+                <div class="step-card rounded-xl p-4">
+                    <div class="flex items-center mb-3">
+                        <div class="step-number rounded-full w-8 h-8 flex items-center justify-center text-white font-bold text-sm mr-3">2</div>
+                        <h3 class="text-lg font-bold text-white">USD 익스포트</h3>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <img src="https://help.autodesk.com/cloudhelp/2025/ENU/Maya-USD/images/export_options.jpg" 
+                             alt="Maya USD Export Options" 
+                             class="w-full h-20 object-cover rounded-lg screenshot-frame">
+                    </div>
+                    
+                    <div class="space-y-2 text-sm">
+                        <div class="flex items-center text-gray-300">
+                            <i class="fas fa-cog text-blue-400 mr-2"></i>
+                            <span>File → Export Selection</span>
+                        </div>
+                        <div class="flex items-center text-gray-300">
+                            <i class="fas fa-cog text-blue-400 mr-2"></i>
+                            <span>Format: USD Files (*.usd)</span>
+                        </div>
+                        <div class="flex items-center text-gray-300">
+                            <i class="fas fa-cog text-blue-400 mr-2"></i>
+                            <span>Include: Geometry + Materials</span>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center mt-3">
+                        <i class="fas fa-arrow-right workflow-arrow"></i>
+                    </div>
+                </div>
+                
+                <!-- Step 3: USDView Analysis -->
+                <div class="step-card rounded-xl p-4">
+                    <div class="flex items-center mb-3">
+                        <div class="step-number rounded-full w-8 h-8 flex items-center justify-center text-white font-bold text-sm mr-3">3</div>
+                        <h3 class="text-lg font-bold text-white">USDView 분석</h3>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <img src="https://docs.omniverse.nvidia.com/usd/latest/_images/usdview_gui_sh.png" 
+                             alt="USDView Interface" 
+                             class="w-full h-20 object-cover rounded-lg screenshot-frame">
+                    </div>
+                    
+                    <div class="space-y-2 text-sm">
+                        <div class="flex items-center text-gray-300">
+                            <i class="fas fa-search text-purple-400 mr-2"></i>
+                            <span>계층 구조 탐색</span>
+                        </div>
+                        <div class="flex items-center text-gray-300">
+                            <i class="fas fa-search text-purple-400 mr-2"></i>
+                            <span>속성 및 메타데이터 확인</span>
+                        </div>
+                        <div class="flex items-center text-gray-300">
+                            <i class="fas fa-search text-purple-400 mr-2"></i>
+                            <span>렌더링 결과 검증</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Detailed Export Settings -->
+            <div class="grid grid-cols-2 gap-6 mb-6">
+                
+                <!-- Export Options Detail -->
+                <div class="step-card rounded-xl p-4">
+                    <div class="flex items-center mb-3">
+                        <i class="fas fa-sliders-h icon-glow text-xl text-blue-400 mr-3"></i>
+                        <h3 class="text-lg font-bold text-white">주요 익스포트 옵션</h3>
+                    </div>
+                    
+                    <div class="space-y-3">
+                        <div class="bg-gray-800 bg-opacity-50 rounded-lg p-3">
+                            <div class="flex justify-between items-center mb-1">
+                                <span class="text-white font-medium">Geometry</span>
+                                <span class="text-green-400 text-sm">✓ 필수</span>
+                            </div>
+                            <p class="text-gray-400 text-xs">메시, 서브디비전, NURBS 포함</p>
+                        </div>
+                        
+                        <div class="bg-gray-800 bg-opacity-50 rounded-lg p-3">
+                            <div class="flex justify-between items-center mb-1">
+                                <span class="text-white font-medium">Materials</span>
+                                <span class="text-blue-400 text-sm">○ 선택</span>
+                            </div>
+                            <p class="text-gray-400 text-xs">셰이더, 텍스처, UV 매핑</p>
+                        </div>
+                        
+                        <div class="bg-gray-800 bg-opacity-50 rounded-lg p-3">
+                            <div class="flex justify-between items-center mb-1">
+                                <span class="text-white font-medium">Animation</span>
+                                <span class="text-purple-400 text-sm">○ 선택</span>
+                            </div>
+                            <p class="text-gray-400 text-xs">키프레임, 변형, 타임라인</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- USDView Navigation -->
+                <div class="step-card rounded-xl p-4">
+                    <div class="flex items-center mb-3">
+                        <i class="fas fa-mouse-pointer icon-glow text-xl text-purple-400 mr-3"></i>
+                        <h3 class="text-lg font-bold text-white">USDView 주요 기능</h3>
+                    </div>
+                    
+                    <div class="space-y-3">
+                        <div class="bg-gray-800 bg-opacity-50 rounded-lg p-3">
+                            <div class="flex items-center mb-1">
+                                <i class="fas fa-tree text-green-400 mr-2"></i>
+                                <span class="text-white font-medium">Scene Graph</span>
+                            </div>
+                            <p class="text-gray-400 text-xs">계층 구조 트리 뷰로 탐색</p>
+                        </div>
+                        
+                        <div class="bg-gray-800 bg-opacity-50 rounded-lg p-3">
+                            <div class="flex items-center mb-1">
+                                <i class="fas fa-list text-blue-400 mr-2"></i>
+                                <span class="text-white font-medium">Property Inspector</span>
+                            </div>
+                            <p class="text-gray-400 text-xs">선택된 객체의 모든 속성 표시</p>
+                        </div>
+                        
+                        <div class="bg-gray-800 bg-opacity-50 rounded-lg p-3">
+                            <div class="flex items-center mb-1">
+                                <i class="fas fa-eye text-purple-400 mr-2"></i>
+                                <span class="text-white font-medium">Viewport Controls</span>
+                            </div>
+                            <p class="text-gray-400 text-xs">렌더링 모드, 조명 설정</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Pro Tips -->
+            <div class="tip-box rounded-xl p-4">
+                <div class="flex items-start">
+                    <i class="fas fa-lightbulb text-2xl text-yellow-400 mr-4 mt-1"></i>
+                    <div>
+                        <h3 class="text-lg font-bold text-white mb-2">실습 팁 & 주의사항</h3>
+                        <div class="grid grid-cols-3 gap-4 text-sm">
+                            <div>
+                                <p class="text-green-400 font-medium mb-1">✓ 성공 포인트</p>
+                                <p class="text-gray-300">파일 경로에 한글 사용 금지 • 텍스처 상대 경로 설정 • 씬 정리 후 익스포트</p>
+                            </div>
+                            <div>
+                                <p class="text-yellow-400 font-medium mb-1">⚠ 주의 사항</p>
+                                <p class="text-gray-300">대용량 파일 처리 시간 • 복잡한 셰이더 변환 한계 • 버전 호환성 확인</p>
+                            </div>
+                            <div>
+                                <p class="text-blue-400 font-medium mb-1">🔧 문제 해결</p>
+                                <p class="text-gray-300">빈 파일 생성 시 → 선택 영역 확인 • 텍스처 누락 시 → 경로 재설정</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        
+        <!-- Footer -->
+        <div class="absolute bottom-6 left-12 right-12 flex justify-between items-center text-gray-400">
+            <div class="flex items-center">
+                <i class="fas fa-university mr-2"></i>
+                <span class="text-sm">Computer Graphics & Data Management Course</span>
+            </div>
+            <div class="flex items-center space-x-4">
+                <div class="progress-dots">
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot active"></div>
+                    <div class="dot"></div>
+                </div>
+                <span class="text-sm">Slide 5 of 6</span>
+            </div>
+        </div>
+        
+    </div>
+</body>
+</html>

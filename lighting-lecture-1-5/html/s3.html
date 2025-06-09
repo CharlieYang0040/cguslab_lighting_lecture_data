@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>5.1 빛의 감쇠(Falloff) 이해와 적용</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        .slide {
+            width: 1280px;
+            min-height: 720px;
+            background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        .content {
+            position: relative;
+            z-index: 10;
+        }
+        .glass-card {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(8px);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .highlight-text {
+            color: #FBBF24;
+            font-weight: bold;
+            text-shadow: 0 0 8px rgba(251, 191, 36, 0.4);
+        }
+        .light-source {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0) 70%);
+            border-radius: 50%;
+            filter: blur(5px);
+            z-index: 2;
+            box-shadow: 0 0 30px 15px rgba(255, 255, 255, 0.5);
+            animation: pulse 4s infinite alternate ease-in-out;
+        }
+        .light-beam {
+            position: absolute;
+            background: linear-gradient(to right, rgba(255,255,255,0.1), rgba(255,255,255,0));
+            transform-origin: left center;
+            z-index: 1;
+            animation: rotate 10s infinite alternate ease-in-out;
+            filter: blur(8px);
+        }
+        @keyframes pulse {
+            0% { transform: scale(0.9); opacity: 0.7; }
+            100% { transform: scale(1.1); opacity: 1; }
+        }
+        @keyframes rotate {
+            0% { transform: rotate(-5deg) translateY(-10px); opacity: 0.3; }
+            100% { transform: rotate(5deg) translateY(10px); opacity: 0.7; }
+        }
+        .key-point {
+            background: rgba(255, 187, 36, 0.15);
+            border-left: 4px solid #FBBF24;
+            padding: 10px 15px;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 10px;
+            transition: all 0.3s ease;
+        }
+        .key-point:hover {
+            background: rgba(255, 187, 36, 0.25);
+            transform: translateX(5px);
+        }
+        .heading-underline {
+            position: relative;
+            display: inline-block;
+        }
+        .heading-underline::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #FBBF24, transparent);
+            border-radius: 2px;
+        }
+        .falloff-example {
+            position: relative;
+            height: 120px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+        .falloff-label {
+            position: absolute;
+            bottom: 0;
+            background: rgba(0,0,0,0.6);
+            width: 100%;
+            padding: 4px 0;
+            text-align: center;
+        }
+        .glow-text {
+            text-shadow: 0 0 10px currentColor;
+        }
+        .formula-box {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 8px 16px;
+            display: inline-block;
+            border: 1px solid rgba(255, 187, 36, 0.3);
+        }
+        .falloff-slider-container {
+            position: relative;
+            width: 100%;
+            height: 10px;
+            background: rgba(30, 41, 59, 0.5);
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        .falloff-slider-thumb {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: #60A5FA;
+            border-radius: 50%;
+            top: -5px;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(96, 165, 250, 0.8);
+        }
+        .falloff-slider-track {
+            position: absolute;
+            height: 100%;
+            background: linear-gradient(to right, #60A5FA, transparent);
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide">
+        <div class="light-source" style="top: 80px; left: 220px;"></div>
+        <div class="light-beam" style="top: 80px; left: 260px; width: 600px; height: 120px;"></div>
+        <div class="light-beam" style="top: 140px; left: 260px; width: 500px; height: 80px; opacity: 0.5;"></div>
+        
+        <div class="content px-16 py-12">
+            <div class="mb-5">
+                <h1 class="text-4xl font-bold text-white">
+                    <i class="fas fa-lightbulb text-yellow-300 mr-3"></i>
+                    <span class="heading-underline">5.1 빛의 감쇠 (Falloff) 이해와 적용</span>
+                </h1>
+                <p class="text-lg text-gray-300 mt-2">거리에 따른 빛의 강도 변화 원리와 활용</p>
+            </div>
+            
+            <div class="grid grid-cols-2 gap-8 mt-6">
+                <div>
+                    <div class="glass-card mb-6">
+                        <h2 class="text-2xl font-semibold text-yellow-300 mb-4 glow-text">
+                            <i class="fas fa-lightbulb mr-2"></i>Falloff 개념
+                        </h2>
+                        <div class="key-point">
+                            <p class="text-lg"><span class="highlight-text">빛의 강도</span>가 <span class="highlight-text">거리</span>에 따라 <span class="highlight-text">감소</span>하는 현상</p>
+                        </div>
+                        <div class="key-point">
+                            <p class="text-lg"><span class="highlight-text">Inverse Square Falloff</span> 모델: 거리의 <span class="highlight-text">제곱에 반비례</span>하여 빛의 강도 감소</p>
+                        </div>
+                        <div class="key-point">
+                            <p class="text-lg">물리 법칙을 기반으로 한 <span class="highlight-text">사실적인 빛 표현</span>의 핵심 요소</p>
+                        </div>
+                        
+                        <div class="mt-4 text-center">
+                            <div class="formula-box inline-block">
+                                <p class="text-lg text-yellow-300">I = I<sub>0</sub> / d<sup>2</sup></p>
+                                <p class="text-sm text-gray-400 mt-1">빛의 강도(I)는 거리(d)의 제곱에 반비례</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="glass-card">
+                        <h2 class="text-2xl font-semibold text-blue-300 mb-4 glow-text">
+                            <i class="fas fa-sliders-h mr-2"></i>실습 가이드
+                        </h2>
+                        <ul class="space-y-3">
+                            <li class="flex items-start bg-blue-900 bg-opacity-20 p-2 rounded transition-all hover:bg-opacity-30">
+                                <i class="fas fa-exclamation-triangle text-red-400 mt-1 mr-2"></i>
+                                <span>너무 강한 Falloff: 빛이 급격히 감소하여 <span class="text-red-300 font-bold">어두운 영역</span> 발생</span>
+                            </li>
+                            <li class="flex items-start bg-blue-900 bg-opacity-20 p-2 rounded transition-all hover:bg-opacity-30">
+                                <i class="fas fa-exclamation-triangle text-yellow-400 mt-1 mr-2"></i>
+                                <span>너무 약한 Falloff: 빛이 먼 곳까지 도달하여 <span class="text-yellow-300 font-bold">평면적인 느낌</span></span>
+                            </li>
+                            <li class="flex items-start bg-green-900 bg-opacity-20 p-2 rounded transition-all hover:bg-opacity-30">
+                                <i class="fas fa-check-circle text-green-400 mt-1 mr-2"></i>
+                                <span>현실적 설정: <span class="text-green-300 font-bold">Quadratic(2.0)</span> 값 사용 시작점</span>
+                            </li>
+                        </ul>
+                        
+                        <div class="mt-4">
+                            <p class="text-sm text-blue-200 mb-2">Falloff 강도 조절:</p>
+                            <div class="falloff-slider-container">
+                                <div class="falloff-slider-track" style="width: 60%;"></div>
+                                <div class="falloff-slider-thumb" style="left: 60%;"></div>
+                            </div>
+                            <div class="flex justify-between text-xs text-gray-400">
+                                <span>약한 Falloff</span>
+                                <span>강한 Falloff</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <div class="glass-card mb-6">
+                        <h2 class="text-2xl font-semibold text-green-300 mb-4 glow-text">
+                            <i class="fas fa-square-root-alt mr-2"></i>Inverse Square Law
+                        </h2>
+                        <div class="flex justify-center mb-4">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/Inverse_square_law.svg/1200px-Inverse_square_law.svg.png" alt="Inverse Square Law Diagram" class="rounded-lg shadow-lg max-w-full h-auto" style="max-height: 200px;">
+                        </div>
+                        <div class="bg-black bg-opacity-30 p-3 rounded-lg text-center">
+                            <p class="text-yellow-200"><i class="fas fa-ruler-combined mr-2"></i>거리 × 2 = 빛의 강도 ÷ 4</p>
+                            <p class="text-yellow-200"><i class="fas fa-ruler-combined mr-2"></i>거리 × 3 = 빛의 강도 ÷ 9</p>
+                        </div>
+                    </div>
+                    
+                    <div class="glass-card">
+                        <h2 class="text-2xl font-semibold text-purple-300 mb-4 glow-text">
+                            <i class="fas fa-eye mr-2"></i>Falloff 설정 효과 비교
+                        </h2>
+                        <div class="grid grid-cols-3 gap-4">
+                            <div class="text-center">
+                                <div class="falloff-example">
+                                    <div style="height: 100%; background: radial-gradient(circle at center left, #FBBF24 30%, transparent 80%);"></div>
+                                    <div class="falloff-label">약한 Falloff</div>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <div class="falloff-example">
+                                    <div style="height: 100%; background: radial-gradient(circle at center left, #FBBF24 10%, transparent 60%);"></div>
+                                    <div class="falloff-label">현실적 Falloff</div>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <div class="falloff-example">
+                                    <div style="height: 100%; background: radial-gradient(circle at center left, #FBBF24 5%, transparent 40%);"></div>
+                                    <div class="falloff-label">강한 Falloff</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-4 p-3 bg-gray-800 bg-opacity-50 rounded-lg border border-purple-500 border-opacity-30">
+                            <p class="text-center">
+                                <span class="text-yellow-300 font-bold text-lg">TIP:</span> 
+                                <span class="text-purple-200 font-bold">목적에 맞는 Falloff 선택</span>
+                            </p>
+                            <div class="grid grid-cols-2 gap-2 mt-2 text-sm">
+                                <div class="bg-blue-900 bg-opacity-30 p-2 rounded">
+                                    <i class="fas fa-fill-drip text-blue-300 mr-1"></i> 
+                                    <span class="text-blue-100">전체 조명: 약한 Falloff</span>
+                                </div>
+                                <div class="bg-yellow-900 bg-opacity-30 p-2 rounded">
+                                    <i class="fas fa-sun text-yellow-300 mr-1"></i> 
+                                    <span class="text-yellow-100">강조 조명: 강한 Falloff</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="absolute bottom-4 right-16 bg-blue-900 bg-opacity-40 rounded-lg px-4 py-2 text-sm text-blue-200">
+                <p><i class="fas fa-info-circle mr-1"></i> 다음 실습: 다양한 Falloff 값 테스트 및 결과 비교</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>프로젝트 1: 라이팅 연출 실습</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11.6.0/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            overflow: hidden;
+        }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            position: relative;
+            background-color: #f8fafc;
+            overflow: hidden;
+        }
+        .title-bar {
+            background: linear-gradient(90deg, #1e3a8a, #3b82f6);
+        }
+        .highlight-box {
+            background-color: #f1f5f9;
+            border-left: 4px solid #3b82f6;
+        }
+        .step-card {
+            background-color: white;
+            transition: all 0.3s ease;
+            border: 1px solid #e2e8f0;
+        }
+        .step-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            border-color: #3b82f6;
+        }
+        .project-goal {
+            border-radius: 0 30px 30px 0;
+            background: linear-gradient(90deg, #3b82f6, #1e3a8a);
+        }
+        .image-container {
+            border: 2px solid #cbd5e1;
+        }
+        .diagram-box {
+            background-color: #f1f5f9;
+            border-radius: 10px;
+        }
+        .diagram-container {
+            width: 100%;
+            max-width: 400px;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container flex flex-col">
+        <!-- 제목 바 -->
+        <div class="title-bar w-full py-4 px-12 flex items-center">
+            <h1 class="text-3xl font-bold text-white">프로젝트 1: 제공된 씬 라이팅 연출 실습</h1>
+            <div class="ml-auto text-white text-opacity-80 text-sm">
+                컴퓨터 그래픽스 라이팅 과정 | 7강
+            </div>
+        </div>
+        
+        <!-- 메인 콘텐츠 -->
+        <div class="flex-1 px-12 py-6 flex">
+            <!-- 왼쪽 컬럼: 프로젝트 목표 및 단계 -->
+            <div class="w-1/2 pr-6 flex flex-col">
+                <!-- 프로젝트 목표 -->
+                <div class="project-goal pl-6 py-4 mb-6 text-white">
+                    <h2 class="text-2xl font-bold mb-2">프로젝트 목표</h2>
+                    <p class="text-white text-opacity-90">제공된 씬을 바탕으로 앞서 학습한 <strong>라이팅 기법</strong>을 적용하여 최종 이미지를 제작합니다.</p>
+                    <ul class="mt-2 list-disc list-inside text-white text-opacity-90">
+                        <li><strong>비주얼 언어</strong> 활용한 씬 분석</li>
+                        <li><strong>3 Point Lighting</strong> 기법 실습</li>
+                        <li><strong>방향별 라이팅</strong> 효과 연출</li>
+                    </ul>
+                </div>
+                
+                <!-- 진행 단계 -->
+                <h3 class="text-xl font-bold text-gray-700 mb-4">
+                    <i class="fas fa-tasks text-blue-600 mr-2"></i>진행 단계
+                </h3>
+                
+                <div class="space-y-4 flex-1">
+                    <!-- 단계 1 -->
+                    <div class="step-card p-4 rounded-lg">
+                        <div class="flex items-center">
+                            <div class="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold flex-shrink-0">1</div>
+                            <h4 class="ml-3 text-lg font-bold text-gray-800">씬 분석 및 라이팅 목표 설정</h4>
+                        </div>
+                        <div class="mt-2 pl-11 text-gray-600 text-sm">
+                            <p>• 제공된 씬의 구성 요소와 공간 특성 분석</p>
+                            <p>• 연출하고자 하는 분위기와 스토리 설정</p>
+                            <p>• 필요한 조명 계획 및 스케치 작업</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 단계 2 -->
+                    <div class="step-card p-4 rounded-lg">
+                        <div class="flex items-center">
+                            <div class="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold flex-shrink-0">2</div>
+                            <h4 class="ml-3 text-lg font-bold text-gray-800">주요 조명 배치와 카메라 세팅</h4>
+                        </div>
+                        <div class="mt-2 pl-11 text-gray-600 text-sm">
+                            <p>• <strong>Key Light</strong> (주조명), <strong>Fill Light</strong> (보조조명), <strong>Back Light</strong> (후면조명) 배치</p>
+                            <p>• 카메라 앵글, 포커스, 화각 설정</p>
+                            <p>• 프레임 구도와 시선 유도 요소 고려</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 단계 3 -->
+                    <div class="step-card p-4 rounded-lg">
+                        <div class="flex items-center">
+                            <div class="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold flex-shrink-0">3</div>
+                            <h4 class="ml-3 text-lg font-bold text-gray-800">V-Ray Physical Camera 활용</h4>
+                        </div>
+                        <div class="mt-2 pl-11 text-gray-600 text-sm">
+                            <p>• 노출(Exposure) 및 조도(Illumination) 조절</p>
+                            <p>• 피사계 심도와 셔터 스피드 최적화</p>
+                            <p>• 최종 렌더링 및 결과물 확인</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 오른쪽 컬럼: 시각 자료 -->
+            <div class="w-1/2 pl-6 flex flex-col">
+                <!-- 씬 및 라이팅 예시 이미지 -->
+                <div class="image-container rounded-lg overflow-hidden mb-4 bg-white">
+                    <img src="https://kaarwan.s3.amazonaws.com/public/blog/media/v-ray-render-architecture_kaarwan_image3.png" alt="V-Ray 렌더링 예시" class="w-full">
+                    <div class="p-2 text-center text-sm text-gray-500">V-Ray를 활용한 라이팅 연출 예시</div>
+                </div>
+                
+                <!-- 3 Point Lighting 다이어그램 -->
+                <div class="diagram-box p-4 mb-4">
+                    <h3 class="text-lg font-bold text-gray-700 mb-2">3 Point Lighting 기법</h3>
+                    <div class="flex">
+                        <div class="diagram-container">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Three-point_lighting_diagram.svg/1200px-Three-point_lighting_diagram.svg.png" alt="3 Point Lighting 다이어그램" class="w-full">
+                        </div>
+                        <div class="ml-4 text-sm text-gray-600">
+                            <p class="mb-2"><strong class="text-blue-600">Key Light</strong>: 주요 조명으로 주체를 강조하고 주된 그림자 형성</p>
+                            <p class="mb-2"><strong class="text-blue-600">Fill Light</strong>: 그림자를 부드럽게 하는 보조 조명</p>
+                            <p><strong class="text-blue-600">Back Light</strong>: 주체를 배경과 분리하고 입체감 부여</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 피드백 및 그룹 토론 안내 -->
+                <div class="highlight-box p-4 rounded-r-lg mt-auto">
+                    <h3 class="text-lg font-bold text-gray-700 mb-2">
+                        <i class="fas fa-comments text-blue-600 mr-2"></i>피드백 및 그룹 토론
+                    </h3>
+                    <p class="text-gray-600 text-sm mb-2">프로젝트 진행 중 실시간 피드백 및 그룹 토론을 통해 창의적 연출과 문제 해결 능력을 향상시킵니다.</p>
+                    <div class="flex flex-wrap gap-2 mt-3">
+                        <div class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-medium">연출 의도 공유</div>
+                        <div class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-medium">기술적 문제 해결</div>
+                        <div class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-medium">창의적 대안 제시</div>
+                        <div class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-medium">동료 평가</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 하단 푸터 -->
+        <div class="py-3 px-12 bg-gray-100 flex justify-between items-center text-gray-600 text-sm">
+            <div>프로젝트 1: 제공된 씬 라이팅 연출 실습</div>
+            <div>컴퓨터 그래픽스 라이팅 과정 | 7강</div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D 데이터 기본 구조 이해</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+            overflow-x: hidden;
+        }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            margin: 0 auto;
+            position: relative;
+        }
+        .animated-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 80%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(168, 85, 247, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 40% 40%, rgba(34, 197, 94, 0.05) 0%, transparent 50%);
+            animation: pulse 4s ease-in-out infinite alternate;
+        }
+        @keyframes pulse {
+            0% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+        .title-gradient {
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .geometric-shape {
+            position: absolute;
+            border: 2px solid rgba(59, 130, 246, 0.3);
+            border-radius: 8px;
+            animation: float 6s ease-in-out infinite;
+        }
+        .shape-1 {
+            width: 50px;
+            height: 50px;
+            top: 12%;
+            right: 10%;
+            animation-delay: 0s;
+        }
+        .shape-2 {
+            width: 35px;
+            height: 35px;
+            top: 65%;
+            right: 18%;
+            animation-delay: -2s;
+            border-color: rgba(168, 85, 247, 0.3);
+        }
+        .shape-3 {
+            width: 40px;
+            height: 40px;
+            top: 20%;
+            left: 8%;
+            animation-delay: -4s;
+            border-color: rgba(34, 197, 94, 0.3);
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-12px) rotate(180deg); }
+        }
+        .data-card {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(168, 85, 247, 0.1) 100%);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+        .data-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(59, 130, 246, 0.5);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.2);
+        }
+        .code-block {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .icon-glow {
+            filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.5));
+        }
+        .number-badge {
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        }
+        .visual-diagram {
+            background: rgba(30, 41, 59, 0.6);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            backdrop-filter: blur(10px);
+        }
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.1) 0%, rgba(59, 130, 246, 0.1) 100%);
+            border-left: 4px solid #22c55e;
+        }
+        .progress-dots {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(156, 163, 175, 0.3);
+        }
+        .dot.active {
+            background: #3b82f6;
+            box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container relative">
+        <div class="animated-bg"></div>
+        
+        <!-- Geometric Shapes -->
+        <div class="geometric-shape shape-1"></div>
+        <div class="geometric-shape shape-2"></div>
+        <div class="geometric-shape shape-3"></div>
+        
+        <!-- Main Content -->
+        <div class="relative z-10 px-16 py-10">
+            
+            <!-- Header Section -->
+            <div class="mb-8">
+                <div class="flex items-center mb-3">
+                    <div class="number-badge rounded-full w-10 h-10 flex items-center justify-center text-white font-bold text-lg mr-4">
+                        3.1
+                    </div>
+                    <h1 class="title-gradient text-4xl font-black">3D 데이터 기본 구조 이해</h1>
+                </div>
+                <p class="text-gray-400 text-lg ml-14">Float3, Normal, Vector - Fundamental Data Types in 3D Graphics</p>
+            </div>
+            
+            <!-- Two Column Layout -->
+            <div class="grid grid-cols-2 gap-10">
+                
+                <!-- Left Column - Data Types & Code -->
+                <div>
+                    <div class="flex items-center mb-6">
+                        <i class="fas fa-code icon-glow text-2xl text-blue-400 mr-3"></i>
+                        <h2 class="text-2xl font-bold text-white">핵심 데이터 타입</h2>
+                    </div>
+                    
+                    <!-- Float3 -->
+                    <div class="data-card rounded-xl p-5 mb-5">
+                        <div class="flex items-center mb-3">
+                            <div class="bg-blue-500 rounded-lg w-8 h-8 flex items-center justify-center text-white font-bold text-sm mr-3">F3</div>
+                            <h3 class="text-xl font-bold text-white">Float3</h3>
+                        </div>
+                        <p class="text-gray-300 text-sm mb-3">3D 공간의 위치, 크기, 색상을 나타내는 3개 실수값</p>
+                        <div class="code-block rounded-lg p-3">
+                            <code class="text-green-400 text-sm">
+                                // Position in 3D space<br>
+                                Float3 position = {10.5f, 20.0f, -5.3f};<br>
+                                // RGB Color values<br>
+                                Float3 color = {0.8f, 0.2f, 0.9f};
+                            </code>
+                        </div>
+                    </div>
+                    
+                    <!-- Normal -->
+                    <div class="data-card rounded-xl p-5 mb-5">
+                        <div class="flex items-center mb-3">
+                            <div class="bg-purple-500 rounded-lg w-8 h-8 flex items-center justify-center text-white font-bold text-sm mr-3">N</div>
+                            <h3 class="text-xl font-bold text-white">Normal Vector</h3>
+                        </div>
+                        <p class="text-gray-300 text-sm mb-3">표면의 법선 벡터, 라이팅 계산에 필수적</p>
+                        <div class="code-block rounded-lg p-3">
+                            <code class="text-purple-400 text-sm">
+                                // Surface normal (unit vector)<br>
+                                Normal3f normal = {0.0f, 1.0f, 0.0f};<br>
+                                // Lighting calculation<br>
+                                float intensity = dot(normal, lightDir);
+                            </code>
+                        </div>
+                    </div>
+                    
+                    <!-- Vector -->
+                    <div class="data-card rounded-xl p-5">
+                        <div class="flex items-center mb-3">
+                            <div class="bg-green-500 rounded-lg w-8 h-8 flex items-center justify-center text-white font-bold text-sm mr-3">V</div>
+                            <h3 class="text-xl font-bold text-white">Vector3</h3>
+                        </div>
+                        <p class="text-gray-300 text-sm mb-3">방향과 크기를 가진 벡터, 변환 및 계산에 사용</p>
+                        <div class="code-block rounded-lg p-3">
+                            <code class="text-green-400 text-sm">
+                                // Direction vector<br>
+                                Vector3f direction = {1.0f, 0.0f, 0.0f};<br>
+                                // Movement calculation<br>
+                                position += direction * speed;
+                            </code>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Right Column - Visual Diagrams -->
+                <div>
+                    <div class="flex items-center mb-6">
+                        <i class="fas fa-project-diagram icon-glow text-2xl text-purple-400 mr-3"></i>
+                        <h2 class="text-2xl font-bold text-white">시각적 구조 분석</h2>
+                    </div>
+                    
+                    <!-- Normal Vector Diagram -->
+                    <div class="visual-diagram rounded-xl p-4 mb-5">
+                        <h3 class="text-lg font-bold text-white mb-3">Normal Vector 구조</h3>
+                        <div class="flex justify-center mb-3">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Vertex_normals.png" 
+                                 alt="Vertex Normal Vectors" 
+                                 class="w-64 h-auto rounded-lg border border-blue-500 border-opacity-30">
+                        </div>
+                        <p class="text-gray-300 text-sm text-center">각 정점의 Normal Vector가 표면 법선을 정의</p>
+                    </div>
+                    
+                    <!-- Face Normal Diagram -->
+                    <div class="visual-diagram rounded-xl p-4 mb-5">
+                        <h3 class="text-lg font-bold text-white mb-3">Face & Vertex Normals</h3>
+                        <div class="flex justify-center mb-3">
+                            <img src="https://learn.microsoft.com/en-us/windows/win32/direct3d9/images/nrmlvect.png" 
+                                 alt="Face and Vertex Normal Vectors" 
+                                 class="w-full h-auto rounded-lg border border-purple-500 border-opacity-30">
+                        </div>
+                        <p class="text-gray-300 text-sm text-center">면 법선과 정점 법선의 차이점</p>
+                    </div>
+                    
+                    <!-- Sphere Normal Example -->
+                    <div class="visual-diagram rounded-xl p-4">
+                        <h3 class="text-lg font-bold text-white mb-3">구체 표면 Normal</h3>
+                        <div class="flex justify-center mb-3">
+                            <img src="https://www.scratchapixel.com/images/shading-intro/shad-sphere-normal.png" 
+                                 alt="Sphere Surface Normals" 
+                                 class="w-48 h-auto rounded-lg border border-green-500 border-opacity-30">
+                        </div>
+                        <p class="text-gray-300 text-sm text-center">구체 표면의 연속적인 Normal 분포</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Bottom Highlight Box -->
+            <div class="highlight-box rounded-xl p-6 mt-8">
+                <div class="flex items-start">
+                    <i class="fas fa-lightbulb text-2xl text-yellow-400 mr-4 mt-1"></i>
+                    <div>
+                        <h3 class="text-xl font-bold text-white mb-2">데이터 구조 이해의 중요성</h3>
+                        <p class="text-gray-300">
+                            <strong class="text-green-400">라이팅 계산:</strong> Normal 벡터는 Phong, Lambert 등 조명 모델의 핵심 • 
+                            <strong class="text-blue-400">렌더링 최적화:</strong> 올바른 데이터 구조로 GPU 메모리 효율성 향상 • 
+                            <strong class="text-purple-400">파이프라인 호환성:</strong> 표준 데이터 형식으로 툴 간 호환성 보장
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        
+        <!-- Footer -->
+        <div class="absolute bottom-6 left-16 right-16 flex justify-between items-center text-gray-400">
+            <div class="flex items-center">
+                <i class="fas fa-university mr-2"></i>
+                <span class="text-sm">Computer Graphics & Data Management Course</span>
+            </div>
+            <div class="flex items-center space-x-4">
+                <div class="progress-dots">
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot active"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                </div>
+                <span class="text-sm">Slide 3 of 6</span>
+            </div>
+        </div>
+        
+    </div>
+</body>
+</html>

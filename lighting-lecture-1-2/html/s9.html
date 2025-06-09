@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3 Point Lighting 실습</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Noto Sans KR', sans-serif;
+            overflow: hidden;
+        }
+        .slide {
+            width: 1280px;
+            min-height: 720px;
+            overflow: hidden;
+            position: relative;
+            background: linear-gradient(135deg, #0a2342 0%, #183763 100%);
+            color: white;
+        }
+        .title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+            color: #ffffff;
+            position: relative;
+            display: inline-block;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        .title::after {
+            content: '';
+            position: absolute;
+            width: 100px;
+            height: 4px;
+            background: #60a5fa;
+            bottom: -10px;
+            left: 0;
+            animation: expandWidth 1s ease-out forwards;
+        }
+        @keyframes expandWidth {
+            from { width: 0; }
+            to { width: 100px; }
+        }
+        .section-title {
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: #93c5fd;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        }
+        .light-type-card {
+            border-radius: 10px;
+            background: rgba(30, 58, 138, 0.3);
+            transition: all 0.3s ease;
+            transform: translateX(-20px);
+            opacity: 0;
+            animation: fadeInRight 0.6s forwards;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        .light-type-card:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        .light-type-card:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        .light-type-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            background: rgba(30, 58, 138, 0.5);
+        }
+        @keyframes fadeInRight {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        .light-example {
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            animation: fadeIn 0.8s forwards;
+            border: 2px solid rgba(96, 165, 250, 0.3);
+        }
+        .light-example:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+        .light-example:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        .light-example:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        .light-example:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+            border-color: rgba(96, 165, 250, 0.8);
+            z-index: 2;
+        }
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+        .highlight {
+            color: #93c5fd;
+            font-weight: 600;
+            position: relative;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        }
+        .highlight::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #93c5fd;
+            transition: width 0.3s ease;
+        }
+        .light-type-card:hover .highlight::after,
+        .practice-step:hover .highlight::after {
+            width: 100%;
+        }
+        .accent-circle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(96, 165, 250, 0.1);
+            z-index: 0;
+            animation: float 10s infinite alternate ease-in-out;
+        }
+        @keyframes float {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-15px); }
+        }
+        .light-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            flex-shrink: 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+        .light-type-card:hover .light-icon {
+            transform: rotate(15deg) scale(1.1);
+        }
+        .key-light-icon {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        }
+        .fill-light-icon {
+            background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+        }
+        .back-light-icon {
+            background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
+        }
+        .setup-diagram {
+            border-radius: 10px;
+            padding: 15px;
+            background: rgba(30, 58, 138, 0.2);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            opacity: 0;
+            animation: fadeIn 0.8s forwards;
+            animation-delay: 0.6s;
+            border: 1px solid rgba(96, 165, 250, 0.2);
+        }
+        .setup-diagram:hover {
+            transform: scale(1.02);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+            border-color: rgba(96, 165, 250, 0.5);
+        }
+        .practice-step {
+            border-left: 3px solid #60a5fa;
+            background: rgba(30, 58, 138, 0.2);
+            transition: all 0.3s ease;
+            opacity: 0;
+            animation: fadeInUp 0.6s forwards;
+            animation-delay: 0.8s;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+        }
+        .practice-step:hover {
+            background: rgba(30, 58, 138, 0.4);
+            transform: translateX(5px);
+            box-shadow: 0 5px 12px rgba(0, 0, 0, 0.3);
+        }
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .light-beam {
+            position: absolute;
+            z-index: 0;
+            opacity: 0.4;
+            animation: pulse 4s infinite alternate;
+            pointer-events: none;
+        }
+        @keyframes pulse {
+            0% { opacity: 0.2; }
+            100% { opacity: 0.6; }
+        }
+        .key-beam {
+            background: radial-gradient(ellipse at center, rgba(245, 158, 11, 0.3) 0%, rgba(245, 158, 11, 0) 70%);
+        }
+        .fill-beam {
+            background: radial-gradient(ellipse at center, rgba(59, 130, 246, 0.3) 0%, rgba(59, 130, 246, 0) 70%);
+        }
+        .back-beam {
+            background: radial-gradient(ellipse at center, rgba(139, 92, 246, 0.3) 0%, rgba(139, 92, 246, 0) 70%);
+        }
+        .diagram-container {
+            position: relative;
+            height: 250px;
+            background: rgba(15, 23, 42, 0.4);
+            border-radius: 8px;
+            border: 1px solid rgba(96, 165, 250, 0.3);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        .diagram-container:hover {
+            transform: scale(1.02);
+            border-color: rgba(96, 165, 250, 0.6);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        .diagram-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at center, rgba(30, 58, 138, 0) 30%, rgba(15, 23, 42, 0.8) 100%);
+            pointer-events: none;
+        }
+        .camera-icon {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(30, 58, 138, 0.6);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            z-index: 2;
+            transition: all 0.3s ease;
+        }
+        .diagram-container:hover .camera-icon {
+            transform: translateX(-50%) scale(1.1);
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
+        }
+        .subject {
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100px;
+            height: 100px;
+            background: rgba(96, 165, 250, 0.2);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            z-index: 2;
+            transition: all 0.3s ease;
+        }
+        .diagram-container:hover .subject {
+            transform: translate(-50%, -50%) scale(1.05);
+            background: rgba(96, 165, 250, 0.3);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+        }
+        .light-position {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+            z-index: 2;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .light-position:hover {
+            transform: scale(1.2);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
+        }
+        .key-position {
+            top: 40%;
+            right: 25%;
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        }
+        .key-position:hover::after {
+            content: 'Key Light';
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(245, 158, 11, 0.8);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            white-space: nowrap;
+        }
+        .fill-position {
+            top: 40%;
+            left: 25%;
+            background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+        }
+        .fill-position:hover::after {
+            content: 'Fill Light';
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(59, 130, 246, 0.8);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            white-space: nowrap;
+        }
+        .back-position {
+            top: 20%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
+        }
+        .back-position:hover::after {
+            content: 'Back Light';
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(139, 92, 246, 0.8);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            white-space: nowrap;
+        }
+        .light-connection {
+            position: absolute;
+            height: 2px;
+            background-color: rgba(255, 255, 255, 0.3);
+            transform-origin: 0 0;
+            z-index: 1;
+            transition: all 0.3s ease;
+        }
+        .diagram-container:hover .light-connection {
+            filter: brightness(1.5);
+            height: 3px;
+        }
+        .intro-text {
+            background: rgba(30, 58, 138, 0.3);
+            border-radius: 8px;
+            border-left: 4px solid #60a5fa;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+            transform: translateY(-10px);
+            opacity: 0;
+            animation: fadeInUp 0.6s forwards;
+        }
+        .image-label {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 100%);
+            padding: 8px 0 2px;
+            transition: all 0.3s ease;
+        }
+        .light-example:hover .image-label {
+            padding-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide p-10 flex flex-col">
+        <!-- Decorative elements -->
+        <div class="accent-circle" style="width: 300px; height: 300px; top: -100px; right: -100px; animation-delay: 0s;"></div>
+        <div class="accent-circle" style="width: 250px; height: 250px; bottom: -100px; left: -50px; animation-delay: 2s;"></div>
+        
+        <!-- Light beams -->
+        <div class="light-beam key-beam" style="width: 400px; height: 400px; top: 150px; right: 200px; animation-delay: 0s;"></div>
+        <div class="light-beam fill-beam" style="width: 300px; height: 300px; top: 200px; left: 200px; animation-delay: 1s;"></div>
+        <div class="light-beam back-beam" style="width: 350px; height: 350px; bottom: 100px; left: 40%; animation-delay: 2s;"></div>
+        
+        <!-- Header -->
+        <div class="mb-6 relative z-10">
+            <h1 class="title">3 Point Lighting 실습</h1>
+        </div>
+        
+        <!-- Main content container -->
+        <div class="flex flex-1 space-x-6 relative z-10">
+            <!-- Left column: 3 Point Lighting types and description -->
+            <div class="w-1/2 space-y-5 pr-4">
+                <div class="intro-text p-4 rounded-lg mb-6">
+                    <p class="text-gray-200">3 Point Lighting은 <span class="highlight">기본적인 조명 배치 기법</span>으로, 피사체를 효과적으로 조명하기 위한 세 가지 주요 광원을 사용합니다. 각 조명은 특정 목적을 가지고 피사체와 장면을 표현합니다.</p>
+                </div>
+                
+                <!-- Key Light -->
+                <div class="light-type-card p-4">
+                    <div class="flex items-center mb-3">
+                        <div class="light-icon key-light-icon">
+                            <i class="fas fa-sun text-white" style="filter: drop-shadow(0 0 3px rgba(245, 158, 11, 0.5));"></i>
+                        </div>
+                        <h2 class="section-title m-0">Key Light (주 조명)</h2>
+                    </div>
+                    <div class="pl-14">
+                        <p class="mb-2 text-gray-200"><span class="highlight">주요 조명 역할</span>을 담당하며 피사체의 <span class="highlight">주요 디테일</span>을 표현합니다.</p>
+                        <ul class="list-disc pl-5 text-gray-200 space-y-1">
+                            <li>피사체의 <span class="highlight">정면 45° 각도</span>에 위치</li>
+                            <li><span class="highlight">가장 강한 빛</span>으로 피사체의 형태 정의</li>
+                            <li>방향에 따라 <span class="highlight">그림자 형성 위치</span> 결정</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Fill Light -->
+                <div class="light-type-card p-4">
+                    <div class="flex items-center mb-3">
+                        <div class="light-icon fill-light-icon">
+                            <i class="fas fa-lightbulb text-white" style="filter: drop-shadow(0 0 3px rgba(59, 130, 246, 0.5));"></i>
+                        </div>
+                        <h2 class="section-title m-0">Fill Light (보조 조명)</h2>
+                    </div>
+                    <div class="pl-14">
+                        <p class="mb-2 text-gray-200">Key Light로 인한 <span class="highlight">그림자 부분</span>을 보완하여 <span class="highlight">부드러운 효과</span>를 제공합니다.</p>
+                        <ul class="list-disc pl-5 text-gray-200 space-y-1">
+                            <li>Key Light <span class="highlight">반대편</span>에 위치</li>
+                            <li>Key Light보다 <span class="highlight">약한 강도</span> (약 1/2 ~ 1/4)</li>
+                            <li>그림자 영역의 <span class="highlight">디테일 보존</span> 역할</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Back Light -->
+                <div class="light-type-card p-4">
+                    <div class="flex items-center mb-3">
+                        <div class="light-icon back-light-icon">
+                            <i class="fas fa-circle-notch text-white" style="filter: drop-shadow(0 0 3px rgba(139, 92, 246, 0.5));"></i>
+                        </div>
+                        <h2 class="section-title m-0">Back Light (배경 조명)</h2>
+                    </div>
+                    <div class="pl-14">
+                        <p class="mb-2 text-gray-200">피사체의 <span class="highlight">윤곽을 강조</span>하여 배경과 분리하고 <span class="highlight">입체감</span>을 부여합니다.</p>
+                        <ul class="list-disc pl-5 text-gray-200 space-y-1">
+                            <li>피사체 <span class="highlight">뒤쪽 상단</span>에 위치</li>
+                            <li>피사체의 <span class="highlight">가장자리 하이라이트</span> 형성</li>
+                            <li><span class="highlight">깊이감</span>과 공간감 강화 효과</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Right column: Visual examples and setup diagram -->
+            <div class="w-1/2 flex flex-col space-y-5">
+                <!-- 3 Point Lighting diagram -->
+                <div class="setup-diagram mb-3">
+                    <h3 class="text-lg font-semibold text-blue-200 mb-3 flex items-center">
+                        <i class="fas fa-map-marked-alt text-blue-300 mr-2" style="filter: drop-shadow(0 0 3px rgba(96, 165, 250, 0.5));"></i>
+                        3 Point Lighting 배치도
+                    </h3>
+                    
+                    <div class="diagram-container">
+                        <!-- 피사체 표현 -->
+                        <div class="subject">
+                            <i class="fas fa-cube text-white text-2xl"></i>
+                        </div>
+                        
+                        <!-- 카메라 위치 -->
+                        <div class="camera-icon">
+                            <i class="fas fa-camera text-white"></i>
+                        </div>
+                        
+                        <!-- 조명 위치 표시 -->
+                        <div class="light-position key-position" title="Key Light">
+                            <i class="fas fa-sun text-white text-sm"></i>
+                        </div>
+                        <div class="light-position fill-position" title="Fill Light">
+                            <i class="fas fa-lightbulb text-white text-sm"></i>
+                        </div>
+                        <div class="light-position back-position" title="Back Light">
+                            <i class="fas fa-circle-notch text-white text-sm"></i>
+                        </div>
+                        
+                        <!-- 조명과 피사체 연결선 -->
+                        <div id="key-connection" class="light-connection" style="top: 40%; left: 50%; width: 100px; transform: rotate(-20deg); background: rgba(245, 158, 11, 0.5);"></div>
+                        <div id="fill-connection" class="light-connection" style="top: 40%; left: 50%; width: 100px; transform: rotate(160deg); background: rgba(59, 130, 246, 0.5);"></div>
+                        <div id="back-connection" class="light-connection" style="top: 40%; left: 50%; width: 80px; transform: rotate(90deg); background: rgba(139, 92, 246, 0.5);"></div>
+                    </div>
+                </div>
+                
+                <!-- Light example images -->
+                <div class="grid grid-cols-3 gap-3">
+                    <div class="light-example">
+                        <div class="relative">
+                            <img src="https://www.3drender.com/light/figures/3ptKey.jpg" alt="Key Light 예시" class="w-full h-auto">
+                            <div class="image-label">
+                                <p class="text-xs text-center text-white">Key Light만 켠 상태</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="light-example">
+                        <div class="relative">
+                            <img src="https://www.3drender.com/light/figures/3ptFill.jpg" alt="Fill Light 예시" class="w-full h-auto">
+                            <div class="image-label">
+                                <p class="text-xs text-center text-white">Fill Light 추가</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="light-example">
+                        <div class="relative">
+                            <img src="https://www.3drender.com/light/figures/3ptBack.jpg" alt="Back Light 예시" class="w-full h-auto">
+                            <div class="image-label">
+                                <p class="text-xs text-center text-white">Back Light 추가</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Complete example -->
+                <div class="light-example" style="animation-delay: 0.6s;">
+                    <div class="relative">
+                        <img src="https://www.3drender.com/light/figures/3ptLights.gif" alt="3 Point Lighting 종합 예시" class="w-full h-auto">
+                        <div class="image-label">
+                            <p class="text-sm text-center font-medium text-white">완성된 3 Point Lighting 설정</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Practice steps -->
+                <div class="practice-step p-4 rounded mt-2">
+                    <h3 class="text-lg font-semibold text-blue-200 mb-2 flex items-center">
+                        <i class="fas fa-clipboard-list text-green-300 mr-2" style="filter: drop-shadow(0 0 3px rgba(74, 222, 128, 0.5));"></i>
+                        실습 단계
+                    </h3>
+                    <ol class="list-decimal pl-8 text-gray-200 space-y-1">
+                        <li>기본 씬에 <span class="highlight">Key Light 배치</span> 후 테스트 렌더링</li>
+                        <li><span class="highlight">Fill Light 추가</span>하고 강도 조절하며 효과 관찰</li>
+                        <li><span class="highlight">Back Light 배치</span>하여 윤곽선 강조 확인</li>
+                        <li>각 조명의 <span class="highlight">위치와 강도를 미세 조정</span>하며 최적의 결과 도출</li>
+                        <li>다양한 각도에서 <span class="highlight">렌더링 결과 비교</span> 및 분석</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // 애니메이션이 완료된 후 연결선 위치 조정
+        setTimeout(() => {
+            // Key Light 연결선
+            const keyConnection = document.getElementById('key-connection');
+            const keyLight = document.querySelector('.key-position');
+            const subject = document.querySelector('.subject');
+            
+            if (keyConnection && keyLight && subject) {
+                const keyRect = keyLight.getBoundingClientRect();
+                const subjectRect = subject.getBoundingClientRect();
+                
+                const dx = keyRect.left - subjectRect.left;
+                const dy = keyRect.top - subjectRect.top;
+                const length = Math.sqrt(dx * dx + dy * dy);
+                const angle = Math.atan2(dy, dx) * (180 / Math.PI);
+                
+                keyConnection.style.width = `${length}px`;
+                keyConnection.style.transform = `rotate(${angle}deg)`;
+            }
+            
+            // Fill Light 연결선
+            const fillConnection = document.getElementById('fill-connection');
+            const fillLight = document.querySelector('.fill-position');
+            
+            if (fillConnection && fillLight && subject) {
+                const fillRect = fillLight.getBoundingClientRect();
+                const subjectRect = subject.getBoundingClientRect();
+                
+                const dx = fillRect.left - subjectRect.left;
+                const dy = fillRect.top - subjectRect.top;
+                const length = Math.sqrt(dx * dx + dy * dy);
+                const angle = Math.atan2(dy, dx) * (180 / Math.PI);
+                
+                fillConnection.style.width = `${length}px`;
+                fillConnection.style.transform = `rotate(${angle}deg)`;
+            }
+            
+            // Back Light 연결선
+            const backConnection = document.getElementById('back-connection');
+            const backLight = document.querySelector('.back-position');
+            
+            if (backConnection && backLight && subject) {
+                const backRect = backLight.getBoundingClientRect();
+                const subjectRect = subject.getBoundingClientRect();
+                
+                const dx = backRect.left - subjectRect.left;
+                const dy = backRect.top - subjectRect.top;
+                const length = Math.sqrt(dx * dx + dy * dy);
+                const angle = Math.atan2(dy, dx) * (180 / Math

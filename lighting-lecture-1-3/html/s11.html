@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>마무리 슬라이드</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        .summary-title {
+            font-size: 2.8rem;
+            font-weight: 800;
+            background: linear-gradient(90deg, #f9a826, #ffd166);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 10px rgba(249, 168, 38, 0.2);
+        }
+        .technique-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(5px);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+        }
+        .technique-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        .card-rembrandt {
+            border-color: #f9a826;
+        }
+        .card-split {
+            border-color: #4cc9f0;
+        }
+        .card-short {
+            border-color: #f72585;
+        }
+        .card-broad {
+            border-color: #7209b7;
+        }
+        .next-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            border-left: 4px solid #f9a826;
+        }
+        .qa-section {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+        }
+        .light-beam {
+            position: absolute;
+            width: 200px;
+            height: 1000px;
+            background: linear-gradient(to bottom, rgba(255,255,255,0.05), transparent);
+            transform: rotate(45deg);
+            top: -500px;
+            right: -100px;
+            filter: blur(20px);
+        }
+        .contact-icon {
+            transition: all 0.3s ease;
+        }
+        .contact-icon:hover {
+            transform: scale(1.2);
+            color: #f9a826;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container p-12 relative">
+        <!-- 배경 효과 -->
+        <div class="light-beam"></div>
+        
+        <!-- 헤더 -->
+        <div class="text-center mb-10">
+            <h1 class="summary-title">3강 요약 & 다음 단계</h1>
+            <p class="text-xl mt-3 opacity-80">캐릭터 라이팅 기본 기법 실습</p>
+        </div>
+        
+        <!-- 주요 기법 요약 -->
+        <div class="grid grid-cols-4 gap-4 mb-12">
+            <div class="technique-card card-rembrandt p-4 text-center">
+                <div class="w-12 h-12 mx-auto bg-opacity-20 bg-yellow-500 rounded-full flex items-center justify-center mb-2">
+                    <i class="fas fa-lightbulb text-yellow-400 text-xl"></i>
+                </div>
+                <h3 class="font-bold text-lg">Rembrandt Light</h3>
+                <p class="text-xs text-gray-300">삼각형 형태의 빛으로<br>드라마틱한 입체감</p>
+            </div>
+            
+            <div class="technique-card card-split p-4 text-center">
+                <div class="w-12 h-12 mx-auto bg-opacity-20 bg-blue-400 rounded-full flex items-center justify-center mb-2">
+                    <i class="fas fa-adjust text-blue-400 text-xl"></i>
+                </div>
+                <h3 class="font-bold text-lg">Split Light</h3>
+                <p class="text-xs text-gray-300">얼굴 절반을 밝혀<br>강렬한 대비 효과</p>
+            </div>
+            
+            <div class="technique-card card-short p-4 text-center">
+                <div class="w-12 h-12 mx-auto bg-opacity-20 bg-pink-500 rounded-full flex items-center justify-center mb-2">
+                    <i class="fas fa-compress-alt text-pink-500 text-xl"></i>
+                </div>
+                <h3 class="font-bold text-lg">Short Light</h3>
+                <p class="text-xs text-gray-300">짧은 쪽을 강조해<br>개성과 입체감 부여</p>
+            </div>
+            
+            <div class="technique-card card-broad p-4 text-center">
+                <div class="w-12 h-12 mx-auto bg-opacity-20 bg-purple-600 rounded-full flex items-center justify-center mb-2">
+                    <i class="fas fa-expand-alt text-purple-500 text-xl"></i>
+                </div>
+                <h3 class="font-bold text-lg">Broad Light</h3>
+                <p class="text-xs text-gray-300">넓은 쪽을 밝게 해<br>부드럽고 친근한 느낌</p>
+            </div>
+        </div>
+        
+        <!-- 다음 차시 예고 -->
+        <div class="next-section p-6 mb-8">
+            <div class="flex items-start">
+                <div class="text-3xl mr-6">
+                    <i class="fas fa-arrow-circle-right text-yellow-400"></i>
+                </div>
+                <div>
+                    <h2 class="text-2xl font-bold mb-3">다음 차시 예고: 4강</h2>
+                    <p class="text-lg mb-2">고급 캐릭터 라이팅 기법 및 실전 활용</p>
+                    <div class="flex flex-wrap gap-3 mt-3">
+                        <span class="px-3 py-1 bg-opacity-20 bg-white rounded-full text-sm">3점 라이팅 시스템</span>
+                        <span class="px-3 py-1 bg-opacity-20 bg-white rounded-full text-sm">감정 표현 라이팅</span>
+                        <span class="px-3 py-1 bg-opacity-20 bg-white rounded-full text-sm">환경 라이팅 연동</span>
+                        <span class="px-3 py-1 bg-opacity-20 bg-white rounded-full text-sm">실전 프로젝트 적용</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Q&A 안내 -->
+        <div class="qa-section p-6">
+            <div class="flex justify-between items-center">
+                <div>
+                    <h2 class="text-2xl font-bold mb-3">Q&A 및 문의</h2>
+                    <p class="mb-3">수업 내용 관련 질문이나 추가 자료 요청은 아래 채널로 문의해 주세요.</p>
+                    <p class="text-yellow-400 italic">"실습은 이론을 실력으로 바꾸는 유일한 방법입니다!"</p>
+                </div>
+                
+                <div class="flex space-x-6">
+                    <a href="#" class="contact-icon text-center">
+                        <i class="fas fa-envelope text-3xl mb-2"></i>
+                        <p class="text-xs">이메일</p>
+                    </a>
+                    <a href="#" class="contact-icon text-center">
+                        <i class="fas fa-comments text-3xl mb-2"></i>
+                        <p class="text-xs">온라인 포럼</p>
+                    </a>
+                    <a href="#" class="contact-icon text-center">
+                        <i class="fas fa-book text-3xl mb-2"></i>
+                        <p class="text-xs">학습자료</p>
+                    </a>
+                    <a href="#" class="contact-icon text-center">
+                        <i class="fas fa-video text-3xl mb-2"></i>
+                        <p class="text-xs">실습 영상</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>라이팅 이론 심화 및 V-Ray 실습</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Noto Sans KR', sans-serif;
+            overflow: hidden;
+        }
+        .slide {
+            width: 1280px;
+            min-height: 720px;
+            overflow: hidden;
+            position: relative;
+            background: linear-gradient(135deg, #0a2342 0%, #183763 100%);
+            color: white;
+        }
+        .title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+            color: #ffffff;
+            position: relative;
+            display: inline-block;
+        }
+        .title::after {
+            content: '';
+            position: absolute;
+            width: 100px;
+            height: 4px;
+            background: #60a5fa;
+            bottom: -10px;
+            left: 0;
+            animation: expandWidth 1s ease-out forwards;
+        }
+        @keyframes expandWidth {
+            from { width: 0; }
+            to { width: 100px; }
+        }
+        .section-title {
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: #93c5fd;
+            margin-bottom: 0.5rem;
+        }
+        .theory-card {
+            border-radius: 10px;
+            background: rgba(30, 58, 138, 0.3);
+            transition: all 0.3s ease;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: fadeInUp 0.6s forwards;
+        }
+        .theory-card:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        .theory-card:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        .theory-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            background: rgba(30, 58, 138, 0.5);
+        }
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .example-image {
+            border-radius: 8px;
+            border: 2px solid rgba(96, 165, 250, 0.3);
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            animation: fadeIn 0.8s forwards;
+            animation-delay: 0.6s;
+        }
+        .example-image:nth-child(2) {
+            animation-delay: 0.8s;
+        }
+        .example-image:hover {
+            transform: scale(1.02);
+            border-color: rgba(96, 165, 250, 0.8);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+        }
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+        .practice-card {
+            border-left: 4px solid #60a5fa;
+            background: rgba(30, 58, 138, 0.2);
+            transition: all 0.3s ease;
+            opacity: 0;
+            animation: fadeIn 0.8s forwards;
+            animation-delay: 1s;
+        }
+        .practice-card:hover {
+            background: rgba(30, 58, 138, 0.4);
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        .highlight {
+            color: #93c5fd;
+            font-weight: 600;
+            position: relative;
+            display: inline-block;
+        }
+        .highlight::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #93c5fd;
+            transition: width 0.3s ease;
+        }
+        .theory-card:hover .highlight::after {
+            width: 100%;
+        }
+        .accent-circle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(96, 165, 250, 0.1);
+            z-index: 0;
+            animation: float 8s infinite alternate ease-in-out;
+        }
+        @keyframes float {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-15px); }
+        }
+        .concept-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+        .theory-card:hover .concept-icon {
+            transform: rotate(15deg) scale(1.1);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+        .light-ray {
+            position: absolute;
+            background: linear-gradient(90deg, rgba(96,165,250,0) 0%, rgba(96,165,250,0.1) 50%, rgba(96,165,250,0) 100%);
+            transform-origin: center;
+            z-index: 0;
+            opacity: 0.5;
+            animation: pulse 8s infinite alternate ease-in-out;
+        }
+        @keyframes pulse {
+            0% { opacity: 0.3; }
+            100% { opacity: 0.7; }
+        }
+        .image-caption {
+            background: rgba(30, 58, 138, 0.8);
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+        .example-image:hover .image-caption {
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="slide p-10 flex flex-col">
+        <!-- Decorative elements -->
+        <div class="accent-circle" style="width: 300px; height: 300px; top: -100px; right: -100px; animation-delay: 0s;"></div>
+        <div class="accent-circle" style="width: 250px; height: 250px; bottom: -100px; left: -50px; animation-delay: 2s;"></div>
+        <div class="light-ray" style="width: 150px; height: 800px; top: -100px; right: 30%; transform: rotate(45deg);"></div>
+        <div class="light-ray" style="width: 100px; height: 600px; bottom: -100px; left: 40%; transform: rotate(-30deg);"></div>
+        
+        <!-- Header -->
+        <div class="mb-8 relative z-10">
+            <h1 class="title">라이팅 이론 심화 및 V-Ray 실습</h1>
+        </div>
+        
+        <!-- Main content container -->
+        <div class="flex flex-1 space-x-6 relative z-10">
+            <!-- Left column: Theory -->
+            <div class="w-7/12 space-y-5 pr-4">
+                <!-- Contrast Theory -->
+                <div class="theory-card p-5">
+                    <div class="flex items-center mb-2">
+                        <div class="concept-icon">
+                            <i class="fas fa-adjust text-white"></i>
+                        </div>
+                        <h2 class="section-title m-0">Contrast 심화</h2>
+                    </div>
+                    <div class="pl-12">
+                        <p class="mb-2 text-gray-200">빛의 강도차이가 만들어내는 <span class="highlight">시각적 대비</span>와 그 효과</p>
+                        <ul class="list-disc pl-5 text-gray-200 space-y-1">
+                            <li>높은 대비: 선명한 명암 분리, <span class="highlight">극적인 연출</span> 가능</li>
+                            <li>낮은 대비: <span class="highlight">부드러운 전환</span>, 섬세한 디테일 표현</li>
+                            <li>대비를 통한 <span class="highlight">시선 유도</span> 및 포인트 강조</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Light & Shape Theory -->
+                <div class="theory-card p-5">
+                    <div class="flex items-center mb-2">
+                        <div class="concept-icon">
+                            <i class="fas fa-cube text-white"></i>
+                        </div>
+                        <h2 class="section-title m-0">Light & Shape 심화</h2>
+                    </div>
+                    <div class="pl-12">
+                        <p class="mb-2 text-gray-200">빛이 물체의 <span class="highlight">형태와 질감</span>을 어떻게 표현하는가</p>
+                        <ul class="list-disc pl-5 text-gray-200 space-y-1">
+                            <li>빛의 <span class="highlight">산란(Scattering)</span>과 표면 특성의 관계</li>
+                            <li>형태 인식에 영향을 주는 <span class="highlight">빛의 각도와 세기</span></li>
+                            <li>질감 표현에 필요한 <span class="highlight">미세 그림자</span> 컨트롤</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Light & Direction Theory -->
+                <div class="theory-card p-5">
+                    <div class="flex items-center mb-2">
+                        <div class="concept-icon">
+                            <i class="fas fa-directions text-white"></i>
+                        </div>
+                        <h2 class="section-title m-0">Light & Direction 심화</h2>
+                    </div>
+                    <div class="pl-12">
+                        <p class="mb-2 text-gray-200">빛의 <span class="highlight">방향</span>이 장면 구성과 감정에 미치는 영향</p>
+                        <ul class="list-disc pl-5 text-gray-200 space-y-1">
+                            <li>상부 조명: <span class="highlight">자연스러운 인상</span>, 그림자 하향 형성</li>
+                            <li>하부 조명: <span class="highlight">극적이고 긴장감 있는</span> 분위기 연출</li>
+                            <li>측면 조명: <span class="highlight">입체감과 질감 강조</span>, 공간 깊이 표현</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Right column: Images and Practice -->
+            <div class="w-5/12 flex flex-col space-y-5">
+                <!-- Image examples -->
+                <div class="flex-1 flex flex-col space-y-4">
+                    <div class="example-image">
+                        <div class="relative overflow-hidden">
+                            <img src="https://www.scratchapixel.com/images/introduction-to-lighting/intro-lighting-light-types-results.png" alt="빛의 방향에 따른 효과" class="w-full h-auto">
+                            <div class="image-caption absolute bottom-0 left-0 right-0 p-2 text-sm text-center">
+                                다양한 방향의 빛이 형태 인식에 미치는 영향
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="example-image">
+                        <div class="relative overflow-hidden">
+                            <img src="https://dreamfarmstudios.com/wp-content/uploads/2021/04/Skydome-vs-skydome-GI-1500x844.jpg" alt="장면의 조명 효과" class="w-full h-auto">
+                            <div class="image-caption absolute bottom-0 left-0 right-0 p-2 text-sm text-center">
+                                조명 설정에 따른 장면의 분위기 변화
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- V-Ray Practice Section -->
+                <div class="practice-card p-5 rounded-r">
+                    <h2 class="section-title flex items-center">
+                        <i class="fas fa-laptop-code text-blue-300 mr-3" style="filter: drop-shadow(0 0 3px rgba(147, 197, 253, 0.5));"></i>
+                        V-Ray 실습
+                    </h2>
+                    <div class="pl-3 mt-3">
+                        <p class="text-gray-200 mb-3"><span class="highlight">실습 목표:</span> 간단한 씬에서 조명 요소 변경 및 결과 비교</p>
+                        <ul class="list-disc pl-5 text-gray-200 space-y-2">
+                            <li><span class="font-semibold">변경 요소:</span> 조명 강도, 방향, 색상, 수량</li>
+                            <li><span class="font-semibold">관찰 포인트:</span> 그림자 형성, 반사광, 분위기 변화</li>
+                            <li><span class="font-semibold">V-Ray 기능:</span> Light Mix, 실시간 결과 미리보기</li>
+                        </ul>
+                        <div class="mt-4 bg-blue-800 bg-opacity-20 p-3 rounded flex items-center">
+                            <i class="fas fa-lightbulb text-yellow-300 mr-3" style="filter: drop-shadow(0 0 5px rgba(252, 211, 77, 0.5));"></i>
+                            <span class="text-sm">조명 세팅 변경 후 <span class="highlight">실시간으로 결과 비교</span>하며 이론이 실제로 적용되는 방식 관찰</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

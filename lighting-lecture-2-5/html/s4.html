@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2개월차 종합 리뷰 및 과제 점검</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        .learning-card {
+            transition: all 0.4s ease;
+            border-left: 4px solid transparent;
+        }
+        .learning-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            border-left-color: #fbbf24;
+        }
+        .progress-ring {
+            background: conic-gradient(#fbbf24 0deg 288deg, rgba(255, 255, 255, 0.2) 288deg 360deg);
+            border-radius: 50%;
+            padding: 4px;
+        }
+        .floating-element {
+            animation: float 10s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            25% { transform: translateY(-15px) rotate(2deg); }
+            50% { transform: translateY(-25px) rotate(0deg); }
+            75% { transform: translateY(-10px) rotate(-2deg); }
+        }
+        .backdrop-pattern {
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 60%),
+                radial-gradient(circle at 90% 80%, rgba(255, 255, 255, 0.05) 0%, transparent 60%),
+                radial-gradient(circle at 50% 10%, rgba(251, 191, 36, 0.1) 0%, transparent 40%);
+        }
+        .achievement-badge {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            animation: pulse-glow 2s ease-in-out infinite alternate;
+        }
+        @keyframes pulse-glow {
+            from { 
+                box-shadow: 0 0 15px rgba(251, 191, 36, 0.5);
+                transform: scale(1);
+            }
+            to { 
+                box-shadow: 0 0 25px rgba(251, 191, 36, 0.8);
+                transform: scale(1.05);
+            }
+        }
+        .content-highlight {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1));
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container backdrop-pattern">
+        <!-- Background Decorative Elements -->
+        <div class="absolute top-10 right-10 floating-element">
+            <i class="fas fa-graduation-cap text-yellow-300 text-6xl opacity-20"></i>
+        </div>
+        <div class="absolute bottom-12 left-10 floating-element" style="animation-delay: -3s;">
+            <i class="fas fa-chart-line text-white text-5xl opacity-15"></i>
+        </div>
+        <div class="absolute top-1/4 right-1/4 floating-element" style="animation-delay: -6s;">
+            <i class="fas fa-star text-purple-300 text-4xl opacity-25"></i>
+        </div>
+        <div class="absolute bottom-1/3 right-12 floating-element" style="animation-delay: -9s;">
+            <i class="fas fa-brain text-green-300 text-3xl opacity-20"></i>
+        </div>
+        
+        <!-- Header Section -->
+        <div class="pt-10 pb-6 text-center">
+            <div class="inline-flex items-center bg-white bg-opacity-25 backdrop-blur-sm rounded-full px-8 py-3 mb-4">
+                <i class="fas fa-clipboard-check mr-3 text-white text-xl"></i>
+                <span class="text-white font-medium text-lg">Comprehensive Review Session</span>
+            </div>
+            <h1 class="text-white text-4xl font-bold mb-2">
+                **2개월차 종합 리뷰**
+            </h1>
+            <h2 class="text-white text-3xl font-semibold mb-4">
+                <span class="text-yellow-300">및 과제 점검</span>
+            </h2>
+            <p class="text-white text-lg opacity-90 max-w-3xl mx-auto">
+                2개월간의 모든 학습 내용을 정리하고, 여러분의 성장을 함께 확인하는 시간
+            </p>
+        </div>
+        
+        <!-- Main Learning Areas Summary -->
+        <div class="px-8 pb-6">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center mb-6">
+                    <h3 class="text-white text-2xl font-bold mb-2 flex items-center justify-center">
+                        <i class="fas fa-book-open mr-3 text-yellow-300"></i>
+                        **2개월차 핵심 학습 영역**
+                    </h3>
+                    <div class="w-32 h-1 bg-yellow-300 mx-auto rounded-full"></div>
+                </div>
+                
+                <div class="grid grid-cols-3 gap-6 mb-8">
+                    <!-- Advanced Lighting -->
+                    <div class="learning-card content-highlight rounded-xl p-6">
+                        <div class="text-center mb-4">
+                            <div class="progress-ring w-16 h-16 mx-auto mb-3 flex items-center justify-center">
+                                <div class="bg-white w-12 h-12 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-sun text-yellow-500 text-xl"></i>
+                                </div>
+                            </div>
+                            <h4 class="text-white text-lg font-bold">**고급 라이팅**</h4>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="bg-white bg-opacity-10 rounded-lg p-3">
+                                <h5 class="text-yellow-300 font-semibold text-sm mb-1">주요 기술</h5>
+                                <ul class="text-white text-xs space-y-1">
+                                    <li>• Volumetric Lighting 구현</li>
+                                    <li>• Global Illumination 최적화</li>
+                                    <li>• HDRI 환경 조명 활용</li>
+                                    <li>• Color Space 관리</li>
+                                </ul>
+                            </div>
+                            <div class="bg-green-500 bg-opacity-20 rounded p-2 text-center">
+                                <span class="text-green-300 font-bold text-xs">
+                                    <i class="fas fa-check-circle mr-1"></i>
+                                    완료율 95%
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Data & USD -->
+                    <div class="learning-card content-highlight rounded-xl p-6">
+                        <div class="text-center mb-4">
+                            <div class="progress-ring w-16 h-16 mx-auto mb-3 flex items-center justify-center">
+                                <div class="bg-white w-12 h-12 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-database text-blue-500 text-xl"></i>
+                                </div>
+                            </div>
+                            <h4 class="text-white text-lg font-bold">**데이터 & USD**</h4>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="bg-white bg-opacity-10 rounded-lg p-3">
+                                <h5 class="text-blue-300 font-semibold text-sm mb-1">핵심 개념</h5>
+                                <ul class="text-white text-xs space-y-1">
+                                    <li>• USD 파이프라인 구축</li>
+                                    <li>• 데이터 구조 최적화</li>
+                                    <li>• 애셋 관리 시스템</li>
+                                    <li>• 협업 워크플로우</li>
+                                </ul>
+                            </div>
+                            <div class="bg-blue-500 bg-opacity-20 rounded p-2 text-center">
+                                <span class="text-blue-300 font-bold text-xs">
+                                    <i class="fas fa-check-circle mr-1"></i>
+                                    완료율 92%
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Python Automation -->
+                    <div class="learning-card content-highlight rounded-xl p-6">
+                        <div class="text-center mb-4">
+                            <div class="progress-ring w-16 h-16 mx-auto mb-3 flex items-center justify-center">
+                                <div class="bg-white w-12 h-12 rounded-full flex items-center justify-center">
+                                    <i class="fab fa-python text-green-500 text-xl"></i>
+                                </div>
+                            </div>
+                            <h4 class="text-white text-lg font-bold">**Python 자동화**</h4>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="bg-white bg-opacity-10 rounded-lg p-3">
+                                <h5 class="text-green-300 font-semibold text-sm mb-1">자동화 영역</h5>
+                                <ul class="text-white text-xs space-y-1">
+                                    <li>• Maya 스크립팅</li>
+                                    <li>• 라이팅 자동 세팅</li>
+                                    <li>• 배치 렌더링</li>
+                                    <li>• 툴 개발 기초</li>
+                                </ul>
+                            </div>
+                            <div class="bg-purple-500 bg-opacity-20 rounded p-2 text-center">
+                                <span class="text-purple-300 font-bold text-xs">
+                                    <i class="fas fa-check-circle mr-1"></i>
+                                    완료율 88%
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Q&A and Feedback Process -->
+                <div class="grid grid-cols-2 gap-6">
+                    <!-- Q&A Session -->
+                    <div class="content-highlight rounded-xl p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="achievement-badge w-12 h-12 rounded-full flex items-center justify-center mr-4">
+                                <i class="fas fa-question-circle text-white text-xl"></i>
+                            </div>
+                            <h3 class="text-white text-xl font-bold">**Q&A 세션**</h3>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="bg-white bg-opacity-10 rounded-lg p-3">
+                                <h4 class="text-yellow-300 font-semibold text-sm mb-2">질문 카테고리</h4>
+                                <ul class="text-white text-xs space-y-1">
+                                    <li><i class="fas fa-lightbulb mr-1 text-yellow-400"></i> 기술적 문제</li>
+                                    <li><i class="fas fa-cogs mr-1 text-blue-400"></i> 워크플로우</li>
+                                    <li><i class="fas fa-rocket mr-1 text-green-400"></i> 실무 적용</li>
+                                    <li><i class="fas fa-graduation-cap mr-1 text-purple-400"></i> 학습 방향</li>
+                                </ul>
+                            </div>
+                            <div class="bg-white bg-opacity-10 rounded-lg p-3">
+                                <h4 class="text-green-300 font-semibold text-sm mb-2">진행 방식</h4>
+                                <ul class="text-white text-xs space-y-1">
+                                    <li><i class="fas fa-hand-paper mr-1 text-orange-400"></i> 자유 질의응답</li>
+                                    <li><i class="fas fa-users mr-1 text-blue-400"></i> 그룹 토론</li>
+                                    <li><i class="fas fa-desktop mr-1 text-green-400"></i> 실시간 시연</li>
+                                    <li><i class="fas fa-comments mr-1 text-purple-400"></i> 경험 공유</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="mt-4 text-center">
+                            <div class="bg-gradient-to-r from-yellow-300 to-orange-300 text-black px-4 py-2 rounded-full inline-block font-bold text-sm">
+                                <i class="fas fa-clock mr-2"></i>
+                                30분 집중 세션
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Individual Feedback -->
+                    <div class="content-highlight rounded-xl p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="achievement-badge w-12 h-12 rounded-full flex items-center justify-center mr-4">
+                                <i class="fas fa-user-check text-white text-xl"></i>
+                            </div>
+                            <h3 class="text-white text-xl font-bold">**개별 피드백**</h3>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="bg-white bg-opacity-10 rounded-lg p-3">
+                                <h4 class="text-blue-300 font-semibold text-sm mb-2">평가 항목</h4>
+                                <div class="grid grid-cols-2 gap-2 text-xs">
+                                    <div class="flex items-center text-white">
+                                        <div class="w-3 h-3 bg-green-400 rounded-full mr-2"></div>
+                                        기술적 이해도
+                                    </div>
+                                    <div class="flex items-center text-white">
+                                        <div class="w-3 h-3 bg-blue-400 rounded-full mr-2"></div>
+                                        창의적 활용
+                                    </div>
+                                    <div class="flex items-center text-white">
+                                        <div class="w-3 h-3 bg-purple-400 rounded-full mr-2"></div>
+                                        문제 해결
+                                    </div>
+                                    <div class="flex items-center text-white">
+                                        <div class="w-3 h-3 bg-yellow-400 rounded-full mr-2"></div>
+                                        발전 가능성
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-white bg-opacity-10 rounded-lg p-3">
+                                <h4 class="text-purple-300 font-semibold text-sm mb-2">피드백 형태</h4>
+                                <ul class="text-white text-xs space-y-1">
+                                    <li>• 개인별 성취도 리포트</li>
+                                    <li>• 향후 학습 로드맵 제시</li>
+                                    <li>• 포트폴리오 발전 방향</li>
+                                    <li>• 실무 진로 상담</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Motivational Message -->
+                <div class="mt-6 text-center">
+                    <div class="content-highlight rounded-xl p-6 max-w-4xl mx-auto">
+                        <div class="flex items-center justify-center mb-3">
+                            <i class="fas fa-trophy text-yellow-300 text-3xl mr-3"></i>
+                            <h3 class="text-white text-xl font-bold">**여러분의 성장을 축하합니다!**</h3>
+                            <i class="fas fa-trophy text-yellow-300 text-3xl ml-3"></i>
+                        </div>
+                        <p class="text-white text-lg opacity-90 mb-4">
+                            2개월간의 여정을 통해 여러분은 단순한 기술 습득을 넘어서<br>
+                            **창의적 사고와 문제 해결 능력**을 함께 기르셨습니다.
+                        </p>
+                        <div class="flex justify-center space-x-4">
+                            <div class="bg-gradient-to-r from-green-400 to-blue-500 text-white px-4 py-2 rounded-full font-bold text-sm">
+                                <i class="fas fa-star mr-1"></i>기술적 성장
+                            </div>
+                            <div class="bg-gradient-to-r from-purple-400 to-pink-500 text-white px-4 py-2 rounded-full font-bold text-sm">
+                                <i class="fas fa-lightbulb mr-1"></i>창의적 발전
+                            </div>
+                            <div class="bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-4 py-2 rounded-full font-bold text-sm">
+                                <i class="fas fa-rocket mr-1"></i>미래 준비
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Bottom Decorative Bar -->
+        <div class="absolute bottom-0 left-0 right-0 h-2 bg-gradient-to-r from-yellow-300 via-white to-yellow-300"></div>
+    </div>
+</body>
+</html>

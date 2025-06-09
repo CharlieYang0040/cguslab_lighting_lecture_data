@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Value (명암) - 추가 예시</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', 'Malgun Gothic', sans-serif;
+        }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            background: linear-gradient(135deg, #1a2a3a 0%, #0d1721 100%);
+            color: #ffffff;
+            overflow: hidden;
+            position: relative;
+        }
+        .header {
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 1.5rem 3rem;
+            border-bottom: 2px solid rgba(163, 198, 255, 0.4);
+            display: flex;
+            align-items: center;
+        }
+        .header-icon {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            color: #a3c6ff;
+            font-size: 1.5rem;
+        }
+        .content {
+            padding: 1.5rem 3rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            height: calc(100% - 120px);
+        }
+        .examples-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            height: 100%;
+        }
+        .example-item {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        .example-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        .example-image {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-bottom: 0.75rem;
+        }
+        .example-title {
+            font-weight: bold;
+            color: #ffcc66;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        .example-desc {
+            font-size: 0.8rem;
+            color: #e0e0e0;
+            line-height: 1.4;
+            flex: 1;
+        }
+        .large-example {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .large-image {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+        .large-title {
+            font-weight: bold;
+            color: #ffcc66;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+        }
+        .large-title i {
+            margin-right: 0.75rem;
+        }
+        .highlight {
+            color: #a3c6ff;
+            font-weight: bold;
+        }
+        .tips-container {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .tips-title {
+            font-weight: bold;
+            color: #ffcc66;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+        }
+        .tips-title i {
+            margin-right: 0.75rem;
+        }
+        .tip-item {
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: flex-start;
+            font-size: 0.9rem;
+        }
+        .tip-item:before {
+            content: "▸";
+            color: #a3c6ff;
+            font-weight: bold;
+            margin-right: 0.75rem;
+            margin-top: 0.1rem;
+        }
+        .footer {
+            padding: 1rem 3rem;
+            text-align: right;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            box-sizing: border-box;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+        .value-progress {
+            width: 100%;
+            height: 8px;
+            background: linear-gradient(to right, #000000, #333333, #666666, #999999, #cccccc, #ffffff);
+            border-radius: 4px;
+            margin: 1rem 0;
+        }
+        .animation-highlight {
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        @keyframes glow {
+            from {
+                box-shadow: 0 0 5px rgba(163, 198, 255, 0.5);
+            }
+            to {
+                box-shadow: 0 0 20px rgba(163, 198, 255, 0.8);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="header">
+            <div class="header-icon">
+                <i class="fas fa-images"></i>
+            </div>
+            <div>
+                <h1 class="text-3xl font-bold">Value (명암) - 추가 예시</h1>
+                <p class="text-sm opacity-70 mt-1">실무 적용 사례와 심화 학습</p>
+            </div>
+        </div>
+        
+        <div class="content">
+            <div>
+                <div class="large-example">
+                    <div class="large-title">
+                        <i class="fas fa-palette"></i> Value Study 실습 예시
+                    </div>
+                    <img src="https://images.squarespace-cdn.com/content/v1/54b51e67e4b09ecf41918d81/f04b003b-b691-402c-9b94-804f6926377c/value+study.png" alt="Value Study 예시" class="large-image">
+                    <p class="text-sm">명암 연구를 통한 <span class="highlight">형태 파악</span>과 <span class="highlight">공간감 표현</span>. 단계적 접근으로 복잡한 형태도 명확하게 표현 가능</p>
+                    <div class="value-progress"></div>
+                </div>
+                
+                <div class="tips-container">
+                    <div class="tips-title">
+                        <i class="fas fa-lightbulb"></i> 명암 활용 핵심 팁
+                    </div>
+                    <div class="tip-item"><span class="highlight">3단계 명암</span>으로 시작: 하이라이트, 중간톤, 그림자</div>
+                    <div class="tip-item"><span class="highlight">주광원 위치</span> 먼저 결정하여 일관성 유지</div>
+                    <div class="tip-item"><span class="highlight">반사광</span> 고려로 자연스러운 명암 연출</div>
+                    <div class="tip-item"><span class="highlight">대비 조절</span>로 분위기와 초점 제어</div>
+                </div>
+            </div>
+            
+            <div class="examples-grid">
+                <div class="example-item animation-highlight">
+                    <img src="../resources/lee-hammond_graphite-pencil-drawing_elements-of-shading.webp" alt="구의 명암 단계" class="example-image">
+                    <div class="example-title">기본 형태의 명암</div>
+                    <div class="example-desc">구에서 나타나는 <span class="highlight">하이라이트</span>, <span class="highlight">중간톤</span>, <span class="highlight">핵심 그림자</span>, <span class="highlight">반사광</span>, <span class="highlight">투사 그림자</span>의 5단계 명암</div>
+                </div>
+                
+                <div class="example-item">
+                    <img src="https://bluelavaart.com/images/chiaroscuro-valuescale%20diagram.jpg" alt="키아로스쿠로 명암" class="example-image">
+                    <div class="example-title">극적 명암 대비</div>
+                    <div class="example-desc"><span class="highlight">키아로스쿠로</span> 기법을 활용한 드라마틱한 명암 표현. 강한 대비로 입체감과 감정 전달</div>
+                </div>
+                
+                <div class="example-item">
+                    <img src="https://www.thedrawingsource.com/images/the-elements-of-form.jpg" alt="형태와 명암" class="example-image">
+                    <div class="example-title">형태 표현</div>
+                    <div class="example-desc">명암을 통한 <span class="highlight">3차원 형태</span> 표현. 평면에서 입체감을 만드는 핵심 원리</div>
+                </div>
+                
+                <div class="example-item">
+                    <img src="https://miro.medium.com/v2/resize:fit:1400/1*GLklem8rVd0VKB8hIpc3uA.png" alt="명암 기법" class="example-image">
+                    <div class="example-title">실무 적용</div>
+                    <div class="example-desc">다양한 <span class="highlight">명암 기법</span>과 <span class="highlight">렌더링 스타일</span>. 목적에 따른 명암 표현 방법</div>
+                </div>
+                
+                <div class="example-item">
+                    <img src="https://bingedrawing.com/wp-content/uploads/2022/10/2-1-1024x733.png.webp" alt="그림자 종류" class="example-image">
+                    <div class="example-title">그림자의 종류</div>
+                    <div class="example-desc"><span class="highlight">형태 그림자</span>와 <span class="highlight">투사 그림자</span>의 차이. 각각의 역할과 표현 방법</div>
+                </div>
+                
+                <div class="example-item">
+                    <img src="https://www.virtualartacademy.com/wp-content/uploads/2019/07/cover.jpg" alt="2값 명암" class="example-image">
+                    <div class="example-title">2값 명암법</div>
+                    <div class="example-desc"><span class="highlight">단순화된 명암</span>으로 강력한 시각적 효과. 빠른 스케치와 컨셉 작업에 유용</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            컴퓨터 그래픽스 라이팅 입문 | Value(명암) 심화 학습
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1개월차 학습 마무리</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            overflow: hidden;
+        }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+        }
+        .message-box {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2);
+        }
+        .quote {
+            font-style: italic;
+            position: relative;
+        }
+        .quote::before, .quote::after {
+            content: '"';
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #3b82f6;
+        }
+        .achievement-badge {
+            width: 90px;
+            height: 90px;
+            background: linear-gradient(135deg, #3b82f6, #1e3a8a);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+        }
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: white;
+            opacity: 0.5;
+            animation: float 15s infinite linear;
+        }
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); }
+            100% { transform: translateY(-100vh) rotate(360deg); }
+        }
+        .next-badge {
+            background: linear-gradient(135deg, #10b981, #047857);
+            border-radius: 10px;
+            color: white;
+            box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3);
+            transition: all 0.3s ease;
+        }
+        .next-badge:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(16, 185, 129, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container flex flex-col items-center justify-center px-16 py-12">
+        <!-- 배경 파티클 효과 -->
+        <div class="particle" style="width: 10px; height: 10px; top: 10%; left: 20%; animation-duration: 25s;"></div>
+        <div class="particle" style="width: 15px; height: 15px; top: 30%; left: 80%; animation-duration: 18s;"></div>
+        <div class="particle" style="width: 8px; height: 8px; top: 70%; left: 30%; animation-duration: 22s;"></div>
+        <div class="particle" style="width: 12px; height: 12px; top: 40%; left: 60%; animation-duration: 20s;"></div>
+        <div class="particle" style="width: 6px; height: 6px; top: 60%; left: 10%; animation-duration: 30s;"></div>
+        <div class="particle" style="width: 14px; height: 14px; top: 20%; left: 50%; animation-duration: 28s;"></div>
+        
+        <!-- 메인 메시지 박스 -->
+        <div class="message-box p-10 w-full max-w-4xl">
+            <div class="flex flex-col items-center text-center">
+                <!-- 축하 메시지 -->
+                <h2 class="text-4xl font-bold text-blue-600 mb-6">축하합니다!</h2>
+                <h3 class="text-2xl font-bold text-gray-800 mb-8">컴퓨터 그래픽스 라이팅 1개월차 과정을 성공적으로 마쳤습니다</h3>
+                
+                <!-- 성과 배지 -->
+                <div class="flex justify-center gap-8 mb-8">
+                    <div class="flex flex-col items-center">
+                        <div class="achievement-badge mb-3">
+                            <i class="fas fa-lightbulb text-4xl"></i>
+                        </div>
+                        <p class="font-bold text-gray-700">기초 이론</p>
+                        <p class="text-sm text-gray-500">습득 완료</p>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <div class="achievement-badge mb-3">
+                            <i class="fas fa-tools text-4xl"></i>
+                        </div>
+                        <p class="font-bold text-gray-700">V-Ray 도구</p>
+                        <p class="text-sm text-gray-500">활용 능력</p>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <div class="achievement-badge mb-3">
+                            <i class="fas fa-project-diagram text-4xl"></i>
+                        </div>
+                        <p class="font-bold text-gray-700">프로젝트</p>
+                        <p class="text-sm text-gray-500">실습 경험</p>
+                    </div>
+                </div>
+                
+                <!-- 격려 메시지 -->
+                <div class="quote text-xl text-gray-600 mb-8 px-10">
+                    라이팅은 단순한 기술이 아닌 이야기를 전달하는 강력한 언어입니다. 
+                    여러분은 이제 그 언어의 기초 문법을 익혔습니다.
+                </div>
+                
+                <!-- 다음 단계로의 안내 -->
+                <div class="next-badge p-5 w-full flex items-center justify-between">
+                    <div>
+                        <h4 class="text-lg font-bold mb-1">다음 단계: 2개월차 과정</h4>
+                        <p class="text-sm">고급 라이팅 기법과 실전 프로젝트로 여러분의 역량을 더욱 발전시킬 차례입니다</p>
+                    </div>
+                    <div class="text-4xl">
+                        <i class="fas fa-arrow-circle-right"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 하단 격려 메시지 -->
+        <div class="mt-8 text-white text-center">
+            <p class="text-xl font-medium mb-2">여러분의 열정과 노력이 빛나는 결과물로 이어지길 바랍니다</p>
+            <p class="text-lg">좋은 라이팅은 단순히 보이는 것이 아니라, 느끼게 하는 것입니다</p>
+        </div>
+        
+        <!-- 하단 정보 -->
+        <div class="absolute bottom-6 right-8">
+            <p class="text-white text-opacity-70 text-sm">
+                컴퓨터 그래픽스 라이팅 과정 | 1개월차 마무리
+            </p>
+        </div>
+    </div>
+</body>
+</html>

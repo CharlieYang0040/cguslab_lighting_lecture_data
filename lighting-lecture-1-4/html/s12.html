@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>아래광 활용 예시 - 공포와 창의적 표현</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+            overflow: hidden;
+        }
+        .slide {
+            width: 1280px;
+            min-height: 720px;
+            background: linear-gradient(0deg, #4a1c2a, #2c1a30, #1a0f1f);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        .slide-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            border-bottom: 2px solid rgba(255,255,255,0.2);
+        }
+        .example-card {
+            background: rgba(255,255,255,0.08);
+            border-radius: 1rem;
+            padding: 1rem;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        .example-card:hover {
+            background: rgba(255,255,255,0.15);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(220, 38, 38, 0.3);
+        }
+        .image-container {
+            border-radius: 0.75rem;
+            overflow: hidden;
+            border: 2px solid rgba(255,255,255,0.2);
+            height: 180px;
+            position: relative;
+        }
+        .image-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, rgba(220, 38, 38, 0.8), transparent);
+            display: flex;
+            align-items: flex-start;
+            padding: 1rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .example-card:hover .image-overlay {
+            opacity: 1;
+        }
+        .technique-box {
+            background: linear-gradient(135deg, #7c2d12, #dc2626);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            margin-top: 1rem;
+        }
+        .technique-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.75rem;
+            background: rgba(255,255,255,0.1);
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        .technique-item:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateX(5px);
+        }
+        .technique-item:last-child {
+            margin-bottom: 0;
+        }
+        .technique-icon {
+            width: 32px;
+            height: 32px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 0.75rem;
+            flex-shrink: 0;
+        }
+        .page-number {
+            position: absolute;
+            bottom: 1rem;
+            right: 1rem;
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+        .studio-badge {
+            position: absolute;
+            top: 0.75rem;
+            left: 0.75rem;
+            background: rgba(255,255,255,0.9);
+            color: #1f2937;
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            z-index: 10;
+        }
+        .lighting-indicator {
+            position: absolute;
+            top: 0.75rem;
+            right: 0.75rem;
+            background: rgba(220, 38, 38, 0.9);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            z-index: 10;
+        }
+        .underlight-glow {
+            position: absolute;
+            bottom: -100px;
+            left: 0;
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(0deg, rgba(220, 38, 38, 0.3), rgba(220, 38, 38, 0));
+            z-index: 0;
+        }
+        .horror-badge {
+            background: linear-gradient(45deg, #dc2626, #7f1d1d);
+        }
+        .creative-badge {
+            background: linear-gradient(45deg, #7c2d12, #a16207);
+        }
+        .dramatic-effect {
+            animation: horrorGlow 4s ease-in-out infinite alternate;
+        }
+        @keyframes horrorGlow {
+            0% { box-shadow: 0 0 20px rgba(220, 38, 38, 0.3); }
+            100% { box-shadow: 0 0 40px rgba(220, 38, 38, 0.6); }
+        }
+        .eerie-animation {
+            animation: eerieFloat 3s ease-in-out infinite;
+        }
+        @keyframes eerieFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-5px); }
+        }
+        .software-tab {
+            background: rgba(220, 38, 38, 0.2);
+            border: 1px solid rgba(220, 38, 38, 0.4);
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .software-tab:hover {
+            background: rgba(220, 38, 38, 0.4);
+        }
+        .software-tab.active {
+            background: rgba(220, 38, 38, 0.6);
+            border-color: rgba(220, 38, 38, 0.8);
+        }
+    </style>
+</head>
+<body>
+    <div class="slide p-8 flex flex-col">
+        <!-- Under light visual effect -->
+        <div class="underlight-glow"></div>
+        
+        <!-- Slide Header -->
+        <div class="slide-title pb-4 mb-6 flex items-center relative z-10">
+            <i class="fas fa-sort-amount-up mr-4 text-red-400"></i>
+            <span>아래광 활용 예시 - 공포와 창의적 표현</span>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex flex-1 space-x-6 relative z-10">
+            <!-- Left Column: Professional Examples -->
+            <div class="w-3/5 space-y-4">
+                <div class="text-lg font-semibold text-red-200 mb-4 flex items-center">
+                    <i class="fas fa-video mr-3"></i>
+                    <span>전문 작품 사례</span>
+                </div>
+
+                <!-- Example Grid -->
+                <div class="grid grid-cols-2 gap-4">
+                    <!-- Horror Lighting Tutorial -->
+                    <div class="example-card dramatic-effect">
+                        <div class="image-container relative">
+                            <img src="https://i.ytimg.com/vi/jPDBMYSGvSs/maxresdefault.jpg" alt="공포 영화 아래광 기법" class="object-cover h-full w-full">
+                            <div class="studio-badge horror-badge">HORROR LIGHTING</div>
+                            <div class="lighting-indicator">
+                                <i class="fas fa-sort-amount-up"></i>
+                            </div>
+                            <div class="image-overlay">
+                                <span class="text-sm font-medium">전문 공포 조명 기법</span>
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <h4 class="font-bold text-red-200">공포 영화 아래광</h4>
+                            <p class="text-sm text-gray-300 mt-1">아래에서 비추는 빛으로 불안감과 공포감을 극대화하는 기법</p>
+                        </div>
+                    </div>
+
+                    <!-- The Exorcist -->
+                    <div class="example-card eerie-animation">
+                        <div class="image-container relative">
+                            <img src="https://static.wixstatic.com/media/efba90_414ab35d97c945e8a6b36738989827eb~mv2.jpg/v1/fill/w_780,h_438,al_c,q_80,enc_avif,quality_auto/efba90_414ab35d97c945e8a6b36738989827eb~mv2.jpg" alt="엑소시스트 아래광" class="object-cover h-full w-full">
+                            <div class="studio-badge horror-badge">THE EXORCIST</div>
+                            <div class="lighting-indicator">
+                                <i class="fas fa-ghost"></i>
+                            </div>
+                            <div class="image-overlay">
+                                <span class="text-sm font-medium">공포 영화의 전설</span>
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <h4 class="font-bold text-red-200">엑소시스트</h4>
+                            <p class="text-sm text-gray-300 mt-1">아래광으로 초자연적 공포와 긴장감을 연출한 명작</p>
+                        </div>
+                    </div>
+
+                    <!-- The Conjuring -->
+                    <div class="example-card">
+                        <div class="image-container relative">
+                            <img src="https://definitionmagazine.com/wp-content/uploads/2021/08/rev-1-CON3-FP-030_High_Res_JPEG-scaled.jpg" alt="컨저링 아래광" class="object-cover h-full w-full">
+                            <div class="studio-badge horror-badge">THE CONJURING</div>
+                            <div class="lighting-indicator">
+                                <i class="fas fa-mask"></i>
+                            </div>
+                            <div class="image-overlay">
+                                <span class="text-sm font-medium">현대 공포의 명작</span>
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <h4 class="font-bold text-red-200">컨저링 시리즈</h4>
+                            <p class="text-sm text-gray-300 mt-1">정교한 아래광 설계로 극도의 공포감을 전달</p>
+                        </div>
+                    </div>
+
+                    <!-- Famous Horror Technique -->
+                    <div class="example-card">
+                        <div class="image-container relative">
+                            <img src="https://i.ytimg.com/vi/MlOa-5kzhTo/maxresdefault.jpg" alt="유명한 공포 조명 기법" class="object-cover h-full w-full">
+                            <div class="studio-badge creative-badge">TECHNIQUE</div>
+                            <div class="lighting-indicator">
+                                <i class="fas fa-lightbulb"></i>
+                            </div>
+                            <div class="image-overlay">
+                                <span class="text-sm font-medium">기법 분석</span>
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <h4 class="font-bold text-red-200">클래식 기법 분석</h4>
+                            <p class="text-sm text-gray-300 mt-1">역사상 가장 유명한 공포 조명 기법들의 분석</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Technique Guide -->
+            <div class="w-2/5">
+                <div class="text-lg font-semibold text-red-200 mb-4 flex items-center">
+                    <i class="fas fa-graduation-cap mr-3"></i>
+                    <span>아래광 마스터하기</span>
+                </div>
+
+                <div class="technique-box">
+                    <h3 class="text-xl font-bold mb-4 flex items-center">
+                        <i class="fas fa-sort-amount-up mr-3"></i>
+                        <span>공포 조명 기법</span>
+                    </h3>
+
+                    <div class="space-y-3">
+                        <div class="technique-item eerie-animation">
+                            <div class="technique-icon">
+                                <i class="fas fa-angle-up"></i>
+                            </div>
+                            <div>
+                                <div class="font-bold">바닥에서 수직</div>
+                                <div class="text-sm">피사체 발밑에서 위로 강하게 비춤</div>
+                            </div>
+                        </div>
+
+                        <div class="technique-item">
+                            <div class="technique-icon">
+                                <i class="fas fa-eye"></i>
+                            </div>
+                            <div>
+                                <div class="font-bold">얼굴 왜곡</div>
+                                <div class="text-sm">눈 아래 그림자로 기괴한 느낌 연출</div>
+                            </div>
+                        </div>
+
+                        <div class="technique-item">
+                            <div class="technique-icon">
+                                <i class="fas fa-fire"></i>
+                            </div>
+                            <div>
+                                <div class="font-bold">색온도 조절</div>
+                                <div class="text-sm">따뜻한 색으로 촛불, 차가운 색으로 초자연적 효과</div>
+                            </div>
+                        </div>
+
+                        <div class="technique-item">
+                            <div class="technique-icon">
+                                <i class="fas fa-brain"></i>
+                            </div>
+                            <div>
+                                <div class="font-bold">심리적 충격</div>
+                                <div class="text-sm">뇌가 인식하는 자연스러운 빛의 반대</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Software Guide -->
+                <div class="mt-4 bg-gray-900 bg-opacity-50 p-4 rounded-lg">
+                    <h4 class="font-bold text-red-200 mb-3 flex items-center">
+                        <i class="fas fa-cogs mr-2"></i>
+                        <span>소프트웨어별 실습</span>
+                    </h4>
+                    
+                    <div class="space-y-2 text-sm">
+                        <div class="software-tab active">
+                            <div class="font-bold flex items-center">
+                                <i class="fab fa-blender mr-2"></i>Blender
+                            </div>
+                            <div class="text-xs mt-1">Area Light를 피사체 아래 배치, 강도 높게 설정</div>
+                        </div>
+                        
+                        <div class="software-tab">
+                            <div class="font-bold flex items-center">
+                                <i class="fas fa-cube mr-2"></i>Maya
+                            </div>
+                            <div class="text-xs mt-1">Directional Light Y축 -90도 회전, Intensity 조절</div>
+                        </div>
+                        
+                        <div class="software-tab">
+                            <div class="font-bold flex items-center">
+                                <i class="fas fa-film mr-2"></i>After Effects
+                            </div>
+                            <div class="text-xs mt-1">CC Light Rays로 바닥에서 올라오는 빛 효과</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Practical Tips -->
+                <div class="mt-4 bg-red-900 bg-opacity-30 p-3 rounded-lg">
+                    <h4 class="font-bold text-red-200 mb-3 flex items-center">
+                        <i class="fas fa-lightbulb mr-2"></i>
+                        <span>실무 팁</span>
+                    </h4>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex items-start">
+                            <i class="fas fa-check-circle mr-2 text-orange-400 mt-1"></i>
+                            <span><strong>강도 조절:</strong> 너무 강하면 부자연스러우므로 적절히 조절</span>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fas fa-check-circle mr-2 text-orange-400 mt-1"></i>
+                            <span><strong>색상 활용:</strong> 빨간색 계열로 지옥, 파란색으로 초자연적 효과</span>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fas fa-check-circle mr-2 text-orange-400 mt-1"></i>
+                            <span><strong>보조광 금지:</strong> 아래광의 극적 효과를 위해 다른 조명 최소화</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Genre Reference -->
+                <div class="mt-4 bg-gradient-to-r from-red-600 to-red-800 p-3 rounded-lg">
+                    <div class="font-bold text-center mb-2">장르별 활용</div>
+                    <div class="grid grid-cols-2 gap-2 text-xs">
+                        <div class="bg-black bg-opacity-30 p-2 rounded text-center">
+                            <div class="font-bold">Horror</div>
+                            <div>공포감 극대화</div>
+                        </div>
+                        <div class="bg-black bg-opacity-30 p-2 rounded text-center">
+                            <div class="font-bold">Fantasy</div>
+                            <div>마법적 효과</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Page Number -->
+        <div class="page-number">12 / 13</div>
+    </div>
+</body>
+</html>

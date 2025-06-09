@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Broad Light 영화/애니메이션 예시</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        .section-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            background: linear-gradient(90deg, #f9a826, #ffbd2f);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 10px rgba(249, 168, 38, 0.3);
+            text-align: center;
+        }
+        .movie-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(8px);
+            border-radius: 15px;
+            transition: all 0.4s ease;
+            border: 1px solid rgba(249, 168, 38, 0.2);
+            overflow: hidden;
+            position: relative;
+        }
+        .movie-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(249, 168, 38, 0.3);
+            border-color: rgba(249, 168, 38, 0.5);
+        }
+        .movie-image {
+            transition: all 0.3s ease;
+            filter: brightness(1.1) contrast(1.1);
+        }
+        .movie-card:hover .movie-image {
+            filter: brightness(1.3) contrast(1.2);
+        }
+        .broad-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 65%;
+            height: 100%;
+            background: linear-gradient(90deg, rgba(249, 168, 38, 0.3), transparent);
+            z-index: 10;
+            pointer-events: none;
+        }
+        .highlight-text {
+            color: #f9a826;
+            font-weight: 600;
+        }
+        .movie-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #f9a826;
+        }
+        .floating-warmth {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 1;
+        }
+        .warm-glow {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            background: radial-gradient(circle, rgba(249, 168, 38, 0.2), transparent);
+            border-radius: 50%;
+            animation: warmGlow 8s infinite ease-in-out;
+        }
+        .warm-glow:nth-child(1) { top: 10%; left: 10%; animation-delay: 0s; }
+        .warm-glow:nth-child(2) { top: 20%; right: 15%; animation-delay: 3s; }
+        .warm-glow:nth-child(3) { bottom: 25%; left: 20%; animation-delay: 6s; }
+        @keyframes warmGlow {
+            0%, 100% { transform: scale(1); opacity: 0.3; }
+            50% { transform: scale(1.5); opacity: 0.6; }
+        }
+        .example-note {
+            background: rgba(249, 168, 38, 0.1);
+            border-left: 3px solid #f9a826;
+            border-radius: 5px;
+        }
+        .feature-tag {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(15, 52, 96, 0.8);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            z-index: 15;
+        }
+        .friendly-indicator {
+            position: absolute;
+            top: 50%;
+            left: 15px;
+            transform: translateY(-50%);
+            color: #f9a826;
+            font-size: 1.2rem;
+            z-index: 20;
+        }
+        .warmth-effect {
+            position: relative;
+        }
+        .warmth-effect::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 60%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.08);
+            z-index: 5;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container p-8 relative">
+        <!-- 배경 장식 요소들 -->
+        <div class="floating-warmth">
+            <div class="warm-glow"></div>
+            <div class="warm-glow"></div>
+            <div class="warm-glow"></div>
+        </div>
+        
+        <!-- 제목 섹션 -->
+        <div class="text-center mb-8 z-10 relative">
+            <h1 class="section-title mb-3">
+                <i class="fas fa-expand mr-3 text-yellow-400"></i>
+                Broad Light 영화/애니메이션 예시
+            </h1>
+            <p class="text-lg opacity-80">얼굴의 넓은 쪽을 밝게 처리하여 <span class="highlight-text">친근하고 자연스러운</span> 느낌을 주는 Broad Light 기법의 실제 사례</p>
+        </div>
+        
+        <!-- 메인 콘텐츠 그리드 -->
+        <div class="grid grid-cols-3 gap-6 h-auto z-10 relative">
+            <!-- 픽사 코코 예시 -->
+            <div class="movie-card p-4 relative warmth-effect">
+                <div class="broad-overlay"></div>
+                <div class="feature-tag">PIXAR</div>
+                <div class="friendly-indicator"><i class="fas fa-smile"></i></div>
+                <div class="mb-3">
+                    <img src="https://variety.com/wp-content/uploads/2017/12/danielle-feinberg-coco-movie-lighting-design-pixar.jpg" 
+                         alt="픽사 코코 Broad 라이팅" 
+                         class="movie-image w-full h-48 object-cover rounded-lg">
+                </div>
+                <div class="text-center">
+                    <h3 class="movie-title mb-2">Pixar's Coco (2017)</h3>
+                    <p class="text-sm opacity-90"><span class="highlight-text">따뜻하고 친근한</span> 캐릭터 표현</p>
+                    <p class="text-xs mt-2 opacity-70">가족애와 따뜻함을 강조하는 조명 연출</p>
+                </div>
+            </div>
+            
+            <!-- 디즈니 모아나 예시 -->
+            <div class="movie-card p-4 relative warmth-effect">
+                <div class="broad-overlay"></div>
+                <div class="feature-tag">DISNEY</div>
+                <div class="friendly-indicator"><i class="fas fa-heart"></i></div>
+                <div class="mb-3">
+                    <img src="https://www.sidefx.com/media/uploads/article/walt-disney-animation-studios-moana/hifive_03.jpg" 
+                         alt="디즈니 모아나 Broad 라이팅" 
+                         class="movie-image w-full h-48 object-cover rounded-lg">
+                </div>
+                <div class="text-center">
+                    <h3 class="movie-title mb-2">Disney's Moana (2016)</h3>
+                    <p class="text-sm opacity-90"><span class="highlight-text">개방적이고 용감한</span> 주인공 표현</p>
+                    <p class="text-xs mt-2 opacity-70">자연스러운 햇빛과 바다의 밝은 분위기</p>
+                </div>
+            </div>
+            
+            <!-- 토이 스토리 예시 -->
+            <div class="movie-card p-4 relative warmth-effect">
+                <div class="broad-overlay"></div>
+                <div class="feature-tag">ANIMATION</div>
+                <div class="friendly-indicator"><i class="fas fa-child"></i></div>
+                <div class="mb-3">
+                    <img src="https://adreamer49.wordpress.com/wp-content/uploads/2014/05/toy-story-3-11.jpg" 
+                         alt="토이 스토리 Broad 라이팅" 
+                         class="movie-image w-full h-48 object-cover rounded-lg">
+                </div>
+                <div class="text-center">
+                    <h3 class="movie-title mb-2">Toy Story Series</h3>
+                    <p class="text-sm opacity-90"><span class="highlight-text">친근하고 재미있는</span> 캐릭터들</p>
+                    <p class="text-xs mt-2 opacity-70">아이들과 함께하는 밝고 자연스러운 분위기</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 하단 추가 예시 섹션 -->
+        <div class="grid grid-cols-2 gap-8 mt-6 z-10 relative">
+            <!-- 상업적 활용 예시 -->
+            <div class="movie-card p-3 flex items-center relative">
+                <div class="w-1/3 mr-4">
+                    <img src="https://thelenslounge.com/wp-content/uploads/2023/08/broad-lighting-photography.jpg" 
+                         alt="상업적 Broad 라이팅" 
+                         class="movie-image w-full h-24 object-cover rounded-lg">
+                </div>
+                <div class="w-2/3">
+                    <h4 class="movie-title text-base mb-1">Commercial Portrait</h4>
+                    <p class="text-xs opacity-80">Broad Light를 통한 <span class="highlight-text">친근하고 자연스러운</span> 상업용 인물 표현</p>
+                </div>
+            </div>
+            
+            <!-- 실습 가이드 -->
+            <div class="example-note p-4">
+                <h4 class="font-bold mb-2 flex items-center">
+                    <i class="fas fa-palette mr-2 text-yellow-400"></i>
+                    Broad Light 활용 포인트
+                </h4>
+                <ul class="text-sm space-y-1">
+                    <li><i class="fas fa-check mr-2 text-yellow-400"></i> <span class="highlight-text">친근하고 개방적인</span> 인상 연출</li>
+                    <li><i class="fas fa-check mr-2 text-yellow-400"></i> <span class="highlight-text">자연스럽고 부드러운</span> 분위기 조성</li>
+                    <li><i class="fas fa-check mr-2 text-yellow-400"></i> 상업용 광고나 <span class="highlight-text">우호적 캐릭터</span>에 최적</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- 하단 기법 설명 -->
+        <div class="mt-4 text-center z-10 relative">
+            <p class="text-sm opacity-70">
+                <i class="fas fa-info-circle mr-1 text-yellow-400"></i>
+                Broad Light는 얼굴의 넓은 쪽(카메라에 더 많이 보이는 쪽)을 밝게 처리하여 얼굴을 더 풍성하고 친근하게 표현하는 기법입니다
+            </p>
+        </div>
+    </div>
+</body>
+</html>

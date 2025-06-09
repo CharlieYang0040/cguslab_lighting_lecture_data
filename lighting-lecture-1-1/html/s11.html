@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sharpness (선명도) - 추가 예시</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', 'Malgun Gothic', sans-serif;
+        }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            background: linear-gradient(135deg, #1a2a3a 0%, #0d1721 100%);
+            color: #ffffff;
+            overflow: hidden;
+            position: relative;
+        }
+        .header {
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 1.5rem 3rem;
+            border-bottom: 2px solid rgba(163, 198, 255, 0.4);
+            display: flex;
+            align-items: center;
+        }
+        .header-icon {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            color: #a3c6ff;
+            font-size: 1.5rem;
+        }
+        .content {
+            padding: 1.5rem 3rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            height: calc(100% - 120px);
+        }
+        .examples-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            height: 100%;
+        }
+        .example-item {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        .example-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        .example-image {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-bottom: 0.75rem;
+        }
+        .example-title {
+            font-weight: bold;
+            color: #ffcc66;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        .example-desc {
+            font-size: 0.8rem;
+            color: #e0e0e0;
+            line-height: 1.4;
+            flex: 1;
+        }
+        .large-example {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .large-image {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+        .large-title {
+            font-weight: bold;
+            color: #ffcc66;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+        }
+        .large-title i {
+            margin-right: 0.75rem;
+        }
+        .highlight {
+            color: #a3c6ff;
+            font-weight: bold;
+        }
+        .tips-container {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .tips-title {
+            font-weight: bold;
+            color: #ffcc66;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+        }
+        .tips-title i {
+            margin-right: 0.75rem;
+        }
+        .tip-item {
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: flex-start;
+            font-size: 0.9rem;
+        }
+        .tip-item:before {
+            content: "▸";
+            color: #a3c6ff;
+            font-weight: bold;
+            margin-right: 0.75rem;
+            margin-top: 0.1rem;
+        }
+        .footer {
+            padding: 1rem 3rem;
+            text-align: right;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            box-sizing: border-box;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+        .animation-highlight {
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        @keyframes glow {
+            from {
+                box-shadow: 0 0 5px rgba(163, 198, 255, 0.5);
+            }
+            to {
+                box-shadow: 0 0 20px rgba(163, 198, 255, 0.8);
+            }
+        }
+        .technique-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(255, 204, 102, 0.9);
+            color: #1a2a3a;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+        .comparison-container {
+            position: relative;
+            margin-bottom: 1rem;
+        }
+        .sharpness-slider {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 3px;
+            height: 80%;
+            background-color: #a3c6ff;
+            border-radius: 2px;
+            animation: pulse-line 3s infinite;
+        }
+        @keyframes pulse-line {
+            0%, 100% {
+                opacity: 0.6;
+                transform: translate(-50%, -50%) scaleX(1);
+            }
+            50% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scaleX(2);
+            }
+        }
+        .detail-zoom {
+            position: relative;
+            overflow: hidden;
+        }
+        .zoom-indicator {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: rgba(163, 198, 255, 0.9);
+            color: #1a2a3a;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+        .zoom-indicator i {
+            margin-right: 4px;
+        }
+        .texture-gradient {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 30%;
+            background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 100%);
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            padding-bottom: 10px;
+        }
+        .enhancement-level {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+            font-size: 0.8rem;
+        }
+        .level-bar {
+            width: 60px;
+            height: 4px;
+            background-color: rgba(255,255,255,0.2);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        .level-fill {
+            height: 100%;
+            background: linear-gradient(to right, #4CAF50, #FF9800, #F44336);
+            transition: all 0.3s ease;
+        }
+        .level-low { width: 30%; }
+        .level-medium { width: 65%; }
+        .level-high { width: 90%; }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="header">
+            <div class="header-icon">
+                <i class="fas fa-search-plus"></i>
+            </div>
+            <div>
+                <h1 class="text-3xl font-bold">Sharpness (선명도) - 추가 예시</h1>
+                <p class="text-sm opacity-70 mt-1">실무 적용 사례와 심화 학습</p>
+            </div>
+        </div>
+        
+        <div class="content">
+            <div>
+                <div class="large-example">
+                    <div class="large-title">
+                        <i class="fas fa-adjust"></i> 선명도 보정 기법 비교
+                    </div>
+                    <div class="comparison-container">
+                        <img src="https://www.goaskerin.com/wp-content/uploads/2019/09/Texture-vs-Clarity-vs-Dehaze-v2.jpg" alt="선명도 기법 비교" class="large-image">
+                        <div class="sharpness-slider"></div>
+                        <div class="technique-badge">Texture vs Clarity vs Dehaze</div>
+                    </div>
+                    <p class="text-sm"><span class="highlight">Texture</span>, <span class="highlight">Clarity</span>, <span class="highlight">Dehaze</span> 기법의 차이와 적용 효과</p>
+                </div>
+                
+                <div class="tips-container">
+                    <div class="tips-title">
+                        <i class="fas fa-cogs"></i> 선명도 향상 핵심 기법
+                    </div>
+                    <div class="enhancement-level">
+                        <span>Texture:</span>
+                        <div class="level-bar"><div class="level-fill level-medium"></div></div>
+                        <span class="highlight">미세 디테일 강화</span>
+                    </div>
+                    <div class="enhancement-level">
+                        <span>Clarity:</span>
+                        <div class="level-bar"><div class="level-fill level-high"></div></div>
+                        <span class="highlight">중간톤 대비 증가</span>
+                    </div>
+                    <div class="enhancement-level">
+                        <span>Dehaze:</span>
+                        <div class="level-bar"><div class="level-fill level-low"></div></div>
+                        <span class="highlight">대기 투명도 개선</span>
+                    </div>
+                    <div class="tip-item"><span class="highlight">언샤프 마스크</span>: 가장자리 대비를 높여 선명도 향상</div>
+                    <div class="tip-item"><span class="highlight">하이패스 필터</span>: 고주파 디테일 강조로 자연스러운 선명화</div>
+                    <div class="tip-item"><span class="highlight">적응형 샤프닝</span>: 영역별 차등 적용으로 최적화</div>
+                </div>
+            </div>
+            
+            <div class="examples-grid">
+                <div class="example-item animation-highlight">
+                    <div class="detail-zoom">
+                        <img src="https://photographylife.com/wp-content/uploads/2021/05/Texture-of-jagged-ice-up-close.jpg" alt="텍스처 디테일" class="example-image">
+                        <div class="zoom-indicator">
+                            <i class="fas fa-search-plus"></i> Macro Detail
+                        </div>
+                        <div class="texture-gradient">
+                            <span style="color: #fff; font-size: 0.8rem; font-weight: bold;">Ultra Sharp Texture</span>
+                        </div>
+                    </div>
+                    <div class="example-title">극세밀 텍스처 표현</div>
+                    <div class="example-desc"><span class="highlight">거친 얼음 표면</span>의 미세한 크랙과 결정 구조를 선명하게 포착</div>
+                </div>
+                
+                <div class="example-item">
+                    <div style="position: relative;">
+                        <img src="https://s27870.pcdn.co/assets/8-Tip-3-Add-Sharpness-in-Post-Processing-1024x760.jpg.optimal.jpg" alt="후처리 선명화" class="example-image">
+                        <div class="technique-badge">Post-Processing</div>
+                    </div>
+                    <div class="example-title">후처리 선명화 기법</div>
+                    <div class="example-desc"><span class="highlight">단계별 보정</span>을 통한 자연스러운 선명도 향상 과정</div>
+                </div>
+                
+                <div class="example-item">
+                    <div style="position: relative;">
+                        <img src="https://s27870.pcdn.co/assets/8-How-to-Use-Clarity-1024x760.jpg.optimal.jpg" alt="클래리티 활용" class="example-image">
+                        <div class="technique-badge">Clarity</div>
+                    </div>
+                    <div class="example-title">클래리티를 통한 대비 강화</div>
+                    <div class="example-desc"><span class="highlight">중간톤 대비</span> 조절로 이미지의 깊이감과 입체감 강조</div>
+                </div>
+                
+                <div class="example-item">
+                    <div style="position: relative;">
+                        <img src="https://s27870.pcdn.co/assets/10-How-to-Use-Texture-1024x507.jpg.optimal.jpg" alt="텍스처 슬라이더" class="example-image">
+                        <div class="technique-badge">Texture Tool</div>
+                    </div>
+                    <div class="example-title">텍스처 슬라이더 효과</div>
+                    <div class="example-desc"><span class="highlight">피부톤</span>은 부드럽게, <span class="highlight">배경 디테일</span>은 선명하게 선택적 적용</div>
+                </div>
+                
+                <div class="example-item">
+                    <div style="position: relative;">
+                        <img src="https://s27870.pcdn.co/assets/0-Cover-93.jpg.optimal.jpg" alt="최대 선명도 팁" class="example-image">
+                        <div class="technique-badge">Pro Tips</div>
+                    </div>
+                    <div class="example-title">최적 선명도 달성법</div>
+                    <div class="example-desc"><span class="highlight">촬영 단계</span>부터 <span class="highlight">후보정</span>까지 체계적 접근법</div>
+                </div>
+                
+                <div class="example-item">
+                    <div style="position: relative;">
+                        <img src="https://s27870.pcdn.co/assets/0-Cover-128.jpg.optimal.jpg" alt="도구별 비교" class="example-image">
+                        <div class="technique-badge">Tool Comparison</div>
+                    </div>
+                    <div class="example-title">보정 도구별 특성</div>
+                    <div class="example-desc"><span class="highlight">상황</span>과 <span class="highlight">피사체</span>에 따른 최적 도구 선택 가이드</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            컴퓨터 그래픽스 라이팅 입문 | Sharpness(선명도) 심화 학습
+        </div>
+    </div>
+</body>
+</html>

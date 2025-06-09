@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>조리개 설정 및 영향</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        .slide {
+            width: 1280px;
+            min-height: 720px;
+            position: relative;
+            background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
+            color: white;
+            overflow: hidden;
+        }
+        .highlight {
+            color: #60a5fa;
+            font-weight: 600;
+        }
+        .aperture-container {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .aperture-blades {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .aperture-blade {
+            position: absolute;
+            width: 70px;
+            height: 70px;
+            background-color: #3b82f6;
+            clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+            opacity: 0.8;
+            transition: all 0.3s ease;
+        }
+        .aperture-center {
+            width: var(--aperture-size);
+            height: var(--aperture-size);
+            border-radius: 50%;
+            background-color: white;
+            transition: all 0.3s ease;
+        }
+        .dof-example {
+            position: relative;
+            height: 150px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        .dof-image {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            background: #1e293b;
+            overflow: hidden;
+        }
+        .dof-object {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            border-radius: 4px;
+            transform: translateZ(0);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            transform-style: preserve-3d;
+            transform: perspective(500px) rotateY(20deg);
+        }
+        .dof-blur {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            backdrop-filter: blur(var(--blur-amount));
+            -webkit-backdrop-filter: blur(var(--blur-amount));
+            z-index: 1;
+            transition: all 0.4s ease;
+            background: rgba(0, 0, 0, 0.1);
+        }
+        .aperture-box {
+            background-color: rgba(37, 99, 235, 0.1);
+            border-left: 3px solid #3b82f6;
+            transition: all 0.3s ease;
+        }
+        .aperture-box:hover {
+            background-color: rgba(37, 99, 235, 0.2);
+            transform: translateX(5px);
+        }
+        .aperture-slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 8px;
+            background: linear-gradient(to right, #2563eb, #60a5fa);
+            outline: none;
+            border-radius: 4px;
+        }
+        .aperture-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #fff;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide flex flex-col p-12 relative">
+        <!-- 헤더 -->
+        <div class="mb-6 relative z-10">
+            <h1 class="text-4xl font-bold text-white mb-2">조리개 설정 및 영향</h1>
+            <div class="w-24 h-1 bg-blue-500 mb-2"></div>
+            <p class="text-gray-300 text-lg">피사계 심도(DOF)를 제어하는 핵심 파라미터</p>
+        </div>
+        
+        <!-- 메인 콘텐츠 -->
+        <div class="flex flex-row gap-8 z-10 flex-1">
+            <!-- 왼쪽: 설명 -->
+            <div class="w-5/12">
+                <div class="mb-6">
+                    <h2 class="text-2xl font-semibold text-blue-300 mb-3 flex items-center">
+                        <i class="fas fa-circle text-yellow-400 mr-2"></i>조리개(F-Number)란?
+                    </h2>
+                    <div class="flex items-center mb-4">
+                        <div class="aperture-container">
+                            <div class="aperture-blades" id="apertureBlades">
+                                <!-- JavaScript로 동적 생성됨 -->
+                            </div>
+                            <div class="aperture-center" id="apertureCenter" style="--aperture-size: 40px;"></div>
+                        </div>
+                        <div class="ml-4">
+                            <p class="mb-2">
+                                렌즈를 통과하는 <span class="highlight">빛의 양</span>을 조절하는 구멍의 크기
+                            </p>
+                            <p>
+                                숫자가 <span class="highlight">작을수록</span> 조리개가 <span class="highlight">크게</span> 열려 
+                                <span class="highlight">많은 빛</span>이 들어옴
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mb-6">
+                    <h2 class="text-2xl font-semibold text-blue-300 mb-3">
+                        <i class="fas fa-mountain text-blue-400 mr-2"></i>피사계 심도(DOF) 효과
+                    </h2>
+                    <p class="mb-3">
+                        <span class="highlight">피사계 심도(Depth of Field)</span>는 이미지에서
+                        선명하게 보이는 거리 범위를 의미합니다.
+                    </p>
+                    
+                    <div class="space-y-4 mt-4">
+                        <div class="aperture-box p-4 rounded">
+                            <h4 class="font-bold mb-1">작은 조리개 값 <small class="text-gray-400">(f/1.4 - f/2.8)</small></h4>
+                            <p><i class="fas fa-check text-green-400 mr-1"></i> 얕은 피사계 심도 = <span class="highlight">배경 흐림</span></p>
+                            <p><i class="fas fa-check text-green-400 mr-1"></i> <span class="highlight">주 피사체 강조</span> 효과</p>
+                        </div>
+                        
+                        <div class="aperture-box p-4 rounded">
+                            <h4 class="font-bold mb-1">큰 조리개 값 <small class="text-gray-400">(f/11 - f/22)</small></h4>
+                            <p><i class="fas fa-check text-green-400 mr-1"></i> 깊은 피사계 심도 = <span class="highlight">전체 선명</span></p>
+                            <p><i class="fas fa-check text-green-400 mr-1"></i> 풍경, 건축물 등 <span class="highlight">전체 디테일</span> 표현에 적합</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-semibold text-blue-200 mb-2">
+                        <i class="fas fa-lightbulb text-yellow-300 mr-2"></i>V-Ray 실무 팁
+                    </h3>
+                    <ul class="list-disc list-inside space-y-2 pl-2">
+                        <li>인물 또는 제품 렌더링: <span class="highlight">f/2.8 - f/5.6</span> 권장</li>
+                        <li>건축/인테리어: <span class="highlight">f/8 - f/16</span> 권장</li>
+                        <li><span class="highlight">Target Distance</span> 설정으로 초점 위치 지정</li>
+                        <li>DOF 효과는 렌더링 시간을 증가시킬 수 있음</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- 오른쪽: 조리개 예시 -->
+            <div class="w-7/12">
+                <h3 class="text-xl font-semibold text-blue-300 mb-4 text-center">
+                    <i class="fas fa-image mr-2"></i>조리개 값에 따른 피사계 심도(DOF) 변화
+                </h3>
+                
+                <div class="space-y-6">
+                    <!-- 작은 조리개 (F/1.8) - 얕은 피사계 심도 -->
+                    <div class="dof-example">
+                        <div class="dof-image">
+                            <!-- 배경 객체들 -->
+                            <div class="dof-object" style="top: 30%; left: 20%; z-index: 2;"></div>
+                            <div class="dof-object" style="top: 50%; left: 50%; z-index: 3; background: linear-gradient(135deg, #f472b6, #db2777);"></div>
+                            <div class="dof-object" style="top: 60%; left: 80%; z-index: 1;"></div>
+                            <!-- 블러 효과 레이어 -->
+                            <div class="dof-blur dof-blur-strong" style="--blur-amount: 8px;" id="blurStrong"></div>
+                        </div>
+                        <div class="absolute bottom-2 left-2 bg-black bg-opacity-70 px-3 py-1 rounded text-sm">
+                            F/1.8 (작은 값) - 얕은 피사계 심도
+                        </div>
+                        <div class="absolute top-2 right-2 bg-black bg-opacity-70 px-3 py-1 rounded text-sm">
+                            <i class="fas fa-mountain text-blue-400 mr-1"></i> 주 피사체만 선명하게
+                        </div>
+                    </div>
+                    
+                    <!-- 중간 조리개 (F/5.6) -->
+                    <div class="dof-example">
+                        <div class="dof-image">
+                            <div class="dof-object" style="top: 30%; left: 20%; z-index: 2;"></div>
+                            <div class="dof-object" style="top: 50%; left: 50%; z-index: 3; background: linear-gradient(135deg, #f472b6, #db2777);"></div>
+                            <div class="dof-object" style="top: 60%; left: 80%; z-index: 1;"></div>
+                            <div class="dof-blur dof-blur-medium" style="--blur-amount: 3px;" id="blurMedium"></div>
+                        </div>
+                        <div class="absolute bottom-2 left-2 bg-black bg-opacity-70 px-3 py-1 rounded text-sm">
+                            F/5.6 (중간 값) - 중간 피사계 심도
+                        </div>
+                        <div class="absolute top-2 right-2 bg-black bg-opacity-70 px-3 py-1 rounded text-sm">
+                            <i class="fas fa-balance-scale text-blue-400 mr-1"></i> 적당한 흐림 효과
+                        </div>
+                    </div>
+                    
+                    <!-- 큰 조리개 (F/16) - 깊은 피사계 심도 -->
+                    <div class="dof-example">
+                        <div class="dof-image">
+                            <div class="dof-object" style="top: 30%; left: 20%; z-index: 2;"></div>
+                            <div class="dof-object" style="top: 50%; left: 50%; z-index: 3; background: linear-gradient(135deg, #f472b6, #db2777);"></div>
+                            <div class="dof-object" style="top: 60%; left: 80%; z-index: 1;"></div>
+                            <div class="dof-blur dof-blur-weak" style="--blur-amount: 0px;" id="blurWeak"></div>
+                        </div>
+                        <div class="absolute bottom-2 left-2 bg-black bg-opacity-70 px-3 py-1 rounded text-sm">
+                            F/16 (큰 값) - 깊은 피사계 심도
+                        </div>
+                        <div class="absolute top-2 right-2 bg-black bg-opacity-70 px-3 py-1 rounded text-sm">
+                            <i class="fas fa-vector-square text-blue-400 mr-1"></i> 모든 피사체가 선명하게
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-6 bg-gray-800 bg-opacity-50 p-4 rounded">
+                    <h4 class="font-semibold mb-3">조리개 값(F-Number) 조절하기:</h4>
+                    <input type="range" min="1.4" max="22" step="0.1" value="5.6" class="aperture-slider" id="apertureSlider">
+                    <div class="flex justify-between mt-2 text-sm">
+                        <span>F/1.4 (얕은 DOF)</span>
+                        <span id="apertureValue">F/5.6</span>
+                        <span>F/22 (깊은 DOF)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 하단 페이지 표시 -->
+        <div class="absolute bottom-6 right-6 text-sm text-gray-400">
+            6 / 10
+        </div>
+    </div>
+
+    <script>
+        // 조리개 블레이드 생성
+        const apertureBlades = document.getElementById('apertureBlades');
+        const bladeCount = 6;
+        
+        for (let i = 0; i < bladeCount; i++) {
+            const blade = document.createElement('div');
+            blade.className = 'aperture-blade';
+            blade.style.transform = `rotate(${i * (360 / bladeCount)}deg)`;
+            apertureBlades.appendChild(blade);
+        }
+        
+        // 조리개 슬라이더
+        const slider = document.getElementById('apertureSlider');
+        const apertureValue = document.getElementById('apertureValue');
+        const apertureCenter = document.getElementById('apertureCenter');
+        const blades = document.querySelectorAll('.aperture-blade');
+        const blurStrong = document.getElementById('blurStrong');
+        const blurMedium = document.getElementById('blurMedium');
+        const blurWeak = document.getElementById('blurWeak');
+        
+        slider.addEventListener('input', function() {
+            const value = parseFloat(this.value);
+            apertureValue.textContent = `F/${value.toFixed(1)}`;
+            
+            // 조리개 크기 변경 (낮은 F값 = 큰 조리개)
+            const apertureSize = 100 - ((value - 1.4) * 4);
+            apertureCenter.style.setProperty('--aperture-size', `${apertureSize}px`);
+            
+            // 블레이드 크기도 변경
+            const bladeScale = apertureSize / 70;
+            blades.forEach(blade => {
+                blade.style.transform = `rotate(${blade.style.transform.match(/rotate\(([^)]+)\)/)[1]}) scale(${bladeScale})`;
+            });
+            
+            // 피사계 심도(DOF) 변경 - 블러 효과
+            const strongBlur = Math.max(0, 10 - value * 0.5);
+            const mediumBlur = Math.max(0, 5 - value * 0.3);
+            const weakBlur = Math.max(0, 1 - value * 0.05);
+            
+            blurStrong.style.setProperty('--blur-amount', `${strongBlur}px`);
+            blurMedium.style.setProperty('--blur-amount', `${mediumBlur}px`);
+            blurWeak.style.setProperty('--blur-amount', `${weakBlur}px`);
+        });
+    </script>
+</body>
+</html>

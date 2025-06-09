@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>노출 조절 실습 가이드</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11.6.0/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        .slide {
+            width: 1280px;
+            min-height: 720px;
+            position: relative;
+            background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
+            color: white;
+            overflow: hidden;
+        }
+        .highlight {
+            color: #60a5fa;
+            font-weight: 600;
+        }
+        .step-card {
+            background-color: rgba(37, 99, 235, 0.1);
+            border-left: 3px solid #3b82f6;
+            transition: all 0.3s ease;
+        }
+        .step-card:hover {
+            background-color: rgba(37, 99, 235, 0.2);
+            transform: translateX(5px);
+        }
+        .tip-box {
+            background-color: rgba(16, 185, 129, 0.1);
+            border-left: 3px solid #10b981;
+        }
+        .warning-box {
+            background-color: rgba(239, 68, 68, 0.1);
+            border-left: 3px solid #ef4444;
+        }
+        .exposure-example {
+            height: 120px;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+        .exposure-label {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-weight: bold;
+            z-index: 3;
+        }
+        .step-number {
+            width: 28px;
+            height: 28px;
+            background-color: #3b82f6;
+            color: white;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 8px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide flex flex-col p-12 relative">
+        <!-- 헤더 -->
+        <div class="mb-6 relative z-10">
+            <h1 class="text-4xl font-bold text-white mb-2">노출 조절 실습 가이드</h1>
+            <div class="w-24 h-1 bg-blue-500 mb-2"></div>
+            <p class="text-gray-300 text-lg">최적의 노출 설정을 찾는 단계별 접근법</p>
+        </div>
+        
+        <!-- 메인 콘텐츠 -->
+        <div class="flex flex-row gap-8 z-10 flex-1">
+            <!-- 왼쪽: 단계별 가이드 -->
+            <div class="w-7/12">
+                <h2 class="text-2xl font-semibold text-blue-300 mb-4">
+                    <i class="fas fa-tasks text-blue-400 mr-2"></i>단계별 노출 조절 워크플로우
+                </h2>
+                
+                <div class="space-y-3">
+                    <div class="step-card p-3 rounded">
+                        <h3 class="font-bold mb-1 flex items-center">
+                            <span class="step-number">1</span>기본 설정 초기화
+                        </h3>
+                        <p class="text-sm ml-9">표준 ISO(100-400), f/8, 1/60초 설정으로 시작</p>
+                    </div>
+                    
+                    <div class="step-card p-3 rounded">
+                        <h3 class="font-bold mb-1 flex items-center">
+                            <span class="step-number">2</span>테스트 렌더링
+                        </h3>
+                        <p class="text-sm ml-9">낮은 해상도로 빠른 테스트 렌더링 수행</p>
+                    </div>
+                    
+                    <div class="step-card p-3 rounded">
+                        <h3 class="font-bold mb-1 flex items-center">
+                            <span class="step-number">3</span>히스토그램 확인
+                        </h3>
+                        <p class="text-sm ml-9">색상 분포가 한쪽으로 치우치지 않도록 확인</p>
+                    </div>
+                    
+                    <div class="step-card p-3 rounded">
+                        <h3 class="font-bold mb-1 flex items-center">
+                            <span class="step-number">4</span>주요 파라미터 조절
+                        </h3>
+                        <p class="text-sm ml-9">
+                            <span class="highlight">ISO</span>: 전체 밝기 조절<br>
+                            <span class="highlight">셔터 속도</span>: 모션 블러 고려<br>
+                            <span class="highlight">조리개(F값)</span>: 피사계 심도 고려
+                        </p>
+                    </div>
+                    
+                    <div class="step-card p-3 rounded">
+                        <h3 class="font-bold mb-1 flex items-center">
+                            <span class="step-number">5</span>세부 조정
+                        </h3>
+                        <p class="text-sm ml-9">하이라이트와 그림자 디테일을 확인하며 미세 조정</p>
+                    </div>
+                </div>
+                
+                <div class="mt-6 tip-box p-4 rounded">
+                    <h3 class="font-bold mb-2 flex items-center">
+                        <i class="fas fa-lightbulb text-green-400 mr-2"></i>실습 팁
+                    </h3>
+                    <ul class="list-disc list-inside space-y-1 ml-2 text-sm">
+                        <li>파라미터 변경 시 <span class="highlight">한 번에 하나씩</span> 조절하며 영향 관찰</li>
+                        <li>실내 장면: <span class="highlight">ISO 400-800</span>이 좋은 출발점</li>
+                        <li>외부 장면: <span class="highlight">ISO 100-200</span>으로 시작</li>
+                        <li>렌더링 시간 단축을 위해 <span class="highlight">Region Render</span> 활용</li>
+                        <li>조명 설정이 정확해야 사실적 노출 가능</li>
+                    </ul>
+                </div>
+                
+                <div class="mt-4 warning-box p-4 rounded">
+                    <h3 class="font-bold mb-2 flex items-center">
+                        <i class="fas fa-exclamation-triangle text-red-400 mr-2"></i>일반적인 문제 해결
+                    </h3>
+                    <div class="grid grid-cols-2 gap-3 text-sm">
+                        <div>
+                            <p class="font-semibold">📉 이미지가 너무 어두움</p>
+                            <p>• ISO 증가</p>
+                            <p>• 셔터 속도 감소(값 낮추기)</p>
+                            <p>• 조리개 값(F값) 낮추기</p>
+                        </div>
+                        <div>
+                            <p class="font-semibold">📈 이미지가 너무 밝음</p>
+                            <p>• ISO 감소</p>
+                            <p>• 셔터 속도 증가(값 높이기)</p>
+                            <p>• 조리개 값(F값) 높이기</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 오른쪽: 시각적 예시 -->
+            <div class="w-5/12">
+                <h2 class="text-2xl font-semibold text-blue-300 mb-4">
+                    <i class="fas fa-image text-blue-400 mr-2"></i>노출 비교 예시
+                </h2>
+                
+                <div class="space-y-6">
+                    <!-- 적정 노출 예시 -->
+                    <div>
+                        <h3 class="text-lg font-semibold mb-2">
+                            <i class="fas fa-check-circle text-green-400 mr-2"></i>적정 노출
+                        </h3>
+                        <div class="exposure-example">
+                            <img src="https://media.greatbigphotographyworld.com/wp-content/uploads/2023/05/exposure-compensation-examples-scene-triptych.jpg" alt="적정 노출" class="w-full h-full object-cover object-center">
+                            <div class="exposure-label bg-green-600">적정 노출</div>
+                        </div>
+                        <ul class="mt-2 text-sm space-y-1">
+                            <li><i class="fas fa-check text-green-400 mr-1"></i> 디테일이 적절히 유지됨</li>
+                            <li><i class="fas fa-check text-green-400 mr-1"></i> 하이라이트와 그림자 밸런스</li>
+                            <li><i class="fas fa-check text-green-400 mr-1"></i> 색상 재현 정확</li>
+                        </ul>
+                    </div>
+                    
+                    <!-- 노출 문제 예시 -->
+                    <div class="grid grid-cols-2 gap-4">
+                        <!-- 과다 노출 -->
+                        <div>
+                            <h3 class="text-md font-semibold mb-2">
+                                <i class="fas fa-exclamation-circle text-yellow-400 mr-1"></i>과다 노출
+                            </h3>
+                            <div class="exposure-example">
+                                <img src="https://www.gavtrain.com/wp-content/uploads/2014/01/over-under-2.jpg" alt="과다 노출" class="w-full h-full object-cover object-top">
+                                <div class="exposure-label bg-yellow-600">과다 노출</div>
+                            </div>
+                            <ul class="mt-1 text-xs space-y-1">
+                                <li><i class="fas fa-times text-red-400 mr-1"></i> 하이라이트 디테일 손실</li>
+                                <li><i class="fas fa-times text-red-400 mr-1"></i> 색상 왜곡</li>
+                            </ul>
+                        </div>
+                        
+                        <!-- 부족 노출 -->
+                        <div>
+                            <h3 class="text-md font-semibold mb-2">
+                                <i class="fas fa-exclamation-circle text-blue-400 mr-1"></i>부족 노출
+                            </h3>
+                            <div class="exposure-example">
+                                <img src="https://shotkit.com/wp-content/uploads/bb-plugin/cache/exposure-feature-landscape-829a5f90201439c1bd419cae8b1734ec-zybravgx2q47.jpg" alt="부족 노출" class="w-full h-full object-cover object-center">
+                                <div class="exposure-label bg-blue-600">부족 노출</div>
+                            </div>
+                            <ul class="mt-1 text-xs space-y-1">
+                                <li><i class="fas fa-times text-red-400 mr-1"></i> 그림자 디테일 손실</li>
+                                <li><i class="fas fa-times text-red-400 mr-1"></i> 노이즈 증가</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- 히스토그램 설명 -->
+                    <div>
+                        <h3 class="text-lg font-semibold mb-2">
+                            <i class="fas fa-chart-bar text-purple-400 mr-2"></i>적정 노출 평가하기
+                        </h3>
+                        <div class="bg-gray-800 bg-opacity-50 rounded p-3">
+                            <h4 class="font-medium mb-1">V-Ray에서 노출 확인 방법:</h4>
+                            <ol class="list-decimal list-inside space-y-1 ml-2 text-sm">
+                                <li><span class="highlight">VFB(V-Ray Frame Buffer)</span>의 히스토그램 도구 활용</li>
+                                <li><span class="highlight">RGB 값</span> 확인: 하이라이트 255 미만, 그림자 10 이상 유지</li>
+                                <li><span class="highlight">색상 클리핑</span> 표시 기능으로 과다 노출 부분 확인</li>
+                                <li>최종 판단은 <span class="highlight">육안 검사</span>로 자연스러움 확인</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 하단 페이지 표시 -->
+        <div class="absolute bottom-6 right-6 text-sm text-gray-400">
+            9 / 10
+        </div>
+    </div>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'dark'
+        });
+    </script>
+</body>
+</html>

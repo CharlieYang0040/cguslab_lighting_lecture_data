@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top Light (탑라이트)</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+            overflow: hidden;
+        }
+        .slide {
+            width: 1280px;
+            min-height: 720px;
+            background: linear-gradient(180deg, #1a2a4c, #2a3c6f);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        .slide-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            border-bottom: 2px solid rgba(255,255,255,0.2);
+        }
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #a0c0ff;
+            margin-bottom: 1rem;
+        }
+        .feature-item, .usage-item {
+            padding: 0.5rem 1rem;
+            margin-bottom: 0.5rem;
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            background-color: rgba(255,255,255,0.08);
+            transition: all 0.3s ease;
+        }
+        .feature-item:hover, .usage-item:hover {
+            background-color: rgba(255,255,255,0.15);
+        }
+        .icon-circle {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
+        .image-container {
+            border-radius: 0.5rem;
+            overflow: hidden;
+            border: 2px solid rgba(255,255,255,0.2);
+        }
+        .page-number {
+            position: absolute;
+            bottom: 1rem;
+            right: 1rem;
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+        .light-diagram {
+            width: 180px;
+            height: 180px;
+            margin: 0 auto;
+            position: relative;
+            background-color: rgba(255,255,255,0.05);
+            border-radius: 0.5rem;
+        }
+        .subject {
+            width: 40px;
+            height: 60px;
+            background-color: #6b7280;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 4px;
+        }
+        .light-source {
+            width: 30px;
+            height: 30px;
+            background-color: #3b82f6;
+            border-radius: 50%;
+            position: absolute;
+            box-shadow: 0 0 20px 10px rgba(59, 130, 246, 0.4);
+        }
+        .light-ray {
+            position: absolute;
+            width: 2px;
+            background: linear-gradient(to bottom, rgba(59, 130, 246, 0.8), rgba(59, 130, 246, 0));
+            transform-origin: top center;
+        }
+        .toplight-effect {
+            position: absolute;
+            width: 300px;
+            height: 500px;
+            background: radial-gradient(ellipse at top, rgba(59, 130, 246, 0.2), rgba(59, 130, 246, 0) 70%);
+            top: -250px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 0;
+        }
+        .shadow-effect {
+            position: absolute;
+            width: 60px;
+            height: 10px;
+            background: rgba(0,0,0,0.5);
+            border-radius: 50%;
+            bottom: 30%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+    </style>
+</head>
+<body>
+    <div class="slide p-10 flex flex-col">
+        <!-- Top light visual effect -->
+        <div class="toplight-effect"></div>
+        
+        <!-- Slide Header -->
+        <div class="slide-title pb-4 mb-6 flex items-center relative z-10">
+            <i class="fas fa-sort-amount-down mr-4 text-blue-300"></i>
+            <span>Top Light (탑라이트)</span>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex flex-1 space-x-6 relative z-10">
+            <!-- Left Column: Definition, Features, Uses -->
+            <div class="w-1/2 space-y-6">
+                <!-- Definition -->
+                <div>
+                    <div class="section-title flex items-center">
+                        <i class="fas fa-info-circle mr-3 text-blue-300"></i>
+                        <span>정의</span>
+                    </div>
+                    <div class="bg-blue-900 bg-opacity-30 p-4 rounded-lg text-lg">
+                        <span class="font-bold text-blue-300">위쪽에서 빛을 내려</span> 피사체에 강한 그림자를 생성합니다.
+                    </div>
+                </div>
+
+                <!-- Features -->
+                <div>
+                    <div class="section-title flex items-center">
+                        <i class="fas fa-list-ul mr-3 text-blue-300"></i>
+                        <span>특징</span>
+                    </div>
+                    
+                    <div class="space-y-2">
+                        <div class="feature-item">
+                            <div class="icon-circle bg-blue-600">
+                                <i class="fas fa-cloud-moon text-white"></i>
+                            </div>
+                            <span><strong>강한 그림자</strong>: 눈과 뺨 아래에 어두운 그림자를 만듭니다</span>
+                        </div>
+
+                        <div class="feature-item">
+                            <div class="icon-circle bg-blue-600">
+                                <i class="fas fa-border-style text-white"></i>
+                            </div>
+                            <span><strong>윤곽 강조</strong>: 머리카락과 어깨 라인을 강조합니다</span>
+                        </div>
+
+                        <div class="feature-item">
+                            <div class="icon-circle bg-blue-600">
+                                <i class="fas fa-sort-amount-down-alt text-white"></i>
+                            </div>
+                            <span><strong>깊이 표현</strong>: 위에서 아래로 향하는 깊이감을 형성합니다</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Uses -->
+                <div>
+                    <div class="section-title flex items-center">
+                        <i class="fas fa-tasks mr-3 text-blue-300"></i>
+                        <span>주요 용도/효과</span>
+                    </div>
+                    
+                    <div class="space-y-2">
+                        <div class="usage-item">
+                            <div class="icon-circle bg-cyan-600">
+                                <i class="fas fa-image text-white"></i>
+                            </div>
+                            <span><strong>강렬한 대비</strong>와 독특한 분위기를 창출합니다</span>
+                        </div>
+
+                        <div class="usage-item">
+                            <div class="icon-circle bg-cyan-600">
+                                <i class="fas fa-film text-white"></i>
+                            </div>
+                            <span>영화에서 <strong>긴장감 있는 장면</strong>이나 캐릭터의 내적 갈등을 표현할 때 활용됩니다</span>
+                        </div>
+
+                        <div class="usage-item">
+                            <div class="icon-circle bg-cyan-600">
+                                <i class="fas fa-gamepad text-white"></i>
+                            </div>
+                            <span><strong>극적인 시각 효과</strong>를 위한 게임 장면에 효과적입니다</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Visual Materials -->
+            <div class="w-1/2 flex flex-col space-y-4">
+                <!-- Lighting Diagram -->
+                <div class="bg-gray-800 bg-opacity-50 p-4 rounded-lg">
+                    <div class="text-center mb-2 text-lg font-medium text-blue-300">조명 위치 다이어그램</div>
+                    <div class="light-diagram">
+                        <div class="subject"></div>
+                        <div class="shadow-effect"></div>
+                        <div class="light-source" style="top: 20px; left: 50%; transform: translateX(-50%);"></div>
+                        <div class="light-ray" style="top: 35px; left: 50%; height: 60px; width: 2px; transform: translateX(-50%) rotate(0deg);"></div>
+                        <div class="light-ray" style="top: 35px; left: 45%; height: 70px; width: 2px; transform: rotate(10deg);"></div>
+                        <div class="light-ray" style="top: 35px; left: 55%; height: 70px; width: 2px; transform: rotate(-10deg);"></div>
+                        <div class="text-center absolute bottom-2 left-0 right-0 text-xs text-blue-300">위에서 빛이 비춤</div>
+                    </div>
+                </div>
+
+                <!-- Example Images -->
+                <div class="flex space-x-4 flex-1">
+                    <div class="w-1/2 flex flex-col">
+                        <div class="text-center mb-2 text-sm font-medium text-blue-300">탑라이트 셋업</div>
+                        <div class="image-container flex-1 bg-gray-700 flex items-center justify-center">
+                            <img src="https://cdn.fstoppers.com/styles/full/s3/media/2018/09/19/lighting-diagram_the-lighting-breakdown_fstoppers_19sep18_copy.jpg" alt="탑라이트 셋업" class="object-cover h-full w-full">
+                        </div>
+                    </div>
+                    
+                    <div class="w-1/2 flex flex-col">
+                        <div class="text-center mb-2 text-sm font-medium text-blue-300">탑라이트 효과</div>
+                        <div class="image-container flex-1 bg-gray-700 flex items-center justify-center">
+                            <img src="https://cdn.fstoppers.com/styles/full/s3/media/2018/08/13/screen_shot_2018-08-13_at_7.42.21_pm.jpg" alt="탑라이트 효과" class="object-cover h-full w-full">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Page Number -->
+        <div class="page-number">6 / 8</div>
+    </div>
+</body>
+</html>

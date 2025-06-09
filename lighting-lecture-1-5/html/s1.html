@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>5강: 빛의 세부 속성 이해 및 응용</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        .slide {
+            width: 1280px;
+            min-height: 720px;
+            background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        .light-beam {
+            position: absolute;
+            top: -100px;
+            left: 600px;
+            width: 300px;
+            height: 1000px;
+            background: linear-gradient(to bottom, rgba(255,255,255,0.05), rgba(255,255,255,0));
+            transform: rotate(45deg);
+            filter: blur(20px);
+            z-index: 1;
+            animation: moveBeam 8s infinite alternate ease-in-out;
+        }
+        .light-beam-2 {
+            position: absolute;
+            top: -50px;
+            left: 300px;
+            width: 250px;
+            height: 900px;
+            background: linear-gradient(to bottom, rgba(135,206,250,0.07), rgba(135,206,250,0));
+            transform: rotate(30deg);
+            filter: blur(15px);
+            z-index: 1;
+            animation: moveBeam2 10s infinite alternate ease-in-out;
+        }
+        .light-source {
+            position: absolute;
+            top: 80px;
+            right: 120px;
+            width: 120px;
+            height: 120px;
+            background: radial-gradient(circle, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0) 70%);
+            border-radius: 50%;
+            filter: blur(5px);
+            z-index: 2;
+            animation: pulse 4s infinite alternate ease-in-out;
+        }
+        .content {
+            position: relative;
+            z-index: 10;
+        }
+        .key-topic {
+            display: inline-block;
+            background: rgba(59, 130, 246, 0.2);
+            border-left: 4px solid #3B82F6;
+            padding: 6px 14px;
+            margin: 5px;
+            border-radius: 0 4px 4px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        .key-topic:hover {
+            transform: translateX(5px);
+            background: rgba(59, 130, 246, 0.3);
+        }
+        @keyframes moveBeam {
+            0% { transform: rotate(35deg); opacity: 0.3; }
+            100% { transform: rotate(55deg); opacity: 0.7; }
+        }
+        @keyframes moveBeam2 {
+            0% { transform: rotate(25deg); opacity: 0.2; }
+            100% { transform: rotate(40deg); opacity: 0.5; }
+        }
+        @keyframes pulse {
+            0% { transform: scale(0.9); opacity: 0.7; }
+            100% { transform: scale(1.1); opacity: 1; }
+        }
+        .title-highlight {
+            position: relative;
+            display: inline-block;
+        }
+        .title-highlight::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 10px;
+            background: linear-gradient(90deg, rgba(59,130,246,0.5) 0%, rgba(147,197,253,0.3) 100%);
+            z-index: -1;
+            transform: translateY(-5px);
+        }
+    </style>
+</head>
+<body>
+    <div class="slide flex items-center justify-center">
+        <div class="light-beam"></div>
+        <div class="light-beam-2"></div>
+        <div class="light-source"></div>
+        
+        <div class="content px-24 py-16 w-full">
+            <div class="mb-6">
+                <p class="text-blue-300 text-2xl font-medium mb-2">컴퓨터 그래픽스 라이팅</p>
+                <h1 class="text-6xl font-bold mb-4 text-white">
+                    <span class="title-highlight">5강: 빛의 세부 속성 이해 및 응용</span>
+                </h1>
+                <h2 class="text-3xl text-blue-200 font-light tracking-wider mb-8">고급 빛 속성과 시각적 표현 기법</h2>
+            </div>
+            
+            <div class="mt-6 flex flex-wrap justify-center">
+                <div class="key-topic">
+                    <i class="fas fa-lightbulb text-yellow-300 mr-2"></i>
+                    <span class="text-xl font-medium">Falloff</span>
+                </div>
+                <div class="key-topic">
+                    <i class="fas fa-moon text-gray-300 mr-2"></i>
+                    <span class="text-xl font-medium">Soft/Hard Shadow</span>
+                </div>
+                <div class="key-topic">
+                    <i class="fas fa-magic text-blue-300 mr-2"></i>
+                    <span class="text-xl font-medium">Motivated Light</span>
+                </div>
+                <div class="key-topic">
+                    <i class="fas fa-cube text-green-300 mr-2"></i>
+                    <span class="text-xl font-medium">Lighting Simulation</span>
+                </div>
+            </div>
+            
+            <div class="mt-28 flex justify-between items-end">
+                <div>
+                    <p class="text-xl text-gray-300">
+                        <i class="fas fa-calendar-alt mr-2 text-blue-300"></i> 2024년 봄학기
+                    </p>
+                </div>
+                <div class="text-right">
+                    <p class="text-xl font-light text-gray-300">김교수 <span class="text-sm">교수</span></p>
+                    <p class="text-lg text-blue-300">컴퓨터그래픽스학과</p>
+                </div>
+            </div>
+
+            <div class="absolute bottom-10 left-24 flex items-center bg-opacity-30 bg-blue-900 px-4 py-2 rounded-lg">
+                <i class="fas fa-info-circle text-blue-300 text-xl mr-3"></i>
+                <p class="text-gray-200 text-lg">빛의 고급 속성과 기법을 통한 사실적 렌더링 학습</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

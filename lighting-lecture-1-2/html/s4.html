@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>라이팅 이론 심화 - 시각적 예시</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Noto Sans KR', sans-serif;
+            overflow: hidden;
+        }
+        .slide {
+            width: 1280px;
+            min-height: 720px;
+            overflow: hidden;
+            position: relative;
+            background: linear-gradient(135deg, #0a2342 0%, #183763 100%);
+            color: white;
+        }
+        .title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            line-height: 1.2;
+            color: #ffffff;
+            position: relative;
+            display: inline-block;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        .title::after {
+            content: '';
+            position: absolute;
+            width: 120px;
+            height: 4px;
+            background: #60a5fa;
+            bottom: -10px;
+            left: 0;
+            animation: expandWidth 1s ease-out forwards;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        }
+        @keyframes expandWidth {
+            from { width: 0; }
+            to { width: 120px; }
+        }
+        .visual-card {
+            border-radius: 12px;
+            background: rgba(30, 58, 138, 0.25);
+            transition: all 0.4s ease;
+            transform: translateY(15px);
+            opacity: 0;
+            animation: fadeInUp 0.8s forwards;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(96, 165, 250, 0.2);
+            overflow: hidden;
+        }
+        .visual-card:nth-child(1) { animation-delay: 0.1s; }
+        .visual-card:nth-child(2) { animation-delay: 0.3s; }
+        .visual-card:nth-child(3) { animation-delay: 0.5s; }
+        .visual-card:nth-child(4) { animation-delay: 0.7s; }
+        .visual-card:nth-child(5) { animation-delay: 0.9s; }
+        .visual-card:nth-child(6) { animation-delay: 1.1s; }
+        
+        .visual-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+            border-color: rgba(96, 165, 250, 0.6);
+            background: rgba(30, 58, 138, 0.4);
+        }
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .image-container {
+            position: relative;
+            overflow: hidden;
+            height: 140px;
+            background: rgba(15, 23, 42, 0.5);
+        }
+        .comparison-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.4s ease;
+            filter: brightness(0.9);
+        }
+        .visual-card:hover .comparison-image {
+            transform: scale(1.08);
+            filter: brightness(1.1);
+        }
+        .image-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, rgba(10, 35, 66, 0) 0%, rgba(10, 35, 66, 0.8) 100%);
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+        .visual-card:hover .image-overlay {
+            opacity: 0.3;
+        }
+        .card-content {
+            padding: 12px 16px;
+            position: relative;
+            z-index: 2;
+        }
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #93c5fd;
+            margin-bottom: 6px;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+        }
+        .card-description {
+            font-size: 0.85rem;
+            color: #cbd5e1;
+            line-height: 1.4;
+        }
+        .concept-icon {
+            width: 24px;
+            height: 24px;
+            background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+        .visual-card:hover .concept-icon {
+            transform: rotate(15deg) scale(1.1);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+        }
+        .accent-circle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(96, 165, 250, 0.08);
+            z-index: 0;
+            animation: float 12s infinite alternate ease-in-out;
+        }
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); }
+            100% { transform: translateY(-20px) rotate(5deg); }
+        }
+        .light-beam {
+            position: absolute;
+            background: linear-gradient(90deg, rgba(96,165,250,0) 0%, rgba(96,165,250,0.06) 50%, rgba(96,165,250,0) 100%);
+            transform-origin: center;
+            z-index: 0;
+            animation: pulse 10s infinite alternate ease-in-out;
+        }
+        @keyframes pulse {
+            0% { opacity: 0.3; }
+            100% { opacity: 0.7; }
+        }
+        .highlight-badge {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.3s ease;
+        }
+        .visual-card:hover .highlight-badge {
+            opacity: 1;
+            transform: scale(1);
+        }
+        .comparison-slider {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 2px;
+            height: 60%;
+            background: rgba(255, 255, 255, 0.8);
+            transform: translate(-50%, -50%);
+            z-index: 3;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .comparison-slider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        }
+        .comparison-slider::after {
+            content: '⟷';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #0a2342;
+            font-weight: bold;
+            font-size: 10px;
+        }
+        .visual-card:hover .comparison-slider {
+            opacity: 1;
+        }
+        .section-header {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #93c5fd;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        }
+        .section-header i {
+            margin-right: 12px;
+            padding: 8px;
+            background: rgba(59, 130, 246, 0.2);
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+        .large-card {
+            grid-column: span 2;
+        }
+        .tech-label {
+            position: absolute;
+            bottom: 8px;
+            left: 8px;
+            background: rgba(30, 58, 138, 0.9);
+            color: #93c5fd;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(96, 165, 250, 0.3);
+        }
+        .interactive-hint {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.8rem;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
+        }
+        .visual-card:hover .interactive-hint {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide p-8 flex flex-col">
+        <!-- Decorative elements -->
+        <div class="accent-circle" style="width: 350px; height: 350px; top: -150px; right: -120px; animation-delay: 0s;"></div>
+        <div class="accent-circle" style="width: 280px; height: 280px; bottom: -120px; left: -80px; animation-delay: 3s;"></div>
+        <div class="accent-circle" style="width: 200px; height: 200px; top: 100px; left: 200px; animation-delay: 1.5s;"></div>
+        
+        <div class="light-beam" style="width: 180px; height: 900px; top: -150px; right: 25%; transform: rotate(35deg);"></div>
+        <div class="light-beam" style="width: 120px; height: 700px; bottom: -150px; left: 35%; transform: rotate(-40deg);"></div>
+        
+        <!-- Header -->
+        <div class="mb-6 relative z-10">
+            <h1 class="title">라이팅 이론 심화 - 시각적 예시</h1>
+        </div>
+        
+        <!-- Content -->
+        <div class="flex-1 relative z-10">
+            <!-- Contrast Examples Section -->
+            <div class="mb-6">
+                <div class="section-header">
+                    <i class="fas fa-adjust text-blue-300"></i>
+                    Contrast & Direction 비교
+                </div>
+                
+                <div class="grid-container">
+                    <!-- Large contrast comparison -->
+                    <div class="visual-card large-card">
+                        <div class="image-container">
+                            <img src="https://professional3dservices.com/img/blog/before-and-after-lighting.webp" alt="조명 대비 비교" class="comparison-image">
+                            <div class="image-overlay"></div>
+                            <div class="comparison-slider"></div>
+                            <div class="interactive-hint">
+                                <i class="fas fa-eye mb-1"></i><br>
+                                조명 강도 대비 효과
+                            </div>
+                            <div class="highlight-badge">HIGH CONTRAST</div>
+                            <div class="tech-label">Before/After</div>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-title">
+                                <div class="concept-icon">
+                                    <i class="fas fa-chart-line text-white text-xs"></i>
+                                </div>
+                                고대비 vs 저대비 라이팅 효과
+                            </div>
+                            <div class="card-description">
+                                동일한 장면에서 조명 강도와 방향 변경으로 만들어지는 극적인 차이
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Light direction -->
+                    <div class="visual-card">
+                        <div class="image-container">
+                            <img src="https://www.scratchapixel.com/images/introduction-to-lighting/intro-lighting-light-types-results.png" alt="빛의 방향 효과" class="comparison-image">
+                            <div class="image-overlay"></div>
+                            <div class="interactive-hint">
+                                <i class="fas fa-compass mb-1"></i><br>
+                                방향별 효과
+                            </div>
+                            <div class="highlight-badge">DIRECTION</div>
+                            <div class="tech-label">Light Types</div>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-title">
+                                <div class="concept-icon">
+                                    <i class="fas fa-arrows-alt text-white text-xs"></i>
+                                </div>
+                                광원 방향 비교
+                            </div>
+                            <div class="card-description">
+                                상부/측면/하부 조명의 형태 인식 차이
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Hard vs Soft Light Section -->
+            <div class="mb-6">
+                <div class="section-header">
+                    <i class="fas fa-sun text-yellow-300"></i>
+                    Hard Light vs Soft Light
+                </div>
+                
+                <div class="grid-container">
+                    <!-- Hard light example -->
+                    <div class="visual-card">
+                        <div class="image-container">
+                            <img src="https://www.peachpit.com/content/images/chap3_0321316312/elementLinks/dir2_03_22.jpg" alt="하드 라이트 그림자" class="comparison-image">
+                            <div class="image-overlay"></div>
+                            <div class="interactive-hint">
+                                <i class="fas fa-sun mb-1"></i><br>
+                                선명한 그림자
+                            </div>
+                            <div class="highlight-badge">HARD</div>
+                            <div class="tech-label">Point Light</div>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-title">
+                                <div class="concept-icon">
+                                    <i class="fas fa-circle text-white text-xs"></i>
+                                </div>
+                                Hard Light
+                            </div>
+                            <div class="card-description">
+                                점광원에서 나오는 선명하고 강한 그림자
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Soft light example -->
+                    <div class="visual-card">
+                        <div class="image-container">
+                            <img src="https://www.peachpit.com/content/images/chap3_0321316312/elementLinks/dir2_03_25.jpg" alt="소프트 라이트 그림자" class="comparison-image">
+                            <div class="image-overlay"></div>
+                            <div class="interactive-hint">
+                                <i class="fas fa-cloud mb-1"></i><br>
+                                부드러운 그림자
+                            </div>
+                            <div class="highlight-badge">SOFT</div>
+                            <div class="tech-label">Area Light</div>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-title">
+                                <div class="concept-icon">
+                                    <i class="fas fa-square text-white text-xs"></i>
+                                </div>
+                                Soft Light
+                            </div>
+                            <div class="card-description">
+                                면광원에서 나오는 부드럽고 확산된 그림자
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Shape and texture -->
+                    <div class="visual-card">
+                        <div class="image-container">
+                            <img src="https://www.creativeshrimp.com/wp-content/uploads/2015/07/big_light_soft_light_01.jpg" alt="빛과 형태" class="comparison-image">
+                            <div class="image-overlay"></div>
+                            <div class="interactive-hint">
+                                <i class="fas fa-cube mb-1"></i><br>
+                                형태와 질감
+                            </div>
+                            <div class="highlight-badge">SHAPE</div>
+                            <div class="tech-label">Light Size</div>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-title">
+                                <div class="concept-icon">
+                                    <i class="fas fa-shapes text-white text-xs"></i>
+                                </div>
+                                Light & Shape
+                            </div>
+                            <div class="card-description">
+                                광원 크기에 따른 물체 형태 표현의 차이
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- V-Ray Interface Section -->
+            <div>
+                <div class="section-header">
+                    <i class="fas fa-desktop text-green-300"></i>
+                    V-Ray 인터페이스 & 설정
+                </div>
+                
+                <div class="grid-container">
+                    <!-- V-Ray sun settings -->
+                    <div class="visual-card">
+                        <div class="image-container">
+                            <img src="https://iastate.pressbooks.pub/app/uploads/sites/53/2021/07/08-15-04-02-SunLight-settings.jpg" alt="V-Ray Sun 설정" class="comparison-image">
+                            <div class="image-overlay"></div>
+                            <div class="interactive-hint">
+                                <i class="fas fa-cog mb-1"></i><br>
+                                태양광 설정
+                            </div>
+                            <div class="highlight-badge">SUN</div>
+                            <div class="tech-label">V-Ray Sun</div>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-title">
+                                <div class="concept-icon">
+                                    <i class="fas fa-sun text-white text-xs"></i>
+                                </div>
+                                V-Ray Sun 설정
+                            </div>
+                            <div class="card-description">
+                                태양광 강도, 위치, 색상 온도 조절 패널
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- V-Ray light settings -->
+                    <div class="visual-card">
+                        <div class="image-container">
+                            <img src="https://iastate.pressbooks.pub/app/uploads/sites/53/2021/07/08-15-04-09-Edit-a-IES-light.jpg" alt="V-Ray 라이트 설정" class="comparison-image">
+                            <div class="image-overlay"></div>
+                            <div class="interactive-hint">
+                                <i class="fas fa-sliders-h mb-1"></i><br>
+                                조명 제어
+                            </div>
+                            <div class="highlight-badge">LIGHT</div>
+                            <div class="tech-label">IES Light</div>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-title">
+                                <div class="concept-icon">
+                                    <i class="fas fa-lightbulb text-white text-xs"></i>
+                                </div>
+                                IES Light 편집
+                            </div>
+                            <div class="card-description">
+                                실제 조명기구 데이터 기반 사실적 조명
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- V-Ray material editor -->
+                    <div class="visual-card">
+                        <div class="image-container">
+                            <img src="https://iastate.pressbooks.pub/app/uploads/sites/53/2021/07/08-15-04-04-Edit-emissive-material.jpg" alt="V-Ray 발광 재질" class="comparison-image">
+                            <div class="image-overlay"></div>
+                            <div class="interactive-hint">
+                                <i class="fas fa-palette mb-1"></i><br>
+                                발광 재질
+                            </div>
+                            <div class="highlight-badge">MATERIAL</div>
+                            <div class="tech-label">Emissive</div>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-title">
+                                <div class="concept-icon">
+                                    <i class="fas fa-fire text-white text-xs"></i>
+                                </div>
+                                발광 재질 편집
+                            </div>
+                            <div class="card-description">
+                                자체 발광하는 재질로 간접 조명 효과
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

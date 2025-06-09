@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2강: 라이팅 이론 심화 및 3 Point Lighting 실습</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Noto Sans KR', sans-serif;
+            overflow: hidden;
+        }
+        .slide {
+            width: 1280px;
+            min-height: 720px;
+            overflow: hidden;
+            position: relative;
+            background: linear-gradient(135deg, #0a2342 0%, #183763 100%);
+            color: white;
+        }
+        .title {
+            font-size: 4rem;
+            font-weight: 800;
+            line-height: 1.2;
+            text-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+            background: linear-gradient(90deg, #ffffff, #a5c4ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+        .subtitle {
+            font-size: 2rem;
+            font-weight: 500;
+            color: #90cdf4;
+            letter-spacing: 1px;
+        }
+        .light-ray {
+            position: absolute;
+            background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(96,165,250,0.3) 50%, rgba(255,255,255,0) 100%);
+            transform-origin: bottom left;
+            z-index: 1;
+            animation: pulse 6s infinite alternate;
+        }
+        .content-container {
+            position: relative;
+            z-index: 10;
+        }
+        .accent-circle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(96, 165, 250, 0.15);
+            z-index: 0;
+            animation: float 10s infinite alternate;
+        }
+        .topic-icon {
+            transition: all 0.3s ease;
+        }
+        .topic-icon:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        .spotlight {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(147,197,253,0.2) 0%, rgba(10,35,66,0) 70%);
+            z-index: 0;
+        }
+        @keyframes pulse {
+            0% { opacity: 0.4; }
+            100% { opacity: 0.7; }
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            100% { transform: translateY(-15px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="slide flex items-center justify-center">
+        <!-- Decorative lighting elements -->
+        <div class="light-ray" style="width: 300px; height: 1000px; top: -200px; left: 300px; transform: rotate(45deg);"></div>
+        <div class="light-ray" style="width: 200px; height: 900px; top: -100px; right: 400px; transform: rotate(-35deg);"></div>
+        <div class="light-ray" style="width: 250px; height: 1200px; bottom: -300px; left: 500px; transform: rotate(65deg);"></div>
+        
+        <!-- Background decorative circles -->
+        <div class="accent-circle" style="width: 450px; height: 450px; top: -150px; right: -100px;"></div>
+        <div class="accent-circle" style="width: 300px; height: 300px; bottom: -50px; left: -50px;"></div>
+        
+        <!-- Spotlight effects -->
+        <div class="spotlight" style="top: 100px; left: 300px;"></div>
+        <div class="spotlight" style="bottom: 50px; right: 200px;"></div>
+        
+        <!-- Main content -->
+        <div class="content-container text-center px-16">
+            <div class="mb-8">
+                <i class="fas fa-lightbulb text-yellow-300 text-7xl mb-6" style="filter: drop-shadow(0 0 10px rgba(252, 211, 77, 0.5));"></i>
+            </div>
+            <h1 class="title mb-4">2강: 라이팅 이론 심화 및<br>3 Point Lighting 실습</h1>
+            <p class="subtitle mb-12">컴퓨터 그래픽스 라이팅</p>
+            
+            <div class="flex justify-center mt-16 space-x-16">
+                <div class="text-center">
+                    <div class="topic-icon h-20 w-20 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center mx-auto shadow-lg">
+                        <i class="fas fa-adjust text-white text-2xl"></i>
+                    </div>
+                    <p class="mt-3 text-blue-100 font-medium">Contrast & Shape</p>
+                </div>
+                <div class="text-center">
+                    <div class="topic-icon h-20 w-20 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center mx-auto shadow-lg">
+                        <i class="fas fa-directions text-white text-2xl"></i>
+                    </div>
+                    <p class="mt-3 text-blue-100 font-medium">Light Direction</p>
+                </div>
+                <div class="text-center">
+                    <div class="topic-icon h-20 w-20 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center mx-auto shadow-lg">
+                        <i class="fas fa-spotlights text-white text-2xl"></i>
+                    </div>
+                    <p class="mt-3 text-blue-100 font-medium">3 Point Lighting</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

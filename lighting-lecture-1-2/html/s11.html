@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2강 요약 및 다음 차시 예고</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Noto Sans KR', sans-serif;
+            overflow: hidden;
+        }
+        .slide {
+            width: 1280px;
+            min-height: 720px;
+            overflow: hidden;
+            position: relative;
+            background: linear-gradient(135deg, #0a2342 0%, #183763 100%);
+            color: white;
+        }
+        .title {
+            font-size: 2.8rem;
+            font-weight: 700;
+            line-height: 1.2;
+            color: #ffffff;
+            position: relative;
+            display: inline-block;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(90deg, #ffffff, #93c5fd);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .title::after {
+            content: '';
+            position: absolute;
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, #60a5fa, #3b82f6);
+            bottom: -10px;
+            left: 0;
+            animation: expandWidth 1s ease-out forwards;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        }
+        @keyframes expandWidth {
+            from { width: 0; }
+            to { width: 100px; }
+        }
+        .section-title {
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: #93c5fd;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+        }
+        .summary-card {
+            border-radius: 10px;
+            background: rgba(30, 58, 138, 0.3);
+            transition: all 0.3s ease;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: fadeInUp 0.6s forwards;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(96, 165, 250, 0.1);
+        }
+        .summary-card:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        .summary-card:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        .summary-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            background: rgba(30, 58, 138, 0.5);
+            border-color: rgba(96, 165, 250, 0.3);
+        }
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .next-lesson-card {
+            border-radius: 10px;
+            background: linear-gradient(135deg, rgba(30, 58, 138, 0.4) 0%, rgba(24, 55, 99, 0.6) 100%);
+            transition: all 0.3s ease;
+            transform: translateX(-20px);
+            opacity: 0;
+            animation: fadeInRight 0.6s forwards;
+            animation-delay: 0.6s;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(96, 165, 250, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        .next-lesson-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, rgba(30, 58, 138, 0) 70%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        .next-lesson-card:hover {
+            transform: scale(1.03);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+            border-color: rgba(96, 165, 250, 0.6);
+        }
+        .next-lesson-card:hover::before {
+            opacity: 1;
+        }
+        @keyframes fadeInRight {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        .qa-card {
+            border-radius: 10px;
+            background: rgba(30, 58, 138, 0.3);
+            transition: all 0.3s ease;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: fadeInUp 0.6s forwards;
+            animation-delay: 0.8s;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            border-left: 4px solid #60a5fa;
+        }
+        .qa-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            background: rgba(30, 58, 138, 0.5);
+        }
+        .highlight {
+            color: #93c5fd;
+            font-weight: 600;
+            position: relative;
+            display: inline-block;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        }
+        .highlight::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #93c5fd;
+            transition: width 0.3s ease;
+        }
+        .summary-card:hover .highlight::after,
+        .next-lesson-card:hover .highlight::after,
+        .qa-card:hover .highlight::after {
+            width: 100%;
+        }
+        .accent-circle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(96, 165, 250, 0.1);
+            z-index: 0;
+            animation: float 10s infinite alternate ease-in-out;
+        }
+        @keyframes float {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-15px); }
+        }
+        .concept-icon {
+            width: 38px;
+            height: 38px;
+            background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+        .section-title:hover .concept-icon {
+            transform: rotate(15deg) scale(1.1);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+        .light-ray {
+            position: absolute;
+            background: linear-gradient(90deg, rgba(96,165,250,0) 0%, rgba(96,165,250,0.1) 50%, rgba(96,165,250,0) 100%);
+            transform-origin: center;
+            z-index: 0;
+            opacity: 0.5;
+            animation: pulse 8s infinite alternate ease-in-out;
+        }
+        @keyframes pulse {
+            0% { opacity: 0.3; }
+            100% { opacity: 0.7; }
+        }
+        .contact-method {
+            display: flex;
+            align-items: center;
+            padding: 0.5rem 0;
+            transition: all 0.3s ease;
+            border-radius: 6px;
+        }
+        .contact-method:hover {
+            transform: translateX(5px);
+            background: rgba(59, 130, 246, 0.1);
+            padding-left: 5px;
+        }
+        .contact-icon {
+            width: 32px;
+            height: 32px;
+            background: rgba(59, 130, 246, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        .contact-method:hover .contact-icon {
+            background: rgba(59, 130, 246, 0.4);
+            transform: scale(1.1);
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+        }
+        .key-concept {
+            padding: 5px 10px;
+            background: rgba(59, 130, 246, 0.2);
+            border-radius: 20px;
+            display: inline-block;
+            margin: 0 4px 8px 0;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(96, 165, 250, 0.2);
+        }
+        .key-concept:hover {
+            background: rgba(59, 130, 246, 0.4);
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+            border-color: rgba(96, 165, 250, 0.4);
+        }
+        .thank-you {
+            position: absolute;
+            bottom: 15px;
+            right: 20px;
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.7);
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            animation: fadeIn 1s forwards;
+            animation-delay: 1.2s;
+            padding: 8px 15px;
+            border-radius: 20px;
+            background: rgba(30, 58, 138, 0.3);
+            transition: all 0.3s ease;
+        }
+        .thank-you:hover {
+            transform: scale(1.05);
+            color: rgba(255, 255, 255, 0.9);
+            background: rgba(30, 58, 138, 0.5);
+        }
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+        .tip-box {
+            background: linear-gradient(135deg, rgba(30, 58, 138, 0.4) 0%, rgba(59, 130, 246, 0.2) 100%);
+            border-radius: 8px;
+            border: 1px solid rgba(96, 165, 250, 0.4);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+        .tip-box:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+            border-color: rgba(96, 165, 250, 0.6);
+        }
+        .next-label {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: #3b82f6;
+            color: white;
+            font-size: 0.8rem;
+            font-weight: bold;
+            padding: 3px 10px;
+            border-radius: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            transform: rotate(5deg);
+        }
+    </style>
+</head>
+<body>
+    <div class="slide p-10 flex flex-col">
+        <!-- Decorative elements -->
+        <div class="accent-circle" style="width: 300px; height: 300px; top: -100px; right: -100px; animation-delay: 0s;"></div>
+        <div class="accent-circle" style="width: 250px; height: 250px; bottom: -100px; left: -50px; animation-delay: 2s;"></div>
+        <div class="light-ray" style="width: 150px; height: 800px; top: -100px; right: 30%; transform: rotate(45deg);"></div>
+        <div class="light-ray" style="width: 100px; height: 600px; bottom: -100px; left: 40%; transform: rotate(-30deg);"></div>
+        
+        <!-- Header -->
+        <div class="mb-8 relative z-10">
+            <h1 class="title">2강 요약 및 다음 차시 예고</h1>
+        </div>
+        
+        <!-- Main content container -->
+        <div class="flex flex-1 space-x-6 relative z-10">
+            <!-- Left column: Summary and next lesson -->
+            <div class="w-7/12 space-y-6 pr-4">
+                <!-- 2강 요약 섹션 -->
+                <div class="section-title">
+                    <div class="concept-icon">
+                        <i class="fas fa-check-double text-white" style="filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.5));"></i>
+                    </div>
+                    2강 요약
+                </div>
+                
+                <div class="summary-card p-4">
+                    <h3 class="text-lg font-semibold text-blue-200 mb-2">라이팅 이론 심화</h3>
+                    <div class="flex flex-wrap mb-2">
+                        <span class="key-concept">Contrast</span>
+                        <span class="key-concept">Light & Shape</span>
+                        <span class="key-concept">Light & Direction</span>
+                        <span class="key-concept">Composition</span>
+                        <span class="key-concept">Light & Shadow</span>
+                    </div>
+                    <p class="text-gray-200 text-sm">빛의 <span class="highlight">강도, 방향, 색상</span>이 형태 인식과 장면 구성에 미치는 영향을 이해하고, V-Ray를 활용해 <span class="highlight">다양한 조명 효과</span>를 실습했습니다.</p>
+                </div>
+                
+                <div class="summary-card p-4">
+                    <h3 class="text-lg font-semibold text-blue-200 mb-2">3 Point Lighting 실습</h3>
+                    <div class="flex flex-wrap mb-2">
+                        <span class="key-concept">Key Light</span>
+                        <span class="key-concept">Fill Light</span>
+                        <span class="key-concept">Back Light</span>
+                    </div>
+                    <p class="text-gray-200 text-sm"><span class="highlight">기본적인 조명 배치 기법</span>으로 피사체의 주요 디테일, 그림자 보완, 윤곽 강조를 위한 세 가지 조명의 <span class="highlight">역할과 배치</span>를 학습했습니다.</p>
+                </div>
+                
+                <!-- 다음 차시 예고 -->
+                <div class="section-title mt-8">
+                    <div class="concept-icon">
+                        <i class="fas fa-forward text-white" style="filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.5));"></i>
+                    </div>
+                    다음 차시 예고
+                </div>
+                
+                <div class="next-lesson-card p-5 relative">
+                    <div class="next-label">NEXT</div>
+                    <h3 class="text-xl font-semibold text-blue-200 mb-4">3강: 고급 라이팅 테크닉과 재질 상호작용</h3>
+                    <p class="text-gray-200 mb-3">라이팅과 다양한 <span class="highlight">재질(Material)의 상호작용</span>을 중점적으로 다루며, 재질 특성에 따른 빛의 반사, 굴절, 투과 등의 효과를 학습합니다.</p>
+                    <div class="flex items-center mt-4">
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center mr-4 shadow-md">
+                            <i class="fas fa-calendar-alt text-white" style="filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.5));"></i>
+                        </div>
+                        <div>
+                            <p class="text-white font-medium">다음 주 화요일 14:00</p>
+                            <p class="text-sm text-gray-300">온라인 강의실 #103</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Right column: Q&A and contact -->
+            <div class="w-5/12 flex flex-col">
+                <!-- Q&A 안내 -->
+                <div class="section-title">
+                    <div class="concept-icon">
+                        <i class="fas fa-question-circle text-white" style="filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.5));"></i>
+                    </div>
+                    Q&A 안내
+                </div>
+                
+                <div class="qa-card p-5 flex-grow">
+                    <h3 class="text-lg font-semibold text-blue-200 mb-4">질문이 있으신가요?</h3>
+                    <p class="text-gray-200 mb-4">수업 중 배운 내용에 대해 <span class="highlight">추가 질문</span>이나 <span class="highlight">실습 문제</span>가 있으시면 다음 방법으로 문의해 주세요.</p>
+                    
+                    <div class="space-y-2 mt-6">
+                        <div class="contact-method">
+                            <div class="contact-icon">
+                                <i class="fas fa-envelope text-blue-300" style="filter: drop-shadow(0 0 2px rgba(147, 197, 253, 0.5));"></i>
+                            </div>
+                            <span class="text-gray-200">이메일: <span class="highlight">professor@example.com</span></span>
+                        </div>
+                        
+                        <div class="contact-method">
+                            <div class="contact-icon">
+                                <i class="fas fa-comments text-blue-300" style="filter: drop-shadow(0 0 2px rgba(147, 197, 253, 0.5));"></i>
+                            </div>
+                            <span class="text-gray-200">온라인 토론방: <span class="highlight">학습관리시스템(LMS) 내 게시판</span></span>
+                        </div>
+                        
+                        <div class="contact-method">
+                            <div class="contact-icon">
+                                <i class="fas fa-clock text-blue-300" style="filter: drop-shadow(0 0 2px rgba(147, 197, 253, 0.5));"></i>
+                            </div>
+                            <span class="text-gray-200">오피스 아워: <span class="highlight">월, 수 16:00-18:00</span></span>
+                        </div>
+                    </div>
+                    
+                    <div class="tip-box p-4 rounded-lg mt-6">
+                        <div class="flex items-start">
+                            <i class="fas fa-lightbulb text-yellow-300 text-xl mt-1 mr-3" style="filter: drop-shadow(0 0 3px rgba(252, 211, 77, 0.5));"></i>
+                            <div>
+                                <h4 class="font-medium text-white mb-1">다음 수업 준비</h4>
+                                <p class="text-sm text-gray-200">3강을 위해 <span class="highlight">다양한 재질 특성</span>에 대해 미리 살펴보고 오시면 더 효과적인 학습이 가능합니다!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Thank you message -->
+        <div class="thank-you">
+            감사합니다!
+        </div>
+    </div>
+</body>
+</html>

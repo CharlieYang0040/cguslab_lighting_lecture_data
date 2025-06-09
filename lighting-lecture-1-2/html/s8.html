@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Composition & Light Shadow 시각적 예시</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Noto Sans KR', sans-serif;
+            overflow: hidden;
+        }
+        .slide {
+            width: 1280px;
+            min-height: 720px;
+            overflow: hidden;
+            position: relative;
+            background: linear-gradient(135deg, #0a2342 0%, #183763 100%);
+            color: white;
+        }
+        .title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            line-height: 1.2;
+            color: #ffffff;
+            position: relative;
+            display: inline-block;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        .title::after {
+            content: '';
+            position: absolute;
+            width: 140px;
+            height: 4px;
+            background: #60a5fa;
+            bottom: -10px;
+            left: 0;
+            animation: expandWidth 1s ease-out forwards;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        }
+        @keyframes expandWidth {
+            from { width: 0; }
+            to { width: 140px; }
+        }
+        .section-header {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #93c5fd;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        }
+        .section-header i {
+            margin-right: 8px;
+            padding: 6px;
+            background: rgba(59, 130, 246, 0.2);
+            border-radius: 6px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        .gallery-card {
+            border-radius: 10px;
+            background: rgba(30, 58, 138, 0.25);
+            transition: all 0.4s ease;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: fadeInUp 0.8s forwards;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(96, 165, 250, 0.2);
+            overflow: hidden;
+            cursor: pointer;
+            position: relative;
+        }
+        .gallery-card:nth-child(1) { animation-delay: 0.1s; }
+        .gallery-card:nth-child(2) { animation-delay: 0.2s; }
+        .gallery-card:nth-child(3) { animation-delay: 0.3s; }
+        .gallery-card:nth-child(4) { animation-delay: 0.4s; }
+        .gallery-card:nth-child(5) { animation-delay: 0.5s; }
+        .gallery-card:nth-child(6) { animation-delay: 0.6s; }
+        .gallery-card:nth-child(7) { animation-delay: 0.7s; }
+        .gallery-card:nth-child(8) { animation-delay: 0.8s; }
+        
+        .gallery-card:hover {
+            transform: translateY(-8px) scale(1.03);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+            border-color: rgba(96, 165, 250, 0.6);
+            background: rgba(30, 58, 138, 0.4);
+        }
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .image-container {
+            position: relative;
+            overflow: hidden;
+            height: 160px;
+            background: rgba(15, 23, 42, 0.5);
+        }
+        .gallery-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.4s ease;
+            filter: brightness(0.85);
+        }
+        .gallery-card:hover .gallery-image {
+            transform: scale(1.1);
+            filter: brightness(1.1);
+        }
+        .image-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, rgba(10, 35, 66, 0) 0%, rgba(10, 35, 66, 0.8) 100%);
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+        .gallery-card:hover .image-overlay {
+            opacity: 0.3;
+        }
+        .card-content {
+            padding: 12px 14px;
+            position: relative;
+            z-index: 2;
+        }
+        .card-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #93c5fd;
+            margin-bottom: 6px;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+        }
+        .card-description {
+            font-size: 0.8rem;
+            color: #cbd5e1;
+            line-height: 1.4;
+        }
+        .technique-icon {
+            width: 24px;
+            height: 24px;
+            background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+        .gallery-card:hover .technique-icon {
+            transform: rotate(15deg) scale(1.1);
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.4);
+        }
+        .accent-circle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(96, 165, 250, 0.08);
+            z-index: 0;
+            animation: float 10s infinite alternate ease-in-out;
+        }
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); }
+            100% { transform: translateY(-15px) rotate(5deg); }
+        }
+        .category-badge {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 8px;
+            font-size: 0.6rem;
+            font-weight: 500;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.3s ease;
+        }
+        .gallery-card:hover .category-badge {
+            opacity: 1;
+            transform: scale(1);
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+        }
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+        .comparison-highlight {
+            position: absolute;
+            bottom: 8px;
+            left: 8px;
+            background: rgba(30, 58, 138, 0.9);
+            color: #93c5fd;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.65rem;
+            font-weight: 500;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(96, 165, 250, 0.3);
+        }
+        .interactive-hint {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.75rem;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
+            background: rgba(0, 0, 0, 0.6);
+            padding: 6px 10px;
+            border-radius: 6px;
+        }
+        .gallery-card:hover .interactive-hint {
+            opacity: 1;
+        }
+        .light-ray {
+            position: absolute;
+            background: linear-gradient(90deg, rgba(96,165,250,0) 0%, rgba(96,165,250,0.06) 50%, rgba(96,165,250,0) 100%);
+            transform-origin: center;
+            z-index: 0;
+            animation: pulse 8s infinite alternate ease-in-out;
+        }
+        @keyframes pulse {
+            0% { opacity: 0.3; }
+            100% { opacity: 0.6; }
+        }
+        .zoom-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.9);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            cursor: pointer;
+        }
+        .zoom-image {
+            max-width: 90vw;
+            max-height: 90vh;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+        }
+        .close-zoom {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 40px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+        .before-after-container {
+            position: relative;
+            height: 160px;
+            overflow: hidden;
+            cursor: ew-resize;
+        }
+        .before-after-slider {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 3px;
+            background: rgba(255, 255, 255, 0.8);
+            cursor: ew-resize;
+            z-index: 10;
+            transition: width 0.3s ease;
+        }
+        .before-after-slider:hover {
+            width: 4px;
+            background: rgba(255, 255, 255, 0.9);
+        }
+        .before-after-slider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 24px;
+            height: 24px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+        .before-after-slider::after {
+            content: '⟷';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #0a2342;
+            font-weight: bold;
+            font-size: 10px;
+        }
+        .comparison-before, .comparison-after {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        .comparison-after {
+            width: 50%;
+            overflow: hidden;
+        }
+        .comparison-after img {
+            width: 200%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .highlight-text {
+            color: #60a5fa;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide p-8 flex flex-col">
+        <!-- Decorative elements -->
+        <div class="accent-circle" style="width: 320px; height: 320px; top: -140px; right: -110px; animation-delay: 0s;"></div>
+        <div class="accent-circle" style="width: 250px; height: 250px; bottom: -100px; left: -70px; animation-delay: 2s;"></div>
+        <div class="accent-circle" style="width: 180px; height: 180px; top: 120px; left: 180px; animation-delay: 1s;"></div>
+        
+        <div class="light-ray" style="width: 150px; height: 800px; top: -120px; right: 25%; transform: rotate(30deg);"></div>
+        <div class="light-ray" style="width: 100px; height: 600px; bottom: -120px; left: 35%; transform: rotate(-35deg);"></div>
+        
+        <!-- Header -->
+        <div class="mb-5 relative z-10">
+            <h1 class="title">Composition & Light Shadow 시각적 예시</h1>
+        </div>
+        
+        <!-- Content -->
+        <div class="flex-1 relative z-10">
+            <!-- Composition Examples -->
+            <div class="mb-5">
+                <div class="section-header">
+                    <i class="fas fa-th-large text-blue-300"></i>
+                    구성 원리 & 시각적 균형
+                </div>
+                
+                <div class="grid-4">
+                    <!-- Lighting Before/After -->
+                    <div class="gallery-card">
+                        <div class="image-container">
+                            <img src="https://professional3dservices.com/img/blog/before-and-after-lighting.webp" alt="조명 전후 비교" class="gallery-image">
+                            <div class="image-overlay"></div>
+                            <div class="interactive-hint">
+                                <i class="fas fa-exchange-alt mb-1"></i><br>
+                                전후 비교
+                            </div>
+                            <div class="category-badge">COMPARISON</div>
+                            <div class="comparison-highlight">Before & After</div>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-title">
+                                <div class="technique-icon">
+                                    <i class="fas fa-exchange-alt text-white text-xs"></i>
+                                </div>
+                                조명 효과 비교
+                            </div>
+                            <div class="card-description">
+                                적절한 조명이 만드는 <span class="highlight-text">극적인 변화</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Lighting Contrast -->
+                    <div class="gallery-card">
+                        <div class="image-container">
+                            <img src="https://cdn.helloluxx.com/wp-content/uploads/2021/07/Lighting101_Contrast1.jpg" alt="조명 대비" class="gallery-image">
+                            <div class="image-overlay"></div>
+                            <div class="interactive-hint">
+                                <i class="fas fa-adjust mb-1"></i><br>
+                                대비 제어
+                            </div>
+                            <div class="category-badge">CONTRAST</div>
+                            <div class="comparison-highlight">Light Contrast</div>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-title">
+                                <div class="technique-icon">
+                                    <i class="fas fa-adjust text-white text-xs"></i>
+                                </div>
+                                대비 제어 기법
+                            </div>
+                            <div class="card-description">
+                                명암 차이로 만드는 <span class="highlight-text">시각적 집중</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Animation Mentor Example -->
+                    <div class="gallery-card">
+                        <div class="image-container">
+                            <img src="https://www.animationmentor.com/wp-content/uploads/2013/09/28_BEFORE_AFTER_LIGHTING.jpg" alt="CG 라이팅 튜토리얼" class="gallery-image">
+                            <div class="image-overlay"></div>
+                            <div class="interactive-hint">
+                                <i class="fas fa-graduation-cap mb-1"></i><br>
+                                전문 기법
+                            </div>
+                            <div class="category-badge">TUTORIAL</div>
+                            <div class="comparison-highlight">Professional</div>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-title">
+                                <div class="technique-icon">
+                                    <i class="fas fa-graduation-cap text-white text-xs"></i>
+                                </div>
+                                전문 라이팅 기법
+                            </div>
+                            <div class="card-description">
+                                <span class="highlight-text">단계별 조명</span> 설정 과정
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Adobe Dimension Tips -->
+                    <div class="gallery-card">
+                        <div class="image-container">
+                            <img src="https://helpx.adobe.com/content/dam/help/en/dimension/using/cgi-3d-lighting-tips-techniques/jcr_content/main-pars/image_157062792/image31.jpg" alt="3D 조명 팁" class="gallery-image">
+                            <div class="image-overlay"></div>
+                            <div class="interactive-hint">
+                                <i class="fas fa-lightbulb mb-1"></i><br>
+                                실용 팁
+                            </div>
+                            <div class="category-badge">TIPS</div>
+                            <div class="comparison-highlight">Adobe Guide</div>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-title">
+                                <div class="technique-icon">
+                                    <i class="fas fa-lightbulb text-white text-xs"></i>
+                                </div>
+                                CGI 조명 마스터
+                            </div>
+                            <div class="card-description">
+                                실무에서 사용하는 <span class="highlight-text">핵심 테크닉</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Shadow Quality & Hard/Soft Light -->
+            <div class="mb-5">
+                <div class="section-header">
+                    <i class="fas fa-circle-half-stroke text-purple-300"></i>
+                    그림자 품질 & 빛의 특성
+                </div>
+                
+                <div class="grid-3">
+                    <!-- Hard vs Soft Shadows -->
+                    <div class="gallery-card">
+                        <div class="image-container">
+                            <img src="https://www.peachpit.com/content/images/chap3_0321316312/elementLinks/dir2_03_25.jpg" alt="경직한 그림자와 부드러운 그림자" class="gallery-image">
+                            <div class="image-overlay"></div>
+                            <div class="interactive-hint">
+                                <i class="fas fa-circle-half-stroke mb-1"></i><br>
+                                그림자 비교
+                            </div>
+                            <div class="category-badge">SHADOW</div>
+                            <div class="comparison-highlight">Hard vs Soft</div>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-title">
+                                <div class="technique-icon">
+                                    <i class="fas fa-circle-half-stroke text-white text-xs"></i>
+                                </div>
+                                그림자 품질 비교
+                            </div>
+                            <div class="card-description">
+                                광원 크기에 따른 <span class="highlight-text">그림자 특성</span> 변화
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Research Gate Shadow Study -->
+                    <div class="gallery-card">
+                        <div class="image-container">
+                            <img src="https://www.researchgate.net/publication/242383784/figure/fig3/AS:298469525868563@1448172088633/Left-Hard-shadows-from-a-point-light-source-Right-Soft-shadows-from-an-area-light.png" alt="점광원과 면광원 그림자" class="gallery-image">
+                            <div class="image-overlay"></div>
+                            <div class="interactive-hint">
+                                <i class="fas fa-flask mb-1"></i><br>
+                                연구 자료
+                            </div>
+                            <div class="category-badge">RESEARCH</div>
+                            <div class="comparison-highlight">Scientific</div>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-title">
+                                <div class="technique-icon">
+                                    <i class="fas fa-flask text-white text-xs"></i>
+                                </div>
+                                광원 타입별 그림자
+                            </div>
+                            <div class="card-description">
+                                <span class="highlight-text">점광원 vs 면광원</span> 그림자 차이
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Creative Shrimp High Key -->
+                    <div class="gallery-card">
+                        <div class="image-container">
+                            <img src="https://www.creativeshrimp.com/wp-content/uploads/2015/07/big_light_soft_light_01.jpg" alt="하이키 라이팅" class="gallery-image">
+                            <div class="image-overlay"></div>
+                            <div class="interactive-hint">
+                                <i class="fas fa-sun mb-1"></i><br>
+                                하이키 조명
+                            </div>
+                            <div class="category-badge">TECHNIQUE</div>
+                            <div class="comparison-highlight">High Key</div>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-title">
+                                <div class="technique-icon">
+                                    <i class="fas fa-sun text-white text-xs"></i>
+                                </div>
+                                하이키 라이팅
+                            </div>
+                            <div class="card-description">
+                                <span class="highlight-text">부드러운 광원</span>으로 만드는 밝은 분위기
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Advanced Composition & Shadow Effects -->
+            <div>
+                <div class="section-header">
+                    <i class="fas fa-magic text-yellow-300"></i>
+                    고급 구성 & 그림자 효과
+                </div>
+                
+                <div class="grid-2">
+                    <!-- Academy Shadow Effects -->
+                    <div class="gallery-card">
+                        <div class="image-container">
+                            <img src="https://academyofanimatedart.com/wp-content/uploads/2019/06/td-u-shadow-effects-featured.jpg" alt="그림자 효과" class="gallery-image">
+                            <div class="image-overlay"></div>
+                            <div class="interactive-hint">
+                                <i class="fas fa-palette mb-1"></i><br>
+                                창작 효과
+                            </div>
+                            <div class="category-badge">CREATIVE</div>
+                            <div class="comparison-highlight">Artistic</div>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-title">
+                                <div class="technique-icon">
+                                    <i class="fas fa-palette text-white text-xs"></i>
+                                </div>
+                                창의적 그림자 활용
+                            </div>
+                            <div class="card-description">
+                                그림자를 활용한 <span class="highlight-text">스토리텔링</span>과 분위기 연출
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- School of Motion Design -->
+                    <div class="gallery-card">
+                        <div class="image-container">
+                            <img src="https://cdn.prod.website-files.com/650b672b6d49343e2368aa57/6553874f0e4410159dfefa7d_616892d49d8a3d13ada4a6fe_c4d-render-shadow-6.jpeg" alt="3D 그림자 디자인" class="gallery-image">
+                            <div class="image-overlay"></div>
+                            <div class="interactive-hint">
+                                <i class="fas fa-cube mb-1"></i><br>
+                                3D 디자인
+                            </div>
+                            <div class="category-badge">DESIGN</div>
+                            <div class="comparison-highlight">Modern</div>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-title">
+                                <div class="technique-icon">
+                                    <i class="fas fa-cube text-white text-xs"></i>
+                                </div>
+                                모던 3D 그림자 디자인
+                            </div>
+                            <div class="card-description">
+                                현대적 감각의 <span class="highlight-text">그림자 조형</span>과 공간감 표현
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Zoom overlay for detailed viewing -->
+        <div class="zoom-overlay" id="zoomOverlay">
+            <div class="close-zoom" onclick="closeZoom()">&times;</div>
+            <img class="zoom-image" id="zoomImage" src="" alt="확대 이미지">
+        </div>
+    </div>
+    
+    <script>
+        // Image zoom functionality
+        function openZoom(imgSrc) {
+            const overlay = document.getElementById('zoomOverlay');
+            const zoomImg = document.getElementById('zoomImage');
+            zoomImg.src = imgSrc;
+            overlay.style.display = 'flex';
+        }
+        
+        function closeZoom() {
+            const overlay = document.getElementById('zoomOverlay');
+            overlay.style.display = 'none';
+        }
+        
+        // Add click event to all gallery images
+        document.addEventListener('DOMContentLoaded', function() {
+            const galleryCards = document.querySelectorAll('.gallery-card');
+            
+            galleryCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    const img = this.querySelector('.gallery-image');
+                    if (img) {
+                        openZoom(img.src);
+                    }
+                });
+            });
+            
+            // Close zoom when clicking overlay
+            document.getElementById('zoomOverlay').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeZoom();
+                }
+            });
+            
+            // Close zoom with Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeZoom();
+                }
+            });
+            
+            // Add hover effects for interactive elements
+            const cards = document.querySelectorAll('.gallery-card');
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.zIndex = '10';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.zIndex = '1';
+                });
+            });
+        });
+    </script>
+</body>
+</html>

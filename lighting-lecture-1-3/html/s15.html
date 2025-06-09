@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>실습 종합 가이드</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(90deg, #00d4ff, #5b73ff, #ff006e, #ffbe0b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 10px rgba(0, 212, 255, 0.3);
+            text-align: center;
+        }
+        .technique-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(12px);
+            border-radius: 15px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .technique-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+        .technique-rembrandt {
+            border-color: rgba(255, 107, 157, 0.4);
+        }
+        .technique-rembrandt:hover {
+            border-color: #ff6b9d;
+            box-shadow: 0 20px 40px rgba(255, 107, 157, 0.3);
+        }
+        .technique-split {
+            border-color: rgba(255, 69, 0, 0.4);
+        }
+        .technique-split:hover {
+            border-color: #ff4500;
+            box-shadow: 0 20px 40px rgba(255, 69, 0, 0.3);
+        }
+        .technique-short {
+            border-color: rgba(0, 191, 255, 0.4);
+        }
+        .technique-short:hover {
+            border-color: #00bfff;
+            box-shadow: 0 20px 40px rgba(0, 191, 255, 0.3);
+        }
+        .technique-broad {
+            border-color: rgba(50, 205, 50, 0.4);
+        }
+        .technique-broad:hover {
+            border-color: #32cd32;
+            box-shadow: 0 20px 40px rgba(50, 205, 50, 0.3);
+        }
+        .technique-three-point {
+            border-color: rgba(255, 140, 0, 0.4);
+        }
+        .technique-three-point:hover {
+            border-color: #ff8c00;
+            box-shadow: 0 20px 40px rgba(255, 140, 0, 0.3);
+        }
+        .technique-rim {
+            border-color: rgba(138, 43, 226, 0.4);
+        }
+        .technique-rim:hover {
+            border-color: #8a2be2;
+            box-shadow: 0 20px 40px rgba(138, 43, 226, 0.3);
+        }
+        .technique-butterfly {
+            border-color: rgba(255, 215, 0, 0.4);
+        }
+        .technique-butterfly:hover {
+            border-color: #ffd700;
+            box-shadow: 0 20px 40px rgba(255, 215, 0, 0.3);
+        }
+        .step-timeline {
+            position: relative;
+        }
+        .step-timeline::before {
+            content: '';
+            position: absolute;
+            left: 20px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, #00d4ff, #5b73ff, #ff006e);
+        }
+        .step-item {
+            position: relative;
+            padding-left: 50px;
+            margin-bottom: 20px;
+        }
+        .step-number {
+            position: absolute;
+            left: 10px;
+            top: 0;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #00d4ff, #5b73ff);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: bold;
+            z-index: 2;
+        }
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 8px;
+        }
+        .grid-header {
+            background: rgba(0, 212, 255, 0.2);
+            padding: 8px 4px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 0.7rem;
+        }
+        .grid-cell {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 6px 4px;
+            border-radius: 6px;
+            text-align: center;
+            font-size: 0.65rem;
+            transition: all 0.2s ease;
+        }
+        .grid-cell:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: scale(1.05);
+        }
+        .difficulty-easy {
+            color: #32cd32;
+        }
+        .difficulty-medium {
+            color: #ffd700;
+        }
+        .difficulty-hard {
+            color: #ff6b9d;
+        }
+        .floating-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .floating-light {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.8), transparent);
+            animation: float 6s infinite ease-in-out;
+        }
+        .floating-light:nth-child(1) { top: 10%; left: 15%; animation-delay: 0s; }
+        .floating-light:nth-child(2) { top: 20%; right: 20%; animation-delay: 2s; }
+        .floating-light:nth-child(3) { bottom: 30%; left: 25%; animation-delay: 4s; }
+        .floating-light:nth-child(4) { bottom: 15%; right: 15%; animation-delay: 1s; }
+        .floating-light:nth-child(5) { top: 40%; left: 50%; animation-delay: 3s; }
+        @keyframes float {
+            0%, 100% { opacity: 0.3; transform: translateY(0px); }
+            50% { opacity: 0.8; transform: translateY(-20px); }
+        }
+        .practice-tip {
+            background: rgba(255, 190, 11, 0.15);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 190, 11, 0.3);
+            position: relative;
+        }
+        .chart-container {
+            height: 180px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 15px;
+        }
+        .highlight-text {
+            color: #00d4ff;
+            font-weight: 600;
+        }
+        .workflow-step {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-left: 4px solid transparent;
+            transition: all 0.3s ease;
+        }
+        .workflow-step:hover {
+            transform: translateX(10px);
+            background: rgba(255, 255, 255, 0.12);
+        }
+        .workflow-planning {
+            border-left-color: #00d4ff;
+        }
+        .workflow-setup {
+            border-left-color: #5b73ff;
+        }
+        .workflow-execution {
+            border-left-color: #ff006e;
+        }
+        .workflow-review {
+            border-left-color: #ffbe0b;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container p-6 relative">
+        <!-- 배경 떠다니는 요소들 -->
+        <div class="floating-elements">
+            <div class="floating-light"></div>
+            <div class="floating-light"></div>
+            <div class="floating-light"></div>
+            <div class="floating-light"></div>
+            <div class="floating-light"></div>
+        </div>
+        
+        <!-- 제목 섹션 -->
+        <div class="text-center mb-5 z-10 relative">
+            <h1 class="section-title mb-2">
+                <i class="fas fa-tools mr-3 text-blue-400"></i>
+                실습 종합 가이드
+            </h1>
+            <p class="text-lg opacity-80">7가지 캐릭터 라이팅 기법의 <span class="highlight-text">완벽 마스터</span>를 위한 실습 로드맵</p>
+        </div>
+        
+        <!-- 메인 콘텐츠 -->
+        <div class="grid grid-cols-12 gap-5 z-10 relative">
+            <!-- 왼쪽: 기법 비교 차트 -->
+            <div class="col-span-7">
+                <!-- 기법 비교 표 -->
+                <div class="mb-5">
+                    <h3 class="text-lg font-bold mb-3 flex items-center">
+                        <i class="fas fa-chart-bar mr-2 text-blue-400"></i>
+                        라이팅 기법 특성 비교
+                    </h3>
+                    <div class="comparison-grid text-xs">
+                        <div class="grid-header">기법명</div>
+                        <div class="grid-header">난이도</div>
+                        <div class="grid-header">효과</div>
+                        <div class="grid-header">활용도</div>
+                        <div class="grid-header">분위기</div>
+                        <div class="grid-header">적용 분야</div>
+                        <div class="grid-header">특징</div>
+                        
+                        <div class="grid-cell font-semibold text-pink-400">Rembrandt</div>
+                        <div class="grid-cell difficulty-medium">⭐⭐⭐</div>
+                        <div class="grid-cell">드라마틱</div>
+                        <div class="grid-cell difficulty-hard">높음</div>
+                        <div class="grid-cell">고전적</div>
+                        <div class="grid-cell">영화, 포트레이트</div>
+                        <div class="grid-cell">삼각형 빛</div>
+                        
+                        <div class="grid-cell font-semibold text-red-400">Split</div>
+                        <div class="grid-cell difficulty-easy">⭐⭐</div>
+                        <div class="grid-cell">강렬한 대비</div>
+                        <div class="grid-cell difficulty-medium">중간</div>
+                        <div class="grid-cell">극적</div>
+                        <div class="grid-cell">스릴러, 액션</div>
+                        <div class="grid-cell">절반 조명</div>
+                        
+                        <div class="grid-cell font-semibold text-blue-400">Short</div>
+                        <div class="grid-cell difficulty-hard">⭐⭐⭐⭐</div>
+                        <div class="grid-cell">입체감</div>
+                        <div class="grid-cell difficulty-medium">중간</div>
+                        <div class="grid-cell">자연스러운</div>
+                        <div class="grid-cell">인물, 제품</div>
+                        <div class="grid-cell">짧은 쪽 강조</div>
+                        
+                        <div class="grid-cell font-semibold text-green-400">Broad</div>
+                        <div class="grid-cell difficulty-easy">⭐⭐</div>
+                        <div class="grid-cell">친근함</div>
+                        <div class="grid-cell difficulty-hard">높음</div>
+                        <div class="grid-cell">밝고 개방적</div>
+                        <div class="grid-cell">상업, 광고</div>
+                        <div class="grid-cell">넓은 쪽 조명</div>
+                        
+                        <div class="grid-cell font-semibold text-orange-400">3-Point</div>
+                        <div class="grid-cell difficulty-hard">⭐⭐⭐⭐⭐</div>
+                        <div class="grid-cell">완전한 조명</div>
+                        <div class="grid-cell difficulty-hard">최고</div>
+                        <div class="grid-cell">전문적</div>
+                        <div class="grid-cell">모든 분야</div>
+                        <div class="grid-cell">Key+Fill+Rim</div>
+                        
+                        <div class="grid-cell font-semibold text-purple-400">Rim</div>
+                        <div class="grid-cell difficulty-medium">⭐⭐⭐</div>
+                        <div class="grid-cell">윤곽 강조</div>
+                        <div class="grid-cell difficulty-hard">높음</div>
+                        <div class="grid-cell">신비로운</div>
+                        <div class="grid-cell">판타지, SF</div>
+                        <div class="grid-cell">배경 분리</div>
+                        
+                        <div class="grid-cell font-semibold text-yellow-400">Butterfly</div>
+                        <div class="grid-cell difficulty-easy">⭐⭐</div>
+                        <div class="grid-cell">글래머</div>
+                        <div class="grid-cell difficulty-medium">중간</div>
+                        <div class="grid-cell">세련된</div>
+                        <div class="grid-cell">뷰티, 패션</div>
+                        <div class="grid-cell">나비 그림자</div>
+                    </div>
+                </div>
+                
+                <!-- 실습 워크플로우 -->
+                <div>
+                    <h3 class="text-lg font-bold mb-3 flex items-center">
+                        <i class="fas fa-route mr-2 text-purple-400"></i>
+                        실습 워크플로우
+                    </h3>
+                    <div class="space-y-3">
+                        <div class="workflow-step workflow-planning">
+                            <div class="flex items-center">
+                                <div class="w-8 h-8 bg-blue-500 bg-opacity-20 rounded-full flex items-center justify-center mr-3">
+                                    <i class="fas fa-lightbulb text-blue-400 text-sm"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-sm">1. 기획 및 준비 (Planning)</h4>
+                                    <p class="text-xs opacity-80">목표 분위기 설정 → 기법 선택 → 장비 준비</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="workflow-step workflow-setup">
+                            <div class="flex items-center">
+                                <div class="w-8 h-8 bg-indigo-500 bg-opacity-20 rounded-full flex items-center justify-center mr-3">
+                                    <i class="fas fa-cogs text-indigo-400 text-sm"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-sm">2. 셋업 및 테스트 (Setup)</h4>
+                                    <p class="text-xs opacity-80">조명 배치 → 테스트 촬영 → 각도 조정</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="workflow-step workflow-execution">
+                            <div class="flex items-center">
+                                <div class="w-8 h-8 bg-pink-500 bg-opacity-20 rounded-full flex items-center justify-center mr-3">
+                                    <i class="fas fa-camera text-pink-400 text-sm"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-sm">3. 실행 및 촬영 (Execution)</h4>
+                                    <p class="text-xs opacity-80">본격 촬영 → 다양한 각도 시도 → 결과물 확인</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="workflow-step workflow-review">
+                            <div class="flex items-center">
+                                <div class="w-8 h-8 bg-yellow-500 bg-opacity-20 rounded-full flex items-center justify-center mr-3">
+                                    <i class="fas fa-search text-yellow-400 text-sm"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-sm">4. 분석 및 개선 (Review)</h4>
+                                    <p class="text-xs opacity-80">결과 분석 → 개선점 도출 → 다음 실습 계획</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 오른쪽: 실습 가이드 -->
+            <div class="col-span-5 space-y-4">
+                <!-- 단계별 실습 가이드 -->
+                <div class="practice-tip p-4">
+                    <h3 class="text-lg font-bold mb-3 flex items-center">
+                        <i class="fas fa-clipboard-list mr-2 text-yellow-400"></i>
+                        단계별 실습 가이드
+                    </h3>
+                    <div class="step-timeline">
+                        <div class="step-item">
+                            <div class="step-number">1</div>
+                            <div>
+                                <h4 class="font-semibold text-sm mb-1">기초 기법 마스터</h4>
+                                <p class="text-xs opacity-80"><span class="highlight-text">Butterfly → Broad → Split</span> 순서로 연습</p>
+                            </div>
+                        </div>
+                        
+                        <div class="step-item">
+                            <div class="step-number">2</div>
+                            <div>
+                                <h4 class="font-semibold text-sm mb-1">중급 기법 도전</h4>
+                                <p class="text-xs opacity-80"><span class="highlight-text">Rembrandt → Rim Light</span> 정밀한 각도 조절</p>
+                            </div>
+                        </div>
+                        
+                        <div class="step-item">
+                            <div class="step-number">3</div>
+                            <div>
+                                <h4 class="font-semibold text-sm mb-1">고급 기법 완성</h4>
+                                <p class="text-xs opacity-80"><span class="highlight-text">Short Light → 3-Point</span> 복합 조명 시스템</p>
+                            </div>
+                        </div>
+                        
+                        <div class="step-item">
+                            <div class="step-number">4</div>
+                            <div>
+                                <h4 class="font-semibold text-sm mb-1">창의적 응용</h4>
+                                <p class="text-xs opacity-80"><span class="highlight-text">기법 조합</span>으로 독창적 스타일 개발</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 실습 팁 -->
+                <div class="practice-tip p-4">
+                    <h4 class="font-bold text-sm mb-3 flex items-center">
+                        <i class="fas fa-star mr-2 text-yellow-400"></i>
+                        필수 실습 팁
+                    </h4>
+                    <div class="space-y-2 text-xs">
+                        <div class="flex items-center">
+                            <i class="fas fa-check mr-2 text-green-400"></i>
+                            <span>항상 <span class="highlight-text">테스트 촬영</span>으로 시작하기</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check mr-2 text-green-400"></i>
+                            <span><span class="highlight-text">조명 각도</span>를 5도씩 세밀하게 조정</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check mr-2 text-green-400"></i>
+                            <span>결과물을 <span class="highlight-text">레퍼런스</span>와 비교 분석</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check mr-2 text-green-400"></i>
+                            <span>실패도 <span class="highlight-text">학습 과정</span>으로 기록하기</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 기법별 추천 연습 순서 -->
+                <div class="practice-tip p-4">
+                    <h4 class="font-bold text-sm mb-3 flex items-center">
+                        <i class="fas fa-layer-group mr-2 text-blue-400"></i>
+                        추천 연습 순서
+                    </h4>
+                    <div class="space-y-2">
+                        <div class="technique-card technique-butterfly p-2">
+                            <div class="flex items-center text-xs">
+                                <span class="font-bold text-yellow-400 mr-2">1주차:</span>
+                                <span>Butterfly Light (기초)</span>
+                            </div>
+                        </div>
+                        <div class="technique-card technique-broad p-2">
+                            <div class="flex items-center text-xs">
+                                <span class="font-bold text-green-400 mr-2">2주차:</span>
+                                <span>Broad Light (응용)</span>
+                            </div>
+                        </div>
+                        <div class="technique-card technique-split p-2">
+                            <div class="flex items-center text-xs">
+                                <span class="font-bold text-red-400 mr-2">3주차:</span>
+                                <span>Split Light (극적 효과)</span>
+                            </div>
+                        </div>
+                        <div class="technique-card technique-rembrandt p-2">
+                            <div class="flex items-center text-xs">
+                                <span class="font-bold text-pink-400 mr-2">4주차:</span>
+                                <span>Rembrandt Light (정밀)</span>
+                            </div>
+                        </div>
+                        <div class="technique-card technique-rim p-2">
+                            <div class="flex items-center text-xs">
+                                <span class="font-bold text-purple-400 mr-2">5주차:</span>
+                                <span>Rim Light (고급)</span>
+                            </div>
+                        </div>
+                        <div class="technique-card technique-short p-2">
+                            <div class="flex items-center text-xs">
+                                <span class="font-bold text-blue-400 mr-2">6주차:</span>
+                                <span>Short Light (마스터)</span>
+                            </div>
+                        </div>
+                        <div class="technique-card technique-three-point p-2">
+                            <div class="flex items-center text-xs">
+                                <span class="font-bold text-orange-400 mr-2">7주차:</span>
+                                <span>3-Point Lighting (통합)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 실습 완료 체크리스트 -->
+                <div class="practice-tip p-4">
+                    <h4 class="font-bold text-sm mb-3 flex items-center">
+                        <i class="fas fa-tasks mr-2 text-green-400"></i>
+                        실습 완료 체크리스트
+                    </h4>
+                    <div class="grid grid-cols-2 gap-2 text-xs">
+                        <div class="flex items-center">
+                            <input type="checkbox" class="mr-2">
+                            <span>기본 셋업 완료</span>
+                        </div>
+                        <div class="flex items-center">
+                            <input type="checkbox" class="mr-2">
+                            <span>각도 조정 완료</span>
+                        </div>
+                        <div class="flex items-center">
+                            <input type="checkbox" class="mr-2">
+                            <span>테스트 촬영 완료</span>
+                        </div>
+                        <div class="flex items-center">
+                            <input type="checkbox" class="mr-2">
+                            <span>결과물 분석 완료</span>
+                        </div>
+                        <div class="flex items-center">
+                            <input type="checkbox" class="mr-2">
+                            <span>개선점 도출 완료</span>
+                        </div>
+                        <div class="flex items-center">
+                            <input type="checkbox" class="mr-2">
+                            <span>포트폴리오 정리</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 하단 마무리 메시지 -->
+        <div class="mt-4 text-center z-10 relative">
+            <div class="practice-tip p-3">
+                <p class="text-sm">
+                    <i class="fas fa-graduation-cap mr-2 text-blue-400"></i>
+                    <span class="highlight-text">체계적인 실습</span>을 통해 프로페셔널한 캐릭터 라이팅 기법을 완벽히 마스터하세요!
+                    <i class="fas fa-heart ml-2 text-red-400"></i>
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

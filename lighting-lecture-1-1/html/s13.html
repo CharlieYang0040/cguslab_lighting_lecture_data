@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color & Mood (컬러와 분위기) - 추가 예시</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', 'Malgun Gothic', sans-serif;
+        }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            background: linear-gradient(135deg, #1a2a3a 0%, #0d1721 100%);
+            color: #ffffff;
+            overflow: hidden;
+            position: relative;
+        }
+        .header {
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 1.5rem 3rem;
+            border-bottom: 2px solid rgba(163, 198, 255, 0.4);
+            display: flex;
+            align-items: center;
+        }
+        .header-icon {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            color: #a3c6ff;
+            font-size: 1.5rem;
+        }
+        .content {
+            padding: 1.5rem 3rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            height: calc(100% - 120px);
+        }
+        .examples-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            height: 100%;
+        }
+        .example-item {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        .example-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        .example-image {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-bottom: 0.75rem;
+        }
+        .example-title {
+            font-weight: bold;
+            color: #ffcc66;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        .example-desc {
+            font-size: 0.8rem;
+            color: #e0e0e0;
+            line-height: 1.4;
+            flex: 1;
+        }
+        .large-example {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .large-image {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+        .large-title {
+            font-weight: bold;
+            color: #ffcc66;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+        }
+        .large-title i {
+            margin-right: 0.75rem;
+        }
+        .highlight {
+            color: #a3c6ff;
+            font-weight: bold;
+        }
+        .tips-container {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .tips-title {
+            font-weight: bold;
+            color: #ffcc66;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+        }
+        .tips-title i {
+            margin-right: 0.75rem;
+        }
+        .tip-item {
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: flex-start;
+            font-size: 0.9rem;
+        }
+        .tip-item:before {
+            content: "▸";
+            color: #a3c6ff;
+            font-weight: bold;
+            margin-right: 0.75rem;
+            margin-top: 0.1rem;
+        }
+        .footer {
+            padding: 1rem 3rem;
+            text-align: right;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            box-sizing: border-box;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+        .animation-highlight {
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        @keyframes glow {
+            from {
+                box-shadow: 0 0 5px rgba(163, 198, 255, 0.5);
+            }
+            to {
+                box-shadow: 0 0 20px rgba(163, 198, 255, 0.8);
+            }
+        }
+        .technique-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(255, 204, 102, 0.9);
+            color: #1a2a3a;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+        .temperature-slider {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            height: 4px;
+            background: linear-gradient(to right, #ff6b35 0%, #f7931e 25%, #ffcc02 50%, #87ceeb 75%, #4169e1 100%);
+            border-radius: 2px;
+            animation: pulse-warm-cool 4s infinite;
+        }
+        @keyframes pulse-warm-cool {
+            0%, 100% {
+                opacity: 0.7;
+                transform: translate(-50%, -50%) scaleY(1);
+            }
+            50% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scaleY(2);
+            }
+        }
+        .mood-indicator {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            right: 10px;
+            background: linear-gradient(to right, rgba(255,107,53,0.8) 0%, rgba(65,105,225,0.8) 100%);
+            color: white;
+            padding: 6px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            text-align: center;
+        }
+        .kelvin-scale {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding: 0.75rem;
+            background-color: rgba(255, 255, 255, 0.08);
+            border-radius: 6px;
+        }
+        .kelvin-item {
+            text-align: center;
+            flex: 1;
+        }
+        .kelvin-temp {
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: #a3c6ff;
+        }
+        .kelvin-desc {
+            font-size: 0.7rem;
+            color: #e0e0e0;
+            margin-top: 0.25rem;
+        }
+        .color-circle {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            margin: 0.25rem auto;
+        }
+        .warm-circle { background: linear-gradient(45deg, #ff6b35, #f7931e); }
+        .neutral-circle { background: linear-gradient(45deg, #ffcc02, #ffffff); }
+        .cool-circle { background: linear-gradient(45deg, #87ceeb, #4169e1); }
+        .comparison-container {
+            position: relative;
+            margin-bottom: 1rem;
+        }
+        .split-image {
+            display: flex;
+            height: 160px;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .split-left, .split-right {
+            flex: 1;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        .split-label {
+            position: absolute;
+            bottom: 8px;
+            left: 8px;
+            right: 8px;
+            background-color: rgba(0,0,0,0.7);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            text-align: center;
+            font-weight: bold;
+        }
+        .psychology-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+        }
+        .psychology-item {
+            background-color: rgba(255, 255, 255, 0.08);
+            padding: 0.5rem;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+        .emotion-icon {
+            font-size: 1.2rem;
+            margin-bottom: 0.25rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="header">
+            <div class="header-icon">
+                <i class="fas fa-thermometer-half"></i>
+            </div>
+            <div>
+                <h1 class="text-3xl font-bold">Color & Mood (컬러와 분위기) - 추가 예시</h1>
+                <p class="text-sm opacity-70 mt-1">실무 적용 사례와 심화 학습</p>
+            </div>
+        </div>
+        
+        <div class="content">
+            <div>
+                <div class="large-example">
+                    <div class="large-title">
+                        <i class="fas fa-palette"></i> 색온도별 분위기 변화
+                    </div>
+                    <div class="comparison-container">
+                        <img src="https://vorlane.com/wp-content/uploads/2024/10/Affects-Mood-and-Ambiance-Bedroom-showing-contrast-between-cool-and-warm-lighting_-demonstrating-how.webp" alt="색온도 분위기 비교" class="large-image">
+                        <div class="temperature-slider"></div>
+                        <div class="mood-indicator">Warm Light (2700K) ← → Cool Light (6500K)</div>
+                    </div>
+                    <p class="text-sm">동일한 공간에서 <span class="highlight">색온도</span>만 변경했을 때의 극적인 분위기 변화</p>
+                </div>
+                
+                <div class="tips-container">
+                    <div class="tips-title">
+                        <i class="fas fa-lightbulb"></i> 색온도 선택 가이드
+                    </div>
+                    <div class="kelvin-scale">
+                        <div class="kelvin-item">
+                            <div class="color-circle warm-circle"></div>
+                            <div class="kelvin-temp">2700K-3000K</div>
+                            <div class="kelvin-desc">따뜻함, 편안함</div>
+                        </div>
+                        <div class="kelvin-item">
+                            <div class="color-circle neutral-circle"></div>
+                            <div class="kelvin-temp">4000K-4500K</div>
+                            <div class="kelvin-desc">자연광, 균형감</div>
+                        </div>
+                        <div class="kelvin-item">
+                            <div class="color-circle cool-circle"></div>
+                            <div class="kelvin-temp">5500K-6500K</div>
+                            <div class="kelvin-desc">집중력, 명료함</div>
+                        </div>
+                    </div>
+                    <div class="tip-item"><span class="highlight">거실/침실</span>: 2700K-3000K로 편안하고 아늑한 분위기</div>
+                    <div class="tip-item"><span class="highlight">사무실/작업공간</span>: 4000K-5000K로 집중력과 생산성 향상</div>
+                    <div class="tip-item"><span class="highlight">병원/상업공간</span>: 5500K-6500K로 밝고 전문적인 환경</div>
+                </div>
+            </div>
+            
+            <div class="examples-grid">
+                <div class="example-item animation-highlight">
+                    <div style="position: relative;">
+                        <img src="https://www.superbrightleds.com/media/amasty/blog/Choose_CCT_2.png" alt="색온도 스펙트럼" class="example-image">
+                        <div class="technique-badge">Color Temperature Scale</div>
+                    </div>
+                    <div class="example-title">색온도 스펙트럼 차트</div>
+                    <div class="example-desc"><span class="highlight">1000K</span>부터 <span class="highlight">10000K</span>까지 색온도별 특성과 적용 분야</div>
+                </div>
+                
+                <div class="example-item">
+                    <div style="position: relative;">
+                        <img src="https://www.thelightingpractice.com/wp-content/uploads/2018/07/Color-Temperature-Example-Grid.jpg" alt="색온도 실제 적용" class="example-image">
+                        <div class="technique-badge">Real Applications</div>
+                    </div>
+                    <div class="example-title">실제 공간별 색온도 적용</div>
+                    <div class="example-desc">다양한 <span class="highlight">실내 공간</span>에서 색온도가 분위기에 미치는 실제 효과</div>
+                </div>
+                
+                <div class="example-item">
+                    <div style="position: relative;">
+                        <img src="https://home-cdn.reolink.us/wp-content/uploads/2023/06/120835351686558935.4854.jpg" alt="따뜻한 vs 차가운 빛" class="example-image">
+                        <div class="technique-badge">Warm vs Cool</div>
+                    </div>
+                    <div class="example-title">따뜻한 빛 vs 차가운 빛</div>
+                    <div class="example-desc"><span class="highlight">주거공간</span>과 <span class="highlight">상업공간</span>에서의 색온도 선택 기준</div>
+                </div>
+                
+                <div class="example-item">
+                    <div style="position: relative;">
+                        <img src="https://www.shutterstock.com/blog/wp-content/uploads/sites/5/2019/08/color-temperature-example-1.jpg" alt="영상 제작 색온도" class="example-image">
+                        <div class="technique-badge">Video Production</div>
+                    </div>
+                    <div class="example-title">영상 제작에서의 색온도</div>
+                    <div class="example-desc"><span class="highlight">촬영</span>과 <span class="highlight">포스트 프로덕션</span>에서 색온도 조절의 중요성</div>
+                </div>
+                
+                <div class="example-item">
+                    <div class="psychology-grid">
+                        <div class="psychology-item">
+                            <div class="emotion-icon" style="color: #ff6b35;">😊</div>
+                            <div>따뜻함</div>
+                        </div>
+                        <div class="psychology-item">
+                            <div class="emotion-icon" style="color: #ffcc02;">⚖️</div>
+                            <div>균형감</div>
+                        </div>
+                        <div class="psychology-item">
+                            <div class="emotion-icon" style="color: #4169e1;">🧠</div>
+                            <div>집중력</div>
+                        </div>
+                        <div class="psychology-item">
+                            <div class="emotion-icon" style="color: #ff6b35;">🏠</div>
+                            <div>편안함</div>
+                        </div>
+                        <div class="psychology-item">
+                            <div class="emotion-icon" style="color: #ffcc02;">☀️</div>
+                            <div>자연스러움</div>
+                        </div>
+                        <div class="psychology-item">
+                            <div class="emotion-icon" style="color: #4169e1;">💼</div>
+                            <div>전문성</div>
+                        </div>
+                    </div>
+                    <div class="example-title mt-2">색상과 감정의 연관성</div>
+                    <div class="example-desc"><span class="highlight">색 심리학</span>을 활용한 감정 유도와 공간 디자인</div>
+                </div>
+                
+                <div class="example-item">
+                    <div class="split-image">
+                        <div class="split-left" style="background-image: linear-gradient(45deg, #ff6b35, #f7931e);">
+                            <div class="split-label">따뜻한 색상 (Warm)</div>
+                        </div>
+                        <div class="split-right" style="background-image: linear-gradient(45deg, #87ceeb, #4169e1);">
+                            <div class="split-label">차가운 색상 (Cool)</div>
+                        </div>
+                    </div>
+                    <div class="example-title">색상 카테고리별 특성</div>
+                    <div class="example-desc"><span class="highlight">컬러 휠</span>을 기준으로 한 색상 분류와 감정적 효과</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            컴퓨터 그래픽스 라이팅 입문 | Color & Mood(컬러와 분위기) 심화 학습
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>7강 목차</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            overflow: hidden;
+        }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            position: relative;
+            background: linear-gradient(to right, #f8fafc, #e2e8f0);
+            overflow: hidden;
+        }
+        .title-bar {
+            background: linear-gradient(90deg, #1e3a8a, #3b82f6);
+        }
+        .toc-item {
+            border-left: 4px solid transparent;
+            transition: all 0.3s ease;
+        }
+        .toc-item:hover {
+            border-left-color: #3b82f6;
+            background-color: rgba(59, 130, 246, 0.1);
+            transform: translateX(5px);
+        }
+        .icon-circle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #3b82f6, #1e3a8a);
+            box-shadow: 0 4px 10px rgba(30, 64, 175, 0.3);
+        }
+        .accent-border {
+            border-left: 5px solid #3b82f6;
+        }
+        .light-beam {
+            position: absolute;
+            background-color: rgba(59, 130, 246, 0.05);
+            transform: rotate(45deg);
+            transform-origin: 0 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container flex flex-col">
+        <!-- 배경 라이트 빔 효과 -->
+        <div class="light-beam" style="width: 200px; height: 1000px; top: -300px; right: 500px;"></div>
+        <div class="light-beam" style="width: 150px; height: 1200px; top: -100px; right: 300px;"></div>
+        <div class="light-beam" style="width: 180px; height: 900px; top: 0px; right: 700px;"></div>
+        
+        <!-- 제목 바 -->
+        <div class="title-bar w-full py-4 px-12 flex items-center">
+            <h1 class="text-3xl font-bold text-white">7강: 프로젝트 실습, 리라이팅 및 1개월차 종합 리뷰</h1>
+            <div class="ml-auto text-white text-opacity-80 text-sm">
+                컴퓨터 그래픽스 라이팅 과정
+            </div>
+        </div>
+        
+        <!-- 메인 콘텐츠 -->
+        <div class="flex-1 p-12 flex flex-col">
+            <h2 class="text-3xl font-bold text-gray-800 mb-8">주요 활동 목차</h2>
+            
+            <div class="flex flex-1 items-center">
+                <div class="space-y-10 w-full">
+                    <!-- 프로젝트 1 -->
+                    <div class="toc-item flex items-center p-5 bg-white rounded-lg shadow-md">
+                        <div class="icon-circle flex-shrink-0 mr-6">
+                            <i class="fas fa-lightbulb text-3xl text-white"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="text-2xl font-bold text-gray-800">프로젝트 1</h3>
+                            <p class="text-xl text-gray-600">제공된 씬 라이팅 연출 실습</p>
+                            <div class="mt-2 text-sm text-gray-500 flex items-center">
+                                <span class="mr-4"><i class="fas fa-check-circle text-green-500 mr-1"></i> 비주얼 언어 적용</span>
+                                <span class="mr-4"><i class="fas fa-check-circle text-green-500 mr-1"></i> 3 Point Lighting</span>
+                                <span><i class="fas fa-check-circle text-green-500 mr-1"></i> V-Ray 작업 환경</span>
+                            </div>
+                        </div>
+                        <div class="text-blue-600 text-4xl font-bold mr-4">01</div>
+                    </div>
+                    
+                    <!-- 프로젝트 2 -->
+                    <div class="toc-item flex items-center p-5 bg-white rounded-lg shadow-md">
+                        <div class="icon-circle flex-shrink-0 mr-6">
+                            <i class="fas fa-sync-alt text-3xl text-white"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="text-2xl font-bold text-gray-800">프로젝트 2</h3>
+                            <p class="text-xl text-gray-600">이전 작업물 리라이팅 및 개선 실습</p>
+                            <div class="mt-2 text-sm text-gray-500 flex items-center">
+                                <span class="mr-4"><i class="fas fa-check-circle text-green-500 mr-1"></i> 분석 및 문제 파악</span>
+                                <span class="mr-4"><i class="fas fa-check-circle text-green-500 mr-1"></i> 개선 방향 수립</span>
+                                <span><i class="fas fa-check-circle text-green-500 mr-1"></i> 피드백 세션</span>
+                            </div>
+                        </div>
+                        <div class="text-blue-600 text-4xl font-bold mr-4">02</div>
+                    </div>
+                    
+                    <!-- 종합 리뷰 -->
+                    <div class="toc-item flex items-center p-5 bg-white rounded-lg shadow-md">
+                        <div class="icon-circle flex-shrink-0 mr-6">
+                            <i class="fas fa-tasks text-3xl text-white"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="text-2xl font-bold text-gray-800">1개월차 종합 리뷰</h3>
+                            <p class="text-xl text-gray-600">Q&A 및 과제 제출</p>
+                            <div class="mt-2 text-sm text-gray-500 flex items-center">
+                                <span class="mr-4"><i class="fas fa-check-circle text-green-500 mr-1"></i> 학습 내용 정리</span>
+                                <span class="mr-4"><i class="fas fa-check-circle text-green-500 mr-1"></i> 질의응답</span>
+                                <span><i class="fas fa-check-circle text-green-500 mr-1"></i> 최종 과제 안내</span>
+                            </div>
+                        </div>
+                        <div class="text-blue-600 text-4xl font-bold mr-4">03</div>
+                    </div>
+                </div>
+                
+                <!-- 우측 아이콘 이미지 -->
+                <div class="ml-8 flex-shrink-0">
+                    <div class="w-48 h-48 relative">
+                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="w-full h-full opacity-30">
+                            <circle cx="50" cy="50" r="40" fill="none" stroke="#3b82f6" stroke-width="1"/>
+                            <circle cx="50" cy="50" r="30" fill="none" stroke="#3b82f6" stroke-width="1"/>
+                            <circle cx="50" cy="50" r="20" fill="none" stroke="#3b82f6" stroke-width="1"/>
+                            <line x1="20" y1="20" x2="40" y2="40" stroke="#3b82f6" stroke-width="1"/>
+                            <line x1="80" y1="20" x2="60" y2="40" stroke="#3b82f6" stroke-width="1"/>
+                            <line x1="80" y1="80" x2="60" y2="60" stroke="#3b82f6" stroke-width="1"/>
+                            <line x1="20" y1="80" x2="40" y2="60" stroke="#3b82f6" stroke-width="1"/>
+                            <circle cx="50" cy="50" r="5" fill="#3b82f6"/>
+                            <circle cx="20" cy="20" r="4" fill="#3b82f6"/>
+                            <circle cx="80" cy="20" r="4" fill="#3b82f6"/>
+                            <circle cx="80" cy="80" r="4" fill="#3b82f6"/>
+                            <circle cx="20" cy="80" r="4" fill="#3b82f6"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 하단 푸터 -->
+        <div class="py-3 px-12 bg-gray-100 flex justify-between items-center text-gray-600 text-sm">
+            <div>7강: 1개월차 마무리</div>
+            <div>컴퓨터 그래픽스 라이팅 과정</div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Light & Direction (빛과 방향) - 추가 예시</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', 'Malgun Gothic', sans-serif;
+        }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            background: linear-gradient(135deg, #1a2a3a 0%, #0d1721 100%);
+            color: #ffffff;
+            overflow: hidden;
+            position: relative;
+        }
+        .header {
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 1.5rem 3rem;
+            border-bottom: 2px solid rgba(163, 198, 255, 0.4);
+            display: flex;
+            align-items: center;
+        }
+        .header-icon {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            color: #a3c6ff;
+            font-size: 1.5rem;
+        }
+        .content {
+            padding: 1.5rem 3rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            height: calc(100% - 120px);
+        }
+        .examples-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            height: 100%;
+        }
+        .example-item {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .example-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        .example-image {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-bottom: 0.75rem;
+        }
+        .example-title {
+            font-weight: bold;
+            color: #ffcc66;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        .example-desc {
+            font-size: 0.8rem;
+            color: #e0e0e0;
+            line-height: 1.4;
+            flex: 1;
+        }
+        .large-example {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .large-image {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+        .large-title {
+            font-weight: bold;
+            color: #ffcc66;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+        }
+        .large-title i {
+            margin-right: 0.75rem;
+        }
+        .highlight {
+            color: #a3c6ff;
+            font-weight: bold;
+        }
+        .tips-container {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .tips-title {
+            font-weight: bold;
+            color: #ffcc66;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+        }
+        .tips-title i {
+            margin-right: 0.75rem;
+        }
+        .tip-item {
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: flex-start;
+            font-size: 0.9rem;
+        }
+        .tip-item:before {
+            content: "▸";
+            color: #a3c6ff;
+            font-weight: bold;
+            margin-right: 0.75rem;
+            margin-top: 0.1rem;
+        }
+        .footer {
+            padding: 1rem 3rem;
+            text-align: right;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            box-sizing: border-box;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+        .animation-highlight {
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        @keyframes glow {
+            from {
+                box-shadow: 0 0 5px rgba(163, 198, 255, 0.5);
+            }
+            to {
+                box-shadow: 0 0 20px rgba(163, 198, 255, 0.8);
+            }
+        }
+        .direction-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(255, 204, 102, 0.9);
+            color: #1a2a3a;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+        .front-badge {
+            background-color: rgba(255, 204, 102, 0.9);
+        }
+        .side-badge {
+            background-color: rgba(102, 204, 255, 0.9);
+        }
+        .back-badge {
+            background-color: rgba(255, 102, 204, 0.9);
+        }
+        .top-badge {
+            background-color: rgba(102, 255, 153, 0.9);
+        }
+        .bottom-badge {
+            background-color: rgba(255, 102, 102, 0.9);
+        }
+        .rim-badge {
+            background-color: rgba(255, 153, 102, 0.9);
+        }
+        .direction-simulator {
+            position: relative;
+            height: 120px;
+            background: linear-gradient(45deg, #2a2a2a 0%, #1a1a1a 100%);
+            border-radius: 4px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.5s ease;
+            cursor: pointer;
+        }
+        .light-source {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+        .light-front {
+            background: #ffcc66;
+            top: 50%;
+            left: 20%;
+            box-shadow: 0 0 10px #ffcc66;
+        }
+        .light-side {
+            background: #66ccff;
+            top: 50%;
+            right: 20%;
+            box-shadow: 0 0 10px #66ccff;
+        }
+        .light-top {
+            background: #66ff99;
+            top: 20%;
+            left: 50%;
+            box-shadow: 0 0 10px #66ff99;
+        }
+        .light-bottom {
+            background: #ff6666;
+            bottom: 20%;
+            left: 50%;
+            box-shadow: 0 0 10px #ff6666;
+        }
+        .light-back {
+            background: #ff66cc;
+            top: 50%;
+            left: 70%;
+            box-shadow: 0 0 10px #ff66cc;
+        }
+        .subject {
+            width: 20px;
+            height: 20px;
+            background: rgba(255,255,255,0.9);
+            border-radius: 50%;
+            z-index: 10;
+            transition: all 0.3s ease;
+        }
+        .direction-simulator:hover .light-source {
+            opacity: 1;
+            transform: scale(1.5);
+        }
+        .direction-simulator:hover .subject {
+            box-shadow: 0 0 20px rgba(255,255,255,0.8);
+        }
+        .comparison-container {
+            display: flex;
+            width: 100%;
+            margin-top: 1rem;
+            gap: 1rem;
+        }
+        .comparison-card {
+            flex: 1;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .comparison-title {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+        .comparison-image {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-bottom: 0.75rem;
+        }
+        .comparison-desc {
+            font-size: 0.85rem;
+            text-align: center;
+        }
+        .technical-demo {
+            position: relative;
+            height: 100px;
+            background: #1a1a1a;
+            border-radius: 4px;
+            overflow: hidden;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid rgba(163, 198, 255, 0.3);
+        }
+        .direction-angles {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        .angle-item {
+            background-color: rgba(255, 255, 255, 0.08);
+            padding: 0.5rem;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 0.75rem;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+        }
+        .angle-item:hover {
+            background-color: rgba(163, 198, 255, 0.2);
+            transform: translateY(-2px);
+        }
+        .angle-icon {
+            font-size: 1rem;
+            margin-bottom: 0.25rem;
+        }
+        .front-angle { color: #ffcc66; }
+        .side-angle { color: #66ccff; }
+        .back-angle { color: #ff66cc; }
+        .top-angle { color: #66ff99; }
+        .bottom-angle { color: #ff6666; }
+        .rim-angle { color: #ff9966; }
+        .analysis-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        .analysis-item {
+            background-color: rgba(255, 255, 255, 0.08);
+            padding: 0.5rem;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 0.75rem;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .analysis-item:hover {
+            background-color: rgba(255, 204, 102, 0.2);
+            transform: translateY(-2px);
+        }
+        .analysis-icon {
+            font-size: 1rem;
+            margin-bottom: 0.25rem;
+        }
+        .emotion-icon { color: #ff9999; }
+        .texture-icon { color: #99ccff; }
+        .volume-icon { color: #99ff99; }
+        .drama-icon { color: #ffcc99; }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="header">
+            <div class="header-icon">
+                <i class="fas fa-arrows-to-dot"></i>
+            </div>
+            <div>
+                <h1 class="text-3xl font-bold">Light & Direction (빛과 방향) - 추가 예시</h1>
+                <p class="text-sm opacity-70 mt-1">실무 적용 사례와 심화 학습</p>
+            </div>
+        </div>
+        
+        <div class="content">
+            <div>
+                <div class="large-example">
+                    <div class="large-title">
+                        <i class="fas fa-compass"></i> 방향별 조명 분석
+                    </div>
+                    <div style="position: relative;">
+                        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjm91_rKaZFY6UHj9E6bcGohqPvq_nRMMPNDTuRbL6TnWA5P0ZB5qqJ0SAnTaDi7EtePMQW1MeNdW1ejGXknaLaZmHFMNrgxvFZd47DmgiyGJmbm3xX4V2VMdsHlHYMjVX7Di13-UvfDk_Y/s1600/directional-lighting.jpg" alt="방향별 조명 효과" class="large-image">
+                        <div class="direction-badge">Directional</div>
+                    </div>
+                    <p class="text-sm"><span class="highlight">각 방향</span>의 빛이 피사체에 미치는 <span class="highlight">구체적 효과</span> 분석</p>
+                </div>
+                
+                <div class="tips-container">
+                    <div class="tips-title">
+                        <i class="fas fa-cogs"></i> 방향 제어 기법
+                    </div>
+                    
+                    <div class="comparison-container">
+                        <div class="comparison-card">
+                            <div class="comparison-title" style="color: #ffcc66;">정면광 효과</div>
+                            <div class="direction-simulator">
+                                <div class="light-source light-front"></div>
+                                <div class="subject"></div>
+                            </div>
+                            <div class="comparison-desc">평면적, 색상 강조</div>
+                        </div>
+                        <div class="comparison-card">
+                            <div class="comparison-title" style="color: #66ccff;">측면광 효과</div>
+                            <div class="direction-simulator">
+                                <div class="light-source light-side"></div>
+                                <div class="subject"></div>
+                            </div>
+                            <div class="comparison-desc">입체감, 질감 강조</div>
+                        </div>
+                    </div>
+                    
+                    <div class="tip-item"><span class="highlight">각도 조절</span>: 15°-45°씩 변화로 미묘한 차이 연출</div>
+                    <div class="tip-item"><span class="highlight">높이 변화</span>: 상하 각도로 분위기 극적 변화</div>
+                    <div class="tip-item"><span class="highlight">복합 조명</span>: 여러 방향 조합으로 입체감 극대화</div>
+                    <div class="tip-item"><span class="highlight">반사판</span>: 보조광으로 그림자 강도 조절</div>
+                    
+                    <div class="direction-angles">
+                        <div class="angle-item">
+                            <div class="angle-icon front-angle"><i class="fas fa-arrow-right"></i></div>
+                            <div>Front</div>
+                        </div>
+                        <div class="angle-item">
+                            <div class="angle-icon side-angle"><i class="fas fa-arrow-left"></i></div>
+                            <div>Side</div>
+                        </div>
+                        <div class="angle-item">
+                            <div class="angle-icon back-angle"><i class="fas fa-reply"></i></div>
+                            <div>Back</div>
+                        </div>
+                        <div class="angle-item">
+                            <div class="angle-icon top-angle"><i class="fas fa-arrow-down"></i></div>
+                            <div>Top</div>
+                        </div>
+                        <div class="angle-item">
+                            <div class="angle-icon bottom-angle"><i class="fas fa-arrow-up"></i></div>
+                            <div>Bottom</div>
+                        </div>
+                        <div class="angle-item">
+                            <div class="angle-icon rim-angle"><i class="fas fa-circle-notch"></i></div>
+                            <div>Rim</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="examples-grid">
+                <div class="example-item animation-highlight">
+                    <div style="position: relative;">
+                        <img src="https://thelenslounge.com/wp-content/uploads/2023/07/directional-back-lighting-photography.jpg" alt="역광 효과" class="example-image">
+                        <div class="direction-badge back-badge">Back Light</div>
+                    </div>
+                    <div class="example-title">역광 실루엣</div>
+                    <div class="example-desc"><span class="highlight">윤곽 강조</span>와 <span class="highlight">드라마틱한 실루엣</span> 효과</div>
+                </div>
+                
+                <div class="example-item">
+                    <div style="position: relative;">
+                        <img src="https://rangefinderonline.com/wp-content/uploads/2021/05/Screen-Shot-2021-05-25-at-10.34.46-AM.png" alt="인물 조명 변화" class="example-image">
+                        <div class="direction-badge">Portrait</div>
+                    </div>
+                    <div class="example-title">인물 조명 변화</div>
+                    <div class="example-desc">각도별 <span class="highlight">얼굴 형태</span>와 <span class="highlight">감정 표현</span>의 차이</div>
+                </div>
+                
+                <div class="example-item">
+                    <div class="technical-demo">
+                        <div class="light-source light-front"></div>
+                        <div class="light-source light-side"></div>
+                        <div class="light-source light-top"></div>
+                        <div class="light-source light-bottom"></div>
+                        <div class="light-source light-back"></div>
+                        <div class="subject"></div>
+                    </div>
+                    <div class="example-title mt-2">인터랙티브 데모</div>
+                    <div class="example-desc">마우스를 올려 <span class="highlight">다중 방향</span> 조명의 <span class="highlight">복합 효과</span> 체험</div>
+                </div>
+                
+                <div class="example-item">
+                    <div style="position: relative;">
+                        <img src="https://static1.discoverdigitalphotography.com/wp-content/uploads/2014/directional-lighting-front-back-and-side-lighting-compared/side-lit-portrait.jpg" alt="측면광" class="example-image">
+                        <div class="direction-badge side-badge">Side Light</div>
+                    </div>
+                    <div class="example-title">측면광 활용</div>
+                    <div class="example-desc"><span class="highlight">질감 강조</span>와 <span class="highlight">입체감</span> 극대화 기법</div>
+                </div>
+                
+                <div class="example-item">
+                    <div class="analysis-grid">
+                        <div class="analysis-item">
+                            <div class="analysis-icon emotion-icon"><i class="fas fa-heart"></i></div>
+                            <div>Emotion</div>
+                        </div>
+                        <div class="analysis-item">
+                            <div class="analysis-icon texture-icon"><i class="fas fa-grip-horizontal"></i></div>
+                            <div>Texture</div>
+                        </div>
+                        <div class="analysis-item">
+                            <div class="analysis-icon volume-icon"><i class="fas fa-cube"></i></div>
+                            <div>Volume</div>
+                        </div>
+                        <div class="analysis-item">
+                            <div class="analysis-icon drama-icon"><i class="fas fa-theater-masks"></i></div>
+                            <div>Drama</div>
+                        </div>
+                    </div>
+                    <div class="example-title mt-2">조명 효과</div>
+                    <div class="example-desc">방향이 <span class="highlight">감정</span>, <span class="highlight">질감</span>, <span class="highlight">볼륨감</span>, <span class="highlight">드라마</span>에 미치는 영향</div>
+                </div>
+                
+                <div class="example-item">
+                    <div style="position: relative;">
+                        <img src="https://static1.discoverdigitalphotography.com/wp-content/uploads/2014/directional-lighting-front-back-and-side-lighting-compared/bottom-lighting-spooky-eerie-portrait-photo.jpg" alt="하단광" class="example-image">
+                        <div class="direction-badge bottom-badge">Bottom</div>
+                    </div>
+                    <div class="example-title">하단광 효과</div>
+                    <div class="example-desc"><span class="highlight">기괴한 분위기</span>와 <span class="highlight">극적 연출</span>을 위한 특수 조명</div>
+                </div>
+                
+                <div class="example-item">
+                    <div style="position: relative;">
+                        <img src="https://thelenslounge.com/wp-content/uploads/2023/07/direction-of-light.jpg" alt="조명 각도" class="example-image">
+                        <div class="direction-badge">Angles</div>
+                    </div>
+                    <div class="example-title">각도별 비교</div>
+                    <div class="example-desc">동일한 피사체에서 <span class="highlight">각도 변화</span>에 따른 <span class="highlight">시각적 변화</span></div>
+                </div>
+                
+                <div class="example-item">
+                    <div style="position: relative;">
+                        <img src="https://knilt.arcc.albany.edu/images/3/3c/Lighting_Direction.jpg" alt="방향 가이드" class="example-image">
+                        <div class="direction-badge">Guide</div>
+                    </div>
+                    <div class="example-title">방향 설정 가이드</div>
+                    <div class="example-desc"><span class="highlight">조명 방향</span> 설정을 위한 <span class="highlight">실무 가이드라인</span></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            컴퓨터 그래픽스 라이팅 입문 | Light & Direction(빛과 방향) 심화 학습
+        </div>
+    </div>
+</body>
+</html>

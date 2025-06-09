@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISO 비교 예시 및 실습</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        .slide {
+            width: 1280px;
+            min-height: 720px;
+            position: relative;
+            background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
+            color: white;
+            overflow: hidden;
+        }
+        .highlight {
+            color: #60a5fa;
+            font-weight: 600;
+        }
+        .iso-comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+        .iso-card {
+            background: rgba(37, 99, 235, 0.1);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            position: relative;
+        }
+        .iso-card:hover {
+            transform: translateY(-5px);
+            border-color: #3b82f6;
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3);
+        }
+        .iso-card.active {
+            border-color: #60a5fa;
+            box-shadow: 0 0 20px rgba(96, 165, 250, 0.5);
+        }
+        .iso-image-container {
+            height: 120px;
+            position: relative;
+            background: linear-gradient(135deg, #374151, #1f2937);
+            overflow: hidden;
+        }
+        .noise-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: 4px 4px;
+            background-image: 
+                radial-gradient(circle at 25% 25%, rgba(255,255,255,0.1) 2px, transparent 2px),
+                radial-gradient(circle at 75% 75%, rgba(255,255,255,0.05) 1px, transparent 1px);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .brightness-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0);
+            transition: all 0.3s ease;
+        }
+        .iso-info {
+            padding: 12px;
+        }
+        .iso-badge {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 12px;
+        }
+        .practice-tip {
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(16, 185, 129, 0.1));
+            border-left: 4px solid #10b981;
+            padding: 16px;
+            border-radius: 8px;
+            margin: 12px 0;
+        }
+        .warning-tip {
+            background: linear-gradient(135deg, rgba(251, 146, 60, 0.1), rgba(249, 115, 22, 0.1));
+            border-left: 4px solid #f97316;
+            padding: 16px;
+            border-radius: 8px;
+            margin: 12px 0;
+        }
+        .interactive-demo {
+            background: rgba(15, 23, 42, 0.7);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+        .iso-slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 10px;
+            background: linear-gradient(to right, #1e40af, #3b82f6, #60a5fa, #93c5fd, #fbbf24, #f59e0b, #d97706);
+            outline: none;
+            border-radius: 5px;
+            margin: 16px 0;
+        }
+        .iso-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #fff;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+        }
+        .demo-viewport {
+            height: 150px;
+            background: #1e293b;
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid #374151;
+        }
+        .demo-scene {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #4338ca, #1e40af, #1e3a8a);
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        .demo-objects {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            border-radius: 6px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        .obj1 { top: 20%; left: 20%; }
+        .obj2 { top: 50%; left: 60%; transform: rotate(45deg); }
+        .obj3 { top: 70%; left: 30%; border-radius: 50%; }
+        .noise-overlay-demo {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(255,255,255,0.05) 1px, transparent 1px),
+                radial-gradient(circle at 80% 70%, rgba(255,255,255,0.03) 1px, transparent 1px),
+                radial-gradient(circle at 40% 80%, rgba(255,255,255,0.04) 1px, transparent 1px);
+            background-size: 8px 8px, 6px 6px, 10px 10px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide flex flex-col p-12 relative">
+        <!-- 헤더 -->
+        <div class="mb-6 relative z-10">
+            <h1 class="text-4xl font-bold text-white mb-2">ISO 비교 예시 및 실습</h1>
+            <div class="w-24 h-1 bg-blue-500 mb-2"></div>
+            <p class="text-gray-300 text-lg">실제 V-Ray 렌더링에서 ISO 설정의 영향 체험</p>
+        </div>
+        
+        <!-- 메인 콘텐츠 -->
+        <div class="flex flex-row gap-8 z-10 flex-1">
+            <!-- 왼쪽: ISO 비교 카드들 -->
+            <div class="w-6/12">
+                <h2 class="text-2xl font-semibold text-blue-300 mb-4 flex items-center">
+                    <i class="fas fa-layer-group text-blue-400 mr-2"></i>ISO 값별 특성 비교
+                </h2>
+                
+                <div class="iso-comparison-grid">
+                    <!-- ISO 100 카드 -->
+                    <div class="iso-card" data-iso="100">
+                        <div class="iso-image-container">
+                            <div class="brightness-overlay" style="background: rgba(0,0,0,0.4);"></div>
+                            <div class="noise-pattern" style="opacity: 0.02;"></div>
+                            <div class="iso-badge">ISO 100</div>
+                            <div class="absolute bottom-2 right-2 text-xs">
+                                <i class="fas fa-star text-yellow-400"></i> 최고 품질
+                            </div>
+                        </div>
+                        <div class="iso-info">
+                            <h4 class="font-bold text-sm">기본 감도</h4>
+                            <p class="text-xs text-gray-300">노이즈 거의 없음</p>
+                            <div class="flex items-center mt-1">
+                                <div class="w-full bg-gray-600 rounded-full h-1">
+                                    <div class="bg-green-500 h-1 rounded-full" style="width: 95%;"></div>
+                                </div>
+                                <span class="text-xs ml-2">품질</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- ISO 400 카드 -->
+                    <div class="iso-card" data-iso="400">
+                        <div class="iso-image-container">
+                            <div class="brightness-overlay" style="background: rgba(255,255,255,0.1);"></div>
+                            <div class="noise-pattern" style="opacity: 0.08;"></div>
+                            <div class="iso-badge">ISO 400</div>
+                            <div class="absolute bottom-2 right-2 text-xs">
+                                <i class="fas fa-balance-scale text-blue-400"></i> 균형
+                            </div>
+                        </div>
+                        <div class="iso-info">
+                            <h4 class="font-bold text-sm">표준 감도</h4>
+                            <p class="text-xs text-gray-300">실용적 선택</p>
+                            <div class="flex items-center mt-1">
+                                <div class="w-full bg-gray-600 rounded-full h-1">
+                                    <div class="bg-blue-500 h-1 rounded-full" style="width: 80%;"></div>
+                                </div>
+                                <span class="text-xs ml-2">품질</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- ISO 800 카드 -->
+                    <div class="iso-card" data-iso="800">
+                        <div class="iso-image-container">
+                            <div class="brightness-overlay" style="background: rgba(255,255,255,0.2);"></div>
+                            <div class="noise-pattern" style="opacity: 0.15;"></div>
+                            <div class="iso-badge">ISO 800</div>
+                            <div class="absolute bottom-2 right-2 text-xs">
+                                <i class="fas fa-exclamation-triangle text-yellow-400"></i> 주의
+                            </div>
+                        </div>
+                        <div class="iso-info">
+                            <h4 class="font-bold text-sm">고감도</h4>
+                            <p class="text-xs text-gray-300">노이즈 시작</p>
+                            <div class="flex items-center mt-1">
+                                <div class="w-full bg-gray-600 rounded-full h-1">
+                                    <div class="bg-yellow-500 h-1 rounded-full" style="width: 60%;"></div>
+                                </div>
+                                <span class="text-xs ml-2">품질</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- ISO 1600 카드 -->
+                    <div class="iso-card" data-iso="1600">
+                        <div class="iso-image-container">
+                            <div class="brightness-overlay" style="background: rgba(255,255,255,0.3);"></div>
+                            <div class="noise-pattern" style="opacity: 0.25;"></div>
+                            <div class="iso-badge">ISO 1600</div>
+                            <div class="absolute bottom-2 right-2 text-xs">
+                                <i class="fas fa-eye text-orange-400"></i> 눈에 띔
+                            </div>
+                        </div>
+                        <div class="iso-info">
+                            <h4 class="font-bold text-sm">극고감도</h4>
+                            <p class="text-xs text-gray-300">노이즈 증가</p>
+                            <div class="flex items-center mt-1">
+                                <div class="w-full bg-gray-600 rounded-full h-1">
+                                    <div class="bg-orange-500 h-1 rounded-full" style="width: 40%;"></div>
+                                </div>
+                                <span class="text-xs ml-2">품질</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- ISO 3200 카드 -->
+                    <div class="iso-card" data-iso="3200">
+                        <div class="iso-image-container">
+                            <div class="brightness-overlay" style="background: rgba(255,255,255,0.4);"></div>
+                            <div class="noise-pattern" style="opacity: 0.4;"></div>
+                            <div class="iso-badge">ISO 3200</div>
+                            <div class="absolute bottom-2 right-2 text-xs">
+                                <i class="fas fa-times text-red-400"></i> 품질 저하
+                            </div>
+                        </div>
+                        <div class="iso-info">
+                            <h4 class="font-bold text-sm">최고감도</h4>
+                            <p class="text-xs text-gray-300">심한 노이즈</p>
+                            <div class="flex items-center mt-1">
+                                <div class="w-full bg-gray-600 rounded-full h-1">
+                                    <div class="bg-red-500 h-1 rounded-full" style="width: 25%;"></div>
+                                </div>
+                                <span class="text-xs ml-2">품질</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- ISO 6400 카드 -->
+                    <div class="iso-card" data-iso="6400">
+                        <div class="iso-image-container">
+                            <div class="brightness-overlay" style="background: rgba(255,255,255,0.5);"></div>
+                            <div class="noise-pattern" style="opacity: 0.6;"></div>
+                            <div class="iso-badge">ISO 6400</div>
+                            <div class="absolute bottom-2 right-2 text-xs">
+                                <i class="fas fa-ban text-red-500"></i> 비추천
+                            </div>
+                        </div>
+                        <div class="iso-info">
+                            <h4 class="font-bold text-sm">극한감도</h4>
+                            <p class="text-xs text-gray-300">렌더링 비실용적</p>
+                            <div class="flex items-center mt-1">
+                                <div class="w-full bg-gray-600 rounded-full h-1">
+                                    <div class="bg-red-600 h-1 rounded-full" style="width: 15%;"></div>
+                                </div>
+                                <span class="text-xs ml-2">품질</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 실무 팁들 -->
+                <div class="practice-tip">
+                    <h4 class="font-bold text-sm flex items-center mb-2">
+                        <i class="fas fa-lightbulb text-green-400 mr-2"></i>V-Ray 실무 권장사항
+                    </h4>
+                    <ul class="text-sm space-y-1">
+                        <li>• <span class="highlight">실내 장면:</span> ISO 400-800 권장</li>
+                        <li>• <span class="highlight">야외 장면:</span> ISO 100-200 권장</li>
+                        <li>• <span class="highlight">어두운 장면:</span> 조명 추가가 ISO 상승보다 효과적</li>
+                    </ul>
+                </div>
+                
+                <div class="warning-tip">
+                    <h4 class="font-bold text-sm flex items-center mb-2">
+                        <i class="fas fa-exclamation-triangle text-orange-400 mr-2"></i>주의사항
+                    </h4>
+                    <p class="text-sm">
+                        ISO 1600 이상에서는 <span class="highlight">디노이징</span> 처리가 필요하며, 
+                        렌더링 시간이 크게 증가할 수 있습니다.
+                    </p>
+                </div>
+            </div>
+            
+            <!-- 오른쪽: 인터랙티브 데모 -->
+            <div class="w-6/12">
+                <div class="interactive-demo">
+                    <h3 class="text-xl font-semibold text-blue-300 mb-4 flex items-center">
+                        <i class="fas fa-play-circle text-green-400 mr-2"></i>실시간 ISO 체험
+                    </h3>
+                    
+                    <!-- 데모 뷰포트 -->
+                    <div class="demo-viewport mb-4">
+                        <div class="demo-scene" id="demoScene">
+                            <div class="demo-objects obj1"></div>
+                            <div class="demo-objects obj2"></div>
+                            <div class="demo-objects obj3"></div>
+                            <div class="noise-overlay-demo" id="noiseOverlay"></div>
+                            
+                            <div class="absolute bottom-2 left-2 bg-black bg-opacity-60 px-3 py-1 rounded text-sm">
+                                현재 ISO: <span id="currentISO" class="font-bold text-blue-300">400</span>
+                            </div>
+                            
+                            <div class="absolute top-2 right-2 bg-black bg-opacity-60 px-3 py-1 rounded text-xs">
+                                <span id="noiseLevel">노이즈: 낮음</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- ISO 조절 슬라이더 -->
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium mb-2">ISO 값 조절:</label>
+                        <input type="range" min="100" max="6400" value="400" step="100" class="iso-slider" id="isoSlider">
+                        <div class="flex justify-between text-xs mt-1">
+                            <span>100</span>
+                            <span>800</span>
+                            <span>1600</span>
+                            <span>3200</span>
+                            <span>6400</span>
+                        </div>
+                    </div>
+                    
+                    <!-- 실시간 피드백 -->
+                    <div class="bg-gray-800 bg-opacity-50 p-3 rounded mb-3">
+                        <h4 class="font-semibold text-sm mb-2">현재 설정 분석:</h4>
+                        <div class="grid grid-cols-2 gap-4 text-sm">
+                            <div>
+                                <span class="text-gray-400">밝기:</span>
+                                <div class="w-full bg-gray-600 rounded-full h-2 mt-1">
+                                    <div class="bg-blue-500 h-2 rounded-full transition-all duration-300" id="brightnessBar" style="width: 40%;"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <span class="text-gray-400">노이즈:</span>
+                                <div class="w-full bg-gray-600 rounded-full h-2 mt-1">
+                                    <div class="bg-red-500 h-2 rounded-full transition-all duration-300" id="noiseBar" style="width: 20%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 자동 권장 -->
+                    <div class="bg-blue-900 bg-opacity-30 p-3 rounded">
+                        <h4 class="font-semibold text-sm mb-1 flex items-center">
+                            <i class="fas fa-robot text-blue-400 mr-2"></i>자동 권장:
+                        </h4>
+                        <p class="text-sm" id="autoRecommendation">
+                            현재 설정이 실내 렌더링에 적합합니다.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 하단 페이지 표시 -->
+        <div class="absolute bottom-6 right-6 text-sm text-gray-400">
+            5 / 10
+        </div>
+    </div>
+
+    <script>
+        // ISO 카드 클릭 효과
+        const isoCards = document.querySelectorAll('.iso-card');
+        const slider = document.getElementById('isoSlider');
+        
+        isoCards.forEach(card => {
+            card.addEventListener('click', function() {
+                const isoValue = this.dataset.iso;
+                slider.value = isoValue;
+                updateDemo(isoValue);
+                
+                // 카드 활성화 효과
+                isoCards.forEach(c => c.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+        
+        // ISO 슬라이더 이벤트
+        const currentISO = document.getElementById('currentISO');
+        const noiseLevel = document.getElementById('noiseLevel');
+        const noiseOverlay = document.getElementById('noiseOverlay');
+        const demoScene = document.getElementById('demoScene');
+        const brightnessBar = document.getElementById('brightnessBar');
+        const noiseBar = document.getElementById('noiseBar');
+        const autoRecommendation = document.getElementById('autoRecommendation');
+        
+        slider.addEventListener('input', function() {
+            updateDemo(this.value);
+        });
+        
+        function updateDemo(isoValue) {
+            const iso = parseInt(isoValue);
+            currentISO.textContent = iso;
+            
+            // 밝기 계산 (로그 스케일)
+            const brightnessPercent = Math.min(100, (Math.log(iso / 100) / Math.log(64)) * 100);
+            brightnessBar.style.width = `${Math.max(10, brightnessPercent)}%`;
+            
+            // 노이즈 계산
+            const noisePercent = Math.max(0, ((iso - 100) / 6300) * 100);
+            noiseBar.style.width = `${noisePercent}%`;
+            noiseOverlay.style.opacity = noisePercent / 100 * 0.8;
+            
+            // 장면 밝기 조정
+            const brightness = Math.min(1.5, 0.3 + (iso / 100) * 0.2);
+            demoScene.style.filter = `brightness(${brightness})`;
+            
+            // 노이즈 레벨 텍스트
+            if (iso <= 200) {
+                noiseLevel.textContent = '노이즈: 거의 없음';
+                noiseLevel.className = 'text-green-400';
+            } else if (iso <= 400) {
+                noiseLevel.textContent = '노이즈: 낮음';
+                noiseLevel.className = 'text-blue-400';
+            } else if (iso <= 800) {
+                noiseLevel.textContent = '노이즈: 보통';
+                noiseLevel.className = 'text-yellow-400';
+            } else if (iso <= 1600) {
+                noiseLevel.textContent = '노이즈: 높음';
+                noiseLevel.className = 'text-orange-400';
+            } else {
+                noiseLevel.textContent = '노이즈: 매우 높음';
+                noiseLevel.className = 'text-red-400';
+            }
+            
+            // 자동 권장 업데이트
+            if (iso <= 200) {
+                autoRecommendation.textContent = '밝은 야외 장면에 최적화된 설정입니다.';
+            } else if (iso <= 400) {
+                autoRecommendation.textContent = '실내 렌더링에 이상적인 설정입니다.';
+            } else if (iso <= 800) {
+                autoRecommendation.textContent = '어두운 실내나 저조도 환경에 적합합니다.';
+            } else if (iso <= 1600) {
+                autoRecommendation.textContent = '노이즈가 눈에 띄기 시작합니다. 후처리 필요.';
+            } else {
+                autoRecommendation.textContent = '품질 저하가 심각합니다. 조명 보강을 권장합니다.';
+            }
+            
+            // 해당 카드 하이라이트
+            isoCards.forEach(card => {
+                card.classList.remove('active');
+                if (parseInt(card.dataset.iso) === iso) {
+                    card.classList.add('active');
+                }
+            });
+        }
+        
+        // 초기화
+        updateDemo(400);
+        
+        // 카드 호버 효과로 펄스 애니메이션 추가
+        isoCards.forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.classList.add('pulse-animation');
+            });
+            card.addEventListener('mouseleave', function() {
+                this.classList.remove('pulse-animation');
+            });
+        });
+    </script>
+</body>
+</html>

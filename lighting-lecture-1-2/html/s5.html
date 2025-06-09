@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>V-Ray 실습 예시 및 단계별 안내</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11.6.0/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Noto Sans KR', sans-serif;
+            overflow: hidden;
+        }
+        .slide {
+            width: 1280px;
+            min-height: 720px;
+            overflow: hidden;
+            position: relative;
+            background: linear-gradient(135deg, #0a2342 0%, #183763 100%);
+            color: white;
+        }
+        .title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+            color: #ffffff;
+            position: relative;
+            display: inline-block;
+        }
+        .title::after {
+            content: '';
+            position: absolute;
+            width: 100px;
+            height: 4px;
+            background: #60a5fa;
+            bottom: -10px;
+            left: 0;
+            animation: expandWidth 1s ease-out forwards;
+        }
+        @keyframes expandWidth {
+            from { width: 0; }
+            to { width: 100px; }
+        }
+        .section-title {
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: #93c5fd;
+            margin-bottom: 0.5rem;
+        }
+        .example-card {
+            border-radius: 10px;
+            background: rgba(30, 58, 138, 0.3);
+            transition: all 0.3s ease;
+            overflow: hidden;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+            transform: translateY(20px);
+            opacity: 0;
+            animation: fadeInUp 0.6s forwards;
+        }
+        .example-card:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        .example-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+        }
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .step-card {
+            border-left: 4px solid #60a5fa;
+            background: rgba(30, 58, 138, 0.2);
+            transition: all 0.3s ease;
+            transform: translateX(-10px);
+            opacity: 0;
+            animation: fadeInRight 0.6s forwards;
+        }
+        .step-card:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        .step-card:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        .step-card:hover {
+            background: rgba(30, 58, 138, 0.4);
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        @keyframes fadeInRight {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        .highlight {
+            color: #93c5fd;
+            font-weight: 600;
+            position: relative;
+            display: inline-block;
+        }
+        .highlight::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #93c5fd;
+            transition: width 0.3s ease;
+        }
+        .step-card:hover .highlight::after {
+            width: 100%;
+        }
+        .image-comparison {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px 8px 0 0;
+        }
+        .image-slider {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 4px;
+            background: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            z-index: 10;
+            cursor: ew-resize;
+        }
+        .image-slider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 30px;
+            height: 30px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        .image-slider::after {
+            content: '⟷';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #0a2342;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        .image-slider .slider-hint {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            opacity: 0.8;
+            white-space: nowrap;
+            pointer-events: none;
+        }
+        .image-before, .image-after {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .image-after {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 50%;
+            overflow: hidden;
+        }
+        .accent-circle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(96, 165, 250, 0.1);
+            z-index: 0;
+            animation: float 10s infinite alternate ease-in-out;
+        }
+        @keyframes float {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-15px); }
+        }
+        .feature-badge {
+            background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+            border-radius: 20px;
+            padding: 4px 12px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-right: 8px;
+            margin-bottom: 8px;
+            display: inline-block;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+        .feature-badge:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        .workflow-container {
+            background: rgba(30, 58, 138, 0.2);
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            animation: fadeIn 0.8s forwards;
+            animation-delay: 0.6s;
+            transform: scale(0.95);
+            transition: transform 0.3s ease;
+        }
+        .workflow-container:hover {
+            transform: scale(1);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .tooltip:hover {
+            transform: translateY(-3px);
+        }
+        .tooltip .tooltip-text {
+            visibility: hidden;
+            width: 200px;
+            background-color: rgba(15, 23, 42, 0.9);
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 8px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s, transform 0.3s;
+            font-size: 0.85rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            transform: translateX(-50%) translateY(10px);
+        }
+        .tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+        .light-ray {
+            position: absolute;
+            background: linear-gradient(90deg, rgba(96,165,250,0) 0%, rgba(96,165,250,0.1) 50%, rgba(96,165,250,0) 100%);
+            transform-origin: center;
+            z-index: 0;
+            opacity: 0.5;
+            animation: pulse 8s infinite alternate ease-in-out;
+        }
+        @keyframes pulse {
+            0% { opacity: 0.3; }
+            100% { opacity: 0.7; }
+        }
+        .mermaid-container {
+            position: relative;
+        }
+        .mermaid-container::before {
+            content: '클릭하여 확대';
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background-color: rgba(30, 58, 138, 0.7);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            opacity: 0.8;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide p-10 flex flex-col">
+        <!-- Decorative elements -->
+        <div class="accent-circle" style="width: 300px; height: 300px; top: -100px; right: -100px; animation-delay: 0s;"></div>
+        <div class="accent-circle" style="width: 250px; height: 250px; bottom: -100px; left: -50px; animation-delay: 2s;"></div>
+        <div class="light-ray" style="width: 150px; height: 800px; top: -100px; right: 30%; transform: rotate(45deg);"></div>
+        <div class="light-ray" style="width: 100px; height: 600px; bottom: -100px; left: 40%; transform: rotate(-30deg);"></div>
+        
+        <!-- Header -->
+        <div class="mb-8 relative z-10">
+            <h1 class="title">V-Ray 실습 예시 및 단계별 안내</h1>
+        </div>
+        
+        <!-- Main content container -->
+        <div class="flex flex-1 space-x-6 relative z-10">
+            <!-- Left column: Examples and comparisons -->
+            <div class="w-7/12 space-y-6">
+                <div class="section-title flex items-center mb-4">
+                    <i class="fas fa-images text-blue-300 mr-3"></i>
+                    조명 세팅 변경에 따른 결과물 비교
+                </div>
+                
+                <!-- Example 1: Interior lighting comparison -->
+                <div class="example-card">
+                    <div class="image-comparison" style="height: 250px;">
+                        <img src="https://i.ytimg.com/vi/x8H1CNNFPgc/maxresdefault.jpg" alt="실내 라이팅 - 밝은 설정" class="image-before">
+                        <div class="image-after">
+                            <img src="https://vrender.com/wp-content/uploads/2016/10/interior-using-VRaySun.jpg" alt="실내 라이팅 - 따뜻한 설정" class="image-after" style="width: 200%; right: 0;">
+                        </div>
+                        <div class="image-slider">
+                            <div class="slider-hint">드래그하여 비교</div>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-xl font-semibold mb-2">실내 라이팅 컨트라스트 비교</h3>
+                        <div class="flex flex-wrap mt-3">
+                            <span class="feature-badge">자연광 활용</span>
+                            <span class="feature-badge">V-Ray Sun</span>
+                            <span class="feature-badge">반사광 설정</span>
+                            <span class="feature-badge">온도 조절</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Example 2: Materials and shadows -->
+                <div class="example-card mt-6">
+                    <div class="p-4">
+                        <h3 class="text-xl font-semibold mb-3">V-Ray의 주요 라이팅 도구</h3>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="tooltip">
+                                <div class="bg-blue-900 bg-opacity-40 p-3 rounded-lg text-center hover:bg-opacity-60 transition-all">
+                                    <i class="fas fa-sun text-yellow-300 text-2xl mb-2" style="filter: drop-shadow(0 0 5px rgba(252, 211, 77, 0.5));"></i>
+                                    <div class="font-medium">V-Ray Sun</div>
+                                </div>
+                                <span class="tooltip-text">태양광 시뮬레이션. 위치와 강도 조절로 자연스러운 조명 구현</span>
+                            </div>
+                            <div class="tooltip">
+                                <div class="bg-blue-900 bg-opacity-40 p-3 rounded-lg text-center hover:bg-opacity-60 transition-all">
+                                    <i class="fas fa-cloud-sun text-blue-300 text-2xl mb-2" style="filter: drop-shadow(0 0 5px rgba(147, 197, 253, 0.5));"></i>
+                                    <div class="font-medium">V-Ray Sky</div>
+                                </div>
+                                <span class="tooltip-text">전체 하늘 조명. 광범위한 확산광 제공으로 실내 조명 보완</span>
+                            </div>
+                            <div class="tooltip">
+                                <div class="bg-blue-900 bg-opacity-40 p-3 rounded-lg text-center hover:bg-opacity-60 transition-all">
+                                    <i class="fas fa-lightbulb text-yellow-200 text-2xl mb-2" style="filter: drop-shadow(0 0 5px rgba(254, 240, 138, 0.5));"></i>
+                                    <div class="font-medium">V-Ray Light</div>
+                                </div>
+                                <span class="tooltip-text">다양한 인공 조명. 면적, 강도, 색상, 형태 등 세부 조절 가능</span>
+                            </div>
+                            <div class="tooltip">
+                                <div class="bg-blue-900 bg-opacity-40 p-3 rounded-lg text-center hover:bg-opacity-60 transition-all">
+                                    <i class="fas fa-sliders-h text-green-300 text-2xl mb-2" style="filter: drop-shadow(0 0 5px rgba(134, 239, 172, 0.5));"></i>
+                                    <div class="font-medium">Light Mix</div>
+                                </div>
+                                <span class="tooltip-text">렌더링 후 조명 세팅 변경 가능. 실시간으로 다양한 설정 시험</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Right column: Steps and workflow -->
+            <div class="w-5/12 flex flex-col space-y-6">
+                <div class="section-title flex items-center mb-4">
+                    <i class="fas fa-tasks text-blue-300 mr-3"></i>
+                    V-Ray 실습 단계별 가이드
+                </div>
+                
+                <!-- Workflow diagram -->
+                <div class="workflow-container">
+                    <h3 class="text-lg font-semibold mb-3 text-blue-200">V-Ray 라이팅 워크플로우</h3>
+                    <div class="mermaid-container" style="background-color: rgba(255, 255, 255, 0.05); border-radius: 8px; padding: 10px; cursor: pointer;" onclick="this.classList.toggle('scale-110'); this.classList.toggle('shadow-lg'); this.style.transition='all 0.3s';">
+                        <div class="mermaid">
+                            graph TD
+                                A[기본 씬 준비] --> B[기본 조명 설정]
+                                B --> C[렌더 테스트]
+                                C --> D{결과 평가}
+                                D -->|개선 필요| E[조명 조절]
+                                E --> C
+                                D -->|만족| F[최종 렌더링]
+                                style A fill:#3b82f6,color:#fff
+                                style B fill:#3b82f6,color:#fff
+                                style C fill:#3b82f6,color:#fff
+                                style D fill:#9333ea,color:#fff
+                                style E fill:#3b82f6,color:#fff
+                                style F fill:#10b981,color:#fff
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Step-by-step instructions -->
+                <div class="space-y-4">
+                    <div class="step-card p-4 rounded-r">
+                        <h3 class="text-lg font-semibold text-blue-200 flex items-center">
+                            <div class="w-8 h-8 rounded-full bg-blue-700 flex items-center justify-center mr-3 shadow-md">1</div>
+                            기본 조명 설정
+                        </h3>
+                        <ul class="list-disc pl-12 text-gray-200 mt-2 space-y-1">
+                            <li>기본 <span class="highlight">V-Ray Sun</span> 추가 (Menu → Create → Lights)</li>
+                            <li>태양 위치 및 <span class="highlight">강도 설정</span> (Multiplier 값 조절)</li>
+                            <li>환경광 구성을 위한 <span class="highlight">V-Ray Sky</span> 추가</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="step-card p-4 rounded-r">
+                        <h3 class="text-lg font-semibold text-blue-200 flex items-center">
+                            <div class="w-8 h-8 rounded-full bg-blue-700 flex items-center justify-center mr-3 shadow-md">2</div>
+                            조명 세부 조절 및 테스트
+                        </h3>
+                        <ul class="list-disc pl-12 text-gray-200 mt-2 space-y-1">
+                            <li>그림자 설정: <span class="highlight">Soft/Sharp 조절</span></li>
+                            <li>조명 각도 변경하며 <span class="highlight">그림자 위치</span> 관찰</li>
+                            <li>매트리얼의 반사/흡수 특성에 따른 빛 효과 비교</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="step-card p-4 rounded-r">
+                        <h3 class="text-lg font-semibold text-blue-200 flex items-center">
+                            <div class="w-8 h-8 rounded-full bg-blue-700 flex items-center justify-center mr-3 shadow-md">3</div>
+                            고급 라이팅 효과
+                        </h3>
+                        <ul class="list-disc pl-12 text-gray-200 mt-2 space-y-1">
+                            <li><span class="highlight">V-Ray Light Mix</span> 활용한 다양한 세팅 시험</li>
+                            <li>렌더 설정에서 <span class="highlight">Global Illumination</span> 활성화</li>
+                            <li>각 요소 변경마다 결과물 <span class="highlight">비교 저장</span> 및 분석</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Tip box -->
+                <div class="bg-blue-900 bg-opacity-30 p-4 rounded-lg border border-blue-500 mt-auto transform hover:scale-105 transition-transform duration-300 shadow-md">
+                    <h3 class="flex items-center text-lg font-semibold text-blue-200 mb-2">
+                        <i class="fas fa-lightbulb text-yellow-300 mr-2" style="filter: drop-shadow(0 0 5px rgba(252, 211, 77, 0.5));"></i>
+                        실습 TIP
+                    </h3>
+                    <p class="text-gray-200 text-sm">실습 중 각 설정값 변경 후 <span class="highlight">메모해두기</span>. 어떤 설정이 어떤 효과를 만들었는지 <span class="highlight">기록하고 비교</span>하면 이론과 실무 연결에 큰 도움이 됩니다.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Initialize mermaid
+        mermaid.initialize({
+            theme: 'dark',
+            themeVariables: {
+                primaryColor: '#3b82f6',
+                primaryTextColor: '#fff',
+                primaryBorderColor: '#60a5fa',
+                lineColor: '#93c5fd',
+                secondaryColor: '#9333ea',
+                tertiaryColor: '#10b981'
+            },
+            flowchart: {
+                htmlLabels: true,
+                curve: 'cardinal',
+            }
+        });
+        
+        // Allow the diagram to render fully
+        setTimeout(() => {
+            // Add image slider functionality
+            const slider = document.querySelector('.image-slider');
+            const before = document.querySelector('.image-before');
+            const after = document.querySelector('.image-after');
+            
+            if (slider && before && after) {
+                const container = slider.parentElement;
+                
+                function slide(e) {
+                    let pos;
+                    if (e.touches) {
+                        pos = (e.touches[0].pageX - container.getBoundingClientRect().left) / container.offsetWidth * 100;
+                    } else {
+                        pos = (e.pageX - container.getBoundingClientRect().left) / container.offsetWidth * 100;
+                    }
+                    pos = Math.max(0, Math.min(100, pos));
+                    after.style.width = `${pos}%`;
+                    slider.style.left = `${pos}%`;
+                }
+                
+                container.addEventListener('mousemove', (e) => {
+                    if (container.classList.contains('active')) {
+                        slide(e);
+                    }
+                });
+                
+                container.addEventListener('touchmove', (e) => {
+                    if (container.classList.contains('active')) {
+                        slide(e);
+                    }
+                });
+                
+                container.addEventListener('mousedown', () => {
+                    container.classList.add('active');
+                    slider.querySelector('.slider-hint').style.opacity = '0';
+                    setTimeout(() => {
+                        if (slider.querySelector('.slider-hint')) {
+                            slider.querySelector('.slider-hint').style.display = 'none';
+                        }
+                    }, 300);
+                });
+                
+                container.addEventListener('touchstart', () => {
+                    container.classList.add('active');
+                    slider.querySelector('.slider-hint').style.opacity = '0';
+                    setTimeout(() => {
+                        if (slider.querySelector('.slider-hint')) {
+                            slider.querySelector('.slider-hint').style.display = 'none';
+                        }
+                    }, 300);
+                });
+                
+                window.addEventListener('mouseup', () => {
+                    container.classList.remove('active');
+                });
+                
+                window.addEventListener('touchend', () => {
+                    container.classList.remove('active');
+                });
+            }
+        }, 500);
+    </script>
+</body>
+</html>

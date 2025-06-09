@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Front Light (정면광)</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+            overflow: hidden;
+        }
+        .slide {
+            width: 1280px;
+            min-height: 720px;
+            background: linear-gradient(135deg, #1a2a6c, #2a3c7f);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        .slide-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            border-bottom: 2px solid rgba(255,255,255,0.2);
+        }
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #a0c0ff;
+            margin-bottom: 1rem;
+        }
+        .feature-item, .usage-item {
+            padding: 0.5rem 1rem;
+            margin-bottom: 0.5rem;
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            background-color: rgba(255,255,255,0.08);
+            transition: all 0.3s ease;
+        }
+        .feature-item:hover, .usage-item:hover {
+            background-color: rgba(255,255,255,0.15);
+        }
+        .icon-circle {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
+        .image-container {
+            border-radius: 0.5rem;
+            overflow: hidden;
+            border: 2px solid rgba(255,255,255,0.2);
+        }
+        .page-number {
+            position: absolute;
+            bottom: 1rem;
+            right: 1rem;
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+        .light-diagram {
+            width: 180px;
+            height: 180px;
+            margin: 0 auto;
+            position: relative;
+            background-color: rgba(255,255,255,0.05);
+            border-radius: 0.5rem;
+        }
+        .subject {
+            width: 40px;
+            height: 60px;
+            background-color: #6b7280;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 4px;
+        }
+        .light-source {
+            width: 30px;
+            height: 30px;
+            background-color: #fbbf24;
+            border-radius: 50%;
+            position: absolute;
+            box-shadow: 0 0 20px 10px rgba(251, 191, 36, 0.4);
+        }
+        .light-ray {
+            position: absolute;
+            height: 2px;
+            background: linear-gradient(to right, rgba(251, 191, 36, 0.8), rgba(251, 191, 36, 0));
+            transform-origin: left center;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide p-10 flex flex-col">
+        <!-- Slide Header -->
+        <div class="slide-title pb-4 mb-6 flex items-center">
+            <i class="fas fa-sun mr-4 text-yellow-300"></i>
+            <span>Front Light (정면광)</span>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex flex-1 space-x-6">
+            <!-- Left Column: Definition, Features, Uses -->
+            <div class="w-1/2 space-y-6">
+                <!-- Definition -->
+                <div>
+                    <div class="section-title flex items-center">
+                        <i class="fas fa-info-circle mr-3 text-blue-300"></i>
+                        <span>정의</span>
+                    </div>
+                    <div class="bg-blue-900 bg-opacity-30 p-4 rounded-lg text-lg">
+                        피사체를 <span class="font-bold text-yellow-200">정면에서 균일하게 비추어</span> 세부 디테일을 모두 표현합니다.
+                    </div>
+                </div>
+
+                <!-- Features -->
+                <div>
+                    <div class="section-title flex items-center">
+                        <i class="fas fa-list-ul mr-3 text-blue-300"></i>
+                        <span>특징</span>
+                    </div>
+                    
+                    <div class="space-y-2">
+                        <div class="feature-item">
+                            <div class="icon-circle bg-indigo-600">
+                                <i class="fas fa-mountain text-white"></i>
+                            </div>
+                            <span>그림자가 거의 없어 <strong>평면적인 느낌</strong> 제공</span>
+                        </div>
+
+                        <div class="feature-item">
+                            <div class="icon-circle bg-indigo-600">
+                                <i class="fas fa-palette text-white"></i>
+                            </div>
+                            <span><strong>색상과 텍스처</strong>를 가장 정확하게 표현</span>
+                        </div>
+
+                        <div class="feature-item">
+                            <div class="icon-circle bg-indigo-600">
+                                <i class="fas fa-search-plus text-white"></i>
+                            </div>
+                            <span>피사체의 모든 <strong>디테일이 명확하게</strong> 드러남</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Uses -->
+                <div>
+                    <div class="section-title flex items-center">
+                        <i class="fas fa-tasks mr-3 text-blue-300"></i>
+                        <span>주요 용도</span>
+                    </div>
+                    
+                    <div class="space-y-2">
+                        <div class="usage-item">
+                            <div class="icon-circle bg-green-600">
+                                <i class="fas fa-camera text-white"></i>
+                            </div>
+                            <span><strong>제품 촬영, 인물 초상</strong>에서 주로 사용</span>
+                        </div>
+
+                        <div class="usage-item">
+                            <div class="icon-circle bg-green-600">
+                                <i class="fas fa-paint-brush text-white"></i>
+                            </div>
+                            <span>정확한 <strong>색상과 디테일 표현</strong>이 필요한 상황에 적합</span>
+                        </div>
+
+                        <div class="usage-item">
+                            <div class="icon-circle bg-green-600">
+                                <i class="fas fa-eye text-white"></i>
+                            </div>
+                            <span>실제 물체의 <strong>색과 질감을 그대로</strong> 보여줄 때 활용</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Visual Materials -->
+            <div class="w-1/2 flex flex-col space-y-4">
+                <!-- Lighting Diagram -->
+                <div class="bg-gray-800 bg-opacity-50 p-4 rounded-lg">
+                    <div class="text-center mb-2 text-lg font-medium text-blue-200">조명 위치 다이어그램</div>
+                    <div class="light-diagram">
+                        <div class="subject"></div>
+                        <div class="light-source" style="top: 20px; left: 50%; transform: translateX(-50%);"></div>
+                        <div class="light-ray" style="top: 35px; left: 50%; width: 60px; height: 2px; transform: translateX(-50%) rotate(95deg);"></div>
+                        <div class="light-ray" style="top: 35px; left: 50%; width: 60px; height: 2px; transform: translateX(-50%) rotate(85deg);"></div>
+                        <div class="light-ray" style="top: 35px; left: 50%; width: 80px; height: 2px; transform: translateX(-50%) rotate(75deg);"></div>
+                        <div class="light-ray" style="top: 35px; left: 50%; width: 80px; height: 2px; transform: translateX(-50%) rotate(105deg);"></div>
+                        <div class="text-center absolute bottom-2 left-0 right-0 text-xs text-blue-200">정면에서 빛이 비춤</div>
+                    </div>
+                </div>
+
+                <!-- Example Images -->
+                <div class="flex space-x-4 flex-1">
+                    <div class="w-1/2 flex flex-col">
+                        <div class="text-center mb-2 text-sm font-medium text-blue-200">인물 정면광</div>
+                        <div class="image-container flex-1 bg-gray-700 flex items-center justify-center">
+                            <img src="https://shotkit.com/wp-content/uploads/2021/10/front-light-ali-pazani.jpeg" alt="인물 정면광 예시" class="object-cover h-full w-full">
+                        </div>
+                    </div>
+                    
+                    <div class="w-1/2 flex flex-col">
+                        <div class="text-center mb-2 text-sm font-medium text-blue-200">풍경 정면광</div>
+                        <div class="image-container flex-1 bg-gray-700 flex items-center justify-center">
+                            <img src="https://thelenslounge.com/wp-content/uploads/2024/09/front-light-in-photography-9.jpg" alt="풍경 정면광 예시" class="object-cover h-full w-full">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Page Number -->
+        <div class="page-number">3 / 8</div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>6강 마무리 및 다음 차시 안내</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        .slide {
+            width: 1280px;
+            min-height: 720px;
+            position: relative;
+            background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
+            color: white;
+            overflow: hidden;
+        }
+        .highlight {
+            color: #60a5fa;
+            font-weight: 600;
+        }
+        .summary-box {
+            background-color: rgba(37, 99, 235, 0.1);
+            border-left: 3px solid #3b82f6;
+            transition: all 0.3s ease;
+        }
+        .summary-box:hover {
+            background-color: rgba(37, 99, 235, 0.2);
+            transform: translateX(5px);
+        }
+        .next-topic-box {
+            background-color: rgba(139, 92, 246, 0.1);
+            border-left: 3px solid #8b5cf6;
+            transition: all 0.3s ease;
+        }
+        .next-topic-box:hover {
+            background-color: rgba(139, 92, 246, 0.2);
+            transform: translateX(5px);
+        }
+        .resource-box {
+            background-color: rgba(16, 185, 129, 0.1);
+            border-left: 3px solid #10b981;
+            transition: all 0.3s ease;
+        }
+        .resource-box:hover {
+            background-color: rgba(16, 185, 129, 0.2);
+            transform: scale(1.02);
+        }
+        .camera-icon {
+            position: absolute;
+            opacity: 0.05;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+        }
+        .floating-icon {
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="slide flex flex-col p-12 relative">
+        <!-- 배경 요소 -->
+        <i class="fas fa-camera-retro camera-icon text-9xl" style="top: 30%; left: 25%;"></i>
+        <i class="fas fa-sliders-h camera-icon text-8xl" style="top: 70%; left: 75%;"></i>
+        <i class="fas fa-lightbulb camera-icon text-7xl" style="top: 50%; left: 85%;"></i>
+        
+        <!-- 헤더 -->
+        <div class="mb-8 relative z-10">
+            <h1 class="text-4xl font-bold text-white mb-2">6강 마무리 및 다음 차시 안내</h1>
+            <div class="w-24 h-1 bg-blue-500 mb-2"></div>
+            <p class="text-gray-300 text-lg">V-Ray Physical Camera와 노출 제어의 여정을 마무리합니다</p>
+        </div>
+        
+        <!-- 메인 콘텐츠 -->
+        <div class="flex flex-row gap-8 z-10 flex-1">
+            <!-- 왼쪽: 내용 요약 및 다음 차시 -->
+            <div class="w-7/12 space-y-6">
+                <div>
+                    <h2 class="text-2xl font-semibold text-blue-300 mb-3">
+                        <i class="fas fa-check-square text-blue-400 mr-2"></i>6강 핵심 내용 요약
+                    </h2>
+                    
+                    <div class="space-y-3">
+                        <div class="summary-box p-3 rounded">
+                            <h3 class="font-bold flex items-center">
+                                <span class="text-blue-400 mr-2">01</span>V-Ray Physical Camera 기본 원리
+                            </h3>
+                            <p class="text-sm ml-7">실제 카메라와 동일한 원리로 작동하는 V-Ray의 카메라 시스템</p>
+                        </div>
+                        
+                        <div class="summary-box p-3 rounded">
+                            <h3 class="font-bold flex items-center">
+                                <span class="text-blue-400 mr-2">02</span>주요 카메라 파라미터와 영향
+                            </h3>
+                            <p class="text-sm ml-7"><span class="highlight">ISO</span>(감도), <span class="highlight">셔터 속도</span>, <span class="highlight">조리개(F-Number)</span>의 렌더링 결과 영향</p>
+                        </div>
+                        
+                        <div class="summary-box p-3 rounded">
+                            <h3 class="font-bold flex items-center">
+                                <span class="text-blue-400 mr-2">03</span>노출의 정의 및 중요성
+                            </h3>
+                            <p class="text-sm ml-7">이미지 전체 밝기를 결정하는 노출의 적절한 설정 방법</p>
+                        </div>
+                        
+                        <div class="summary-box p-3 rounded">
+                            <h3 class="font-bold flex items-center">
+                                <span class="text-blue-400 mr-2">04</span>조도와 노출의 균형
+                            </h3>
+                            <p class="text-sm ml-7">광원 강도와 카메라 설정의 적절한 조합으로 최적의 결과물 도출</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <h2 class="text-2xl font-semibold text-purple-300 mb-3">
+                        <i class="fas fa-arrow-circle-right text-purple-400 mr-2"></i>다음 차시 예고
+                    </h2>
+                    
+                    <div class="next-topic-box p-4 rounded">
+                        <div class="flex items-start">
+                            <div class="w-1/4">
+                                <div class="w-16 h-16 rounded-full bg-purple-500 flex items-center justify-center text-2xl font-bold mx-auto">
+                                    7강
+                                </div>
+                            </div>
+                            <div class="w-3/4">
+                                <h3 class="text-xl font-bold text-purple-300 mb-2">V-Ray 고급 조명 기법</h3>
+                                <ul class="list-disc list-inside space-y-1 text-sm">
+                                    <li>HDRI 조명 기법 및 환경 맵 활용</li>
+                                    <li>IES 라이트 활용한 사실적 조명 구현</li>
+                                    <li>다중 광원 설정과 밸런싱 테크닉</li>
+                                    <li>다양한 조명 상황별 렌더링 최적화</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 오른쪽: Q&A 및 추가 자료 -->
+            <div class="w-5/12 space-y-6">
+                <div>
+                    <h2 class="text-2xl font-semibold text-blue-300 mb-3">
+                        <i class="fas fa-question-circle text-blue-400 mr-2"></i>질문 & 토론
+                    </h2>
+                    
+                    <div class="bg-gray-800 bg-opacity-50 p-6 rounded-lg text-center">
+                        <div class="text-5xl text-blue-400 mb-2">
+                            <i class="fas fa-comments floating-icon"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">질문이 있으신가요?</h3>
+                        <p class="mb-4">수업 후 질문 시간이 준비되어 있습니다.</p>
+                        <div class="flex flex-col space-y-2">
+                            <div class="bg-blue-900 bg-opacity-40 py-2 px-3 rounded">
+                                <i class="fas fa-envelope mr-2"></i>
+                                <span>질문 이메일: vray@example.com</span>
+                            </div>
+                            <div class="bg-blue-900 bg-opacity-40 py-2 px-3 rounded">
+                                <i class="fas fa-globe mr-2"></i>
+                                <span>학습 포럼: forum.vray-class.com</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <h2 class="text-2xl font-semibold text-green-300 mb-3">
+                        <i class="fas fa-book text-green-400 mr-2"></i>추가 학습 자료
+                    </h2>
+                    
+                    <div class="grid grid-cols-2 gap-3">
+                        <div class="resource-box rounded p-3 flex flex-col items-center">
+                            <i class="fas fa-file-pdf text-2xl text-red-400 mb-2"></i>
+                            <h4 class="font-bold mb-1">V-Ray 카메라 가이드</h4>
+                            <p class="text-xs text-center">공식 V-Ray 카메라 사용 매뉴얼</p>
+                        </div>
+                        
+                        <div class="resource-box rounded p-3 flex flex-col items-center">
+                            <i class="fas fa-video text-2xl text-blue-400 mb-2"></i>
+                            <h4 class="font-bold mb-1">실습 영상</h4>
+                            <p class="text-xs text-center">노출 조절 단계별 데모 동영상</p>
+                        </div>
+                        
+                        <div class="resource-box rounded p-3 flex flex-col items-center">
+                            <i class="fas fa-laptop-code text-2xl text-purple-400 mb-2"></i>
+                            <h4 class="font-bold mb-1">실습 파일</h4>
+                            <p class="text-xs text-center">예제 씬 파일 다운로드</p>
+                        </div>
+                        
+                        <div class="resource-box rounded p-3 flex flex-col items-center">
+                            <i class="fas fa-clipboard-list text-2xl text-yellow-400 mb-2"></i>
+                            <h4 class="font-bold mb-1">체크리스트</h4>
+                            <p class="text-xs text-center">렌더링 전 확인 사항 목록</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 하단 마무리 -->
+        <div class="mt-8 text-center z-10">
+            <p class="text-xl font-medium text-blue-300">감사합니다</p>
+            <p class="text-gray-400">다음 수업에서 뵙겠습니다!</p>
+        </div>
+        
+        <!-- 하단 페이지 표시 -->
+        <div class="absolute bottom-6 right-6 text-sm text-gray-400">
+            10 / 10
+        </div>
+    </div>
+</body>
+</html>

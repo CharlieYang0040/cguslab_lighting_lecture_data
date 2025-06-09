@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>학습 목표 및 목차</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+            overflow: hidden;
+        }
+        .slide {
+            width: 1280px;
+            min-height: 720px;
+            background: linear-gradient(135deg, #1a2a6c, #2a3c7f);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        .slide-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            border-bottom: 2px solid rgba(255,255,255,0.2);
+        }
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #a0c0ff;
+            margin-bottom: 1rem;
+        }
+        .objective-item, .toc-item {
+            padding: 0.75rem 1rem;
+            margin-bottom: 0.75rem;
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            background-color: rgba(255,255,255,0.08);
+            transition: all 0.3s ease;
+        }
+        .objective-item:hover, .toc-item:hover {
+            background-color: rgba(255,255,255,0.15);
+            transform: translateX(5px);
+        }
+        .icon-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
+        .light-icon {
+            position: absolute;
+            opacity: 0.05;
+            font-size: 15rem;
+            z-index: 1;
+        }
+        .page-number {
+            position: absolute;
+            bottom: 1rem;
+            right: 1rem;
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide p-12 flex flex-col">
+        <!-- Background Light Icon -->
+        <i class="fas fa-lightbulb light-icon" style="top: 50%; left: 50%; transform: translate(-50%, -50%);"></i>
+
+        <!-- Slide Header -->
+        <div class="slide-title pb-4 mb-8 flex items-center">
+            <i class="fas fa-list-check mr-4 text-yellow-300"></i>
+            <span>학습 목표 및 목차</span>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex flex-1 space-x-8">
+            <!-- Learning Objectives -->
+            <div class="w-1/2">
+                <div class="section-title flex items-center">
+                    <i class="fas fa-bullseye mr-3 text-red-400"></i>
+                    <span>학습 목표</span>
+                </div>
+
+                <div class="space-y-4">
+                    <div class="objective-item">
+                        <div class="icon-circle bg-blue-700">
+                            <i class="fas fa-eye text-white"></i>
+                        </div>
+                        <span class="text-lg">빛의 방향이 시각적 효과에 미치는 영향 이해</span>
+                    </div>
+
+                    <div class="objective-item">
+                        <div class="icon-circle bg-green-700">
+                            <i class="fas fa-tools text-white"></i>
+                        </div>
+                        <span class="text-lg">다양한 빛의 방향 기법 활용 방법 습득</span>
+                    </div>
+
+                    <div class="objective-item">
+                        <div class="icon-circle bg-purple-700">
+                            <i class="fas fa-puzzle-piece text-white"></i>
+                        </div>
+                        <span class="text-lg">각 빛의 방향별 특징과 적합한 사용 상황 파악</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Table of Contents -->
+            <div class="w-1/2">
+                <div class="section-title flex items-center">
+                    <i class="fas fa-book-open mr-3 text-yellow-400"></i>
+                    <span>목차</span>
+                </div>
+
+                <div class="space-y-2">
+                    <div class="toc-item">
+                        <div class="icon-circle bg-yellow-500">
+                            <i class="fas fa-arrow-down text-white"></i>
+                        </div>
+                        <span class="text-lg">1. Front Light (정면광)</span>
+                    </div>
+
+                    <div class="toc-item">
+                        <div class="icon-circle bg-yellow-500">
+                            <i class="fas fa-arrow-right text-white"></i>
+                        </div>
+                        <span class="text-lg">2. Side Light (측면광)</span>
+                    </div>
+
+                    <div class="toc-item">
+                        <div class="icon-circle bg-yellow-500">
+                            <i class="fas fa-arrow-up text-white"></i>
+                        </div>
+                        <span class="text-lg">3. Back Light (역광)</span>
+                    </div>
+
+                    <div class="toc-item">
+                        <div class="icon-circle bg-yellow-500">
+                            <i class="fas fa-angle-double-down text-white"></i>
+                        </div>
+                        <span class="text-lg">4. Top Light (탑라이트)</span>
+                    </div>
+
+                    <div class="toc-item">
+                        <div class="icon-circle bg-yellow-500">
+                            <i class="fas fa-angle-double-up text-white"></i>
+                        </div>
+                        <span class="text-lg">5. Under Light (아래광)</span>
+                    </div>
+
+                    <div class="toc-item">
+                        <div class="icon-circle bg-blue-500">
+                            <i class="fas fa-check-double text-white"></i>
+                        </div>
+                        <span class="text-lg">6. 요약 및 다음 차시 안내</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Page Number -->
+        <div class="page-number">2 / 8</div>
+    </div>
+</body>
+</html>

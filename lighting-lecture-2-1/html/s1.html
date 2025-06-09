@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2개월차 1강: 라이팅 심화 기술</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .light-beam {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.3) 0%, rgba(59, 130, 246, 0.1) 40%, transparent 70%);
+            border-radius: 50%;
+            filter: blur(20px);
+        }
+        
+        .light-beam-1 {
+            top: -150px;
+            right: -150px;
+            animation: pulse 4s ease-in-out infinite;
+        }
+        
+        .light-beam-2 {
+            bottom: -100px;
+            left: -100px;
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.2) 0%, rgba(16, 185, 129, 0.05) 40%, transparent 70%);
+            animation: pulse 6s ease-in-out infinite reverse;
+        }
+        
+        .content-wrapper {
+            position: relative;
+            z-index: 10;
+            height: 720px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 80px;
+        }
+        
+        .title-main {
+            font-size: 4.5rem;
+            font-weight: 900;
+            background: linear-gradient(45deg, #3b82f6, #10b981, #8b5cf6);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 3s ease-in-out infinite;
+            margin-bottom: 1rem;
+            line-height: 1.1;
+        }
+        
+        .subtitle {
+            font-size: 1.5rem;
+            color: #e2e8f0;
+            font-weight: 300;
+            margin-bottom: 3rem;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 0.5s forwards;
+        }
+        
+        .course-info {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 1s forwards;
+        }
+        
+        .course-badge {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            font-size: 1.1rem;
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
+        }
+        
+        .tech-icons {
+            display: flex;
+            gap: 2rem;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 1.5s forwards;
+        }
+        
+        .tech-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #94a3b8;
+            font-size: 1.5rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .tech-icon:hover {
+            background: rgba(59, 130, 246, 0.2);
+            color: #3b82f6;
+            transform: translateY(-5px);
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.1); }
+        }
+        
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .floating-light {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #3b82f6;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #3b82f6;
+            animation: float 8s ease-in-out infinite;
+        }
+        
+        .floating-light:nth-child(1) { top: 20%; left: 10%; animation-delay: 0s; }
+        .floating-light:nth-child(2) { top: 70%; right: 15%; animation-delay: 2s; }
+        .floating-light:nth-child(3) { top: 40%; left: 85%; animation-delay: 4s; }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <!-- Background light effects -->
+        <div class="light-beam light-beam-1"></div>
+        <div class="light-beam light-beam-2"></div>
+        
+        <!-- Floating light particles -->
+        <div class="floating-light"></div>
+        <div class="floating-light"></div>
+        <div class="floating-light"></div>
+        
+        <div class="content-wrapper">
+            <div class="course-info">
+                <div class="course-badge">
+                    <i class="fas fa-lightbulb mr-2"></i>
+                    컴퓨터 그래픽스 전문과정
+                </div>
+            </div>
+            
+            <h1 class="title-main">
+                라이팅 심화 기술
+            </h1>
+            
+            <p class="subtitle">
+                2개월차 1강 - Advanced Lighting Techniques
+            </p>
+            
+            <div class="tech-icons">
+                <div class="tech-icon">
+                    <i class="fas fa-cube"></i>
+                </div>
+                <div class="tech-icon">
+                    <i class="fas fa-eye"></i>
+                </div>
+                <div class="tech-icon">
+                    <i class="fas fa-palette"></i>
+                </div>
+                <div class="tech-icon">
+                    <i class="fas fa-magic"></i>
+                </div>
+            </div>
+            
+            <div style="margin-top: 3rem; color: #94a3b8; font-size: 0.9rem; opacity: 0; animation: fadeInUp 1s ease-out 2s forwards;">
+                Volumetric Light • Dramatic Mood • Global Illumination • HDRI
+            </div>
+        </div>
+    </div>
+</body>
+</html>

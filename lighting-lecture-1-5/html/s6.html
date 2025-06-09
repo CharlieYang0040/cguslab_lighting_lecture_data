@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>그림자 실제 적용 예시 및 스튜디오 라이팅 사례</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        .slide {
+            width: 1280px;
+            min-height: 720px;
+            background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        .content {
+            position: relative;
+            z-index: 10;
+        }
+        .glass-card {
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+        .glass-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(96, 165, 250, 0.3);
+        }
+        .example-card {
+            background: rgba(15, 23, 42, 0.8);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+            height: 200px;
+        }
+        .example-card:hover {
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(96, 165, 250, 0.5);
+        }
+        .example-image {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            transition: all 0.5s ease;
+        }
+        .example-card:hover .example-image {
+            transform: scale(1.15);
+            filter: brightness(1.2) contrast(1.2);
+        }
+        .example-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(transparent 30%, rgba(0, 0, 0, 0.9));
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            transform: translateY(100%);
+            transition: all 0.4s ease;
+        }
+        .example-card:hover .example-overlay {
+            transform: translateY(0);
+        }
+        .example-title {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 8px 12px;
+            font-weight: bold;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+        }
+        .example-card:hover .example-title {
+            background: rgba(96, 165, 250, 0.9);
+            color: black;
+        }
+        .heading-underline {
+            position: relative;
+            display: inline-block;
+        }
+        .heading-underline::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #60A5FA, transparent);
+            border-radius: 2px;
+        }
+        .highlight-text {
+            color: #60A5FA;
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(96, 165, 250, 0.5);
+        }
+        .shadow-particle {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 70%);
+            animation: shadowFloat 12s infinite ease-in-out;
+            filter: blur(6px);
+        }
+        .light-beam {
+            position: absolute;
+            background: linear-gradient(45deg, rgba(96, 165, 250, 0.3), rgba(96, 165, 250, 0));
+            filter: blur(8px);
+            animation: beamMove 15s infinite alternate ease-in-out;
+        }
+        .technique-step {
+            background: rgba(15, 23, 42, 0.5);
+            border-left: 5px solid #60A5FA;
+            padding: 12px 16px;
+            margin-bottom: 8px;
+            border-radius: 0 12px 12px 0;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .technique-step:hover {
+            background: rgba(15, 23, 42, 0.8);
+            transform: translateX(8px);
+            border-left-color: #34D399;
+        }
+        .technique-step::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(to bottom, #60A5FA, #34D399);
+            transform: scaleY(0);
+            transition: transform 0.3s ease;
+        }
+        .technique-step:hover::before {
+            transform: scaleY(1);
+        }
+        .step-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            background: #60A5FA;
+            color: white;
+            border-radius: 50%;
+            font-weight: bold;
+            font-size: 11px;
+            margin-right: 10px;
+            transition: all 0.3s ease;
+        }
+        .technique-step:hover .step-icon {
+            background: #34D399;
+            transform: scale(1.2);
+        }
+        .brand-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.7em;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            z-index: 5;
+        }
+        .cinema-badge {
+            background: rgba(251, 191, 36, 0.9);
+            color: black;
+        }
+        .studio-badge {
+            background: rgba(34, 197, 94, 0.9);
+            color: white;
+        }
+        .software-badge {
+            background: rgba(239, 68, 68, 0.9);
+            color: white;
+        }
+        .pixar-badge {
+            background: rgba(255, 107, 107, 0.9);
+            color: white;
+        }
+        .glow-text {
+            text-shadow: 0 0 15px currentColor;
+        }
+        .animated-pulse {
+            animation: pulse 4s infinite alternate ease-in-out;
+        }
+        .grid-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 30px 30px;
+            pointer-events: none;
+            opacity: 0.5;
+        }
+        .tech-info {
+            background: rgba(0, 0, 0, 0.6);
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 0.75em;
+            margin-top: 6px;
+            border: 1px solid rgba(96, 165, 250, 0.4);
+            transition: all 0.3s ease;
+        }
+        .tech-info:hover {
+            background: rgba(0, 0, 0, 0.8);
+            border-color: rgba(96, 165, 250, 0.6);
+        }
+        .shadow-demo {
+            position: relative;
+            height: 60px;
+            border-radius: 8px;
+            margin: 6px 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .shadow-demo:hover {
+            transform: scale(1.02);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+        }
+        .shadow-label {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.8em;
+            font-weight: bold;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+            z-index: 2;
+        }
+        .modifier-setup {
+            background: rgba(30, 41, 59, 0.7);
+            border-radius: 10px;
+            padding: 12px;
+            margin-bottom: 12px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .modifier-setup:hover {
+            background: rgba(30, 41, 59, 0.9);
+            transform: translateY(-3px);
+            border-color: rgba(96, 165, 250, 0.4);
+        }
+        .modifier-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(96, 165, 250, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 1.4em;
+            color: #60A5FA;
+            transition: all 0.3s ease;
+        }
+        .modifier-setup:hover .modifier-icon {
+            background: rgba(96, 165, 250, 0.4);
+            transform: scale(1.15);
+        }
+        .floating {
+            animation: float 6s infinite ease-in-out;
+        }
+        .main-title {
+            text-shadow: 0 0 20px rgba(96, 165, 250, 0.6);
+        }
+        @keyframes shadowFloat {
+            0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.4; }
+            25% { transform: translate(20px, -15px) scale(1.2); opacity: 0.7; }
+            50% { transform: translate(-15px, -10px) scale(0.8); opacity: 0.5; }
+            75% { transform: translate(-10px, 15px) scale(1.1); opacity: 0.8; }
+        }
+        @keyframes beamMove {
+            0% { transform: translateX(-30px) rotate(-3deg); opacity: 0.3; }
+            100% { transform: translateX(30px) rotate(3deg); opacity: 0.7; }
+        }
+        @keyframes pulse {
+            0% { transform: scale(0.95); opacity: 0.8; }
+            100% { transform: scale(1.05); opacity: 1; }
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="slide">
+        <div class="grid-overlay"></div>
+        
+        <!-- Floating Shadow Particles -->
+        <div class="shadow-particle" style="width: 80px; height: 80px; top: 100px; left: 180px;"></div>
+        <div class="shadow-particle" style="width: 60px; height: 60px; top: 300px; right: 220px; animation-delay: -4s;"></div>
+        <div class="shadow-particle" style="width: 100px; height: 100px; bottom: 160px; left: 320px; animation-delay: -8s;"></div>
+        
+        <!-- Light Beams -->
+        <div class="light-beam" style="top: 120px; left: 250px; width: 500px; height: 40px; transform: rotate(-12deg);"></div>
+        <div class="light-beam" style="top: 350px; right: 120px; width: 400px; height: 35px; transform: rotate(8deg); animation-delay: -6s;"></div>
+        <div class="light-beam" style="bottom: 180px; left: 60%; width: 350px; height: 30px; transform: rotate(0deg); animation-delay: -10s;"></div>
+        
+        <div class="content px-14 py-10">
+            <div class="mb-5">
+                <h1 class="text-4xl font-bold text-white main-title">
+                    <i class="fas fa-camera-retro text-blue-300 mr-4 animated-pulse floating"></i>
+                    <span class="heading-underline">그림자 실제 적용 예시 및 스튜디오 라이팅 사례</span>
+                </h1>
+                <p class="text-xl text-gray-300 mt-3">프로페셔널 스튜디오와 영화계의 그림자 마스터링 기법</p>
+            </div>
+            
+            <div class="grid grid-cols-3 gap-6 mt-6">
+                <!-- 영화/애니메이션 사례 -->
+                <div>
+                    <div class="glass-card">
+                        <h2 class="text-2xl font-semibold text-yellow-300 mb-4 glow-text">
+                            <i class="fas fa-film mr-2 floating"></i>영화 & 애니메이션
+                        </h2>
+                        
+                        <div class="space-y-4">
+                            <div class="example-card">
+                                <div class="brand-badge cinema-badge">FILM NOIR</div>
+                                <img src="https://images-prod.dazeddigital.com/900/azure/dazed-prod/1220/2/1222959.jpg" alt="Film Noir Lighting" class="example-image">
+                                <div class="example-title">클래식 필름 누아르</div>
+                                <div class="example-overlay">
+                                    <p class="text-sm text-yellow-200 mb-2">극적인 하드 그림자로 긴장감과 미스터리 연출</p>
+                                    <div class="tech-info">
+                                        <i class="fas fa-lightbulb mr-2"></i>Single Point Source + High Contrast
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="example-card">
+                                <div class="brand-badge pixar-badge">PIXAR</div>
+                                <img src="https://www.fxguide.com/wp-content/uploads/2015/06/inside-out-progression_image_7of7_LightingFinal.jpg" alt="Inside Out Lighting" class="example-image">
+                                <div class="example-title">인사이드 아웃 - 감정 표현</div>
+                                <div class="example-overlay">
+                                    <p class="text-sm text-blue-200 mb-2">캐릭터별 개성적 그림자 톤으로 감정 차별화</p>
+                                    <div class="tech-info">
+                                        <i class="fas fa-palette mr-2"></i>Character-driven Shadow Design
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 스튜디오 라이팅 기법 -->
+                <div>
+                    <div class="glass-card">
+                        <h2 class="text-2xl font-semibold text-purple-300 mb-4 glow-text">
+                            <i class="fas fa-video mr-2 floating"></i>스튜디오 기법
+                        </h2>
+                        
+                        <div class="space-y-4">
+                            <div class="example-card">
+                                <div class="brand-badge studio-badge">STUDIO</div>
+                                <img src="https://www.slrlounge.com/wp-content/uploads/2021/01/Lighting-Modifier-Cheat-Sheet-add-umbrella-to-soften-light-03-1200x603.png" alt="Lighting Modifiers" class="example-image">
+                                <div class="example-title">라이팅 모디파이어 치트시트</div>
+                                <div class="example-overlay">
+                                    <p class="text-sm text-purple-200 mb-2">다양한 도구로 그림자 질감 정밀 제어</p>
+                                    <div class="tech-info">
+                                        <i class="fas fa-tools mr-2"></i>Softbox • Umbrella • Reflector
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="example-card">
+                                <div class="brand-badge studio-badge">PORTRAIT</div>
+                                <img src="https://aftershoot.com/wp-content/uploads/2024/02/comparing-hard-light-vs-soft-light.png" alt="Portrait Shadow Comparison" class="example-image">
+                                <div class="example-title">포트레이트 그림자 비교</div>
+                                <div class="example-overlay">
+                                    <p class="text-sm text-purple-200 mb-2">인물 촬영에서 감정과 분위기를 만드는 그림자</p>
+                                    <div class="tech-info">
+                                        <i class="fas fa-user-circle mr-2"></i>Portrait Shadow Mastery
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 3D 소프트웨어 실습 -->
+                <div>
+                    <div class="glass-card">
+                        <h2 class="text-2xl font-semibold text-green-300 mb-4 glow-text">
+                            <i class="fas fa-cube mr-2 floating"></i>3D 소프트웨어
+                        </h2>
+                        
+                        <div class="space-y-4">
+                            <div class="example-card">
+                                <div class="brand-badge software-badge">MAYA</div>
+                                <img src="https://courses.cs.washington.edu/courses/cse458/06au/reading/lighting_tutorial/3ptKey.jpg" alt="3-Point Lighting Setup" class="example-image">
+                                <div class="example-title">3포인트 라이팅 마스터</div>
+                                <div class="example-overlay">
+                                    <p class="text-sm text-red-200 mb-2">기본 조명 배치와 그림자 밸런싱의 핵심</p>
+                                    <div class="tech-info">
+                                        <i class="fas fa-triangle mr-2"></i>Key • Fill • Rim Light Balance
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="example-card">
+                                <div class="brand-badge software-badge">BLENDER</div>
+                                <img src="https://i.ytimg.com/vi/VYD6jx111EM/maxresdefault.jpg" alt="Blender Character Lighting" class="example-image">
+                                <div class="example-title">캐릭터 애니메이션 라이팅</div>
+                                <div class="example-overlay">
+                                    <p class="text-sm text-red-200 mb-2">움직임에 따른 동적 그림자 제어 기법</p>
+                                    <div class="tech-info">
+                                        <i class="fas fa-play-circle mr-2"></i>Dynamic Shadow Animation
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 하단: 실습 가이드와 모디파이어 효과 -->
+            <div class="grid grid-cols-2 gap-6 mt-6">
+                <div class="glass-card">
+                    <h3 class="text-xl font-semibold text-blue-300 mb-4 glow-text">
+                        <i class="fas fa-clipboard-check mr-2 floating"></i>스튜디오 그림자 제어 마스터 클래스
+                    </h3>
+                    <div class="space-y-2">
+                        <div class="technique-step">
+                            <span class="step-icon">1</span>
+                            <span><span class="highlight-text">Key Light</span> 배치로 메인 그림자 방향 설정</span>
+                        </div>
+                        <div class="technique-step">
+                            <span class="step-icon">2</span>
+                            <span><span class="highlight-text">Fill Light</span>로 그림자 강도와 대비 조절</span>
+                        </div>
+                        <div class="technique-step">
+                            <span class="step-icon">3</span>
+                            <span>모디파이어로 <span class="highlight-text">그림자 엣지</span> 품질 변경</span>
+                        </div>
+                        <div class="technique-step">
+                            <span class="step-icon">4</span>
+                            <span><span class="highlight-text">Rim Light</span>로 피사체 분리감 강화</span>
+                        </div>
+                        <div class="technique-step">
+                            <span class="step-icon">5</span>
+                            <span>최종 <span class="highlight-text">색온도 밸런스</span> 및 분위기 완성</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="glass-card">
+                    <h3 class="text-xl font-semibold text-orange-300 mb-4 glow-text">
+                        <i class="fas fa-sliders-h mr-2 floating"></i>라이팅 모디파이어 효과 비교
+                    </h3>
+                    <div class="space-y-3">
+                        <div class="modifier-setup">
+                            <div class="flex items-center">
+                                <div class="modifier-icon">
+                                    <i class="fas fa-circle"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <p class="text-sm font-bold text-orange-200 mb-2">하드 라이트 (직사광)</p>
+                                    <div class="shadow-demo" style="background: linear-gradient(to right, rgba(0,0,0,0.9), transparent 25%);">
+                                        <div class="shadow-label">날카로운 경계선</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="modifier-setup">
+                            <div class="flex items-center">
+                                <div class="modifier-icon">
+                                    <i class="fas fa-square"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <p class="text-sm font-bold text-blue-200 mb-2">소프트박스</p>
+                                    <div class="shadow-demo" style="background: linear-gradient(to right, rgba(0,0,0,0.7), rgba(0,0,0,0.4), transparent 55%);">
+                                        <div class="shadow-label">부드러운 그라데이션</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="modifier-setup">
+                            <div class="flex items-center">
+                                <div class="modifier-icon">
+                                    <i class="fas fa-umbrella"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <p class="text-sm font-bold text-green-200 mb-2">엄브렐라 (확산)</p>
+                                    <div class="shadow-demo" style="background: linear-gradient(to right, rgba(0,0,0,0.6), rgba(0,0,0,0.3), transparent 70%);">
+                                        <div class="shadow-label">넓은 확산 그림자</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-4 p-3 bg-purple-900 bg-opacity-30 rounded-lg border border-purple-500 border-opacity-40 text-center">
+                        <p class="text-sm text-purple-200">
+                            <i class="fas fa-magic mr-2 animated-pulse"></i>
+                            <span class="font-bold">프로 팁:</span> 그림자의 품질이 작품의 전체적인 분위기와 완성도를 좌우합니다
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="absolute bottom-4 right-16 bg-blue-900 bg-opacity-50 rounded-lg px-4 py-2 text-sm text-blue-200 hover:bg-opacity-70 transition-all duration-300">
+                <p><i class="fas fa-arrow-circle-right mr-2"></i>다음: 라이팅 접근법 (Motivated Light vs Lighting Simulation)</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

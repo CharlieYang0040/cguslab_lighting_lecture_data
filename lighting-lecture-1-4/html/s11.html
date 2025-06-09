@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Under Light (아래광)</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+            overflow: hidden;
+        }
+        .slide {
+            width: 1280px;
+            min-height: 720px;
+            background: linear-gradient(0deg, #4a1c2a, #2c1a30);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        .slide-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            border-bottom: 2px solid rgba(255,255,255,0.2);
+        }
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #f8a0b0;
+            margin-bottom: 1rem;
+        }
+        .feature-item, .usage-item {
+            padding: 0.5rem 1rem;
+            margin-bottom: 0.5rem;
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            background-color: rgba(255,255,255,0.08);
+            transition: all 0.3s ease;
+        }
+        .feature-item:hover, .usage-item:hover {
+            background-color: rgba(255,255,255,0.15);
+        }
+        .icon-circle {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
+        .image-container {
+            border-radius: 0.5rem;
+            overflow: hidden;
+            border: 2px solid rgba(255,255,255,0.2);
+        }
+        .page-number {
+            position: absolute;
+            bottom: 1rem;
+            right: 1rem;
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+        .light-diagram {
+            width: 180px;
+            height: 180px;
+            margin: 0 auto;
+            position: relative;
+            background-color: rgba(255,255,255,0.05);
+            border-radius: 0.5rem;
+        }
+        .subject {
+            width: 40px;
+            height: 60px;
+            background-color: #6b7280;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 4px;
+        }
+        .light-source {
+            width: 30px;
+            height: 30px;
+            background-color: #f87171;
+            border-radius: 50%;
+            position: absolute;
+            box-shadow: 0 0 20px 10px rgba(248, 113, 113, 0.4);
+        }
+        .light-ray {
+            position: absolute;
+            width: 2px;
+            background: linear-gradient(to top, rgba(248, 113, 113, 0.8), rgba(248, 113, 113, 0));
+            transform-origin: bottom center;
+        }
+        .underlight-effect {
+            position: absolute;
+            width: 300px;
+            height: 500px;
+            background: radial-gradient(ellipse at bottom, rgba(248, 113, 113, 0.2), rgba(248, 113, 113, 0) 70%);
+            bottom: -250px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 0;
+        }
+        .shadow-effect {
+            position: absolute;
+            width: 60px;
+            height: 10px;
+            background: rgba(0,0,0,0.5);
+            border-radius: 50%;
+            top: 30%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+    </style>
+</head>
+<body>
+    <div class="slide p-10 flex flex-col">
+        <!-- Under light visual effect -->
+        <div class="underlight-effect"></div>
+        
+        <!-- Slide Header -->
+        <div class="slide-title pb-4 mb-6 flex items-center relative z-10">
+            <i class="fas fa-sort-amount-up mr-4 text-red-400"></i>
+            <span>Under Light (아래광)</span>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex flex-1 space-x-6 relative z-10">
+            <!-- Left Column: Definition, Features, Uses -->
+            <div class="w-1/2 space-y-6">
+                <!-- Definition -->
+                <div>
+                    <div class="section-title flex items-center">
+                        <i class="fas fa-info-circle mr-3 text-red-300"></i>
+                        <span>정의</span>
+                    </div>
+                    <div class="bg-red-900 bg-opacity-30 p-4 rounded-lg text-lg">
+                        <span class="font-bold text-red-300">아래에서 비추어</span> 비현실적이거나 극적인 효과를 주며, 공포감이나 특수 효과에 자주 사용됩니다.
+                    </div>
+                </div>
+
+                <!-- Features -->
+                <div>
+                    <div class="section-title flex items-center">
+                        <i class="fas fa-list-ul mr-3 text-red-300"></i>
+                        <span>특징</span>
+                    </div>
+                    
+                    <div class="space-y-2">
+                        <div class="feature-item">
+                            <div class="icon-circle bg-red-700">
+                                <i class="fas fa-ghost text-white"></i>
+                            </div>
+                            <span><strong>불안감 조성</strong>: 일상에서 보기 힘든 비자연적인 그림자 생성</span>
+                        </div>
+
+                        <div class="feature-item">
+                            <div class="icon-circle bg-red-700">
+                                <i class="fas fa-mask text-white"></i>
+                            </div>
+                            <span><strong>기괴한 분위기</strong>: 얼굴의 특징이 왜곡되어 보임</span>
+                        </div>
+
+                        <div class="feature-item">
+                            <div class="icon-circle bg-red-700">
+                                <i class="fas fa-meteor text-white"></i>
+                            </div>
+                            <span><strong>비현실적 효과</strong>: 현실과 다른 비일상적인 느낌 부여</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Uses -->
+                <div>
+                    <div class="section-title flex items-center">
+                        <i class="fas fa-tasks mr-3 text-red-300"></i>
+                        <span>주요 용도/효과</span>
+                    </div>
+                    
+                    <div class="space-y-2">
+                        <div class="usage-item">
+                            <div class="icon-circle bg-pink-700">
+                                <i class="fas fa-paint-brush text-white"></i>
+                            </div>
+                            <span><strong>창의적 연출</strong>과 분위기 전환에 효과적</span>
+                        </div>
+
+                        <div class="usage-item">
+                            <div class="icon-circle bg-pink-700">
+                                <i class="fas fa-film text-white"></i>
+                            </div>
+                            <span><strong>호러 영화</strong>나 긴장감 넘치는 장면에서 자주 활용</span>
+                        </div>
+
+                        <div class="usage-item">
+                            <div class="icon-circle bg-pink-700">
+                                <i class="fas fa-gamepad text-white"></i>
+                            </div>
+                            <span>게임에서 <strong>불안하거나 기괴한 캐릭터</strong> 묘사에 적합</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Visual Materials -->
+            <div class="w-1/2 flex flex-col space-y-4">
+                <!-- Lighting Diagram -->
+                <div class="bg-gray-800 bg-opacity-50 p-4 rounded-lg">
+                    <div class="text-center mb-2 text-lg font-medium text-red-300">조명 위치 다이어그램</div>
+                    <div class="light-diagram">
+                        <div class="subject"></div>
+                        <div class="shadow-effect"></div>
+                        <div class="light-source" style="bottom: 20px; left: 50%; transform: translateX(-50%);"></div>
+                        <div class="light-ray" style="bottom: 35px; left: 50%; height: 60px; width: 2px; transform: translateX(-50%) rotate(0deg);"></div>
+                        <div class="light-ray" style="bottom: 35px; left: 45%; height: 70px; width: 2px; transform: rotate(-10deg);"></div>
+                        <div class="light-ray" style="bottom: 35px; left: 55%; height: 70px; width: 2px; transform: rotate(10deg);"></div>
+                        <div class="text-center absolute bottom-2 left-0 right-0 text-xs text-red-300">아래에서 빛이 비춤</div>
+                    </div>
+                </div>
+
+                <!-- Example Images -->
+                <div class="flex space-x-4 flex-1">
+                    <div class="w-1/2 flex flex-col">
+                        <div class="text-center mb-2 text-sm font-medium text-red-300">영화 아래광 효과</div>
+                        <div class="image-container flex-1 bg-gray-700 flex items-center justify-center">
+                            <img src="https://i.pinimg.com/564x/2e/06/a6/2e06a694efb482cba54d21451b0c9f02.jpg" alt="영화 아래광 효과" class="object-cover h-full w-full">
+                        </div>
+                    </div>
+                    
+                    <div class="w-1/2 flex flex-col">
+                        <div class="text-center mb-2 text-sm font-medium text-red-300">공포 효과 아래광</div>
+                        <div class="image-container flex-1 bg-gray-700 flex items-center justify-center">
+                            <img src="https://cdn.fstoppers.com/styles/full/s3/media/2022/05/12/up_lighting_monster_horror_lighting_example.jpg" alt="공포 효과 아래광" class="object-cover h-full w-full">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Page Number -->
+        <div class="page-number">7 / 8</div>
+    </div>
+</body>
+</html>

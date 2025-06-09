@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Depth & Dramatic Mood / 캐릭터 분리 실습</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .dramatic-effect {
+            position: absolute;
+            width: 350px;
+            height: 350px;
+            background: radial-gradient(ellipse at center, rgba(245, 158, 11, 0.25) 0%, rgba(245, 158, 11, 0.1) 40%, rgba(217, 119, 6, 0.05) 70%, transparent 100%);
+            border-radius: 50%;
+            filter: blur(25px);
+            top: -150px;
+            left: -150px;
+            animation: dramaticPulse 7s ease-in-out infinite;
+        }
+        
+        .depth-ray {
+            position: absolute;
+            width: 3px;
+            height: 250px;
+            background: linear-gradient(180deg, rgba(245, 158, 11, 0.6) 0%, rgba(245, 158, 11, 0.2) 60%, transparent 100%);
+            transform-origin: top;
+            animation: depthFloat 10s ease-in-out infinite;
+        }
+        
+        .depth-ray:nth-child(2) { right: 10%; top: 50px; animation-delay: 0s; transform: rotate(15deg); }
+        .depth-ray:nth-child(3) { right: 25%; top: 100px; animation-delay: 2s; transform: rotate(-10deg); }
+        .depth-ray:nth-child(4) { left: 70%; top: 80px; animation-delay: 4s; transform: rotate(8deg); }
+        
+        .content-wrapper {
+            position: relative;
+            z-index: 10;
+            padding: 35px 50px;
+            height: 720px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .header-section {
+            text-align: center;
+            margin-bottom: 25px;
+            opacity: 0;
+            animation: fadeInDown 1s ease-out 0.3s forwards;
+        }
+        
+        .main-title {
+            font-size: 2.4rem;
+            font-weight: 700;
+            color: #e2e8f0;
+            margin-bottom: 8px;
+        }
+        
+        .subtitle {
+            font-size: 1rem;
+            color: #f59e0b;
+            font-weight: 500;
+        }
+        
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 35px;
+            flex: 1;
+        }
+        
+        .techniques-section {
+            opacity: 0;
+            animation: fadeInLeft 1s ease-out 0.6s forwards;
+        }
+        
+        .examples-section {
+            opacity: 0;
+            animation: fadeInRight 1s ease-out 0.8s forwards;
+        }
+        
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        
+        .section-icon {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.3rem;
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #e2e8f0;
+        }
+        
+        .technique-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            opacity: 0;
+            animation: slideInLeft 0.8s ease-out forwards;
+        }
+        
+        .technique-card:nth-child(1) { animation-delay: 1s; }
+        .technique-card:nth-child(2) { animation-delay: 1.2s; }
+        .technique-card:nth-child(3) { animation-delay: 1.4s; }
+        
+        .technique-card:hover {
+            background: rgba(245, 158, 11, 0.1);
+            transform: translateX(8px);
+            border-color: rgba(245, 158, 11, 0.3);
+        }
+        
+        .technique-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+        
+        .technique-icon {
+            width: 35px;
+            height: 35px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1rem;
+        }
+        
+        .depth-icon {
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+        }
+        
+        .mood-icon {
+            background: linear-gradient(135deg, #dc2626, #b91c1c);
+        }
+        
+        .separation-icon {
+            background: linear-gradient(135deg, #10b981, #059669);
+        }
+        
+        .technique-title {
+            color: #e2e8f0;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+        
+        .technique-desc {
+            color: #94a3b8;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        
+        .examples-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        
+        .example-card {
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            opacity: 0;
+            animation: zoomIn 0.8s ease-out forwards;
+            height: 120px;
+        }
+        
+        .example-card:nth-child(1) { animation-delay: 1.5s; }
+        .example-card:nth-child(2) { animation-delay: 1.7s; }
+        .example-card:nth-child(3) { animation-delay: 1.9s; }
+        .example-card:nth-child(4) { animation-delay: 2.1s; }
+        
+        .example-card:hover {
+            transform: scale(1.03);
+            box-shadow: 0 8px 20px rgba(245, 158, 11, 0.2);
+        }
+        
+        .example-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .example-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.85) 100%);
+            padding: 12px;
+            color: white;
+        }
+        
+        .example-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+        
+        .example-type {
+            font-size: 0.7rem;
+            color: #f59e0b;
+            font-weight: 500;
+        }
+        
+        .large-example {
+            grid-column: 1 / -1;
+            height: 140px;
+            margin-bottom: 15px;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 2.3s forwards;
+        }
+        
+        .practice-guide {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 10px;
+            padding: 15px;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 2.5s forwards;
+        }
+        
+        .guide-title {
+            color: #10b981;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .guide-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        
+        .guide-item {
+            color: #e2e8f0;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .guide-item i {
+            color: #10b981;
+            width: 14px;
+        }
+        
+        @keyframes dramaticPulse {
+            0%, 100% { opacity: 0.25; transform: scale(1) rotate(0deg); }
+            50% { opacity: 0.4; transform: scale(1.2) rotate(90deg); }
+        }
+        
+        @keyframes depthFloat {
+            0%, 100% { transform: translateY(0px) rotate(15deg); opacity: 0.6; }
+            50% { transform: translateY(-15px) rotate(20deg); opacity: 0.9; }
+        }
+        
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-25px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes fadeInLeft {
+            from { opacity: 0; transform: translateX(-40px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        @keyframes fadeInRight {
+            from { opacity: 0; transform: translateX(40px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-25px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        @keyframes zoomIn {
+            from { opacity: 0; transform: scale(0.85); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <!-- Background dramatic effects -->
+        <div class="dramatic-effect"></div>
+        <div class="depth-ray"></div>
+        <div class="depth-ray"></div>
+        <div class="depth-ray"></div>
+        
+        <div class="content-wrapper">
+            <!-- Header -->
+            <div class="header-section">
+                <h1 class="main-title">Depth & Dramatic Mood / 캐릭터 분리 실습</h1>
+                <p class="subtitle">깊이감 연출과 드라마틱한 무드 조성 기법</p>
+            </div>
+            
+            <!-- Main Content Grid -->
+            <div class="main-content">
+                <!-- Techniques Section -->
+                <div class="techniques-section">
+                    <div class="section-header">
+                        <div class="section-icon">
+                            <i class="fas fa-theater-masks"></i>
+                        </div>
+                        <h2 class="section-title">핵심 기법</h2>
+                    </div>
+                    
+                    <div class="technique-card">
+                        <div class="technique-header">
+                            <div class="technique-icon depth-icon">
+                                <i class="fas fa-layer-group"></i>
+                            </div>
+                            <div class="technique-title">깊이감 연출 (Depth)</div>
+                        </div>
+                        <div class="technique-desc">
+                            전경, 중경, 후경의 차별화된 조명으로 공간의 입체감과 원근감을 극대화하여 몰입도 향상
+                        </div>
+                    </div>
+                    
+                    <div class="technique-card">
+                        <div class="technique-header">
+                            <div class="technique-icon mood-icon">
+                                <i class="fas fa-fire"></i>
+                            </div>
+                            <div class="technique-title">드라마틱 무드 (Dramatic Mood)</div>
+                        </div>
+                        <div class="technique-desc">
+                            강한 명암 대비와 방향성 있는 광원으로 감정적 긴장감과 극적 분위기를 연출
+                        </div>
+                    </div>
+                    
+                    <div class="technique-card">
+                        <div class="technique-header">
+                            <div class="technique-icon separation-icon">
+                                <i class="fas fa-user-slash"></i>
+                            </div>
+                            <div class="technique-title">캐릭터 분리 (Character Separation)</div>
+                        </div>
+                        <div class="technique-desc">
+                            림 라이팅과 백라이팅으로 캐릭터를 배경에서 분리하여 피사체의 입체감과 존재감 강조
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Examples Section -->
+                <div class="examples-section">
+                    <div class="section-header">
+                        <div class="section-icon">
+                            <i class="fas fa-film"></i>
+                        </div>
+                        <h2 class="section-title">영화 & 실습 예시</h2>
+                    </div>
+                    
+                    <div class="large-example example-card">
+                        <img src="https://chrisbrejon.com/wp-content/uploads/2020/04/085_characterLighting_0580_character_lighting_edu_martin_FHD.jpg" alt="Character Lighting Breakdown" class="example-image">
+                        <div class="example-overlay">
+                            <div class="example-title">Character Lighting Breakdown</div>
+                            <div class="example-type">Professional 3D Lighting Study</div>
+                        </div>
+                    </div>
+                    
+                    <div class="examples-grid">
+                        <div class="example-card">
+                            <img src="https://chrisbrejon.com/wp-content/uploads/2020/04/085_characterLighting_0390_josie_dramatic_wrap_distant_FHD.jpg" alt="Dramatic Character Lighting" class="example-image">
+                            <div class="example-overlay">
+                                <div class="example-title">Dramatic Wrap</div>
+                                <div class="example-type">Mood Lighting</div>
+                            </div>
+                        </div>
+                        
+                        <div class="example-card">
+                            <img src="https://storyenvelope.com/wp-content/uploads/2021/06/et-back-lighting.jpg" alt="E.T. Back Lighting" class="example-image">
+                            <div class="example-overlay">
+                                <div class="example-title">E.T. Backlight</div>
+                                <div class="example-type">Classic Film</div>
+                            </div>
+                        </div>
+                        
+                        <div class="example-card">
+                            <img src="https://chrisbrejon.com/wp-content/uploads/2020/04/085_characterLighting_0050_camera_angle_sun_FHD.jpg" alt="Camera Angle Sun Lighting" class="example-image">
+                            <div class="example-overlay">
+                                <div class="example-title">Natural Depth</div>
+                                <div class="example-type">3D Cinematography</div>
+                            </div>
+                        </div>
+                        
+                        <div class="example-card">
+                            <img src="https://chrisbrejon.com/wp-content/uploads/2020/04/085_characterLighting_0410_dragon_breakdown_brejon_FHD.jpg" alt="Dragon Lighting Breakdown" class="example-image">
+                            <div class="example-overlay">
+                                <div class="example-title">Dragon Lighting</div>
+                                <div class="example-type">Character Study</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="practice-guide">
+                        <div class="guide-title">
+                            <i class="fas fa-tools"></i>
+                            실습 가이드
+                        </div>
+                        <div class="guide-grid">
+                            <div class="guide-item">
+                                <i class="fas fa-check"></i>
+                                키 라이트와 필 라이트 비율 조절
+                            </div>
+                            <div class="guide-item">
+                                <i class="fas fa-check"></i>
+                                림 라이팅으로 캐릭터 윤곽 강조
+                            </div>
+                            <div class="guide-item">
+                                <i class="fas fa-check"></i>
+                                그림자 활용한 깊이감 연출
+                            </div>
+                            <div class="guide-item">
+                                <i class="fas fa-check"></i>
+                                색온도 대비로 감정 표현
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

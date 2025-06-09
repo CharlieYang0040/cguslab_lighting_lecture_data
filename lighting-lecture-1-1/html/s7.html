@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contrast (대비) - 추가 예시</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', 'Malgun Gothic', sans-serif;
+        }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            background: linear-gradient(135deg, #1a2a3a 0%, #0d1721 100%);
+            color: #ffffff;
+            overflow: hidden;
+            position: relative;
+        }
+        .header {
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 1.5rem 3rem;
+            border-bottom: 2px solid rgba(163, 198, 255, 0.4);
+            display: flex;
+            align-items: center;
+        }
+        .header-icon {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            color: #a3c6ff;
+            font-size: 1.5rem;
+        }
+        .content {
+            padding: 1.5rem 3rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            height: calc(100% - 120px);
+        }
+        .examples-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            height: 100%;
+        }
+        .example-item {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        .example-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        .example-image {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-bottom: 0.75rem;
+        }
+        .example-title {
+            font-weight: bold;
+            color: #ffcc66;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        .example-desc {
+            font-size: 0.8rem;
+            color: #e0e0e0;
+            line-height: 1.4;
+            flex: 1;
+        }
+        .large-example {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .large-image {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+        .large-title {
+            font-weight: bold;
+            color: #ffcc66;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+        }
+        .large-title i {
+            margin-right: 0.75rem;
+        }
+        .highlight {
+            color: #a3c6ff;
+            font-weight: bold;
+        }
+        .tips-container {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .tips-title {
+            font-weight: bold;
+            color: #ffcc66;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+        }
+        .tips-title i {
+            margin-right: 0.75rem;
+        }
+        .tip-item {
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: flex-start;
+            font-size: 0.9rem;
+        }
+        .tip-item:before {
+            content: "▸";
+            color: #a3c6ff;
+            font-weight: bold;
+            margin-right: 0.75rem;
+            margin-top: 0.1rem;
+        }
+        .footer {
+            padding: 1rem 3rem;
+            text-align: right;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            box-sizing: border-box;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+        .contrast-bar {
+            width: 100%;
+            height: 12px;
+            background: linear-gradient(to right, #000000, #ffffff);
+            border-radius: 6px;
+            margin: 1rem 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        .contrast-demo {
+            display: flex;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        .contrast-sample {
+            flex: 1;
+            height: 40px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.8rem;
+        }
+        .high-contrast {
+            background: #000000;
+            color: #ffffff;
+        }
+        .low-contrast {
+            background: #666666;
+            color: #999999;
+        }
+        .animation-highlight {
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        @keyframes glow {
+            from {
+                box-shadow: 0 0 5px rgba(163, 198, 255, 0.5);
+            }
+            to {
+                box-shadow: 0 0 20px rgba(163, 198, 255, 0.8);
+            }
+        }
+        .contrast-indicator {
+            position: relative;
+            height: 8px;
+            background: linear-gradient(to right, #000, #333, #666, #999, #ccc, #fff);
+            border-radius: 4px;
+            margin: 0.5rem 0;
+        }
+        .indicator-marker {
+            position: absolute;
+            top: -2px;
+            width: 12px;
+            height: 12px;
+            background: #a3c6ff;
+            border-radius: 50%;
+            box-shadow: 0 0 8px rgba(163, 198, 255, 0.8);
+        }
+        .marker-high {
+            right: 0;
+        }
+        .marker-low {
+            left: 30%;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="header">
+            <div class="header-icon">
+                <i class="fas fa-adjust"></i>
+            </div>
+            <div>
+                <h1 class="text-3xl font-bold">Contrast (대비) - 추가 예시</h1>
+                <p class="text-sm opacity-70 mt-1">실무 적용 사례와 심화 학습</p>
+            </div>
+        </div>
+        
+        <div class="content">
+            <div>
+                <div class="large-example">
+                    <div class="large-title">
+                        <i class="fas fa-mountain"></i> 톤 대비 마스터링
+                    </div>
+                    <img src="https://media.greatbigphotographyworld.com/wp-content/uploads/2023/05/high-contrast-landscape-full-tonal-range.jpg" alt="톤 대비 풍경 예시" class="large-image">
+                    <p class="text-sm">전체 <span class="highlight">톤 영역</span>을 활용한 고대비 풍경. 깊은 그림자부터 밝은 하이라이트까지의 완전한 범위</p>
+                    <div class="contrast-indicator">
+                        <div class="indicator-marker marker-high"></div>
+                        <div class="indicator-marker marker-low"></div>
+                    </div>
+                </div>
+                
+                <div class="tips-container">
+                    <div class="tips-title">
+                        <i class="fas fa-lightbulb"></i> 대비 활용 핵심 팁
+                    </div>
+                    <div class="tip-item"><span class="highlight">극적 효과</span>: 높은 대비로 강렬한 시각적 임팩트</div>
+                    <div class="tip-item"><span class="highlight">부드러운 분위기</span>: 낮은 대비로 차분하고 우아한 느낌</div>
+                    <div class="tip-item"><span class="highlight">초점 유도</span>: 대비 차이로 주목도 조절</div>
+                    <div class="tip-item"><span class="highlight">감정 전달</span>: 대비 수준으로 분위기 설정</div>
+                    
+                    <div class="contrast-demo">
+                        <div class="contrast-sample high-contrast">높은 대비</div>
+                        <div class="contrast-sample low-contrast">낮은 대비</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="examples-grid">
+                <div class="example-item animation-highlight">
+                    <img src="https://static1.discoverdigitalphotography.com/wp-content/uploads/2016/understanding-tonal-contrast-for-better-photos/640px/high-contrast-silhouette-landscape.jpg" alt="실루엣 고대비" class="example-image">
+                    <div class="example-title">극적 실루엣</div>
+                    <div class="example-desc"><span class="highlight">최대 대비</span>를 활용한 실루엣 효과. 순수한 검정과 흰색의 극명한 차이</div>
+                </div>
+                
+                <div class="example-item">
+                    <img src="https://images.squarespace-cdn.com/content/v1/5013f4b2c4aaa4752ac69b17/5be21943-ae31-4930-a357-8d63a0bbe933/what+is+tonal+contrast.jpg" alt="톤 대비 이론" class="example-image">
+                    <div class="example-title">톤 대비 이론</div>
+                    <div class="example-desc"><span class="highlight">톤 값</span>의 차이를 통한 대비. 회색조에서의 명암 관계와 시각적 효과</div>
+                </div>
+                
+                <div class="example-item">
+                    <img src="https://visualwilderness.com/wp-content/uploads/2013/03/hawaii_8969bw.jpg" alt="흑백 대비" class="example-image">
+                    <div class="example-title">흑백 사진 대비</div>
+                    <div class="example-desc"><span class="highlight">흑백 변환</span>에서의 대비 조절. 색상 정보 없이 순수한 톤으로 표현</div>
+                </div>
+                
+                <div class="example-item">
+                    <img src="https://clippingpathstudio.com/wp-content/uploads/2022/10/Guide-to-Using-Tonal-Contrast-in-Photography.jpg" alt="대비 가이드" class="example-image">
+                    <div class="example-title">실무 가이드</div>
+                    <div class="example-desc"><span class="highlight">단계별 접근</span>: 대비 조절의 실제 적용 방법과 효과 비교</div>
+                </div>
+                
+                <div class="example-item">
+                    <img src="https://media.greatbigphotographyworld.com/wp-content/uploads/2023/05/tonal-range-black-and-white-landscape-zone-system.jpg" alt="존 시스템" class="example-image">
+                    <div class="example-title">존 시스템</div>
+                    <div class="example-desc"><span class="highlight">11단계 존</span>을 활용한 체계적인 톤 관리와 대비 제어</div>
+                </div>
+                
+                <div class="example-item">
+                    <img src="https://cdn.contrastly.com/wp-content/uploads/009-2.jpg" alt="대비 활용" class="example-image">
+                    <div class="example-title">창의적 활용</div>
+                    <div class="example-desc"><span class="highlight">의도적 대비</span>: 예술적 표현을 위한 대비의 창조적 사용법</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            컴퓨터 그래픽스 라이팅 입문 | Contrast(대비) 심화 학습
+        </div>
+    </div>
+</body>
+</html>

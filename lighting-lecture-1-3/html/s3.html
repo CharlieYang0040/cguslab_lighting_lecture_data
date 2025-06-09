@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rembrandt Light</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(90deg, #f9a826, #ffbd2f);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 10px rgba(249, 168, 38, 0.3);
+        }
+        .feature-box {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(5px);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+        .feature-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        .highlight {
+            color: #f9a826;
+            font-weight: 600;
+        }
+        .image-container {
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        .image-container:hover {
+            transform: scale(1.02);
+        }
+        .triangle-light {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 0;
+            height: 0;
+            border-left: 30px solid transparent;
+            border-right: 30px solid transparent;
+            border-bottom: 50px solid rgba(249, 168, 38, 0.3);
+            transform: rotate(45deg);
+            filter: blur(5px);
+            animation: pulse 3s infinite;
+        }
+        @keyframes pulse {
+            0% { opacity: 0.5; }
+            50% { opacity: 1; }
+            100% { opacity: 0.5; }
+        }
+        .tech-detail {
+            opacity: 0.8;
+            font-weight: 300;
+        }
+        .practice-note {
+            background: rgba(249, 168, 38, 0.1);
+            border-left: 3px solid #f9a826;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container flex p-10 relative">
+        <!-- 삼각형 조명 효과 장식 -->
+        <div class="triangle-light"></div>
+        
+        <!-- 좌측 텍스트 섹션 -->
+        <div class="w-1/2 pr-8 flex flex-col justify-center">
+            <h1 class="section-title mb-8">Rembrandt Light</h1>
+            
+            <div class="feature-box p-5 mb-5">
+                <h3 class="text-xl font-bold mb-2">
+                    <i class="fas fa-lightbulb text-yellow-400 mr-2"></i>정의 및 효과
+                </h3>
+                <p class="text-lg">얼굴 한쪽에 <span class="highlight">삼각형 모양의 빛</span>을 형성하여 인물의 <span class="highlight">입체감</span>과 <span class="highlight">드라마틱함</span>을 강조합니다.</p>
+            </div>
+            
+            <div class="feature-box p-5 mb-5">
+                <h3 class="text-xl font-bold mb-2">
+                    <i class="fas fa-star text-yellow-400 mr-2"></i>특징 및 활용
+                </h3>
+                <p class="text-lg mb-2"><span class="highlight">고전적 분위기</span>와 <span class="highlight">세밀한 얼굴 윤곽</span> 표현에 효과적입니다.</p>
+                <p class="tech-detail">- 빛이 비추는 측면의 반대쪽 뺨에 삼각형 형태의 빛 형성</p>
+                <p class="tech-detail">- 렘브란트(Rembrandt) 화가의 초상화 스타일에서 유래</p>
+            </div>
+            
+            <div class="practice-note p-4 rounded-lg mt-4">
+                <p class="flex items-center">
+                    <i class="fas fa-pencil-alt mr-3 text-yellow-400"></i>
+                    <span>실습 팁: 카메라/시점 기준 45° 각도에서 광원을 배치하고 약간 높은 위치에서 비추세요.</span>
+                </p>
+            </div>
+        </div>
+        
+        <!-- 우측 이미지 섹션 -->
+        <div class="w-1/2 pl-8 flex flex-col items-center justify-center space-y-5">
+            <!-- 렘브란트 라이팅 다이어그램 -->
+            <div class="image-container w-full">
+                <img src="https://cdn.expertphotography.com/wp-content/uploads/2019/02/rembrant-lighting-photography-setup.jpg" 
+                     alt="Rembrandt 라이팅 다이어그램" 
+                     class="w-full object-cover rounded-lg border-2 border-gray-700">
+                <p class="text-center mt-2 text-sm opacity-80"><i class="fas fa-diagram-project mr-1"></i> Rembrandt 라이팅 셋업 다이어그램</p>
+            </div>
+            
+            <!-- 렘브란트 라이팅 예시 -->
+            <div class="image-container w-full">
+                <img src="https://shotkit.com/wp-content/uploads/2020/11/rembrandt-lighting-1.jpg" 
+                     alt="Rembrandt 라이팅 예시" 
+                     class="w-full object-cover rounded-lg border-2 border-gray-700">
+                <p class="text-center mt-2 text-sm opacity-80"><i class="fas fa-image mr-1"></i> Rembrandt 라이팅이 적용된 초상화 - 특징적인 삼각형 형태의 빛 주목</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

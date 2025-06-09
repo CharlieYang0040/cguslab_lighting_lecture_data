@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>V-Ray Physical Camera 개요 및 주요 파라미터</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        .slide {
+            width: 1280px;
+            min-height: 720px;
+            position: relative;
+            background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
+            color: white;
+            overflow: hidden;
+        }
+        .highlight {
+            color: #60a5fa;
+            font-weight: 600;
+        }
+        .parameter-box {
+            background-color: rgba(37, 99, 235, 0.1);
+            border-left: 3px solid #3b82f6;
+            transition: all 0.3s ease;
+        }
+        .parameter-box:hover {
+            background-color: rgba(37, 99, 235, 0.2);
+            transform: translateX(5px);
+        }
+        .image-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+        }
+        .image-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(59, 130, 246, 0.3), transparent);
+            z-index: 1;
+        }
+        .image-highlight {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 2px dashed rgba(59, 130, 246, 0.7);
+            transform: translate(-50%, -50%);
+            z-index: 2;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+            50% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.7; }
+            100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="slide flex flex-col p-12 relative">
+        <!-- 헤더 -->
+        <div class="mb-6 relative z-10">
+            <h1 class="text-4xl font-bold text-white mb-2">V-Ray Physical Camera 개요</h1>
+            <div class="w-24 h-1 bg-blue-500 mb-2"></div>
+            <p class="text-gray-300 text-lg">실제 카메라 설정을 적용한 렌더링 컨트롤</p>
+        </div>
+        
+        <!-- 메인 콘텐츠 -->
+        <div class="flex flex-row gap-8 z-10 flex-1">
+            <!-- 왼쪽: 설명 -->
+            <div class="w-5/12">
+                <div class="mb-6">
+                    <h2 class="text-2xl font-semibold text-blue-300 mb-3">
+                        <i class="fas fa-camera text-blue-400 mr-2"></i>Physical Camera란?
+                    </h2>
+                    <p class="mb-3">
+                        <span class="highlight">V-Ray Physical Camera</span>는 실제 카메라와 
+                        동일한 원리로 작동하는 가상 카메라 시스템으로, 사실적인 
+                        렌더링 결과를 얻을 수 있습니다.
+                    </p>
+                    <p>
+                        실제 사진 촬영과 같은 워크플로우로 라이팅과 노출을 
+                        <span class="highlight">정밀하게 제어</span>할 수 있어 
+                        전문 렌더링 작업에 필수적입니다.
+                    </p>
+                </div>
+                
+                <h2 class="text-2xl font-semibold text-blue-300 mb-3">
+                    <i class="fas fa-sliders-h text-blue-400 mr-2"></i>주요 파라미터
+                </h2>
+                
+                <div class="space-y-4">
+                    <div class="parameter-box p-4 rounded">
+                        <h3 class="font-bold text-xl mb-1">ISO <small class="text-gray-400">(감도)</small></h3>
+                        <p>센서의 빛 감도를 결정하며, 값이 높을수록 밝아지나 <span class="highlight">노이즈</span>가 증가합니다. 일반 범위: 100-800</p>
+                    </div>
+                    
+                    <div class="parameter-box p-4 rounded">
+                        <h3 class="font-bold text-xl mb-1">셔터 속도 <small class="text-gray-400">(Shutter Speed)</small></h3>
+                        <p>빛을 받아들이는 시간을 조절하며, <span class="highlight">모션 블러</span>에 영향을 줍니다. 일반 범위: 1/30 - 1/200</p>
+                    </div>
+                    
+                    <div class="parameter-box p-4 rounded">
+                        <h3 class="font-bold text-xl mb-1">조리개 <small class="text-gray-400">(F-Number)</small></h3>
+                        <p>렌즈를 통과하는 빛의 양을 조절하고, <span class="highlight">피사계 심도</span>(DOF)를 결정합니다. 일반 범위: f/1.4 - f/16</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 오른쪽: 이미지 -->
+            <div class="w-7/12 flex items-center justify-center relative">
+                <div class="image-container w-full h-auto">
+                    <img src="https://pixelnil.com/wp-content/uploads/2024/05/vray-camera-setting.png" alt="V-Ray Physical Camera 인터페이스" class="w-full h-auto object-contain">
+                    
+                    <!-- 주요 파라미터 하이라이트 -->
+                    <div class="image-highlight" style="top: 25%; left: 30%;">
+                        <div class="absolute -top-8 -left-8 bg-blue-600 text-white text-xs px-2 py-1 rounded">ISO</div>
+                    </div>
+                    <div class="image-highlight" style="top: 40%; left: 30%;">
+                        <div class="absolute -top-8 -left-16 bg-blue-600 text-white text-xs px-2 py-1 rounded">셔터 속도</div>
+                    </div>
+                    <div class="image-highlight" style="top: 55%; left: 30%;">
+                        <div class="absolute -top-8 -left-12 bg-blue-600 text-white text-xs px-2 py-1 rounded">조리개(f)</div>
+                    </div>
+                </div>
+                
+                <div class="absolute bottom-2 right-2 text-sm text-gray-400 bg-gray-800 bg-opacity-50 px-3 py-1 rounded">
+                    V-Ray Physical Camera 인터페이스
+                </div>
+            </div>
+        </div>
+        
+        <!-- 하단 페이지 표시 -->
+        <div class="absolute bottom-6 right-6 text-sm text-gray-400">
+            3 / 10
+        </div>
+    </div>
+</body>
+</html>

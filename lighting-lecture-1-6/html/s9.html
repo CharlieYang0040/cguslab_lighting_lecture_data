@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>조리개 활용 실습</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        .slide {
+            width: 1280px;
+            min-height: 720px;
+            position: relative;
+            background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
+            color: white;
+            overflow: hidden;
+        }
+        .highlight {
+            color: #60a5fa;
+            font-weight: 600;
+        }
+        .aperture-demo {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: #374151;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+            border: 3px solid #3b82f6;
+        }
+        .aperture-opening {
+            width: var(--opening-size);
+            height: var(--opening-size);
+            border-radius: 50%;
+            background: radial-gradient(circle, #ffffff 0%, #e5e7eb 100%);
+            transition: all 0.3s ease;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.3);
+        }
+        .dof-comparison {
+            height: 160px;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+            background: #1e293b;
+            border: 2px solid #374151;
+        }
+        .dof-scene {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+        }
+        .focus-object {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            border-radius: 4px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 3;
+            box-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
+        }
+        .background-object {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: linear-gradient(135deg, #10b981, #059669);
+            border-radius: 50%;
+            filter: blur(var(--bg-blur));
+            transition: filter 0.3s ease;
+        }
+        .foreground-object {
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+            border-radius: 4px;
+            filter: blur(var(--fg-blur));
+            transition: filter 0.3s ease;
+        }
+        .f-stop-card {
+            background: rgba(15, 23, 42, 0.8);
+            border-radius: 8px;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .f-stop-card:hover {
+            border-color: #3b82f6;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(59, 130, 246, 0.3);
+        }
+        .f-stop-card.active {
+            border-color: #10b981;
+            background: rgba(16, 185, 129, 0.1);
+        }
+        .vray-setting {
+            background: rgba(37, 99, 235, 0.1);
+            border-left: 4px solid #3b82f6;
+            padding: 12px;
+            border-radius: 8px;
+            margin: 8px 0;
+        }
+        .practice-step {
+            background: rgba(16, 185, 129, 0.1);
+            border-left: 4px solid #10b981;
+            padding: 10px;
+            border-radius: 6px;
+            margin: 6px 0;
+            transition: all 0.3s ease;
+        }
+        .practice-step:hover {
+            background: rgba(16, 185, 129, 0.2);
+            transform: translateX(5px);
+        }
+        .interactive-slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 8px;
+            background: linear-gradient(to right, #3b82f6, #8b5cf6, #ef4444);
+            outline: none;
+            border-radius: 4px;
+            margin: 12px 0;
+        }
+        .interactive-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #fff;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+        }
+        .movie-example {
+            background: rgba(37, 99, 235, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+        .movie-example:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
+        }
+        .technique-badge {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: rgba(0, 0, 0, 0.8);
+            color: #60a5fa;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 10px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide flex flex-col p-8 relative">
+        <!-- 헤더 -->
+        <div class="mb-4 relative z-10">
+            <h1 class="text-3xl font-bold text-white mb-2">조리개 활용 실습</h1>
+            <div class="w-20 h-1 bg-blue-500 mb-1"></div>
+            <p class="text-gray-300">V-Ray Physical Camera의 조리개 설정과 피사계 심도 마스터하기</p>
+        </div>
+        
+        <!-- 메인 콘텐츠 -->
+        <div class="flex flex-row gap-6 z-10 flex-1">
+            <!-- 왼쪽: 이론과 설정 -->
+            <div class="w-5/12">
+                <h3 class="text-lg font-semibold text-blue-300 mb-3 flex items-center">
+                    <i class="fas fa-cog text-yellow-400 mr-2"></i>V-Ray DOF 설정 방법
+                </h3>
+                
+                <div class="space-y-3 mb-4">
+                    <div class="vray-setting">
+                        <h4 class="font-bold text-sm mb-1">1. Physical Camera 활성화</h4>
+                        <p class="text-xs">Camera Type을 <span class="highlight">Physical</span>로 설정</p>
+                    </div>
+                    
+                    <div class="vray-setting">
+                        <h4 class="font-bold text-sm mb-1">2. DOF 활성화</h4>
+                        <p class="text-xs"><span class="highlight">Depth of Field</span> 체크박스 활성화</p>
+                    </div>
+                    
+                    <div class="vray-setting">
+                        <h4 class="font-bold text-sm mb-1">3. 타겟 거리 설정</h4>
+                        <p class="text-xs"><span class="highlight">Target Distance</span>로 초점 위치 지정</p>
+                    </div>
+                    
+                    <div class="vray-setting">
+                        <h4 class="font-bold text-sm mb-1">4. F-Number 조절</h4>
+                        <p class="text-xs">낮은 값(f/1.4) = 얕은 DOF, 높은 값(f/16) = 깊은 DOF</p>
+                    </div>
+                </div>
+                
+                <!-- 조리개 시뮬레이터 -->
+                <div class="bg-gray-800 bg-opacity-50 p-4 rounded mb-4">
+                    <h4 class="font-semibold text-sm mb-3 text-center">조리개 개방도 시뮬레이터</h4>
+                    <div class="aperture-demo" id="apertureDemo">
+                        <div class="aperture-opening" id="apertureOpening" style="--opening-size: 40px;"></div>
+                    </div>
+                    <div class="mt-3">
+                        <input type="range" min="1.4" max="22" step="0.1" value="5.6" class="interactive-slider" id="apertureSlider">
+                        <div class="flex justify-between text-xs mt-1">
+                            <span>f/1.4</span>
+                            <span id="currentFStop">f/5.6</span>
+                            <span>f/22</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 영화 기법 예시 -->
+                <div class="space-y-2">
+                    <h4 class="font-semibold text-sm mb-2 flex items-center">
+                        <i class="fas fa-film text-purple-400 mr-2"></i>영화 속 DOF 기법
+                    </h4>
+                    
+                    <div class="movie-example p-2">
+                        <div class="flex items-center">
+                            <img src="https://www.santiniphotography.com/wp-content/uploads/2019/03/blade-runner-2049-2560x1440-officer-k-hd-12826.jpg" 
+                                 alt="블레이드 러너 2049" class="w-16 h-12 object-cover rounded mr-3">
+                            <div>
+                                <h5 class="font-bold text-xs">블레이드 러너 2049</h5>
+                                <p class="text-xs text-gray-300">f/1.4 - 극도로 얕은 심도</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="movie-example p-2">
+                        <div class="flex items-center">
+                            <img src="https://www.kodak.com/content/blog-news/_3600x2389_crop_center-center_50_line/la-la-land-9.jpeg" 
+                                 alt="라라랜드" class="w-16 h-12 object-cover rounded mr-3">
+                            <div>
+                                <h5 class="font-bold text-xs">라라랜드</h5>
+                                <p class="text-xs text-gray-300">f/2.8 - 로맨틱한 보케</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 중간: F값별 비교 -->
+            <div class="w-4/12">
+                <h3 class="text-lg font-semibold text-blue-300 mb-3 flex items-center">
+                    <i class="fas fa-eye text-green-400 mr-2"></i>F값별 DOF 비교
+                </h3>
+                
+                <div class="space-y-3">
+                    <!-- f/1.4 -->
+                    <div class="f-stop-card p-3" onclick="setFStop(1.4)" id="fstop14">
+                        <div class="flex justify-between items-center mb-2">
+                            <h4 class="font-bold text-sm">f/1.4 - 얕은 DOF</h4>
+                            <span class="text-xs text-blue-300">인물, 제품</span>
+                        </div>
+                        <div class="dof-comparison">
+                            <div class="dof-scene">
+                                <div class="foreground-object" style="top: 30%; left: 20%; --fg-blur: 8px;"></div>
+                                <div class="focus-object"></div>
+                                <div class="background-object" style="top: 40%; left: 75%; --bg-blur: 12px;"></div>
+                                <div class="background-object" style="top: 70%; left: 80%; --bg-blur: 15px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- f/5.6 -->
+                    <div class="f-stop-card p-3" onclick="setFStop(5.6)" id="fstop56">
+                        <div class="flex justify-between items-center mb-2">
+                            <h4 class="font-bold text-sm">f/5.6 - 중간 DOF</h4>
+                            <span class="text-xs text-blue-300">일반 촬영</span>
+                        </div>
+                        <div class="dof-comparison">
+                            <div class="dof-scene">
+                                <div class="foreground-object" style="top: 30%; left: 20%; --fg-blur: 3px;"></div>
+                                <div class="focus-object"></div>
+                                <div class="background-object" style="top: 40%; left: 75%; --bg-blur: 5px;"></div>
+                                <div class="background-object" style="top: 70%; left: 80%; --bg-blur: 6px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- f/16 -->
+                    <div class="f-stop-card p-3" onclick="setFStop(16)" id="fstop16">
+                        <div class="flex justify-between items-center mb-2">
+                            <h4 class="font-bold text-sm">f/16 - 깊은 DOF</h4>
+                            <span class="text-xs text-blue-300">풍경, 건축</span>
+                        </div>
+                        <div class="dof-comparison">
+                            <div class="dof-scene">
+                                <div class="foreground-object" style="top: 30%; left: 20%; --fg-blur: 0px;"></div>
+                                <div class="focus-object"></div>
+                                <div class="background-object" style="top: 40%; left: 75%; --bg-blur: 0px;"></div>
+                                <div class="background-object" style="top: 70%; left: 80%; --bg-blur: 0px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- DOF 분석 도구 -->
+                <div class="mt-4 bg-purple-900 bg-opacity-30 p-3 rounded border-l-4 border-purple-500">
+                    <h4 class="font-semibold text-sm mb-2 flex items-center">
+                        <i class="fas fa-calculator text-purple-400 mr-2"></i>DOF 계산 요소
+                    </h4>
+                    <div class="grid grid-cols-2 gap-2 text-xs">
+                        <div>• <span class="highlight">초점거리:</span> 긴 렌즈 = 얕은 DOF</div>
+                        <div>• <span class="highlight">조리개:</span> 작은 F값 = 얕은 DOF</div>
+                        <div>• <span class="highlight">거리:</span> 가까운 피사체 = 얕은 DOF</div>
+                        <div>• <span class="highlight">센서:</span> 큰 센서 = 얕은 DOF</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 오른쪽: 실습 가이드 -->
+            <div class="w-3/12">
+                <h3 class="text-lg font-semibold text-blue-300 mb-3 flex items-center">
+                    <i class="fas fa-clipboard-list text-orange-400 mr-2"></i>단계별 실습 가이드
+                </h3>
+                
+                <div class="space-y-2">
+                    <div class="practice-step">
+                        <h4 class="font-bold text-xs mb-1">1단계: 씬 준비</h4>
+                        <p class="text-xs">• 전경, 중경, 배경에 오브젝트 배치</p>
+                        <p class="text-xs">• 적절한 조명 설정</p>
+                    </div>
+                    
+                    <div class="practice-step">
+                        <h4 class="font-bold text-xs mb-1">2단계: 카메라 설정</h4>
+                        <p class="text-xs">• V-Ray Physical Camera 생성</p>
+                        <p class="text-xs">• DOF 옵션 활성화</p>
+                    </div>
+                    
+                    <div class="practice-step">
+                        <h4 class="font-bold text-xs mb-1">3단계: 초점 설정</h4>
+                        <p class="text-xs">• Target Distance 조절</p>
+                        <p class="text-xs">• 주요 피사체에 초점 맞추기</p>
+                    </div>
+                    
+                    <div class="practice-step">
+                        <h4 class="font-bold text-xs mb-1">4단계: F값 실험</h4>
+                        <p class="text-xs">• f/1.4, f/5.6, f/16으로 테스트</p>
+                        <p class="text-xs">• 결과 비교 및 분석</p>
+                    </div>
+                    
+                    <div class="practice-step">
+                        <h4 class="font-bold text-xs mb-1">5단계: 최적화</h4>
+                        <p class="text-xs">• 용도에 맞는 F값 선택</p>
+                        <p class="text-xs">• 렌더링 품질 조정</p>
+                    </div>
+                </div>
+                
+                <!-- 렌더링 팁 -->
+                <div class="mt-4 bg-yellow-900 bg-opacity-30 p-3 rounded border-l-4 border-yellow-500">
+                    <h4 class="font-semibold text-sm mb-2 flex items-center">
+                        <i class="fas fa-lightbulb text-yellow-400 mr-2"></i>렌더링 최적화 팁
+                    </h4>
+                    <ul class="text-xs space-y-1">
+                        <li>• DOF는 렌더링 시간 증가</li>
+                        <li>• <span class="highlight">낮은 해상도</span>로 테스트</li>
+                        <li>• <span class="highlight">Subdivs</span> 값 조절로 품질 제어</li>
+                        <li>• 프리뷰 렌더로 빠른 확인</li>
+                    </ul>
+                </div>
+                
+                <!-- 창작 과제 -->
+                <div class="mt-3 bg-green-900 bg-opacity-30 p-3 rounded border-l-4 border-green-500">
+                    <h4 class="font-semibold text-sm mb-2 flex items-center">
+                        <i class="fas fa-star text-green-400 mr-2"></i>창작 과제
+                    </h4>
+                    <div class="text-xs space-y-1">
+                        <p>영화 포스터 스타일의 이미지 만들기:</p>
+                        <p>• <span class="highlight">인물:</span> f/2.8로 배경 분리</p>
+                        <p>• <span class="highlight">제품:</span> f/5.6으로 적당한 심도</p>
+                        <p>• <span class="highlight">건축:</span> f/11로 디테일 강조</p>
+                    </div>
+                </div>
+                
+                <!-- 시작 버튼 -->
+                <div class="mt-4 text-center">
+                    <button onclick="startPractice()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-colors duration-300">
+                        <i class="fas fa-play mr-2"></i>실습 시작하기
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 하단 페이지 표시 -->
+        <div class="absolute bottom-6 right-6 text-sm text-gray-400">
+            9 / 19
+        </div>
+    </div>
+
+    <script>
+        // 조리개 슬라이더 제어
+        const apertureSlider = document.getElementById('apertureSlider');
+        const currentFStop = document.getElementById('currentFStop');
+        const apertureOpening = document.getElementById('apertureOpening');
+        
+        apertureSlider.addEventListener('input', function() {
+            const value = parseFloat(this.value);
+            currentFStop.textContent = `f/${value.toFixed(1)}`;
+            
+            // 조리개 개방도 시각화 (낮은 F값 = 큰 개방도)
+            const openingSize = Math.max(20, 100 - (value * 3));
+            apertureOpening.style.setProperty('--opening-size', `${openingSize}px`);
+            
+            // 해당 F-stop 카드 강조
+            document.querySelectorAll('.f-stop-card').forEach(card => {
+                card.classList.remove('active');
+            });
+            
+            if (value <= 2.0) {
+                document.getElementById('fstop14').classList.add('active');
+            } else if (value <= 8.0) {
+                document.getElementById('fstop56').classList.add('active');
+            } else {
+                document.getElementById('fstop16').classList.add('active');
+            }
+        });
+        
+        // F-stop 카드 클릭 이벤트
+        function setFStop(value) {
+            apertureSlider.value = value;
+            currentFStop.textContent = `f/${value.toFixed(1)}`;
+            
+            const openingSize = Math.max(20, 100 - (value * 3));
+            apertureOpening.style.setProperty('--opening-size', `${openingSize}px`);
+            
+            // 카드 활성화
+            document.querySelectorAll('.f-stop-card').forEach(card => {
+                card.classList.remove('active');
+            });
+            
+            if (value <= 2.0) {
+                document.getElementById('fstop14').classList.add('active');
+            } else if (value <= 8.0) {
+                document.getElementById('fstop56').classList.add('active');
+            } else {
+                document.getElementById('fstop16').classList.add('active');
+            }
+        }
+        
+        // 실습 시작 함수
+        function startPractice() {
+            const steps = document.querySelectorAll('.practice-step');
+            let currentStep = 0;
+            
+            function highlightStep() {
+                steps.forEach((step, index) => {
+                    step.style.background = index === currentStep ? 
+                        'rgba(16, 185, 129, 0.3)' : 
+                        'rgba(16, 185, 129, 0.1)';
+                    step.style.borderLeftColor = index === currentStep ? '#10b981' : '#10b981';
+                    step.style.transform = index === currentStep ? 'translateX(10px)' : 'translateX(0)';
+                });
+                
+                currentStep = (currentStep + 1) % steps.length;
+            }
+            
+            // 단계별 강조 효과
+            highlightStep();
+            const interval = setInterval(highlightStep, 2000);
+            
+            // 10초 후 정지
+            setTimeout(() => {
+                clearInterval(interval);
+                steps.forEach(step => {
+                    step.style.background = 'rgba(16, 185, 129, 0.1)';
+                    step.style.transform = 'translateX(0)';
+                });
+            }, 10000);
+            
+            // 성공 메시지
+            setTimeout(() => {
+                alert('실습 가이드가 완료되었습니다! 이제 V-Ray에서 직접 실습해보세요.');
+            }, 10500);
+        }
+        
+        // 초기 설정
+        setFStop(5.6);
+    </script>
+</body>
+</html>

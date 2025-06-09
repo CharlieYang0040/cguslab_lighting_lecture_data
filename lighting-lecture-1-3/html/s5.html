@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Split Light</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            position: relative;
+            display: inline-block;
+        }
+        .section-title::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -5px;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #f9a826, transparent);
+        }
+        .split-effect {
+            position: relative;
+        }
+        .split-effect::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 50%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            z-index: -1;
+        }
+        .feature-box {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(5px);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+        .feature-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        .highlight {
+            color: #f9a826;
+            font-weight: 600;
+        }
+        .image-container {
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        .image-container:hover {
+            transform: scale(1.02);
+        }
+        .split-decoration {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+        .split-decoration::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 1px;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent, rgba(249, 168, 38, 0.7), transparent);
+        }
+        .practice-note {
+            background: rgba(249, 168, 38, 0.1);
+            border-left: 3px solid #f9a826;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container flex p-10 relative">
+        <div class="split-decoration"></div>
+        
+        <!-- 좌측 텍스트 섹션 -->
+        <div class="w-1/2 pr-8 flex flex-col justify-center z-10">
+            <h1 class="section-title mb-8">Split Light</h1>
+            
+            <div class="feature-box p-5 mb-5">
+                <h3 class="text-xl font-bold mb-2">
+                    <i class="fas fa-adjust text-yellow-400 mr-2"></i>정의 및 효과
+                </h3>
+                <p class="text-lg split-effect p-2">얼굴의 <span class="highlight">절반을 밝히고</span> 반쪽은 <span class="highlight">그림자</span>로 처리해 <span class="highlight">강렬한 대비 효과</span>를 냅니다.</p>
+            </div>
+            
+            <div class="feature-box p-5 mb-5">
+                <h3 class="text-xl font-bold mb-2">
+                    <i class="fas fa-theater-masks text-yellow-400 mr-2"></i>특징 및 활용
+                </h3>
+                <p class="text-lg mb-2">인물의 <span class="highlight">이중성</span>을 표현하거나 <span class="highlight">극적인 분위기</span>를 연출할 때 사용됩니다.</p>
+                <ul class="list-disc pl-5 mt-3 space-y-1 text-gray-300">
+                    <li>서스펜스, 미스터리, 긴장감 조성에 적합</li>
+                    <li>캐릭터의 양면성 또는 내적 갈등 표현</li>
+                    <li>영화 느와르(Film Noir) 스타일에서 자주 활용</li>
+                </ul>
+            </div>
+            
+            <div class="practice-note p-4 rounded-lg mt-4">
+                <p class="flex items-center">
+                    <i class="fas fa-pencil-alt mr-3 text-yellow-400"></i>
+                    <span>실습 팁: 카메라/시점 기준 90° 측면에 광원을 배치하고 부드러운 필 라이트 없이 강한 대비를 유지하세요.</span>
+                </p>
+            </div>
+        </div>
+        
+        <!-- 우측 이미지 섹션 -->
+        <div class="w-1/2 pl-8 flex flex-col items-center justify-center space-y-5 z-10">
+            <!-- Split Light 예시 이미지 -->
+            <div class="image-container w-full">
+                <img src="https://www.picturecorrect.com/wp-content/uploads/2024/04/split-lighting-portrait.jpg" 
+                     alt="Split Light 포트레이트 예시" 
+                     class="w-full object-cover rounded-lg border-2 border-gray-700">
+                <p class="text-center mt-2 text-sm opacity-80"><i class="fas fa-image mr-1"></i> Split Light가 적용된 인물 - 얼굴 정확히 반으로 나뉜 조명 효과</p>
+            </div>
+            
+            <!-- Split Light 셋업 다이어그램 -->
+            <div class="image-container w-full">
+                <img src="https://s.studiobinder.com/wp-content/uploads/2021/07/Side-lighting-examples.png" 
+                     alt="Split Light 다이어그램" 
+                     class="w-full object-cover rounded-lg border-2 border-gray-700">
+                <p class="text-center mt-2 text-sm opacity-80"><i class="fas fa-diagram-project mr-1"></i> Split Light 셋업 다이어그램 - 90° 측면 조명 배치</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

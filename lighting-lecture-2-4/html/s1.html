@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2개월차 4강: Python으로 Maya 작업 자동화 정복하기</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        .code-font {
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .title-gradient {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .maya-blue {
+            color: #0696d7;
+        }
+        .python-yellow {
+            color: #ffde57;
+        }
+        .hero-bg {
+            background-image: 
+                linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%),
+                url('https://adambakerart.com/wp-content/uploads/2021/05/adambakaerart_learn_python_guide-1024x683.jpg');
+            background-size: cover;
+            background-position: center;
+            background-blend-mode: overlay;
+        }
+        .floating-animation {
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+        .icon-shadow {
+            filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container bg-gray-50 flex items-center justify-center hero-bg">
+        <!-- Main Content Container -->
+        <div class="w-full h-full flex items-center justify-between px-16 py-12">
+            
+            <!-- Left Side - Main Title Content -->
+            <div class="flex-1 mr-12">
+                <!-- Course Badge -->
+                <div class="inline-flex items-center bg-white bg-opacity-90 rounded-full px-6 py-3 mb-8 shadow-lg">
+                    <i class="fas fa-graduation-cap text-indigo-600 mr-3 text-lg"></i>
+                    <span class="text-gray-700 font-medium">Maya 전문가 과정</span>
+                </div>
+
+                <!-- Main Title -->
+                <h1 class="text-5xl font-black leading-tight mb-6 text-gray-800">
+                    <span class="block text-3xl font-medium text-gray-600 mb-2">2개월차 4강</span>
+                    <span class="title-gradient">Python으로 Maya</span><br>
+                    <span class="title-gradient">작업 자동화 정복하기</span>
+                </h1>
+
+                <!-- Subtitle -->
+                <p class="text-2xl text-gray-700 font-medium mb-8 leading-relaxed">
+                    Python 스크립팅 기초와 Maya 자동화
+                </p>
+
+                <!-- Key Points -->
+                <div class="flex flex-wrap gap-4 mb-8">
+                    <div class="bg-white bg-opacity-80 rounded-lg px-4 py-2 shadow-sm">
+                        <i class="fab fa-python python-yellow mr-2"></i>
+                        <span class="text-gray-700 font-medium">Python 기초 문법</span>
+                    </div>
+                    <div class="bg-white bg-opacity-80 rounded-lg px-4 py-2 shadow-sm">
+                        <i class="fas fa-cube maya-blue mr-2"></i>
+                        <span class="text-gray-700 font-medium">Maya API 활용</span>
+                    </div>
+                    <div class="bg-white bg-opacity-80 rounded-lg px-4 py-2 shadow-sm">
+                        <i class="fas fa-cogs text-green-600 mr-2"></i>
+                        <span class="text-gray-700 font-medium">작업 자동화</span>
+                    </div>
+                    <div class="bg-white bg-opacity-80 rounded-lg px-4 py-2 shadow-sm">
+                        <i class="fas fa-desktop text-purple-600 mr-2"></i>
+                        <span class="text-gray-700 font-medium">UI 제작</span>
+                    </div>
+                </div>
+
+                <!-- Instructor Info -->
+                <div class="bg-white bg-opacity-90 rounded-xl p-6 shadow-lg">
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full flex items-center justify-center mr-4">
+                            <i class="fas fa-user-tie text-white text-lg"></i>
+                        </div>
+                        <div>
+                            <p class="text-gray-600 text-sm">강사</p>
+                            <p class="text-gray-800 font-semibold text-lg">Maya Python 전문가</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side - Visual Elements -->
+            <div class="flex-1 flex flex-col items-center justify-center">
+                <!-- Maya Python Logo Area -->
+                <div class="relative mb-8">
+                    <div class="floating-animation">
+                        <div class="w-48 h-48 bg-white bg-opacity-90 rounded-full flex items-center justify-center shadow-2xl">
+                            <div class="text-center">
+                                <i class="fab fa-python text-6xl python-yellow mb-4 icon-shadow"></i>
+                                <div class="text-2xl font-bold text-gray-700">+</div>
+                                <i class="fas fa-cube text-6xl maya-blue mt-4 icon-shadow"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Decorative Elements -->
+                    <div class="absolute -top-4 -right-4 w-8 h-8 bg-yellow-400 rounded-full pulse-animation"></div>
+                    <div class="absolute -bottom-4 -left-4 w-6 h-6 bg-blue-500 rounded-full pulse-animation" style="animation-delay: 1s;"></div>
+                </div>
+
+                <!-- Code Preview -->
+                <div class="bg-gray-900 rounded-lg p-6 shadow-xl w-full max-w-sm">
+                    <div class="flex items-center mb-3">
+                        <div class="w-3 h-3 bg-red-500 rounded-full mr-2"></div>
+                        <div class="w-3 h-3 bg-yellow-500 rounded-full mr-2"></div>
+                        <div class="w-3 h-3 bg-green-500 rounded-full"></div>
+                        <span class="text-gray-400 text-sm ml-4 code-font">maya_auto.py</span>
+                    </div>
+                    <div class="code-font text-sm">
+                        <div class="text-purple-400">import</div>
+                        <div class="text-blue-400 ml-4">maya.cmds</div>
+                        <div class="text-purple-400 mt-2">for</div>
+                        <div class="text-yellow-300 ml-4">i in range(10):</div>
+                        <div class="text-green-400 ml-8"># 자동화 마법 ✨</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Decoration -->
+        <div class="absolute bottom-0 left-0 w-full h-2 bg-gradient-to-r from-indigo-500 via-purple-500 to-blue-500"></div>
+    </div>
+</body>
+</html>

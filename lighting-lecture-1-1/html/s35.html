@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exposure (노출) - 추가 예시</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', 'Malgun Gothic', sans-serif;
+        }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            background: linear-gradient(135deg, #1a2a3a 0%, #0d1721 100%);
+            color: #ffffff;
+            overflow: hidden;
+            position: relative;
+        }
+        .header {
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 1.5rem 3rem;
+            border-bottom: 2px solid rgba(163, 198, 255, 0.4);
+            display: flex;
+            align-items: center;
+        }
+        .header-icon {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            color: #a3c6ff;
+            font-size: 1.5rem;
+        }
+        .content {
+            padding: 1.5rem 3rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            height: calc(100% - 120px);
+        }
+        .examples-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            height: 100%;
+        }
+        .example-item {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .example-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        .example-image {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-bottom: 0.75rem;
+        }
+        .example-title {
+            font-weight: bold;
+            color: #ffcc66;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        .example-desc {
+            font-size: 0.8rem;
+            color: #e0e0e0;
+            line-height: 1.4;
+            flex: 1;
+        }
+        .large-example {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .large-image {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+        .large-title {
+            font-weight: bold;
+            color: #ffcc66;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+        }
+        .large-title i {
+            margin-right: 0.75rem;
+        }
+        .highlight {
+            color: #a3c6ff;
+            font-weight: bold;
+        }
+        .tips-container {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .tips-title {
+            font-weight: bold;
+            color: #ffcc66;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+        }
+        .tips-title i {
+            margin-right: 0.75rem;
+        }
+        .tip-item {
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: flex-start;
+            font-size: 0.9rem;
+        }
+        .tip-item:before {
+            content: "▸";
+            color: #a3c6ff;
+            font-weight: bold;
+            margin-right: 0.75rem;
+            margin-top: 0.1rem;
+        }
+        .footer {
+            padding: 1rem 3rem;
+            text-align: right;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            box-sizing: border-box;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+        .animation-highlight {
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        @keyframes glow {
+            from {
+                box-shadow: 0 0 5px rgba(163, 198, 255, 0.5);
+            }
+            to {
+                box-shadow: 0 0 20px rgba(163, 198, 255, 0.8);
+            }
+        }
+        .exposure-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(255, 204, 102, 0.9);
+            color: #1a2a3a;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+        .histogram-demo {
+            background: linear-gradient(to bottom, #333, #111);
+            height: 80px;
+            border-radius: 4px;
+            position: relative;
+            overflow: hidden;
+            margin: 0.5rem 0;
+            display: flex;
+            align-items: end;
+            padding: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .histogram-demo:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        .histogram-bar {
+            background: linear-gradient(to top, #4CAF50, #81C784);
+            width: 4px;
+            margin: 0 1px;
+            border-radius: 1px 1px 0 0;
+            transition: all 0.3s ease;
+        }
+        .histogram-bar:hover {
+            background: linear-gradient(to top, #66BB6A, #A5D6A7);
+        }
+        .exposure-triangle {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        .triangle-item {
+            background-color: rgba(255, 255, 255, 0.08);
+            padding: 0.75rem;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+        .triangle-item:hover {
+            background-color: rgba(255, 204, 102, 0.2);
+            transform: translateY(-2px);
+        }
+        .triangle-icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+        .aperture-icon { color: #ff6b6b; }
+        .shutter-icon { color: #4ecdc4; }
+        .iso-icon { color: #ffe66d; }
+        .exposure-slider {
+            width: 100%;
+            height: 30px;
+            background: linear-gradient(to right, #000, #666, #fff);
+            border-radius: 15px;
+            position: relative;
+            cursor: pointer;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+        .slider-handle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 20px;
+            height: 20px;
+            background: #a3c6ff;
+            border-radius: 50%;
+            border: 2px solid #fff;
+            cursor: grab;
+            transition: all 0.3s ease;
+        }
+        .slider-handle:hover {
+            width: 24px;
+            height: 24px;
+            background: #ffcc66;
+        }
+        .exposure-comparison {
+            display: flex;
+            height: 60px;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 0.5rem 0;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .exposure-comparison:hover {
+            transform: scale(1.02);
+        }
+        .exposure-section {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+        .underexposed {
+            background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+        }
+        .correct-exposure {
+            background: linear-gradient(135deg, #4a90e2, #7bb3f0);
+        }
+        .overexposed {
+            background: linear-gradient(135deg, #f0f0f0, #ffffff);
+            color: #333 !important;
+            text-shadow: none;
+        }
+        .dynamic-meter {
+            height: 100px;
+            background: #2a2a2a;
+            border-radius: 4px;
+            overflow: hidden;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid rgba(163, 198, 255, 0.3);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .dynamic-meter:hover {
+            border-color: rgba(255, 204, 102, 0.6);
+            transform: scale(1.02);
+        }
+        .meter-indicator {
+            color: #a3c6ff;
+            font-size: 2rem;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 0.6; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.1); }
+        }
+        .zone-system {
+            display: flex;
+            height: 40px;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 0.5rem 0;
+        }
+        .zone {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .zone:hover {
+            transform: scaleY(1.2);
+            z-index: 1;
+            position: relative;
+        }
+        .zone-0 { background: #000; color: #fff; }
+        .zone-1 { background: #1a1a1a; color: #fff; }
+        .zone-2 { background: #333; color: #fff; }
+        .zone-3 { background: #4d4d4d; color: #fff; }
+        .zone-4 { background: #666; color: #fff; }
+        .zone-5 { background: #808080; color: #fff; }
+        .zone-6 { background: #999; color: #000; }
+        .zone-7 { background: #b3b3b3; color: #000; }
+        .zone-8 { background: #ccc; color: #000; }
+        .zone-9 { background: #e6e6e6; color: #000; }
+        .zone-10 { background: #fff; color: #000; }
+        .practical-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+        .practical-item {
+            background-color: rgba(255, 255, 255, 0.08);
+            padding: 0.75rem;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .practical-item:hover {
+            background-color: rgba(163, 198, 255, 0.2);
+            transform: translateY(-2px);
+        }
+        .practical-icon {
+            font-size: 1.2rem;
+            margin-bottom: 0.25rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="header">
+            <div class="header-icon">
+                <i class="fas fa-camera-retro"></i>
+            </div>
+            <div>
+                <h1 class="text-3xl font-bold">Exposure (노출) - 추가 예시</h1>
+                <p class="text-sm opacity-70 mt-1">실무 적용 사례와 심화 학습</p>
+            </div>
+        </div>
+        
+        <div class="content">
+            <div>
+                <div class="large-example">
+                    <div class="large-title">
+                        <i class="fas fa-chart-area"></i> 히스토그램 분석 실습
+                    </div>
+                    <div style="position: relative;">
+                        <img src="https://photographypro.com/wp-content/uploads/2018/01/histogram-20-exposure.jpg" alt="히스토그램 분석" class="large-image">
+                        <div class="exposure-badge">Histogram</div>
+                    </div>
+                    <p class="text-sm"><span class="highlight">톤 분포</span>를 통한 <span class="highlight">노출 상태 진단</span> 및 최적화</p>
+                </div>
+                
+                <div class="tips-container">
+                    <div class="tips-title">
+                        <i class="fas fa-cogs"></i> 노출 조절 기법
+                    </div>
+                    
+                    <div class="exposure-triangle">
+                        <div class="triangle-item">
+                            <i class="triangle-icon aperture-icon fas fa-circle"></i>
+                            <div>Aperture</div>
+                            <div style="font-size: 0.7rem; color: #ff6b6b;">f/1.4 ~ f/22</div>
+                        </div>
+                        <div class="triangle-item">
+                            <i class="triangle-icon shutter-icon fas fa-stopwatch"></i>
+                            <div>Shutter</div>
+                            <div style="font-size: 0.7rem; color: #4ecdc4;">1/1000 ~ 30s</div>
+                        </div>
+                        <div class="triangle-item">
+                            <i class="triangle-icon iso-icon fas fa-sliders-h"></i>
+                            <div>ISO</div>
+                            <div style="font-size: 0.7rem; color: #ffe66d;">100 ~ 6400</div>
+                        </div>
+                    </div>
+                    
+                    <div class="exposure-slider">
+                        <div class="slider-handle"></div>
+                    </div>
+                    <div class="text-center text-xs text-blue-300">인터랙티브 노출 조절 슬라이더</div>
+                    
+                    <div class="tip-item"><span class="highlight">ETTR 기법</span>: Expose To The Right로 디테일 최대화</div>
+                    <div class="tip-item"><span class="highlight">존 시스템</span>: 11개 톤 영역으로 정밀한 노출 제어</div>
+                    <div class="tip-item"><span class="highlight">브라케팅</span>: 다중 노출로 완벽한 노출값 확보</div>
+                    <div class="tip-item"><span class="highlight">HDR 기법</span>: 극한 조명 환경에서의 디테일 보존</div>
+                </div>
+            </div>
+            
+            <div class="examples-grid">
+                <div class="example-item animation-highlight">
+                    <div style="position: relative;">
+                        <img src="https://slowtraveltours.com/wp-content/uploads/2014/04/histogram-21.jpg" alt="히스토그램 읽기" class="example-image">
+                        <div class="exposure-badge">Analysis</div>
+                    </div>
+                    <div class="example-title">히스토그램 해석 가이드</div>
+                    <div class="example-desc"><span class="highlight">좌측 클리핑</span>은 언더, <span class="highlight">우측 클리핑</span>은 오버 노출 신호</div>
+                </div>
+                
+                <div class="example-item">
+                    <div class="exposure-comparison">
+                        <div class="exposure-section underexposed">노출 부족</div>
+                        <div class="exposure-section correct-exposure">적정 노출</div>
+                        <div class="exposure-section overexposed">과다 노출</div>
+                    </div>
+                    <div class="example-title">노출 비교 분석</div>
+                    <div class="example-desc"><span class="highlight">시각적 차이</span>와 <span class="highlight">디테일 손실</span> 패턴 이해</div>
+                </div>
+                
+                <div class="example-item">
+                    <div class="histogram-demo">
+                        <div class="histogram-bar" style="height: 20%;"></div>
+                        <div class="histogram-bar" style="height: 35%;"></div>
+                        <div class="histogram-bar" style="height: 60%;"></div>
+                        <div class="histogram-bar" style="height: 85%;"></div>
+                        <div class="histogram-bar" style="height: 70%;"></div>
+                        <div class="histogram-bar" style="height: 45%;"></div>
+                        <div class="histogram-bar" style="height: 25%;"></div>
+                        <div class="histogram-bar" style="height: 15%;"></div>
+                        <div class="histogram-bar" style="height: 30%;"></div>
+                        <div class="histogram-bar" style="height: 50%;"></div>
+                        <div class="histogram-bar" style="height: 75%;"></div>
+                        <div class="histogram-bar" style="height: 40%;"></div>
+                        <div class="histogram-bar" style="height: 20%;"></div>
+                        <div class="histogram-bar" style="height: 10%;"></div>
+                    </div>
+                    <div class="example-title">실시간 히스토그램</div>
+                    <div class="example-desc"><span class="highlight">톤 분포</span> 시각화와 <span class="highlight">클리핑 감지</span></div>
+                </div>
+                
+                <div class="example-item">
+                    <div class="dynamic-meter">
+                        <div class="meter-indicator">
+                            <i class="fas fa-tachometer-alt"></i>
+                        </div>
+                    </div>
+                    <div class="example-title">노출 측정 도구</div>
+                    <div class="example-desc"><span class="highlight">스팟 미터</span>와 <span class="highlight">매트릭스 측정</span> 활용법</div>
+                </div>
+                
+                <div class="example-item">
+                    <div class="zone-system">
+                        <div class="zone zone-0">0</div>
+                        <div class="zone zone-1">I</div>
+                        <div class="zone zone-2">II</div>
+                        <div class="zone zone-3">III</div>
+                        <div class="zone zone-4">IV</div>
+                        <div class="zone zone-5">V</div>
+                        <div class="zone zone-6">VI</div>
+                        <div class="zone zone-7">VII</div>
+                        <div class="zone zone-8">VIII</div>
+                        <div class="zone zone-9">IX</div>
+                        <div class="zone zone-10">X</div>
+                    </div>
+                    <div class="example-title">존 시스템 (Zone System)</div>
+                    <div class="example-desc"><span class="highlight">11단계 톤 구분</span>으로 <span class="highlight">정밀한 노출 제어</span></div>
+                </div>
+                
+                <div class="example-item">
+                    <div style="position: relative;">
+                        <img src="https://static.wixstatic.com/media/8a8033_8956ac4d5b774fcf95e174b240c8473f~mv2.jpg" alt="노출 보정" class="example-image">
+                        <div class="exposure-badge">Correction</div>
+                    </div>
+                    <div class="example-title">노출 보정 기법</div>
+                    <div class="example-desc"><span class="highlight">EV 조절</span>과 <span class="highlight">보상 설정</span>으로 최적화</div>
+                </div>
+                
+                <div class="example-item">
+                    <div class="practical-grid">
+                        <div class="practical-item">
+                            <div class="practical-icon" style="color: #ff6b6b;"><i class="fas fa-sun"></i></div>
+                            <div>고조도 환경</div>
+                        </div>
+                        <div class="practical-item">
+                            <div class="practical-icon" style="color: #4ecdc4;"><i class="fas fa-moon"></i></div>
+                            <div>저조도 환경</div>
+                        </div>
+                        <div class="practical-item">
+                            <div class="practical-icon" style="color: #ffe66d;"><i class="fas fa-camera-retro"></i></div>
+                            <div>스튜디오 조명</div>
+                        </div>
+                        <div class="practical-item">
+                            <div class="practical-icon" style="color: #a8e6cf;"><i class="fas fa-mountain"></i></div>
+                            <div>풍경 촬영</div>
+                        </div>
+                    </div>
+                    <div class="example-title">환경별 노출 전략</div>
+                    <div class="example-desc">다양한 <span class="highlight">촬영 환경</span>에 맞는 <span class="highlight">노출 설정법</span></div>
+                </div>
+                
+                <div class="example-item">
+                    <div style="position: relative;">
+                        <img src="https://imgcap.capturetheatlas.com/wp-content/uploads/2020/03/how-to-read-the-histogram.jpg" alt="고급 히스토그램" class="example-image">
+                        <div class="exposure-badge">Advanced</div>
+                    </div>
+                    <div class="example-title">RGB 히스토그램 분석</div>
+                    <div class="example-desc"><span class="highlight">채널별 분석</span>으로 <span class="highlight">색상 클리핑</span> 방지</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            컴퓨터 그래픽스 라이팅 입문 | Exposure(노출) 심화 학습
+        </div>
+    </div>
+</body>
+</html>

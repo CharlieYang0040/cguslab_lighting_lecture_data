@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>학습 목표 및 목차</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .light-accent {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.2) 0%, rgba(59, 130, 246, 0.05) 50%, transparent 80%);
+            border-radius: 50%;
+            filter: blur(15px);
+        }
+        
+        .light-accent-1 {
+            top: 50px;
+            right: 100px;
+            animation: pulse 5s ease-in-out infinite;
+        }
+        
+        .light-accent-2 {
+            bottom: 80px;
+            left: 50px;
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.15) 0%, rgba(16, 185, 129, 0.03) 50%, transparent 80%);
+            animation: pulse 7s ease-in-out infinite reverse;
+        }
+        
+        .content-wrapper {
+            position: relative;
+            z-index: 10;
+            padding: 60px 80px;
+            height: 720px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .header-section {
+            text-align: center;
+            margin-bottom: 50px;
+            opacity: 0;
+            animation: fadeInDown 1s ease-out 0.2s forwards;
+        }
+        
+        .lesson-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #e2e8f0;
+            margin-bottom: 10px;
+        }
+        
+        .lesson-subtitle {
+            font-size: 1.2rem;
+            color: #94a3b8;
+            font-weight: 300;
+        }
+        
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            flex: 1;
+        }
+        
+        .objectives-section {
+            opacity: 0;
+            animation: fadeInLeft 1s ease-out 0.6s forwards;
+        }
+        
+        .toc-section {
+            opacity: 0;
+            animation: fadeInRight 1s ease-out 0.8s forwards;
+        }
+        
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #3b82f6;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .section-title i {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 15px rgba(59, 130, 246, 0.3);
+        }
+        
+        .objectives-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .objective-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-left: 4px solid #10b981;
+            padding: 20px 25px;
+            margin-bottom: 15px;
+            border-radius: 0 10px 10px 0;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            opacity: 0;
+            animation: slideInLeft 0.8s ease-out forwards;
+        }
+        
+        .objective-item:nth-child(1) { animation-delay: 1s; }
+        .objective-item:nth-child(2) { animation-delay: 1.2s; }
+        .objective-item:nth-child(3) { animation-delay: 1.4s; }
+        
+        .objective-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(10px);
+        }
+        
+        .objective-text {
+            color: #e2e8f0;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+        
+        .toc-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .toc-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            opacity: 0;
+            animation: slideInRight 0.8s ease-out forwards;
+        }
+        
+        .toc-item:nth-child(1) { animation-delay: 1.2s; }
+        .toc-item:nth-child(2) { animation-delay: 1.4s; }
+        .toc-item:nth-child(3) { animation-delay: 1.6s; }
+        
+        .toc-item:hover {
+            background: rgba(59, 130, 246, 0.1);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.2);
+        }
+        
+        .toc-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+        
+        .toc-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+        }
+        
+        .toc-icon.volumetric {
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+        }
+        
+        .toc-icon.dramatic {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+        }
+        
+        .toc-icon.gi {
+            background: linear-gradient(135deg, #10b981, #059669);
+        }
+        
+        .toc-title {
+            color: #e2e8f0;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+        
+        .toc-description {
+            color: #94a3b8;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 0.2; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(1.05); }
+        }
+        
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <!-- Background light effects -->
+        <div class="light-accent light-accent-1"></div>
+        <div class="light-accent light-accent-2"></div>
+        
+        <div class="content-wrapper">
+            <!-- Header -->
+            <div class="header-section">
+                <h1 class="lesson-title">학습 목표 & 목차</h1>
+                <p class="lesson-subtitle">2개월차 1강: 라이팅 심화 기술</p>
+            </div>
+            
+            <!-- Main Content Grid -->
+            <div class="main-content">
+                <!-- Learning Objectives -->
+                <div class="objectives-section">
+                    <h2 class="section-title">
+                        <i class="fas fa-bullseye"></i>
+                        학습 목표
+                    </h2>
+                    
+                    <ul class="objectives-list">
+                        <li class="objective-item">
+                            <div class="objective-text">
+                                **Volumetric Light**의 원리를 이해하고 안개와 빛줄기 효과를 구현할 수 있다
+                            </div>
+                        </li>
+                        <li class="objective-item">
+                            <div class="objective-text">
+                                **깊이감과 드라마틱한 무드**를 연출하여 캐릭터와 배경을 효과적으로 분리할 수 있다
+                            </div>
+                        </li>
+                        <li class="objective-item">
+                            <div class="objective-text">
+                                **Global Illumination과 HDRI**를 활용한 사실적인 라이팅을 구현할 수 있다
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Table of Contents -->
+                <div class="toc-section">
+                    <h2 class="section-title">
+                        <i class="fas fa-list-ul"></i>
+                        강의 목차
+                    </h2>
+                    
+                    <ul class="toc-list">
+                        <li class="toc-item">
+                            <div class="toc-header">
+                                <div class="toc-icon volumetric">
+                                    <i class="fas fa-cloud"></i>
+                                </div>
+                                <div class="toc-title">Volumetric Light 개념 및 활용</div>
+                            </div>
+                            <div class="toc-description">
+                                부피감 있는 라이팅 기법, Fog 효과, God Rays 구현법
+                            </div>
+                        </li>
+                        
+                        <li class="toc-item">
+                            <div class="toc-header">
+                                <div class="toc-icon dramatic">
+                                    <i class="fas fa-theater-masks"></i>
+                                </div>
+                                <div class="toc-title">Depth & Dramatic Mood 실습</div>
+                            </div>
+                            <div class="toc-description">
+                                깊이감 연출, 드라마틱 무드 조성, 캐릭터-배경 분리 기법
+                            </div>
+                        </li>
+                        
+                        <li class="toc-item">
+                            <div class="toc-header">
+                                <div class="toc-icon gi">
+                                    <i class="fas fa-globe"></i>
+                                </div>
+                                <div class="toc-title">Global Illumination & HDRI</div>
+                            </div>
+                            <div class="toc-description">
+                                GI 원리, HDRI 기반 IBL, 사실적 렌더링 기법
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

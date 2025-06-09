@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>컴퓨터 그래픽스 라이팅 입문 - 오리엔테이션</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11.6.0/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', 'Malgun Gothic', sans-serif;
+            background-color: #f8f9fa;
+            min-height: 100vh;
+        }
+        .slide-container {
+            width: 1280px;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1a2a3a 0%, #0d1721 100%);
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            background-size: cover;
+            color: #ffffff;
+            position: relative;
+            padding-bottom: 60px;
+            margin: 0 auto;
+        }
+        .header {
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 1.5rem 3rem;
+            border-bottom: 2px solid rgba(163, 198, 255, 0.4);
+            backdrop-filter: blur(10px);
+        }
+        .content {
+            padding: 2rem 3rem;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2.5rem;
+            align-items: start;
+        }
+        .section-title {
+            font-weight: bold;
+            font-size: 1.4rem;
+            color: #a3c6ff;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+        .section-title i {
+            margin-right: 0.75rem;
+            width: 30px;
+        }
+        .section-content {
+            background-color: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(163, 198, 255, 0.2);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+        .section-content:hover {
+            background-color: rgba(255, 255, 255, 0.12);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+        }
+        .list-item {
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: baseline;
+        }
+        .list-item:before {
+            content: "•";
+            color: #a3c6ff;
+            font-weight: bold;
+            margin-right: 0.75rem;
+        }
+        .highlight {
+            color: #ffcc66;
+            font-weight: 500;
+            padding: 0 2px;
+        }
+        .diagram-container {
+            margin-top: 1rem;
+            background-color: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            padding: 1rem;
+        }
+        .footer {
+            padding: 1rem 3rem;
+            font-size: 0.9rem;
+            text-align: right;
+            width: 100%;
+            box-sizing: border-box;
+            color: rgba(255, 255, 255, 0.6);
+        }
+        .note {
+            font-style: italic;
+            color: #a3c6ff;
+        }
+        
+        /* 아코디언 스타일 추가 */
+        .accordion-item {
+            margin-bottom: 0.5rem;
+            border: 1px solid rgba(163, 198, 255, 0.2);
+            border-radius: 8px;
+            overflow: hidden;
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+        
+        .accordion-header {
+            padding: 1rem 1.5rem;
+            background-color: rgba(163, 198, 255, 0.1);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+            border: none;
+            width: 100%;
+            text-align: left;
+            color: #ffffff;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+        
+        .accordion-header:hover {
+            background-color: rgba(163, 198, 255, 0.15);
+        }
+        
+        .accordion-header.active {
+            background-color: rgba(163, 198, 255, 0.2);
+        }
+        
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            background-color: rgba(255, 255, 255, 0.03);
+        }
+        
+        .accordion-content.active {
+            max-height: 1000px;
+        }
+        
+        .accordion-content-inner {
+            padding: 1.5rem;
+        }
+        
+        .accordion-icon {
+            transition: transform 0.3s ease;
+            font-size: 0.8rem;
+        }
+        
+        .accordion-header.active .accordion-icon {
+            transform: rotate(180deg);
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="header">
+            <h1 class="text-3xl font-bold">오리엔테이션</h1>
+            <p class="text-sm opacity-70 mt-1">컴퓨터 그래픽스 라이팅 입문</p>
+        </div>
+        
+        <div class="content">
+            <div>
+                <div class="section-title">
+                    <i class="fas fa-bullseye"></i> 강의 목표
+                </div>
+                <div class="section-content">
+                    <div class="accordion-item">
+                        <button class="accordion-header" onclick="toggleAccordion('goal-month1')">
+                            <span>1개월차: 라이팅 기초 및 V-Ray</span>
+                            <i class="fas fa-chevron-down accordion-icon"></i>
+                        </button>
+                        <div class="accordion-content" id="goal-month1">
+                            <div class="accordion-content-inner">
+                                <div class="list-item">라이팅 기초 이론 이해</div>
+                                <div class="list-item">V-Ray 기본 사용법 습득</div>
+                                <div class="list-item">다양한 조명 연출 실습</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <button class="accordion-header" onclick="toggleAccordion('goal-month2')">
+                            <span>2개월차: 고급 라이팅 및 Python</span>
+                            <i class="fas fa-chevron-down accordion-icon"></i>
+                        </button>
+                        <div class="accordion-content" id="goal-month2">
+                            <div class="accordion-content-inner">
+                                <div class="list-item">심화 라이팅 기법 습득</div>
+                                <div class="list-item">컬러스페이스 및 Render Elements 기초 이해</div>
+                                <div class="list-item">3D 데이터 및 USD 파일 이해</div>
+                                <div class="list-item">Python 스크립팅 기초 익히기</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <button class="accordion-header" onclick="toggleAccordion('goal-month3')">
+                            <span>3개월차: Renderman 기초 및 심화</span>
+                            <i class="fas fa-chevron-down accordion-icon"></i>
+                        </button>
+                        <div class="accordion-content" id="goal-month3">
+                            <div class="accordion-content-inner">
+                                <div class="list-item">Renderman 기본 기능 이해</div>
+                                <div class="list-item">PBR 및 환경 라이팅 적용</div>
+                                <div class="list-item">렌더 패스 활용 능력</div>
+                                <div class="list-item">새로운 렌더러 접근법</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <button class="accordion-header" onclick="toggleAccordion('goal-month4')">
+                            <span>4개월차: Nuke 합성</span>
+                            <i class="fas fa-chevron-down accordion-icon"></i>
+                        </button>
+                        <div class="accordion-content" id="goal-month4">
+                            <div class="accordion-content-inner">
+                                <div class="list-item">Nuke 기본 인터페이스 및 노드 활용 숙지</div>
+                                <div class="list-item">Channel 개념 이해</div>
+                                <div class="list-item">실습으로 배우는 실사 합성</div>
+                                <div class="list-item">라이팅 아티스트 필수 합성 테크닉 습득</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <button class="accordion-header" onclick="toggleAccordion('goal-month5')">
+                            <span>5개월차: Unreal Engine 기초</span>
+                            <i class="fas fa-chevron-down accordion-icon"></i>
+                        </button>
+                        <div class="accordion-content" id="goal-month5">
+                            <div class="accordion-content-inner">
+                                <div class="list-item">Unreal Engine 기본 개념 및 인터페이스 이해</div>
+                                <div class="list-item">라이팅 및 Material 기초 습득</div>
+                                <div class="list-item">Sequencer를 통한 시네마틱 기초 습득</div>
+                                <div class="list-item">시네마틱 영상 렌더링</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <button class="accordion-header" onclick="toggleAccordion('goal-month6')">
+                            <span>6개월차: Unreal Engine 심화</span>
+                            <i class="fas fa-chevron-down accordion-icon"></i>
+                        </button>
+                        <div class="accordion-content" id="goal-month6">
+                            <div class="accordion-content-inner">
+                                <div class="list-item">고급 씬 구성 및 환경 연출</div>
+                                <div class="list-item">고급 머티리얼 및 PostProcess 기술 습득</div>
+                                <div class="list-item">Blueprint 및 자동화 시스템 활용</div>
+                                <div class="list-item">스타일라이즈 렌더링</div>
+                                <div class="list-item">심화 시네마틱 제작 실습</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div>
+                <div class="section-title">
+                    <i class="fas fa-book"></i> 커리큘럼
+                </div>
+                <div class="section-content">
+                    <div class="accordion-item">
+                        <button class="accordion-header" onclick="toggleAccordion('curriculum-month1')">
+                            <span>1개월차: 라이팅 기초 & V-Ray</span>
+                            <i class="fas fa-chevron-down accordion-icon"></i>
+                        </button>
+                        <div class="accordion-content" id="curriculum-month1">
+                            <div class="accordion-content-inner">
+                                <div class="list-item">L1-3: 라이팅 기초 (Value, Contrast, Shape, Direction)</div>
+                                <div class="list-item">L4: 캐릭터 라이팅 기초 (Rembrandt, Split 등)</div>
+                                <div class="list-item">L5: 빛 감쇠, Hard/Soft Shadow</div>
+                                <div class="list-item">L6: Motivated Light & Lighting Simulation</div>
+                                <div class="list-item">L7: 기존 작업물 리라이팅</div>
+                                <div class="list-item">L8: 월간 리뷰 & 과제 점검</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item">
+                        <button class="accordion-header" onclick="toggleAccordion('curriculum-month2')">
+                            <span>2개월차: 고급 라이팅 & Python</span>
+                            <i class="fas fa-chevron-down accordion-icon"></i>
+                        </button>
+                        <div class="accordion-content" id="curriculum-month2">
+                            <div class="accordion-content-inner">
+                                <div class="list-item">L1: Volumetric Light 활용</div>
+                                <div class="list-item">L2: Image Based Lighting (HDRI)</div>
+                                <div class="list-item">L3: 컬러스페이스 & Render Elements</div>
+                                <div class="list-item">L4: 3D 데이터 구조 (Float3, Normal, USD)</div>
+                                <div class="list-item">L5-7: Python 스크립팅 및 Maya API</div>
+                                <div class="list-item">L8: 월간 리뷰 & 과제 점검</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item">
+                        <button class="accordion-header" onclick="toggleAccordion('curriculum-month3')">
+                            <span>3개월차: Renderman</span>
+                            <i class="fas fa-chevron-down accordion-icon"></i>
+                        </button>
+                        <div class="accordion-content" id="curriculum-month3">
+                            <div class="accordion-content-inner">
+                                <div class="list-item">L1: Renderman 개요 및 기본 설정</div>
+                                <div class="list-item">L2: PxrSurface 셰이더와 PBR</div>
+                                <div class="list-item">L3: HDRI 및 조명 실습</div>
+                                <div class="list-item">L4-5: AOV, Light/Shadow Linking</div>
+                                <div class="list-item">L6: SSS & Lookdev 실습</div>
+                                <div class="list-item">L7-8: 샘플링, 노이즈 감소, LPE</div>
+                                <div class="list-item">L9-11: 합성용 렌더링, 주요 노드, 절차적 텍스처링</div>
+                                <div class="list-item">L12: 월간 리뷰 & 과제 점검</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <button class="accordion-header" onclick="toggleAccordion('curriculum-month4')">
+                            <span>4개월차: Nuke 합성</span>
+                            <i class="fas fa-chevron-down accordion-icon"></i>
+                        </button>
+                        <div class="accordion-content" id="curriculum-month4">
+                            <div class="accordion-content-inner">
+                                <div class="list-item">L1-3: Nuke 기초, 채널, Beauty 합성</div>
+                                <div class="list-item">L4: 카메라 효과 (모션블러, DOF, 왜곡)</div>
+                                <div class="list-item">L5-7: 색 보정, Depth, Deep 합성</div>
+                                <div class="list-item">L8: 월간 리뷰 & 과제 점검</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <button class="accordion-header" onclick="toggleAccordion('curriculum-month5')">
+                            <span>5개월차: Unreal Engine 기초</span>
+                            <i class="fas fa-chevron-down accordion-icon"></i>
+                        </button>
+                        <div class="accordion-content" id="curriculum-month5">
+                            <div class="accordion-content-inner">
+                                <div class="list-item">L1-2: Unreal Engine 기초, 라이팅</div>
+                                <div class="list-item">L3: 머티리얼 에디터 기초</div>
+                                <div class="list-item">L4: 라이트 함수 & 포스트 프로세스</div>
+                                <div class="list-item">L5-6: 시퀀서 및 애니메이션</div>
+                                <div class="list-item">L7: 시네마틱 영상 렌더링 (MRQ)</div>
+                                <div class="list-item">L8: 월간 리뷰 & 과제 점검</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <button class="accordion-header" onclick="toggleAccordion('curriculum-month6')">
+                            <span>6개월차: Unreal Engine 심화</span>
+                            <i class="fas fa-chevron-down accordion-icon"></i>
+                        </button>
+                        <div class="accordion-content" id="curriculum-month6">
+                            <div class="accordion-content-inner">
+                                <div class="list-item">L1: 랜드스케이프 & 폴리지</div>
+                                <div class="list-item">L2: 머티리얼 에디터 심화</div>
+                                <div class="list-item">L3: UDS, EasyFog 활용 씬 구성</div>
+                                <div class="list-item">L4-6: 블루프린트 & 자동화 (Python)</div>
+                                <div class="list-item">L7: 스타일라이즈 렌더링</div>
+                                <div class="list-item">L8: 월간 리뷰 & 과제 점검</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'dark'
+        });
+        
+        // 아코디언 기능 추가
+        function toggleAccordion(id) {
+            const content = document.getElementById(id);
+            const header = content.previousElementSibling;
+            
+            // 현재 아코디언 토글
+            content.classList.toggle('active');
+            header.classList.toggle('active');
+        }
+    </script>
+</body>
+</html><script src='https://www.genspark.ai/slide-inner.js?_v=1'></script>
+    <script id="html_badge_script1">
+        window.__genspark_remove_badge_link = "https://www.genspark.ai/api/html_badge/" +
+            "remove_badge?token=To%2FBnjzloZ3UfQdcSaYfDl7NxULCMRvg0EO4rW4eD%2F5VX6OVWecYS215TsV2wbq%2BY%2BZ70GOAIbOMFAeP95lF2LXYN%2B7dN%2BApKDCJ5lRohRNZ0FHy7j%2BUGTvf2xjcZi5f1X7jP0RFh89KV7wCx9IPfjnr%2BkZe2USE5%2FX8aBAWRoWRf1KaQKQXtjJAE6o0hlj0aaN4HV8U3wDTWAeqEhwyuLVumEx5c52xgO%2FDXIP0g9tzuoBrdqn2uxHM058fa4Ua0ChVzJqaPfolLDMnYrO3Ektogj%2BD%2BSK3%2B8D9wupzjM1JanEU%2FF1a5xSFr3byCQyWkaXDuGKjzBwVClXCQE%2BDxxntmA2uZuiDREks6qT3U0%2BFx2dFo1Aclj5UnjtNbDOlUHM%2Fd85Pgi69VJYPJAoc4QFfM1xjChy4%2F2W6EeWT%2FtXexa3UN5D5vMKWDmnyxymz6oDIygCqlSdG7%2BCwcuNqooJH9QTGVbkpKZpBwg6JOe00cGeJ2%2BTUbDhL68DD0TRe%2FNB8UCCPXGeXDjcSGV4edjYR1XfWwCi81582bYrcHOQK806AfgsnaILF5zKE9sSgTU9warEOf4fAE0Af35GfEm0uNs0lOj6kP1S8sAJlnb00FeTW38gVBZX8PSpMsIWiMZCEInxezHSDj8MsX1IqoDN2aFxHkVCwBdh0nxoFz7h8YoYoGQkvHisx8N8yNmMEcAnrnLUKJ6KA6JAo9LQt4Db36R27JpsnzKf8gn%2BcRKmO3mrIrxbFS3vmkjcPPY%2BK";
+        window.__genspark_locale = "ko-KR";
+        window.__genspark_token = "To/BnjzloZ3UfQdcSaYfDl7NxULCMRvg0EO4rW4eD/5VX6OVWecYS215TsV2wbq+Y+Z70GOAIbOMFAeP95lF2LXYN+7dN+ApKDCJ5lRohRNZ0FHy7j+UGTvf2xjcZi5f1X7jP0RFh89KV7wCx9IPfjnr+kZe2USE5/X8aBAWRoWRf1KaQKQXtjJAE6o0hlj0aaN4HV8U3wDTWAeqEhwyuLVumEx5c52xgO/DXIP0g9tzuoBrdqn2uxHM058fa4Ua0ChVzJqaPfolLDMnYrO3Ektogj+D+SK3+8D9wupzjM1JanEU/F1a5xSFr3byCQyWkaXDuGKjzBwVClXCQE+DxxntmA2uZuiDREks6qT3U0+Fx2dFo1Aclj5UnjtNbDOlUHM/d85Pgi69VJYPJAoc4QFfM1xjChy4/2W6EeWT/tXexa3UN5D5vMKWDmnyxymz6oDIygCqlSdG7+CwcuNqooJH9QTGVbkpKZpBwg6JOe00cGeJ2+TUbDhL68DD0TRe/NB8UCCPXGeXDjcSGV4edjYR1XfWwCi81582bYrcHOQK806AfgsnaILF5zKE9sSgTU9warEOf4fAE0Af35GfEm0uNs0lOj6kP1S8sAJlnb00FeTW38gVBZX8PSpMsIWiMZCEInxezHSDj8MsX1IqoDN2aFxHkVCwBdh0nxoFz7h8YoYoGQkvHisx8N8yNmMEcAnrnLUKJ6KA6JAo9LQt4Db36R27JpsnzKf8gn+cRKmO3mrIrxbFS3vmkjcPPY+K";
+    </script>

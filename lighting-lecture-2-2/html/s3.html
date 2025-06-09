@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>컬러스페이스 이해</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans KR', 'Roboto', sans-serif;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+        }
+        .tech-grid {
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+        .slide-in-left {
+            animation: slideInLeft 0.8s ease-out;
+        }
+        @keyframes slideInLeft {
+            0% { transform: translateX(-50px); opacity: 0; }
+            100% { transform: translateX(0); opacity: 1; }
+        }
+        .slide-in-right {
+            animation: slideInRight 0.8s ease-out;
+        }
+        @keyframes slideInRight {
+            0% { transform: translateX(50px); opacity: 0; }
+            100% { transform: translateX(0); opacity: 1; }
+        }
+        .fade-in-up {
+            animation: fadeInUp 1s ease-out;
+        }
+        @keyframes fadeInUp {
+            0% { transform: translateY(20px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+        .color-badge {
+            transition: all 0.3s ease;
+        }
+        .color-badge:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body class="m-0 p-0">
+    <div class="w-full gradient-bg tech-grid relative overflow-hidden" style="width: 1280px; min-height: 720px;">
+        <!-- Header -->
+        <div class="relative z-10 pt-8 pb-6 px-12">
+            <div class="slide-in-left">
+                <h1 class="text-3xl font-bold text-white mb-2">컬러스페이스 이해</h1>
+                <p class="text-blue-300 text-base">sRGB vs ACES: 색상 영역과 활용 분야</p>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="relative z-10 px-12 pb-8">
+            <div class="grid grid-cols-3 gap-8">
+                <!-- sRGB vs ACES Comparison -->
+                <div class="col-span-2">
+                    <div class="slide-in-left" style="animation-delay: 0.2s;">
+                        <div class="bg-white bg-opacity-10 backdrop-blur-lg rounded-xl p-6 border border-white border-opacity-20 mb-6">
+                            <h2 class="text-xl font-bold text-white mb-4 flex items-center">
+                                <i class="fas fa-balance-scale text-blue-400 mr-3"></i>
+                                컬러스페이스 비교
+                            </h2>
+                            
+                            <div class="grid grid-cols-2 gap-6">
+                                <!-- sRGB -->
+                                <div class="color-badge bg-blue-600 bg-opacity-20 rounded-lg p-4 border border-blue-400 border-opacity-30">
+                                    <div class="flex items-center mb-3">
+                                        <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center mr-3">
+                                            <span class="text-white font-bold text-sm">sRGB</span>
+                                        </div>
+                                        <h3 class="text-white font-semibold">표준 디스플레이</h3>
+                                    </div>
+                                    <ul class="text-blue-100 text-sm space-y-1">
+                                        <li>• 웹, 모바일, 일반 모니터용</li>
+                                        <li>• 제한된 색 영역 (작은 가뭇)</li>
+                                        <li>• 8비트 지원</li>
+                                        <li>• 빠른 처리 속도</li>
+                                    </ul>
+                                </div>
+                                
+                                <!-- ACES -->
+                                <div class="color-badge bg-purple-600 bg-opacity-20 rounded-lg p-4 border border-purple-400 border-opacity-30">
+                                    <div class="flex items-center mb-3">
+                                        <div class="w-8 h-8 bg-purple-500 rounded-full flex items-center justify-center mr-3">
+                                            <span class="text-white font-bold text-xs">ACES</span>
+                                        </div>
+                                        <h3 class="text-white font-semibold">영화 제작 표준</h3>
+                                    </div>
+                                    <ul class="text-purple-100 text-sm space-y-1">
+                                        <li>• 영화, 고급 VFX 작업용</li>
+                                        <li>• 넓은 색 영역 (큰 가뭇)</li>
+                                        <li>• 32비트 Float 지원</li>
+                                        <li>• 높은 다이내믹 레인지</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Color Gamut Visualization -->
+                    <div class="slide-in-left" style="animation-delay: 0.4s;">
+                        <div class="bg-white bg-opacity-10 backdrop-blur-lg rounded-xl p-6 border border-white border-opacity-20">
+                            <h3 class="text-lg font-semibold text-white mb-4 flex items-center">
+                                <i class="fas fa-chart-area text-green-400 mr-3"></i>
+                                색 영역 (Color Gamut) 비교
+                            </h3>
+                            <div class="relative bg-gray-900 rounded-lg p-4">
+                                <img src="https://chrisbrejon.com/wp-content/uploads/2020/09/015_ACES_0210_plot_gamut_sRGB_ACEScg_FHD.jpg" 
+                                     alt="sRGB vs ACES Color Gamut Comparison" 
+                                     class="w-full h-32 object-cover rounded-lg">
+                                <div class="absolute bottom-2 left-2 bg-black bg-opacity-60 rounded px-2 py-1">
+                                    <span class="text-white text-xs">CIE 1931 색도도: ACES(큰 영역) vs sRGB(작은 영역)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Industry Examples -->
+                <div class="slide-in-right" style="animation-delay: 0.3s;">
+                    <div class="bg-white bg-opacity-10 backdrop-blur-lg rounded-xl p-6 border border-white border-opacity-20 h-full">
+                        <h2 class="text-lg font-bold text-white mb-4 flex items-center">
+                            <i class="fas fa-film text-yellow-400 mr-3"></i>
+                            산업 활용 사례
+                        </h2>
+                        
+                        <!-- ACES Usage Examples -->
+                        <div class="space-y-4">
+                            <div class="bg-yellow-600 bg-opacity-20 rounded-lg p-3 border border-yellow-400 border-opacity-30">
+                                <h4 class="text-white font-semibold text-sm mb-2">ACES 활용 영화</h4>
+                                <ul class="text-yellow-100 text-xs space-y-1">
+                                    <li>• 어벤져스 시리즈</li>
+                                    <li>• 스파이더맨 애니메이션</li>
+                                    <li>• 라이온 킹 (2019)</li>
+                                    <li>• 블레이드 러너 2049</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="bg-green-600 bg-opacity-20 rounded-lg p-3 border border-green-400 border-opacity-30">
+                                <h4 class="text-white font-semibold text-sm mb-2">ACES의 장점</h4>
+                                <ul class="text-green-100 text-xs space-y-1">
+                                    <li>• 색상 일관성 보장</li>
+                                    <li>• HDR 지원</li>
+                                    <li>• 미래 호환성</li>
+                                    <li>• 표준화된 워크플로우</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="bg-red-600 bg-opacity-20 rounded-lg p-3 border border-red-400 border-opacity-30">
+                                <h4 class="text-white font-semibold text-sm mb-2">주요 스튜디오</h4>
+                                <ul class="text-red-100 text-xs space-y-1">
+                                    <li>• 픽사 애니메이션</li>
+                                    <li>• 디즈니 애니메이션</li>
+                                    <li>• ILM (Industrial Light & Magic)</li>
+                                    <li>• 와타 디지털</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Key Takeaways -->
+            <div class="mt-6 fade-in-up" style="animation-delay: 0.6s;">
+                <div class="bg-gradient-to-r from-blue-600 via-purple-600 to-green-600 bg-opacity-20 backdrop-blur-lg rounded-xl p-4 border border-white border-opacity-20">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                            <i class="fas fa-lightbulb text-yellow-400 text-lg mr-3"></i>
+                            <span class="text-white font-semibold">실무 핵심 포인트</span>
+                        </div>
+                        <div class="flex space-x-6 text-sm">
+                            <div class="text-center">
+                                <div class="text-blue-300 font-semibold">웹/게임</div>
+                                <div class="text-blue-100">→ sRGB</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-purple-300 font-semibold">영화/VFX</div>
+                                <div class="text-purple-100">→ ACES</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-green-300 font-semibold">HDR 컨텐츠</div>
+                                <div class="text-green-100">→ ACES</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Decorative Elements -->
+        <div class="absolute top-16 right-16 w-20 h-20 border-2 border-blue-300 opacity-20 rotate-45"></div>
+        <div class="absolute bottom-16 left-16 w-12 h-12 border-2 border-purple-300 opacity-20 rotate-12"></div>
+    </div>
+</body>
+</html>

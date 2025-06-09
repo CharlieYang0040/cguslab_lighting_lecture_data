@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>5.2 그림자의 이해: Soft Shadow와 Hard Shadow</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        .slide {
+            width: 1280px;
+            min-height: 720px;
+            background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        .content {
+            position: relative;
+            z-index: 10;
+        }
+        .glass-card {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(8px);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .highlight-text {
+            font-weight: bold;
+            text-shadow: 0 0 10px currentColor;
+        }
+        .heading-underline {
+            position: relative;
+            display: inline-block;
+        }
+        .heading-underline::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #60A5FA, transparent);
+            border-radius: 2px;
+        }
+        .shadow-comparison {
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+            transition: all 0.3s ease;
+        }
+        .shadow-comparison:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.7);
+        }
+        .shadow-type {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 8px;
+            text-align: center;
+            background: rgba(0,0,0,0.7);
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        .shadow-comparison:hover .shadow-type {
+            background: rgba(37, 99, 235, 0.7);
+        }
+        .feature-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            margin: 3px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .feature-badge:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        .shadow-demo {
+            position: relative;
+            height: 160px;
+            border-radius: 8px;
+            background-color: #1E293B;
+            margin-bottom: 20px;
+            overflow: hidden;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.4);
+            transition: all 0.3s ease;
+        }
+        .shadow-demo:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        }
+        .shadow-object {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background-color: #F59E0B;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+        }
+        .shadow-projection {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 70px;
+            transition: all 1s ease;
+        }
+        .shadow-demo:hover .shadow-projection {
+            filter: contrast(1.2);
+        }
+        .light-source {
+            position: absolute;
+            border-radius: 50%;
+            z-index: 1;
+            filter: blur(2px);
+            animation: glow 3s infinite alternate ease-in-out;
+        }
+        .comparison-arrow {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: #60A5FA;
+            border-radius: 50%;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 5;
+            box-shadow: 0 0 10px rgba(96, 165, 250, 0.8);
+        }
+        .usage-box {
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        .usage-box:hover {
+            transform: translateX(5px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+        }
+        .animated-pulse {
+            animation: pulse 4s infinite alternate ease-in-out;
+        }
+        .hidden-info {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+            opacity: 0;
+        }
+        .usage-box:hover .hidden-info {
+            max-height: 100px;
+            opacity: 1;
+            transition: max-height 0.5s ease-in, opacity 0.5s;
+        }
+        .floating {
+            animation: float 6s infinite ease-in-out;
+        }
+        .shadow-beam {
+            position: absolute;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.6), transparent);
+            transform-origin: top center;
+            z-index: 1;
+            filter: blur(3px);
+        }
+        @keyframes pulse {
+            0% { transform: scale(0.95); opacity: 0.7; }
+            100% { transform: scale(1.05); opacity: 1; }
+        }
+        @keyframes glow {
+            0% { filter: blur(2px) brightness(0.9); }
+            100% { filter: blur(4px) brightness(1.1); }
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .main-title {
+            text-shadow: 0 0 15px rgba(96, 165, 250, 0.5);
+        }
+        .glow-text {
+            text-shadow: 0 0 10px currentColor;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide">
+        <div class="shadow-beam" style="top: 0; left: 30%; width: 150px; height: 200px; transform: rotate(5deg); opacity: 0.2;"></div>
+        <div class="shadow-beam" style="top: 0; right: 30%; width: 200px; height: 250px; transform: rotate(-5deg); opacity: 0.3;"></div>
+        
+        <div class="content px-16 py-12">
+            <div class="mb-5">
+                <h1 class="text-4xl font-bold text-white main-title">
+                    <i class="fas fa-moon text-blue-300 mr-3 animated-pulse"></i>
+                    <span class="heading-underline">5.2 그림자의 이해: Soft Shadow와 Hard Shadow</span>
+                </h1>
+                <p class="text-lg text-gray-300 mt-2">광원 크기와 거리에 따른 그림자 형태의 변화</p>
+            </div>
+            
+            <div class="grid grid-cols-2 gap-8 mt-6">
+                <div>
+                    <div class="glass-card mb-6">
+                        <h2 class="text-2xl font-semibold text-blue-300 mb-4 glow-text">
+                            <i class="fas fa-lightbulb mr-2"></i>광원과 그림자의 관계
+                        </h2>
+                        
+                        <div class="shadow-demo mb-8 relative overflow-hidden">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/2/2e/Diagram_of_umbra%2C_penumbra_%26_antumbra.png" alt="Umbra and Penumbra Diagram" class="w-full h-full object-cover transition-transform duration-1000 hover:scale-105">
+                            <div class="absolute top-0 left-0 bg-black bg-opacity-70 text-sm p-3 rounded-br-md">
+                                <span class="text-blue-300 font-bold">Umbra:</span> 완전한 그림자 영역<br>
+                                <span class="text-blue-300 font-bold">Penumbra:</span> 부분 그림자 영역
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="bg-blue-900 bg-opacity-30 p-3 rounded-lg hover:bg-opacity-40 transition-all duration-300 border border-blue-800 border-opacity-30">
+                                <h3 class="text-yellow-300 font-bold mb-2"><i class="fas fa-sun mr-2 animated-pulse"></i> 큰 광원</h3>
+                                <p class="text-sm">
+                                    <span class="highlight-text text-blue-200">소프트 그림자</span> 생성<br>
+                                    넓은 <span class="highlight-text text-blue-200">Penumbra</span> 영역<br>
+                                    가장자리가 <span class="highlight-text text-blue-200">흐릿한</span> 그림자
+                                </p>
+                            </div>
+                            
+                            <div class="bg-gray-900 bg-opacity-30 p-3 rounded-lg hover:bg-opacity-40 transition-all duration-300 border border-gray-700 border-opacity-30">
+                                <h3 class="text-yellow-300 font-bold mb-2"><i class="fas fa-dot-circle mr-2 animated-pulse"></i> 작은 광원</h3>
+                                <p class="text-sm">
+                                    <span class="highlight-text text-blue-200">하드 그림자</span> 생성<br>
+                                    좁거나 없는 <span class="highlight-text text-blue-200">Penumbra</span><br>
+                                    가장자리가 <span class="highlight-text text-blue-200">선명한</span> 그림자
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="glass-card">
+                        <h2 class="text-2xl font-semibold text-green-300 mb-4 glow-text">
+                            <i class="fas fa-magic mr-2"></i>활용법: 장면 분위기 연출
+                        </h2>
+                        
+                        <div class="usage-box bg-blue-900 bg-opacity-20 border-l-4 border-blue-500">
+                            <h3 class="text-lg font-bold text-blue-300 mb-1">Soft Shadow 활용</h3>
+                            <div class="flex flex-wrap">
+                                <span class="feature-badge bg-blue-800 text-blue-200">자연스러운 분위기</span>
+                                <span class="feature-badge bg-blue-800 text-blue-200">부드러운 전환</span>
+                                <span class="feature-badge bg-blue-800 text-blue-200">현실적 렌더링</span>
+                                <span class="feature-badge bg-blue-800 text-blue-200">낮 시간대 표현</span>
+                                <span class="feature-badge bg-blue-800 text-blue-200">넓은 공간감</span>
+                            </div>
+                            <div class="hidden-info pt-2 text-xs text-blue-200">
+                                <i class="fas fa-info-circle mr-1"></i> 자연광이나 넓은 면광원이 있는 밝은 실내 장면에 적합합니다.
+                            </div>
+                        </div>
+                        
+                        <div class="usage-box bg-gray-900 bg-opacity-20 border-l-4 border-gray-500 mt-4">
+                            <h3 class="text-lg font-bold text-gray-300 mb-1">Hard Shadow 활용</h3>
+                            <div class="flex flex-wrap">
+                                <span class="feature-badge bg-gray-800 text-gray-200">극적인 효과</span>
+                                <span class="feature-badge bg-gray-800 text-gray-200">긴장감 조성</span>
+                                <span class="feature-badge bg-gray-800 text-gray-200">시각적 대비 강화</span>
+                                <span class="feature-badge bg-gray-800 text-gray-200">직사광 표현</span>
+                                <span class="feature-badge bg-gray-800 text-gray-200">그래픽적 표현</span>
+                            </div>
+                            <div class="hidden-info pt-2 text-xs text-gray-300">
+                                <i class="fas fa-info-circle mr-1"></i> 스포트라이트, 직사광선, 조명이 적은 공간에 효과적입니다.
+                            </div>
+                        </div>
+                        
+                        <div class="mt-4 p-3 bg-green-900 bg-opacity-20 rounded-lg border border-green-500 border-opacity-30 transition-all duration-300 hover:bg-opacity-30">
+                            <p class="text-center text-green-200">
+                                <i class="fas fa-lightbulb text-yellow-300 mr-2 animated-pulse"></i>
+                                <span class="font-bold">TIP:</span> 여러 광원을 조합하여 Hard/Soft Shadow 균형 조절
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <div class="glass-card mb-6">
+                        <h2 class="text-2xl font-semibold text-purple-300 mb-4 glow-text">
+                            <i class="fas fa-adjust mr-2"></i>Soft vs Hard Shadow 비교
+                        </h2>
+                        
+                        <div class="relative">
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="shadow-comparison">
+                                    <img src="https://i.redd.it/iynudnj18zfc1.jpeg" alt="Soft vs Hard Shadow Comparison" class="w-full h-auto">
+                                    <div class="shadow-type text-gray-200">
+                                        소프트/하드 그림자 비교
+                                    </div>
+                                </div>
+                                
+                                <div class="shadow-comparison">
+                                    <img src="https://www.researchgate.net/publication/242383784/figure/fig3/AS:298469525868563@1448172088633/Left-Hard-shadows-from-a-point-light-source-Right-Soft-shadows-from-an-area-light.png" alt="Point Light vs Area Light" class="w-full h-auto">
+                                    <div class="shadow-type text-gray-200">
+                                        점광원 vs 면광원
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-6 grid grid-cols-2 gap-4">
+                            <div class="shadow-demo">
+                                <div class="shadow-object rounded-sm animated-pulse"></div>
+                                <div class="light-source" style="width: 10px; height: 10px; background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 70%); top: -20px; left: 50%; transform: translateX(-50%);"></div>
+                                <div class="shadow-projection" style="background: radial-gradient(ellipse at top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 80%);"></div>
+                                <div class="shadow-type text-blue-300">
+                                    Hard Shadow
+                                </div>
+                            </div>
+                            
+                            <div class="shadow-demo">
+                                <div class="shadow-object rounded-sm animated-pulse"></div>
+                                <div class="light-source" style="width: 80px; height: 20px; background: radial-gradient(ellipse, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0) 70%); top: -30px; left: 50%; transform: translateX(-50%);"></div>
+                                <div class="shadow-projection" style="background: radial-gradient(ellipse at top, rgba(0,0,0,0.5) 20%, rgba(0,0,0,0.2) 60%, rgba(0,0,0,0) 100%);"></div>
+                                <div class="shadow-type text-blue-300">
+                                    Soft Shadow
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="glass-card">
+                        <h2 class="text-2xl font-semibold text-red-300 mb-4 glow-text">
+                            <i class="fas fa-cogs mr-2"></i>실습 가이드 및 설정 팁
+                        </h2>
+                        
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="bg-blue-900 bg-opacity-20 p-3 rounded-lg transition-all duration-300 hover:bg-opacity-30 border border-blue-700 border-opacity-30">
+                                <h3 class="font-bold text-blue-200 text-lg mb-2">Soft Shadow 설정</h3>
+                                <ul class="text-sm space-y-2">
+                                    <li class="flex items-center">
+                                        <span class="w-5 h-5 bg-blue-600 rounded-full flex items-center justify-center mr-2 text-xs">1</span>
+                                        <span>면광원(Area Light) 사용</span>
+                                    </li>
+                                    <li class="flex items-center">
+                                        <span class="w-5 h-5 bg-blue-600 rounded-full flex items-center justify-center mr-2 text-xs">2</span>
+                                        <span>광원 크기 증가</span>
+                                    </li>
+                                    <li class="flex items-center">
+                                        <span class="w-5 h-5 bg-blue-600 rounded-full flex items-center justify-center mr-2 text-xs">3</span>
+                                        <span>그림자 샘플링 수치 증가</span>
+                                    </li>
+                                    <li class="flex items-center">
+                                        <span class="w-5 h-5 bg-blue-600 rounded-full flex items-center justify-center mr-2 text-xs">4</span>
+                                        <span>그림자 블러 효과 적용</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            
+                            <div class="bg-gray-900 bg-opacity-20 p-3 rounded-lg transition-all duration-300 hover:bg-opacity-30 border border-gray-700 border-opacity-30">
+                                <h3 class="font-bold text-gray-200 text-lg mb-2">Hard Shadow 설정</h3>
+                                <ul class="text-sm space-y-2">
+                                    <li class="flex items-center">
+                                        <span class="w-5 h-5 bg-gray-600 rounded-full flex items-center justify-center mr-2 text-xs">1</span>
+                                        <span>점광원(Point Light) 사용</span>
+                                    </li>
+                                    <li class="flex items-center">
+                                        <span class="w-5 h-5 bg-gray-600 rounded-full flex items-center justify-center mr-2 text-xs">2</span>
+                                        <span>광원 크기 최소화</span>
+                                    </li>
+                                    <li class="flex items-center">
+                                        <span class="w-5 h-5 bg-gray-600 rounded-full flex items-center justify-center mr-2 text-xs">3</span>
+                                        <span>그림자 선명도 증가</span>
+                                    </li>
+                                    <li class="flex items-center">
+                                        <span class="w-5 h-5 bg-gray-600 rounded-full flex items-center justify-center mr-2 text-xs">4</span>
+                                        <span>블러 효과 최소화/제거</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-4 p-3 bg-red-900 bg-opacity-20 rounded-lg border border-red-500 border-opacity-30 transition-all duration-300 hover:bg-opacity-30">
+                            <p class="text-sm text-center text-red-200">
+                                <i class="fas fa-exclamation-triangle text-yellow-300 mr-2 animated-pulse"></i>
+                                <span class="font-bold">주의:</span> Soft Shadow는 렌더링 비용이 높으므로 하드웨어 성능과 장면 복잡도 고려 필요
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="absolute bottom-4 right-16 bg-blue-900 bg-opacity-40 rounded-lg px-4 py-2 text-sm text-blue-200 hover:bg-opacity-60 transition-all duration-300">
+                <p><i class="fas fa-info-circle mr-1"></i> 다음 실습: 다양한 광원 크기에 따른 그림자 변화 관찰</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3강: 캐릭터 라이팅 기본 기법 실습</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        .light-beam {
+            position: absolute;
+            width: 200px;
+            height: 1000px;
+            background: linear-gradient(to bottom, rgba(255,255,255,0.15), rgba(255,255,255,0));
+            transform: rotate(45deg);
+            top: -300px;
+            left: 30%;
+            filter: blur(20px);
+            animation: moveLight 15s infinite linear;
+        }
+        .light-beam:nth-child(2) {
+            width: 300px;
+            top: -400px;
+            left: 60%;
+            transform: rotate(30deg);
+            animation-delay: -5s;
+        }
+        .light-beam:nth-child(3) {
+            width: 250px;
+            top: -350px;
+            left: 10%;
+            transform: rotate(60deg);
+            animation-delay: -10s;
+        }
+        @keyframes moveLight {
+            0% { transform: rotate(45deg) translateY(0); }
+            50% { transform: rotate(40deg) translateY(50px); }
+            100% { transform: rotate(45deg) translateY(0); }
+        }
+        .main-title {
+            font-size: 4.5rem;
+            font-weight: 900;
+            line-height: 1.2;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+        }
+        .subtitle {
+            font-size: 2rem;
+            font-weight: 300;
+            opacity: 0.9;
+        }
+        .light-icon {
+            color: #f9a826;
+            text-shadow: 0 0 15px rgba(249, 168, 38, 0.7);
+            animation: pulse 3s infinite;
+        }
+        @keyframes pulse {
+            0% { opacity: 0.7; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.1); }
+            100% { opacity: 0.7; transform: scale(1); }
+        }
+        .lighting-techniques {
+            font-size: 1.2rem;
+            font-weight: 300;
+            letter-spacing: 1px;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container flex flex-col justify-center items-center p-16 relative">
+        <!-- 라이트 빔 효과 -->
+        <div class="light-beam"></div>
+        <div class="light-beam"></div>
+        <div class="light-beam"></div>
+        
+        <!-- 상단 아이콘 -->
+        <div class="absolute top-20 flex justify-center w-full">
+            <i class="fas fa-lightbulb light-icon text-6xl"></i>
+        </div>
+        
+        <!-- 메인 콘텐츠 -->
+        <div class="z-10 text-center mt-14">
+            <p class="subtitle mb-4">컴퓨터 그래픽스 라이팅</p>
+            <h1 class="main-title mb-8">3강: 캐릭터 라이팅<br>기본 기법 실습</h1>
+            
+            <div class="lighting-techniques mt-16 flex justify-center gap-6">
+                <span class="px-4 py-2 bg-opacity-20 bg-white rounded-lg">Rembrandt Light</span>
+                <span class="px-4 py-2 bg-opacity-20 bg-white rounded-lg">Split Light</span>
+                <span class="px-4 py-2 bg-opacity-20 bg-white rounded-lg">Short Light</span>
+                <span class="px-4 py-2 bg-opacity-20 bg-white rounded-lg">Broad Light</span>
+            </div>
+        </div>
+        
+        <!-- 하단 장식 -->
+        <div class="absolute bottom-10 flex space-x-6">
+            <i class="fas fa-portrait text-3xl opacity-70"></i>
+            <i class="fas fa-camera text-3xl opacity-70"></i>
+            <i class="fas fa-palette text-3xl opacity-70"></i>
+            <i class="fas fa-film text-3xl opacity-70"></i>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2강 학습 목표 및 목차</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Noto Sans KR', sans-serif;
+            overflow: hidden;
+        }
+        .slide {
+            width: 1280px;
+            min-height: 720px;
+            overflow: hidden;
+            position: relative;
+            background: linear-gradient(135deg, #0a2342 0%, #183763 100%);
+            color: white;
+        }
+        .title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+            color: #ffffff;
+            position: relative;
+            display: inline-block;
+        }
+        .title::after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 4px;
+            background: #60a5fa;
+            bottom: -10px;
+            left: 0;
+            animation: expandWidth 1s ease-out forwards;
+        }
+        @keyframes expandWidth {
+            from { width: 0; }
+            to { width: 80px; }
+        }
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #93c5fd;
+        }
+        .objective-card {
+            border-left: 4px solid #60a5fa;
+            transition: all 0.3s ease;
+            background-color: rgba(30, 58, 138, 0.15);
+        }
+        .objective-card:hover {
+            transform: translateX(5px);
+            background-color: rgba(96, 165, 250, 0.2);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        .toc-item {
+            border-radius: 10px;
+            background: rgba(30, 58, 138, 0.3);
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+        .toc-item:hover {
+            background: rgba(30, 58, 138, 0.5);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+        .toc-number {
+            background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+        }
+        .accent-circle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(96, 165, 250, 0.1);
+            z-index: 0;
+            animation: float 10s infinite alternate ease-in-out;
+        }
+        @keyframes float {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-15px); }
+        }
+        .icon-circle {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(96, 165, 250, 0.2);
+            margin-right: 12px;
+        }
+        .light-beam {
+            position: absolute;
+            background: linear-gradient(90deg, rgba(96,165,250,0) 0%, rgba(96,165,250,0.1) 50%, rgba(96,165,250,0) 100%);
+            width: 200px;
+            height: 800px;
+            transform: rotate(45deg);
+            z-index: 0;
+            animation: pulse 8s infinite alternate;
+        }
+        @keyframes pulse {
+            0% { opacity: 0.3; }
+            100% { opacity: 0.7; }
+        }
+    </style>
+</head>
+<body>
+    <div class="slide p-12 flex flex-col">
+        <!-- Decorative elements -->
+        <div class="accent-circle" style="width: 300px; height: 300px; top: -100px; right: -100px; animation-delay: 0s;"></div>
+        <div class="accent-circle" style="width: 200px; height: 200px; bottom: -50px; left: 100px; animation-delay: 1s;"></div>
+        <div class="light-beam" style="top: -200px; left: 200px;"></div>
+        <div class="light-beam" style="bottom: -200px; right: 300px; transform: rotate(-45deg);"></div>
+        
+        <!-- Header -->
+        <div class="mb-10 relative z-10">
+            <h1 class="title">2강 학습 목표 및 목차</h1>
+        </div>
+        
+        <!-- Content flex container -->
+        <div class="flex flex-row space-x-8 flex-1 relative z-10">
+            <!-- Learning Objectives -->
+            <div class="w-1/2">
+                <h2 class="section-title mb-6 flex items-center">
+                    <div class="icon-circle">
+                        <i class="fas fa-bullseye text-blue-300"></i>
+                    </div>
+                    학습 목표
+                </h2>
+                
+                <div class="space-y-5 mt-8">
+                    <div class="objective-card p-4 pl-5 rounded-r">
+                        <div class="flex items-start">
+                            <i class="fas fa-lightbulb text-yellow-300 mt-1 mr-4 text-xl" style="filter: drop-shadow(0 0 3px rgba(252, 211, 77, 0.5));"></i>
+                            <div>
+                                <h3 class="text-xl font-semibold text-blue-200">라이팅 이론 심화</h3>
+                                <p class="mt-2 text-gray-200">
+                                    <strong>Contrast</strong>, <strong>Light & Shape</strong>, <strong>Light & Direction</strong>의 상호작용 이해
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="objective-card p-4 pl-5 rounded-r">
+                        <div class="flex items-start">
+                            <i class="fas fa-laptop-code text-green-300 mt-1 mr-4 text-xl" style="filter: drop-shadow(0 0 3px rgba(167, 243, 208, 0.5));"></i>
+                            <div>
+                                <h3 class="text-xl font-semibold text-blue-200">V-Ray 실습</h3>
+                                <p class="mt-2 text-gray-200">
+                                    V-Ray를 활용한 라이팅 요소 변경 및 결과물 비교 분석
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="objective-card p-4 pl-5 rounded-r">
+                        <div class="flex items-start">
+                            <i class="fas fa-film text-purple-300 mt-1 mr-4 text-xl" style="filter: drop-shadow(0 0 3px rgba(196, 181, 253, 0.5));"></i>
+                            <div>
+                                <h3 class="text-xl font-semibold text-blue-200">3 Point Lighting 실습</h3>
+                                <p class="mt-2 text-gray-200">
+                                    <strong>Key Light</strong>, <strong>Fill Light</strong>, <strong>Back Light</strong>의 역할 이해 및 적용
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Table of Contents -->
+            <div class="w-1/2">
+                <h2 class="section-title mb-6 flex items-center">
+                    <div class="icon-circle">
+                        <i class="fas fa-list-ol text-blue-300"></i>
+                    </div>
+                    목차
+                </h2>
+                
+                <div class="space-y-6 mt-8">
+                    <div class="toc-item p-5">
+                        <div class="flex items-center mb-3">
+                            <div class="toc-number mr-4">1</div>
+                            <h3 class="text-xl font-semibold text-white">라이팅 이론 심화 및 V-Ray 실습</h3>
+                        </div>
+                        <ul class="ml-16 space-y-2 text-gray-200">
+                            <li class="flex items-center">
+                                <i class="fas fa-circle text-xs text-blue-400 mr-3"></i>
+                                <span>Contrast 심화 이론 및 실습</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-circle text-xs text-blue-400 mr-3"></i>
+                                <span>Light & Shape 심화 이론 및 실습</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-circle text-xs text-blue-400 mr-3"></i>
+                                <span>Light & Direction 심화 이론 및 실습</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="toc-item p-5">
+                        <div class="flex items-center mb-3">
+                            <div class="toc-number mr-4">2</div>
+                            <h3 class="text-xl font-semibold text-white">Composition, Light & Shadow 및 3 Point Lighting</h3>
+                        </div>
+                        <ul class="ml-16 space-y-2 text-gray-200">
+                            <li class="flex items-center">
+                                <i class="fas fa-circle text-xs text-blue-400 mr-3"></i>
+                                <span>Composition, Light & Shadow 이론</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-circle text-xs text-blue-400 mr-3"></i>
+                                <span>3 Point Lighting 설정 및 적용</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-circle text-xs text-blue-400 mr-3"></i>
+                                <span>각 조명 세기/위치 조절 및 효과 관찰</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

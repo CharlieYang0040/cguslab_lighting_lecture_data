@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>5강 주요 활동 목차</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        .agenda-card {
+            transition: all 0.3s ease;
+            border-left: 5px solid transparent;
+        }
+        .agenda-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            border-left-color: #fbbf24;
+        }
+        .step-number {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        .floating-element {
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+        }
+        .backdrop-pattern {
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.1) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.05) 0%, transparent 40%);
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container backdrop-pattern">
+        <!-- Background Decorative Elements -->
+        <div class="absolute top-8 right-8 floating-element">
+            <i class="fas fa-tasks text-white text-5xl opacity-20"></i>
+        </div>
+        <div class="absolute bottom-8 left-8 floating-element" style="animation-delay: -2s;">
+            <i class="fas fa-calendar-check text-white text-4xl opacity-15"></i>
+        </div>
+        
+        <!-- Header Section -->
+        <div class="pt-16 pb-8 text-center">
+            <div class="inline-flex items-center bg-white bg-opacity-20 backdrop-blur-sm rounded-full px-6 py-2 mb-6">
+                <i class="fas fa-list-ul mr-3 text-white text-lg"></i>
+                <span class="text-white font-medium">오늘의 학습 계획</span>
+            </div>
+            <h1 class="text-white text-5xl font-bold mb-4">
+                **5강 주요 활동 목차**
+            </h1>
+            <p class="text-white text-xl opacity-90">
+                2개월간의 여정을 마무리하는 특별한 하루
+            </p>
+        </div>
+        
+        <!-- Main Content Area -->
+        <div class="px-12 pb-12">
+            <div class="grid grid-cols-2 gap-8 max-w-6xl mx-auto">
+                
+                <!-- Activity 1 -->
+                <div class="agenda-card bg-white bg-opacity-15 backdrop-blur-sm rounded-2xl p-6">
+                    <div class="flex items-start space-x-4">
+                        <div class="step-number w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-lg flex-shrink-0">
+                            1
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="text-white text-xl font-bold mb-3">
+                                <i class="fas fa-presentation mr-2 text-yellow-300"></i>
+                                **프로젝트 발표 세션**
+                            </h3>
+                            <ul class="text-white text-sm space-y-2 opacity-90">
+                                <li>• 씬 라이팅 스타일링 프로젝트 최종 발표</li>
+                                <li>• 동료 피드백 및 상호 평가</li>
+                                <li>• 창의적 연출과 기술적 완성도 공유</li>
+                            </ul>
+                            <div class="mt-4 flex items-center text-yellow-300 text-sm font-medium">
+                                <i class="fas fa-clock mr-2"></i>
+                                60분
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Activity 2 -->
+                <div class="agenda-card bg-white bg-opacity-15 backdrop-blur-sm rounded-2xl p-6">
+                    <div class="flex items-start space-x-4">
+                        <div class="step-number w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-lg flex-shrink-0">
+                            2
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="text-white text-xl font-bold mb-3">
+                                <i class="fas fa-chart-line mr-2 text-green-300"></i>
+                                **종합 리뷰 세션**
+                            </h3>
+                            <ul class="text-white text-sm space-y-2 opacity-90">
+                                <li>• 2개월차 주요 학습 내용 총정리</li>
+                                <li>• 고급 라이팅, USD, Python 자동화 복습</li>
+                                <li>• Q&A 및 개별 피드백 제공</li>
+                            </ul>
+                            <div class="mt-4 flex items-center text-green-300 text-sm font-medium">
+                                <i class="fas fa-clock mr-2"></i>
+                                45분
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Activity 3 -->
+                <div class="agenda-card bg-white bg-opacity-15 backdrop-blur-sm rounded-2xl p-6">
+                    <div class="flex items-start space-x-4">
+                        <div class="step-number w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-lg flex-shrink-0">
+                            3
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="text-white text-xl font-bold mb-3">
+                                <i class="fas fa-star mr-2 text-purple-300"></i>
+                                **성과 정리 & 미래 준비**
+                            </h3>
+                            <ul class="text-white text-sm space-y-2 opacity-90">
+                                <li>• 개인별 학습 성과 점검 및 정리</li>
+                                <li>• 향후 발전 방향 가이드라인 제시</li>
+                                <li>• 실무 적용을 위한 로드맵 공유</li>
+                            </ul>
+                            <div class="mt-4 flex items-center text-purple-300 text-sm font-medium">
+                                <i class="fas fa-clock mr-2"></i>
+                                30분
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Activity 4 -->
+                <div class="agenda-card bg-white bg-opacity-15 backdrop-blur-sm rounded-2xl p-6">
+                    <div class="flex items-start space-x-4">
+                        <div class="step-number w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-lg flex-shrink-0">
+                            4
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="text-white text-xl font-bold mb-3">
+                                <i class="fas fa-trophy mr-2 text-yellow-300"></i>
+                                **과정 마무리 & 축하**
+                            </h3>
+                            <ul class="text-white text-sm space-y-2 opacity-90">
+                                <li>• 2개월 전체 과정 성과 축하</li>
+                                <li>• 수료증 및 포트폴리오 가이드</li>
+                                <li>• 네트워킹 및 향후 지원 방안 안내</li>
+                            </ul>
+                            <div class="mt-4 flex items-center text-yellow-300 text-sm font-medium">
+                                <i class="fas fa-clock mr-2"></i>
+                                15분
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Bottom Summary -->
+            <div class="mt-8 text-center">
+                <div class="bg-white bg-opacity-10 backdrop-blur-sm rounded-xl p-4 max-w-2xl mx-auto">
+                    <p class="text-white text-lg font-medium">
+                        <i class="fas fa-lightbulb text-yellow-300 mr-2"></i>
+                        **오늘의 목표: 여러분의 성장과 성취를 함께 축하하며 미래를 준비하는 시간**
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Bottom Decorative Bar -->
+        <div class="absolute bottom-0 left-0 right-0 h-2 bg-gradient-to-r from-yellow-300 via-white to-yellow-300"></div>
+    </div>
+</body>
+</html>

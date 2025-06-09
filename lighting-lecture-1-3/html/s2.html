@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3강: 학습 목표 및 목차</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        .slide-title {
+            font-size: 3rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            background: linear-gradient(90deg, #fff, #e0e0e0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 10px rgba(255, 255, 255, 0.2);
+        }
+        .goal-box {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            border-left: 4px solid #f9a826;
+        }
+        .toc-item {
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .toc-item:hover {
+            transform: translateX(10px);
+        }
+        .toc-item::before {
+            content: '';
+            position: absolute;
+            left: -20px;
+            top: 50%;
+            width: 10px;
+            height: 10px;
+            background: #f9a826;
+            border-radius: 50%;
+            transform: translateY(-50%);
+        }
+        .lighting-icon {
+            color: #f9a826;
+            filter: drop-shadow(0 0 5px rgba(249, 168, 38, 0.7));
+        }
+        .light-beam {
+            position: absolute;
+            width: 100px;
+            height: 500px;
+            background: linear-gradient(to bottom, rgba(255,255,255,0.07), rgba(255,255,255,0));
+            transform: rotate(45deg);
+            top: -100px;
+            right: 10%;
+            filter: blur(15px);
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container flex p-16 relative">
+        <div class="light-beam"></div>
+        
+        <!-- 좌측 학습 목표 섹션 -->
+        <div class="w-1/2 pr-8">
+            <div class="flex items-center mb-8">
+                <i class="fas fa-bullseye lighting-icon text-2xl mr-4"></i>
+                <h2 class="text-3xl font-bold">학습 목표</h2>
+            </div>
+            
+            <div class="goal-box p-6 rounded-lg mb-6">
+                <p class="text-xl mb-3"><i class="fas fa-check-circle mr-2 text-yellow-400"></i> 캐릭터 라이팅의 기본 기법 이해</p>
+                <p class="text-xl mb-3"><i class="fas fa-check-circle mr-2 text-yellow-400"></i> 4가지 주요 라이팅 기법의 특징과 효과 학습</p>
+                <p class="text-xl mb-3"><i class="fas fa-check-circle mr-2 text-yellow-400"></i> 각 기법의 적용 사례 분석 및 식별 능력 향상</p>
+                <p class="text-xl"><i class="fas fa-check-circle mr-2 text-yellow-400"></i> 캐릭터 라이팅 기법의 실무 적용 방법 습득</p>
+            </div>
+            
+            <div class="mt-10">
+                <p class="text-lg italic text-gray-300">
+                    <i class="fas fa-quote-left mr-2 opacity-50"></i>
+                    효과적인 라이팅은 캐릭터에 생명력과 감정을 부여합니다
+                    <i class="fas fa-quote-right ml-2 opacity-50"></i>
+                </p>
+            </div>
+        </div>
+        
+        <!-- 우측 목차 섹션 -->
+        <div class="w-1/2 pl-12 border-l border-gray-600">
+            <h1 class="slide-title mb-10">3강 목차</h1>
+            
+            <div class="space-y-8 pl-6">
+                <div class="toc-item flex items-center">
+                    <div class="w-16 h-16 rounded-full bg-opacity-20 bg-yellow-500 flex items-center justify-center mr-6">
+                        <i class="fas fa-lightbulb text-3xl lighting-icon"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold">Rembrandt Light</h3>
+                        <p class="text-gray-300">삼각형 형태의 고전적 라이팅 기법</p>
+                    </div>
+                </div>
+                
+                <div class="toc-item flex items-center">
+                    <div class="w-16 h-16 rounded-full bg-opacity-20 bg-yellow-500 flex items-center justify-center mr-6">
+                        <i class="fas fa-adjust text-3xl lighting-icon"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold">Split Light</h3>
+                        <p class="text-gray-300">강렬한 대비 효과의 분할 라이팅</p>
+                    </div>
+                </div>
+                
+                <div class="toc-item flex items-center">
+                    <div class="w-16 h-16 rounded-full bg-opacity-20 bg-yellow-500 flex items-center justify-center mr-6">
+                        <i class="fas fa-compress-alt text-3xl lighting-icon"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold">Short Light</h3>
+                        <p class="text-gray-300">입체감을 부여하는 측면 라이팅</p>
+                    </div>
+                </div>
+                
+                <div class="toc-item flex items-center">
+                    <div class="w-16 h-16 rounded-full bg-opacity-20 bg-yellow-500 flex items-center justify-center mr-6">
+                        <i class="fas fa-expand-alt text-3xl lighting-icon"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold">Broad Light</h3>
+                        <p class="text-gray-300">부드럽고 친근한 느낌의 라이팅</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

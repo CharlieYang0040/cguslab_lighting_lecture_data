@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>4강 마무리 및 다음 단계</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        .title-gradient {
+            background: linear-gradient(135deg, #10b981 0%, #3b82f6 50%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .success-card {
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+        .success-card:hover {
+            border-left-color: #10b981;
+            transform: translateX(5px);
+            box-shadow: 0 10px 25px -5px rgba(16, 185, 129, 0.1);
+        }
+        .celebration-pulse {
+            animation: celebrate 3s ease-in-out infinite;
+        }
+        @keyframes celebrate {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            25% { transform: scale(1.1) rotate(3deg); }
+            50% { transform: scale(1.05) rotate(-2deg); }
+            75% { transform: scale(1.1) rotate(1deg); }
+        }
+        .progress-bar {
+            background: linear-gradient(90deg, #10b981, #3b82f6, #8b5cf6);
+            animation: progressFill 2s ease-in-out;
+        }
+        @keyframes progressFill {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+        .floating-icon {
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container bg-gradient-to-br from-slate-50 via-green-50 to-blue-50 flex flex-col">
+        
+        <!-- Header -->
+        <div class="bg-white shadow-lg px-16 py-4 border-b-4 border-green-500">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h1 class="text-4xl font-black title-gradient mb-1">4강 마무리 및 다음 단계</h1>
+                    <p class="text-gray-600 text-lg">Python과 Maya 자동화 여정의 첫 걸음 완성! 🎉</p>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <div class="celebration-pulse">
+                        <div class="w-16 h-16 bg-gradient-to-br from-green-500 to-blue-500 rounded-xl flex items-center justify-center">
+                            <i class="fas fa-trophy text-white text-2xl"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 px-16 py-5">
+            <div class="grid grid-cols-12 gap-6 h-full">
+                
+                <!-- Left Column - Learning Summary -->
+                <div class="col-span-4 space-y-4">
+                    <!-- What We Learned -->
+                    <div class="bg-white rounded-xl p-4 shadow-md success-card">
+                        <div class="flex items-center mb-3">
+                            <div class="w-10 h-10 bg-gradient-to-br from-green-500 to-emerald-600 rounded-full flex items-center justify-center mr-3">
+                                <i class="fas fa-check-circle text-white"></i>
+                            </div>
+                            <h3 class="text-lg font-bold text-gray-800">4강에서 배운 것들</h3>
+                        </div>
+                        <div class="space-y-2 text-sm">
+                            <div class="flex items-start">
+                                <i class="fas fa-code text-blue-600 mr-2 mt-1"></i>
+                                <div>
+                                    <div class="font-bold">Python 기초 문법</div>
+                                    <div class="text-gray-600">변수, 조건문, 반복문 마스터</div>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fas fa-cog text-purple-600 mr-2 mt-1"></i>
+                                <div>
+                                    <div class="font-bold">Maya Python API</div>
+                                    <div class="text-gray-600">maya.cmds로 오브젝트 제어</div>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fas fa-th text-orange-600 mr-2 mt-1"></i>
+                                <div>
+                                    <div class="font-bold">자동 배치 스크립트</div>
+                                    <div class="text-gray-600">for 루프로 대량 생성</div>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fas fa-window-maximize text-green-600 mr-2 mt-1"></i>
+                                <div>
+                                    <div class="font-bold">UI 생성</div>
+                                    <div class="text-gray-600">사용자 친화적 도구 제작</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Progress Indicator -->
+                    <div class="bg-gradient-to-r from-green-500 to-blue-500 rounded-xl p-4 text-white">
+                        <h3 class="text-lg font-bold mb-3 flex items-center">
+                            <i class="fas fa-chart-line mr-2"></i>
+                            학습 진도
+                        </h3>
+                        <div class="space-y-3">
+                            <div>
+                                <div class="flex justify-between text-sm mb-1">
+                                    <span>Python 스크립팅 기초</span>
+                                    <span>100%</span>
+                                </div>
+                                <div class="w-full bg-white bg-opacity-30 rounded-full h-2">
+                                    <div class="progress-bar h-2 rounded-full" style="width: 100%;"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-sm mb-1">
+                                    <span>Maya 자동화 기초</span>
+                                    <span>100%</span>
+                                </div>
+                                <div class="w-full bg-white bg-opacity-30 rounded-full h-2">
+                                    <div class="progress-bar h-2 rounded-full" style="width: 100%;"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-sm mb-1">
+                                    <span>전체 과정</span>
+                                    <span>40%</span>
+                                </div>
+                                <div class="w-full bg-white bg-opacity-30 rounded-full h-2">
+                                    <div class="progress-bar h-2 rounded-full" style="width: 40%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Stats -->
+                    <div class="bg-white rounded-xl p-4 shadow-md success-card">
+                        <h3 class="text-lg font-bold text-gray-800 mb-3">성과 요약</h3>
+                        <div class="grid grid-cols-2 gap-3 text-sm">
+                            <div class="bg-blue-50 rounded-lg p-3 text-center">
+                                <div class="text-2xl font-bold text-blue-600">4</div>
+                                <div class="text-gray-600">핵심 개념</div>
+                            </div>
+                            <div class="bg-green-50 rounded-lg p-3 text-center">
+                                <div class="text-2xl font-bold text-green-600">47+</div>
+                                <div class="text-gray-600">생성 오브젝트</div>
+                            </div>
+                            <div class="bg-purple-50 rounded-lg p-3 text-center">
+                                <div class="text-2xl font-bold text-purple-600">600x</div>
+                                <div class="text-gray-600">효율성 증대</div>
+                            </div>
+                            <div class="bg-orange-50 rounded-lg p-3 text-center">
+                                <div class="text-2xl font-bold text-orange-600">1</div>
+                                <div class="text-gray-600">커스텀 UI</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Middle Column - Next Steps -->
+                <div class="col-span-5 space-y-4">
+                    <!-- Next Lesson Preview -->
+                    <div class="bg-gradient-to-br from-blue-600 to-purple-600 rounded-xl p-5 text-white shadow-xl">
+                        <div class="flex items-center mb-4">
+                            <div class="floating-icon mr-3">
+                                <i class="fas fa-rocket text-3xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold">다음 차시 미리보기</h3>
+                                <p class="text-blue-100">2개월차 5강: 고급 스크립팅 테크닉</p>
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-2 gap-4 mb-4">
+                            <div class="bg-white bg-opacity-20 rounded-lg p-3">
+                                <div class="flex items-center mb-2">
+                                    <i class="fas fa-file-code text-yellow-300 mr-2"></i>
+                                    <span class="font-bold text-sm">모듈화 스크립팅</span>
+                                </div>
+                                <p class="text-xs text-blue-100">재사용 가능한 함수와 클래스</p>
+                            </div>
+                            <div class="bg-white bg-opacity-20 rounded-lg p-3">
+                                <div class="flex items-center mb-2">
+                                    <i class="fas fa-database text-green-300 mr-2"></i>
+                                    <span class="font-bold text-sm">데이터 처리</span>
+                                </div>
+                                <p class="text-xs text-blue-100">JSON, CSV 파일 연동</p>
+                            </div>
+                            <div class="bg-white bg-opacity-20 rounded-lg p-3">
+                                <div class="flex items-center mb-2">
+                                    <i class="fas fa-paint-brush text-pink-300 mr-2"></i>
+                                    <span class="font-bold text-sm">쉐이더 자동화</span>
+                                </div>
+                                <p class="text-xs text-blue-100">머티리얼 일괄 적용</p>
+                            </div>
+                            <div class="bg-white bg-opacity-20 rounded-lg p-3">
+                                <div class="flex items-center mb-2">
+                                    <i class="fas fa-clock text-cyan-300 mr-2"></i>
+                                    <span class="font-bold text-sm">애니메이션 스크립트</span>
+                                </div>
+                                <p class="text-xs text-blue-100">키프레임 자동 생성</p>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white bg-opacity-10 rounded-lg p-3">
+                            <div class="flex items-center text-sm">
+                                <i class="fas fa-calendar-alt mr-2"></i>
+                                <span><strong>예정일:</strong> 다음 주 수요일 | <strong>시간:</strong> 90분</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Q&A Section -->
+                    <div class="bg-white rounded-xl p-4 shadow-md success-card">
+                        <div class="flex items-center mb-3">
+                            <i class="fas fa-question-circle text-2xl text-orange-500 mr-3"></i>
+                            <h3 class="text-lg font-bold text-gray-800">Q&A 및 추가 지원</h3>
+                        </div>
+                        
+                        <div class="grid grid-cols-2 gap-3 text-sm">
+                            <div class="bg-orange-50 rounded-lg p-3">
+                                <div class="flex items-center mb-2">
+                                    <i class="fas fa-comments text-orange-600 mr-2"></i>
+                                    <span class="font-bold">실시간 Q&A</span>
+                                </div>
+                                <p class="text-gray-600 text-xs">지금 바로 질문하세요!</p>
+                            </div>
+                            <div class="bg-blue-50 rounded-lg p-3">
+                                <div class="flex items-center mb-2">
+                                    <i class="fas fa-book text-blue-600 mr-2"></i>
+                                    <span class="font-bold">학습 자료</span>
+                                </div>
+                                <p class="text-gray-600 text-xs">예제 코드 다운로드</p>
+                            </div>
+                            <div class="bg-green-50 rounded-lg p-3">
+                                <div class="flex items-center mb-2">
+                                    <i class="fas fa-users text-green-600 mr-2"></i>
+                                    <span class="font-bold">스터디 그룹</span>
+                                </div>
+                                <p class="text-gray-600 text-xs">동료들과 함께 연습</p>
+                            </div>
+                            <div class="bg-purple-50 rounded-lg p-3">
+                                <div class="flex items-center mb-2">
+                                    <i class="fas fa-video text-purple-600 mr-2"></i>
+                                    <span class="font-bold">복습 영상</span>
+                                </div>
+                                <p class="text-gray-600 text-xs">언제든 다시 시청</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column - Resources & Action -->
+                <div class="col-span-3 space-y-4">
+                    <!-- Additional Resources -->
+                    <div class="bg-white rounded-xl p-4 shadow-md success-card">
+                        <h4 class="font-bold text-gray-800 mb-3 flex items-center">
+                            <i class="fas fa-external-link-alt text-indigo-500 mr-2"></i>
+                            추가 학습 리소스
+                        </h4>
+                        <div class="space-y-2 text-sm">
+                            <a href="#" class="flex items-center p-2 bg-gray-50 rounded hover:bg-gray-100 transition-colors">
+                                <i class="fab fa-python text-blue-600 mr-2"></i>
+                                <span>Python 공식 문서</span>
+                            </a>
+                            <a href="#" class="flex items-center p-2 bg-gray-50 rounded hover:bg-gray-100 transition-colors">
+                                <i class="fas fa-cube text-orange-600 mr-2"></i>
+                                <span>Maya Python API 가이드</span>
+                            </a>
+                            <a href="#" class="flex items-center p-2 bg-gray-50 rounded hover:bg-gray-100 transition-colors">
+                                <i class="fab fa-github text-gray-800 mr-2"></i>
+                                <span>예제 코드 저장소</span>
+                            </a>
+                            <a href="#" class="flex items-center p-2 bg-gray-50 rounded hover:bg-gray-100 transition-colors">
+                                <i class="fas fa-play-circle text-red-600 mr-2"></i>
+                                <span>실습 동영상 라이브러리</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Practice Challenge -->
+                    <div class="bg-gradient-to-r from-yellow-400 to-orange-500 rounded-xl p-4 text-white">
+                        <h4 class="font-bold mb-3 flex items-center">
+                            <i class="fas fa-dumbbell mr-2"></i>
+                            과제 챌린지
+                        </h4>
+                        <div class="text-sm space-y-2">
+                            <div class="bg-white bg-opacity-20 rounded p-2">
+                                <div class="font-bold">🎯 기본 과제</div>
+                                <div class="text-xs">10x10 격자로 100개 오브젝트 배치</div>
+                            </div>
+                            <div class="bg-white bg-opacity-20 rounded p-2">
+                                <div class="font-bold">🚀 도전 과제</div>
+                                <div class="text-xs">나만의 UI 도구 만들기</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Contact Information -->
+                    <div class="bg-gray-800 rounded-xl p-4 text-white">
+                        <h4 class="font-bold mb-3 flex items-center">
+                            <i class="fas fa-envelope mr-2"></i>
+                            문의 및 지원
+                        </h4>
+                        <div class="space-y-2 text-sm">
+                            <div class="flex items-center">
+                                <i class="fas fa-at mr-2 text-blue-400"></i>
+                                <span>support@mayacourse.com</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fab fa-discord mr-2 text-purple-400"></i>
+                                <span>Discord 채널 참여</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-clock mr-2 text-green-400"></i>
+                                <span>24시간 내 답변 보장</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Final CTA -->
+                    <div class="bg-gradient-to-r from-green-500 to-teal-600 rounded-xl p-4 text-center text-white">
+                        <div class="celebration-pulse mb-2">
+                            <i class="fas fa-graduation-cap text-3xl"></i>
+                        </div>
+                        <div class="font-bold text-lg">축하합니다! 🎉</div>
+                        <div class="text-sm mt-1">Python Maya 자동화의</div>
+                        <div class="text-sm">첫 걸음을 완주했습니다!</div>
+                        <div class="mt-3 bg-white bg-opacity-20 rounded-lg p-2 text-xs">
+                            다음 강의에서 더 강력한<br>스크립팅 기법을 만나보세요! 💪
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <div class="px-16 py-3 bg-white border-t">
+            <div class="flex justify-between items-center">
+                <div class="text-sm text-gray-600">
+                    <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                    4강 완료! 다음 강의에서 만나요
+                </div>
+                <div class="text-sm text-gray-600">
+                    마무리 / 7
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

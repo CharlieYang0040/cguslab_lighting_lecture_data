@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2개월차 5강: 최종 프로젝트 발표 및 2개월 과정 종합 리뷰</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        .title-glow {
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+        }
+        .floating-element {
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        .backdrop-pattern {
+            background-image: 
+                radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container backdrop-pattern flex items-center justify-center relative">
+        <!-- Background Decorative Elements -->
+        <div class="absolute top-10 left-10 floating-element">
+            <i class="fas fa-cube text-white text-6xl opacity-20"></i>
+        </div>
+        <div class="absolute bottom-10 right-10 floating-element" style="animation-delay: -3s;">
+            <i class="fas fa-graduation-cap text-white text-8xl opacity-15"></i>
+        </div>
+        <div class="absolute top-1/4 right-1/4 floating-element" style="animation-delay: -1.5s;">
+            <i class="fas fa-lightbulb text-yellow-300 text-5xl opacity-30"></i>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="text-center z-10 px-12">
+            <!-- Course Badge -->
+            <div class="inline-flex items-center bg-white bg-opacity-20 backdrop-blur-sm rounded-full px-6 py-2 mb-8">
+                <i class="fas fa-desktop mr-3 text-white text-xl"></i>
+                <span class="text-white font-medium text-lg">컴퓨터 그래픽스 교육 과정</span>
+            </div>
+            
+            <!-- Main Title -->
+            <h1 class="text-white text-6xl font-bold mb-6 leading-tight title-glow">
+                2개월차 5강
+            </h1>
+            <h2 class="text-white text-4xl font-semibold mb-8 leading-relaxed">
+                최종 프로젝트 발표 및<br>
+                <span class="text-yellow-300">2개월 과정 종합 리뷰</span>
+            </h2>
+            
+            <!-- Subtitle -->
+            <div class="bg-white bg-opacity-10 backdrop-blur-sm rounded-2xl p-6 mb-8 max-w-3xl mx-auto">
+                <p class="text-white text-xl font-medium mb-3">
+                    <i class="fas fa-star text-yellow-300 mr-3"></i>
+                    **여러분의 2개월간의 학습 여정을 마무리하는 특별한 시간**
+                </p>
+                <p class="text-white text-lg opacity-90">
+                    프로젝트 발표 • 동료 피드백 • 성과 정리 • 미래 준비
+                </p>
+            </div>
+            
+            <!-- Achievement Icons -->
+            <div class="flex justify-center space-x-8 mt-8">
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-white bg-opacity-20 rounded-full flex items-center justify-center mb-2">
+                        <i class="fas fa-project-diagram text-white text-2xl"></i>
+                    </div>
+                    <span class="text-white text-sm font-medium">프로젝트<br>완성</span>
+                </div>
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-white bg-opacity-20 rounded-full flex items-center justify-center mb-2">
+                        <i class="fas fa-users text-white text-2xl"></i>
+                    </div>
+                    <span class="text-white text-sm font-medium">동료<br>피드백</span>
+                </div>
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-white bg-opacity-20 rounded-full flex items-center justify-center mb-2">
+                        <i class="fas fa-trophy text-yellow-300 text-2xl"></i>
+                    </div>
+                    <span class="text-white text-sm font-medium">성취<br>완성</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Bottom Decorative Bar -->
+        <div class="absolute bottom-0 left-0 right-0 h-2 bg-gradient-to-r from-yellow-300 via-white to-yellow-300"></div>
+    </div>
+</body>
+</html>

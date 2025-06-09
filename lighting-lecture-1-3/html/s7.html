@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Short Light</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            position: relative;
+            display: inline-block;
+        }
+        .section-title::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -5px;
+            width: 40%;
+            height: 3px;
+            background: linear-gradient(90deg, #f9a826, transparent);
+        }
+        .feature-box {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(5px);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+        .feature-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        .highlight {
+            color: #f9a826;
+            font-weight: 600;
+        }
+        .image-container {
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        .image-container:hover {
+            transform: scale(1.02);
+        }
+        .short-light-decoration {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 30%;
+            height: 100%;
+            background: linear-gradient(to right, rgba(249, 168, 38, 0.1), transparent);
+            z-index: 0;
+        }
+        .practice-note {
+            background: rgba(249, 168, 38, 0.1);
+            border-left: 3px solid #f9a826;
+        }
+        .vs-section {
+            position: relative;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+        .vs-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #f9a826;
+            font-weight: 800;
+            font-size: 1.5rem;
+            background: rgba(0, 0, 0, 0.6);
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container flex p-10 relative">
+        <div class="short-light-decoration"></div>
+        
+        <!-- 좌측 텍스트 섹션 -->
+        <div class="w-1/2 pr-8 flex flex-col justify-center z-10">
+            <h1 class="section-title mb-8">Short Light</h1>
+            
+            <div class="feature-box p-5 mb-5">
+                <h3 class="text-xl font-bold mb-2">
+                    <i class="fas fa-compress-alt text-yellow-400 mr-2"></i>정의 및 효과
+                </h3>
+                <p class="text-lg">얼굴의 <span class="highlight">짧은 쪽</span>(빛을 받는 부분)만 강조해 <span class="highlight">입체감</span>을 부여합니다.</p>
+            </div>
+            
+            <div class="feature-box p-5 mb-5">
+                <h3 class="text-xl font-bold mb-2">
+                    <i class="fas fa-fingerprint text-yellow-400 mr-2"></i>특징 및 활용
+                </h3>
+                <p class="text-lg mb-2">인물의 <span class="highlight">특정 특징</span>을 강조하여 <span class="highlight">개성</span>을 드러냅니다.</p>
+                <ul class="list-disc pl-5 mt-3 space-y-1 text-gray-300">
+                    <li>얼굴의 폭이 좁아 보이는 슬리밍(slimming) 효과</li>
+                    <li>깊이감 있는 인물 표현에 효과적</li>
+                    <li>얼굴의 굴곡과 윤곽을 강조할 때 사용</li>
+                </ul>
+            </div>
+            
+            <div class="practice-note p-4 rounded-lg mt-4">
+                <p class="flex items-center">
+                    <i class="fas fa-pencil-alt mr-3 text-yellow-400"></i>
+                    <span>실습 팁: 카메라를 향해 약간 회전된 얼굴의 짧은 쪽(카메라에서 더 멀리 보이는 쪽)에 주 조명을 배치하세요.</span>
+                </p>
+            </div>
+        </div>
+        
+        <!-- 우측 이미지 섹션 -->
+        <div class="w-1/2 pl-8 flex flex-col items-center justify-center space-y-5 z-10">
+            <!-- Short Light 비교 다이어그램 -->
+            <div class="vs-section p-3 mb-3 w-full">
+                <div class="flex justify-between items-center">
+                    <div class="w-5/12">
+                        <img src="https://i.pinimg.com/736x/eb/39/21/eb39219df22e42dddc3fbfb33d2a27a9.jpg" 
+                             alt="Short Light vs Broad Light" 
+                             class="w-full rounded-lg border-2 border-gray-700">
+                    </div>
+                    <div class="vs-text">VS</div>
+                    <div class="w-5/12">
+                        <img src="https://i.pinimg.com/736x/9e/da/3d/9eda3d9365263960d4e62f930e741ea9.jpg" 
+                             alt="Short Light vs Broad Light" 
+                             class="w-full rounded-lg border-2 border-gray-700">
+                    </div>
+                </div>
+                <p class="text-center mt-3 text-sm opacity-80">Short Light(좌) vs Broad Light(우) 비교 - 얼굴의 짧은/긴 쪽 강조 차이</p>
+            </div>
+            
+            <!-- Short Light 예시 이미지 -->
+            <div class="image-container w-full">
+                <img src="https://s.studiobinder.com/wp-content/uploads/2021/09/What-is-Short-Lighting-Photography-Short-Lighting-StudioBinder-Shot-Listing-Software.jpg" 
+                     alt="Short Light 예시" 
+                     class="w-full h-52 object-cover rounded-lg border-2 border-gray-700">
+                <p class="text-center mt-2 text-sm opacity-80"><i class="fas fa-image mr-1"></i> Short Light 적용 예시 - 얼굴의 짧은 쪽(더 적은 면적)만 밝게 처리</p>
+            </div>
+            
+            <!-- Short Light 다이어그램 -->
+            <div class="image-container w-full">
+                <img src="https://nikolaterzicphoto1v2.weebly.com/uploads/3/8/5/9/38596957/7683595_orig.jpg" 
+                     alt="Short Light 다이어그램" 
+                     class="w-full h-48 object-cover rounded-lg border-2 border-gray-700">
+                <p class="text-center mt-2 text-sm opacity-80"><i class="fas fa-diagram-project mr-1"></i> Short Light 조명 셋업 다이어그램</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

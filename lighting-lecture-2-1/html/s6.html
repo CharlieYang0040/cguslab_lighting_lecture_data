@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1강 마무리 - 라이팅 심화 기술</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .celebration-effect {
+            position: absolute;
+            width: 350px;
+            height: 350px;
+            background: radial-gradient(ellipse at center, rgba(245, 158, 11, 0.25) 0%, rgba(245, 158, 11, 0.12) 35%, rgba(217, 119, 6, 0.06) 65%, transparent 100%);
+            border-radius: 50%;
+            filter: blur(30px);
+            top: -175px;
+            right: -175px;
+            animation: celebrationPulse 6s ease-in-out infinite;
+        }
+        
+        .completion-ray {
+            position: absolute;
+            width: 2px;
+            height: 200px;
+            background: linear-gradient(180deg, rgba(16, 185, 129, 0.8) 0%, rgba(16, 185, 129, 0.4) 50%, transparent 100%);
+            animation: completionFloat 8s ease-in-out infinite;
+        }
+        
+        .completion-ray:nth-child(2) { left: 8%; top: 80px; animation-delay: 0s; transform: rotate(12deg); }
+        .completion-ray:nth-child(3) { right: 12%; top: 50px; animation-delay: 2s; transform: rotate(-8deg); }
+        .completion-ray:nth-child(4) { left: 50%; top: 30px; animation-delay: 4s; transform: rotate(5deg); }
+        
+        .success-particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: rgba(14, 165, 233, 0.9);
+            border-radius: 50%;
+            animation: successFloat 10s linear infinite;
+        }
+        
+        .success-particle:nth-child(5) { left: 15%; top: 120px; animation-delay: 0s; }
+        .success-particle:nth-child(6) { left: 70%; top: 90px; animation-delay: 3s; }
+        .success-particle:nth-child(7) { right: 20%; top: 140px; animation-delay: 6s; }
+        
+        .content-wrapper {
+            position: relative;
+            z-index: 10;
+            padding: 30px 45px;
+            height: 720px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .header-section {
+            text-align: center;
+            margin-bottom: 30px;
+            opacity: 0;
+            animation: fadeInDown 1s ease-out 0.3s forwards;
+        }
+        
+        .completion-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+        }
+        
+        .main-title {
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: #e2e8f0;
+            margin-bottom: 8px;
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            color: #94a3b8;
+            font-weight: 500;
+        }
+        
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 25px;
+            flex: 1;
+        }
+        
+        .summary-section, .preview-section, .qa-section {
+            opacity: 0;
+        }
+        
+        .summary-section {
+            animation: fadeInLeft 1s ease-out 0.8s forwards;
+        }
+        
+        .preview-section {
+            animation: fadeInUp 1s ease-out 1s forwards;
+        }
+        
+        .qa-section {
+            animation: fadeInRight 1s ease-out 1.2s forwards;
+        }
+        
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        
+        .section-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        
+        .summary-icon {
+            background: linear-gradient(135deg, #0ea5e9, #0284c7);
+            box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
+        }
+        
+        .preview-icon {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+        }
+        
+        .qa-icon {
+            background: linear-gradient(135deg, #10b981, #059669);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
+        
+        .section-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #e2e8f0;
+        }
+        
+        .summary-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 18px;
+            margin-bottom: 12px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            opacity: 0;
+            animation: slideInLeft 0.8s ease-out forwards;
+        }
+        
+        .summary-card:nth-child(1) { animation-delay: 1.4s; }
+        .summary-card:nth-child(2) { animation-delay: 1.6s; }
+        .summary-card:nth-child(3) { animation-delay: 1.8s; }
+        
+        .summary-card:hover {
+            background: rgba(14, 165, 233, 0.08);
+            transform: translateX(5px);
+            border-color: rgba(14, 165, 233, 0.3);
+        }
+        
+        .summary-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+        
+        .summary-bullet {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #0ea5e9;
+        }
+        
+        .summary-title {
+            color: #e2e8f0;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+        
+        .summary-desc {
+            color: #94a3b8;
+            font-size: 0.85rem;
+            line-height: 1.4;
+            margin-left: 18px;
+        }
+        
+        .preview-box {
+            background: rgba(245, 158, 11, 0.1);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 2s forwards;
+        }
+        
+        .preview-title {
+            color: #f59e0b;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .preview-topics {
+            display: grid;
+            gap: 8px;
+        }
+        
+        .preview-topic {
+            color: #e2e8f0;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 0;
+        }
+        
+        .topic-number {
+            background: #f59e0b;
+            color: white;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+        
+        .qa-info {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 2.2s forwards;
+        }
+        
+        .qa-title {
+            color: #10b981;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .qa-details {
+            display: grid;
+            gap: 12px;
+        }
+        
+        .qa-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #e2e8f0;
+            font-size: 0.9rem;
+        }
+        
+        .qa-item-icon {
+            width: 30px;
+            height: 30px;
+            background: rgba(16, 185, 129, 0.2);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #10b981;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+        
+        .contact-box {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 2.4s forwards;
+        }
+        
+        .contact-title {
+            color: #e2e8f0;
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .contact-info {
+            color: #94a3b8;
+            font-size: 0.8rem;
+            line-height: 1.4;
+        }
+        
+        .thank-you-section {
+            text-align: center;
+            margin-top: 20px;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 2.6s forwards;
+        }
+        
+        .thank-you-text {
+            color: #e2e8f0;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .encouragement-text {
+            color: #94a3b8;
+            font-size: 0.95rem;
+            font-style: italic;
+        }
+        
+        @keyframes celebrationPulse {
+            0%, 100% { opacity: 0.25; transform: scale(1) rotate(0deg); }
+            50% { opacity: 0.4; transform: scale(1.1) rotate(180deg); }
+        }
+        
+        @keyframes completionFloat {
+            0%, 100% { transform: translateY(0px) rotate(12deg); opacity: 0.8; }
+            50% { transform: translateY(-12px) rotate(15deg); opacity: 1; }
+        }
+        
+        @keyframes successFloat {
+            0% { transform: translateY(0px) translateX(0px); opacity: 0.9; }
+            25% { transform: translateY(-10px) translateX(8px); opacity: 1; }
+            50% { transform: translateY(-20px) translateX(-4px); opacity: 0.7; }
+            75% { transform: translateY(-10px) translateX(12px); opacity: 1; }
+            100% { transform: translateY(0px) translateX(0px); opacity: 0.9; }
+        }
+        
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-25px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes fadeInLeft {
+            from { opacity: 0; transform: translateX(-30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        @keyframes fadeInRight {
+            from { opacity: 0; transform: translateX(30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <!-- Background celebration effects -->
+        <div class="celebration-effect"></div>
+        <div class="completion-ray"></div>
+        <div class="completion-ray"></div>
+        <div class="completion-ray"></div>
+        <div class="success-particle"></div>
+        <div class="success-particle"></div>
+        <div class="success-particle"></div>
+        
+        <div class="content-wrapper">
+            <!-- Header -->
+            <div class="header-section">
+                <div class="completion-badge">
+                    <i class="fas fa-check-circle"></i>
+                    1강 완료
+                </div>
+                <h1 class="main-title">라이팅 심화 기술 마스터</h1>
+                <p class="subtitle">오늘 배운 핵심 내용과 다음 여정을 확인해보세요</p>
+            </div>
+            
+            <!-- Main Content Grid -->
+            <div class="main-content">
+                <!-- Summary Section -->
+                <div class="summary-section">
+                    <div class="section-header">
+                        <div class="section-icon summary-icon">
+                            <i class="fas fa-list-check"></i>
+                        </div>
+                        <h2 class="section-title">핵심 학습 내용</h2>
+                    </div>
+                    
+                    <div class="summary-card">
+                        <div class="summary-header">
+                            <div class="summary-bullet"></div>
+                            <div class="summary-title">Volumetric Light</div>
+                        </div>
+                        <div class="summary-desc">
+                            안개와 빛줄기 효과로 신비롭고 극적인 분위기 연출 기법
+                        </div>
+                    </div>
+                    
+                    <div class="summary-card">
+                        <div class="summary-header">
+                            <div class="summary-bullet"></div>
+                            <div class="summary-title">Depth & Dramatic Mood</div>
+                        </div>
+                        <div class="summary-desc">
+                            깊이감과 드라마틱 무드 조성으로 캐릭터 분리 및 강조
+                        </div>
+                    </div>
+                    
+                    <div class="summary-card">
+                        <div class="summary-header">
+                            <div class="summary-bullet"></div>
+                            <div class="summary-title">Global Illumination & HDRI</div>
+                        </div>
+                        <div class="summary-desc">
+                            사실적 렌더링을 위한 GI와 환경 기반 조명 시스템
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Preview Section -->
+                <div class="preview-section">
+                    <div class="section-header">
+                        <div class="section-icon preview-icon">
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                        <h2 class="section-title">다음 차시 예고</h2>
+                    </div>
+                    
+                    <div class="preview-box">
+                        <div class="preview-title">
+                            <i class="fas fa-calendar-alt"></i>
+                            2개월차 2강: 특수 효과 라이팅
+                        </div>
+                        <div class="preview-topics">
+                            <div class="preview-topic">
+                                <div class="topic-number">1</div>
+                                <span>파티클 시스템과 라이팅</span>
+                            </div>
+                            <div class="preview-topic">
+                                <div class="topic-number">2</div>
+                                <span>불, 물, 연기 효과 라이팅</span>
+                            </div>
+                            <div class="preview-topic">
+                                <div class="topic-number">3</div>
+                                <span>매직 & 판타지 라이팅</span>
+                            </div>
+                            <div class="preview-topic">
+                                <div class="topic-number">4</div>
+                                <span>사이파이 & 네온 라이팅</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Q&A Section -->
+                <div class="qa-section">
+                    <div class="section-header">
+                        <div class="section-icon qa-icon">
+                            <i class="fas fa-question-circle"></i>
+                        </div>
+                        <h2 class="section-title">Q&A 안내</h2>
+                    </div>
+                    
+                    <div class="qa-info">
+                        <div class="qa-title">
+                            <i class="fas fa-comments"></i>
+                            질문 & 토론
+                        </div>
+                        <div class="qa-details">
+                            <div class="qa-item">
+                                <div class="qa-item-icon">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <span>지금 바로 질문 받습니다</span>
+                            </div>
+                            <div class="qa-item">
+                                <div class="qa-item-icon">
+                                    <i class="fas fa-lightbulb"></i>
+                                </div>
+                                <span>실습 중 어려운 부분</span>
+                            </div>
+                            <div class="qa-item">
+                                <div class="qa-item-icon">
+                                    <i class="fas fa-tools"></i>
+                                </div>
+                                <span>기술적 문제 해결</span>
+                            </div>
+                            <div class="qa-item">
+                                <div class="qa-item-icon">
+                                    <i class="fas fa-share-alt"></i>
+                                </div>
+                                <span>작품 피드백 요청</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-box">
+                        <div class="contact-title">추가 문의</div>
+                        <div class="contact-info">
+                            강의 후에도 언제든지<br>
+                            개별 상담 가능합니다
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Thank You Section -->
+            <div class="thank-you-section">
+                <div class="thank-you-text">
+                    🎯 수고하셨습니다! 오늘도 한 단계 더 성장했습니다
+                </div>
+                <div class="encouragement-text">
+                    "빛을 다루는 기술은 곧 감정을 다루는 예술입니다"
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

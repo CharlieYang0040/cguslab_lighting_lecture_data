@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Back Light (역광)</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+            overflow: hidden;
+        }
+        .slide {
+            width: 1280px;
+            min-height: 720px;
+            background: linear-gradient(135deg, #1a2a6c, #3a1a6c);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        .slide-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            border-bottom: 2px solid rgba(255,255,255,0.2);
+        }
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #c0a0ff;
+            margin-bottom: 1rem;
+        }
+        .feature-item, .usage-item {
+            padding: 0.5rem 1rem;
+            margin-bottom: 0.5rem;
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            background-color: rgba(255,255,255,0.08);
+            transition: all 0.3s ease;
+        }
+        .feature-item:hover, .usage-item:hover {
+            background-color: rgba(255,255,255,0.15);
+        }
+        .icon-circle {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
+        .image-container {
+            border-radius: 0.5rem;
+            overflow: hidden;
+            border: 2px solid rgba(255,255,255,0.2);
+        }
+        .page-number {
+            position: absolute;
+            bottom: 1rem;
+            right: 1rem;
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+        .light-diagram {
+            width: 180px;
+            height: 180px;
+            margin: 0 auto;
+            position: relative;
+            background-color: rgba(255,255,255,0.05);
+            border-radius: 0.5rem;
+        }
+        .subject {
+            width: 40px;
+            height: 60px;
+            background-color: #6b7280;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 4px;
+        }
+        .light-source {
+            width: 30px;
+            height: 30px;
+            background-color: #a78bfa;
+            border-radius: 50%;
+            position: absolute;
+            box-shadow: 0 0 20px 10px rgba(167, 139, 250, 0.4);
+        }
+        .light-ray {
+            position: absolute;
+            height: 2px;
+            background: linear-gradient(to left, rgba(167, 139, 250, 0.8), rgba(167, 139, 250, 0));
+            transform-origin: right center;
+        }
+        .backlight-effect {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(167, 139, 250, 0.2) 0%, rgba(0, 0, 0, 0) 70%);
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+        .subject-silhouette {
+            background-color: #2c2c2c;
+            box-shadow: 0 0 10px 2px rgba(167, 139, 250, 0.6);
+        }
+    </style>
+</head>
+<body>
+    <div class="slide p-10 flex flex-col">
+        <!-- Backlight visual effect -->
+        <div class="backlight-effect"></div>
+        
+        <!-- Slide Header -->
+        <div class="slide-title pb-4 mb-6 flex items-center relative z-10">
+            <i class="fas fa-moon mr-4 text-purple-300"></i>
+            <span>Back Light (역광)</span>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex flex-1 space-x-6 relative z-10">
+            <!-- Left Column: Definition, Features, Uses -->
+            <div class="w-1/2 space-y-6">
+                <!-- Definition -->
+                <div>
+                    <div class="section-title flex items-center">
+                        <i class="fas fa-info-circle mr-3 text-purple-300"></i>
+                        <span>정의</span>
+                    </div>
+                    <div class="bg-purple-900 bg-opacity-30 p-4 rounded-lg text-lg">
+                        <span class="font-bold text-purple-300">피사체의 뒤에서 빛을 비추어</span> 실루엣 효과를 만듭니다.
+                    </div>
+                </div>
+
+                <!-- Features -->
+                <div>
+                    <div class="section-title flex items-center">
+                        <i class="fas fa-list-ul mr-3 text-purple-300"></i>
+                        <span>특징</span>
+                    </div>
+                    
+                    <div class="space-y-2">
+                        <div class="feature-item">
+                            <div class="icon-circle bg-purple-600">
+                                <i class="fas fa-user-alt-slash text-white"></i>
+                            </div>
+                            <span><strong>실루엣 생성</strong>: 피사체의 윤곽선을 강조합니다</span>
+                        </div>
+
+                        <div class="feature-item">
+                            <div class="icon-circle bg-purple-600">
+                                <i class="fas fa-radiation-alt text-white"></i>
+                            </div>
+                            <span><strong>림 라이트 효과</strong>: 피사체 가장자리에 빛나는 테두리가 생깁니다</span>
+                        </div>
+
+                        <div class="feature-item">
+                            <div class="icon-circle bg-purple-600">
+                                <i class="fas fa-layer-group text-white"></i>
+                            </div>
+                            <span><strong>깊이감</strong>: 피사체와 배경 사이의 분리감이 증가합니다</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Uses -->
+                <div>
+                    <div class="section-title flex items-center">
+                        <i class="fas fa-tasks mr-3 text-purple-300"></i>
+                        <span>주요 용도/효과</span>
+                    </div>
+                    
+                    <div class="space-y-2">
+                        <div class="usage-item">
+                            <div class="icon-circle bg-indigo-600">
+                                <i class="fas fa-magic text-white"></i>
+                            </div>
+                            <span>피사체의 윤곽을 뚜렷하게 드러내며, <strong>신비로운 분위기</strong> 연출</span>
+                        </div>
+
+                        <div class="usage-item">
+                            <div class="icon-circle bg-indigo-600">
+                                <i class="fas fa-star text-white"></i>
+                            </div>
+                            <span><strong>환상적이거나 초현실적인</strong> 장면 연출에 적합</span>
+                        </div>
+
+                        <div class="usage-item">
+                            <div class="icon-circle bg-indigo-600">
+                                <i class="fas fa-gamepad text-white"></i>
+                            </div>
+                            <span>영화나 게임에서 <strong>긴장감 있는 등장</strong>이나 신비로운 캐릭터 표현에 활용</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Visual Materials -->
+            <div class="w-1/2 flex flex-col space-y-4">
+                <!-- Lighting Diagram -->
+                <div class="bg-gray-800 bg-opacity-50 p-4 rounded-lg">
+                    <div class="text-center mb-2 text-lg font-medium text-purple-300">조명 위치 다이어그램</div>
+                    <div class="light-diagram">
+                        <div class="subject subject-silhouette"></div>
+                        <div class="light-source" style="top: 50%; right: 20px; transform: translateY(-50%);"></div>
+                        <div class="light-ray" style="top: 50%; right: 35px; width: 60px; height: 2px; transform: translateY(-50%) rotate(0deg);"></div>
+                        <div class="light-ray" style="top: 40%; right: 35px; width: 70px; height: 2px; transform: translateY(-50%) rotate(-10deg);"></div>
+                        <div class="light-ray" style="top: 60%; right: 35px; width: 70px; height: 2px; transform: translateY(-50%) rotate(10deg);"></div>
+                        <div class="text-center absolute bottom-2 left-0 right-0 text-xs text-purple-300">뒤에서 빛이 비춤</div>
+                    </div>
+                </div>
+
+                <!-- Example Images -->
+                <div class="flex space-x-4 flex-1">
+                    <div class="w-1/2 flex flex-col">
+                        <div class="text-center mb-2 text-sm font-medium text-purple-300">림 라이트 효과</div>
+                        <div class="image-container flex-1 bg-gray-700 flex items-center justify-center">
+                            <img src="https://shotkit.com/wp-content/uploads/2022/09/Rim-light-portrait.jpg" alt="림 라이트 예시" class="object-cover h-full w-full">
+                        </div>
+                    </div>
+                    
+                    <div class="w-1/2 flex flex-col">
+                        <div class="text-center mb-2 text-sm font-medium text-purple-300">실루엣 효과</div>
+                        <div class="image-container flex-1 bg-gray-700 flex items-center justify-center">
+                            <img src="https://colesclassroom.com/wp-content/uploads/2016/10/png-to-jpeg.jpg" alt="실루엣 예시" class="object-cover h-full w-full">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Page Number -->
+        <div class="page-number">5 / 8</div>
+    </div>
+</body>
+</html>

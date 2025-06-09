@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time of Day (시간대별 라이팅) - 추가 예시</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', 'Malgun Gothic', sans-serif;
+        }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            background: linear-gradient(135deg, #1a2a3a 0%, #0d1721 100%);
+            color: #ffffff;
+            overflow: hidden;
+            position: relative;
+        }
+        .header {
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 1.5rem 3rem;
+            border-bottom: 2px solid rgba(163, 198, 255, 0.4);
+            display: flex;
+            align-items: center;
+        }
+        .header-icon {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            color: #a3c6ff;
+            font-size: 1.5rem;
+        }
+        .content {
+            padding: 1.5rem 3rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            height: calc(100% - 120px);
+        }
+        .examples-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            height: 100%;
+        }
+        .example-item {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .example-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        .example-image {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-bottom: 0.75rem;
+        }
+        .example-title {
+            font-weight: bold;
+            color: #ffcc66;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        .example-desc {
+            font-size: 0.8rem;
+            color: #e0e0e0;
+            line-height: 1.4;
+            flex: 1;
+        }
+        .large-example {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .large-image {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+        .large-title {
+            font-weight: bold;
+            color: #ffcc66;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+        }
+        .large-title i {
+            margin-right: 0.75rem;
+        }
+        .highlight {
+            color: #a3c6ff;
+            font-weight: bold;
+        }
+        .tips-container {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .tips-title {
+            font-weight: bold;
+            color: #ffcc66;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+        }
+        .tips-title i {
+            margin-right: 0.75rem;
+        }
+        .tip-item {
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: flex-start;
+            font-size: 0.9rem;
+        }
+        .tip-item:before {
+            content: "▸";
+            color: #a3c6ff;
+            font-weight: bold;
+            margin-right: 0.75rem;
+            margin-top: 0.1rem;
+        }
+        .footer {
+            padding: 1rem 3rem;
+            text-align: right;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            box-sizing: border-box;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+        .animation-highlight {
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        @keyframes glow {
+            from {
+                box-shadow: 0 0 5px rgba(163, 198, 255, 0.5);
+            }
+            to {
+                box-shadow: 0 0 20px rgba(163, 198, 255, 0.8);
+            }
+        }
+        .time-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(255, 204, 102, 0.9);
+            color: #1a2a3a;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+        .time-timeline {
+            height: 100px;
+            background: linear-gradient(to right, 
+                #1a1a2e 0%, 
+                #ff6b35 10%, 
+                #ffcc66 25%, 
+                #ffffff 50%, 
+                #ffcc66 75%, 
+                #ff6b35 90%, 
+                #16213e 100%);
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
+            margin: 1rem 0;
+        }
+        .time-timeline:hover {
+            transform: scaleY(1.1);
+            transition: all 0.3s ease;
+        }
+        .timeline-marker {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: rgba(255, 255, 255, 0.8);
+            animation: slide 8s linear infinite;
+        }
+        @keyframes slide {
+            0% { left: 0%; }
+            100% { left: 100%; }
+        }
+        .timeline-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 0.5rem;
+            font-size: 0.7rem;
+            color: #a3c6ff;
+        }
+        .color-temp-demo {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+        .temp-swatch {
+            height: 60px;
+            border-radius: 4px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .temp-swatch:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        .temp-swatch:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s ease;
+        }
+        .temp-swatch:hover:before {
+            left: 100%;
+        }
+        .golden { background: linear-gradient(135deg, #ff8c00, #ffcc66); }
+        .blue { background: linear-gradient(135deg, #4169e1, #6699ff); }
+        .daylight { background: linear-gradient(135deg, #f0f8ff, #ffffff); color: #333 !important; text-shadow: none; }
+        .tungsten { background: linear-gradient(135deg, #ff4500, #ff6600); }
+        .shadow-demo {
+            height: 80px;
+            background: #2a2a2a;
+            border-radius: 4px;
+            position: relative;
+            overflow: hidden;
+            margin: 0.5rem 0;
+            cursor: pointer;
+        }
+        .shadow-demo:hover {
+            background: #3a3a3a;
+            transition: all 0.3s ease;
+        }
+        .shadow-object {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 30px;
+            height: 30px;
+            background: #ffcc66;
+            border-radius: 50%;
+            box-shadow: var(--shadow-style);
+            transition: all 0.3s ease;
+        }
+        .morning-shadow { --shadow-style: 40px 10px 15px rgba(0,0,0,0.5); }
+        .noon-shadow { --shadow-style: 0px 20px 10px rgba(0,0,0,0.8); }
+        .evening-shadow { --shadow-style: -40px 10px 15px rgba(0,0,0,0.5); }
+        .night-shadow { --shadow-style: 0px 0px 20px rgba(102,153,255,0.6); }
+        .mood-indicator {
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            font-size: 1.2rem;
+            opacity: 0.8;
+        }
+        .interactive-sun {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: radial-gradient(circle, #ffcc66, #ff8c00);
+            border-radius: 50%;
+            box-shadow: 0 0 15px rgba(255, 204, 102, 0.6);
+            animation: orbit 12s linear infinite;
+            cursor: pointer;
+        }
+        @keyframes orbit {
+            0% { 
+                top: 80%; 
+                left: 0%; 
+                transform: scale(0.8);
+                box-shadow: 0 0 10px rgba(255, 140, 0, 0.4);
+            }
+            25% { 
+                top: 20%; 
+                left: 25%; 
+                transform: scale(1.2);
+                box-shadow: 0 0 20px rgba(255, 204, 102, 0.8);
+            }
+            50% { 
+                top: 10%; 
+                left: 50%; 
+                transform: scale(1.4);
+                box-shadow: 0 0 25px rgba(255, 255, 255, 0.9);
+            }
+            75% { 
+                top: 20%; 
+                left: 75%; 
+                transform: scale(1.2);
+                box-shadow: 0 0 20px rgba(255, 204, 102, 0.8);
+            }
+            100% { 
+                top: 80%; 
+                left: 100%; 
+                transform: scale(0.8);
+                box-shadow: 0 0 10px rgba(255, 140, 0, 0.4);
+            }
+        }
+        .time-period-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+        .period-card {
+            background-color: rgba(255, 255, 255, 0.08);
+            padding: 0.75rem;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+        .period-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(163, 198, 255, 0.5);
+            background-color: rgba(255, 255, 255, 0.12);
+        }
+        .period-icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+        .sunrise-icon { color: #ff8c00; }
+        .midday-icon { color: #ffffff; }
+        .sunset-icon { color: #ff6b35; }
+        .night-icon { color: #4169e1; }
+        .dynamic-sky {
+            height: 120px;
+            background: linear-gradient(to bottom, #87ceeb, #f0e68c);
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            margin: 1rem 0;
+            animation: skyChange 16s ease-in-out infinite;
+        }
+        @keyframes skyChange {
+            0%, 100% { background: linear-gradient(to bottom, #191970, #000080); }
+            25% { background: linear-gradient(to bottom, #ff8c00, #ffcc66); }
+            50% { background: linear-gradient(to bottom, #87ceeb, #ffffff); }
+            75% { background: linear-gradient(to bottom, #ff6b35, #ff8c00); }
+        }
+        .sky-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+        .cloud {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 20px;
+            animation: float 8s ease-in-out infinite;
+        }
+        .cloud1 {
+            width: 60px;
+            height: 20px;
+            top: 20%;
+            left: 20%;
+            animation-delay: 0s;
+        }
+        .cloud2 {
+            width: 80px;
+            height: 25px;
+            top: 30%;
+            left: 60%;
+            animation-delay: -2s;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateX(0px) translateY(0px); }
+            50% { transform: translateX(20px) translateY(-10px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="header">
+            <div class="header-icon">
+                <i class="fas fa-clock"></i>
+            </div>
+            <div>
+                <h1 class="text-3xl font-bold">Time of Day (시간대별 라이팅) - 추가 예시</h1>
+                <p class="text-sm opacity-70 mt-1">실무 적용 사례와 심화 학습</p>
+            </div>
+        </div>
+        
+        <div class="content">
+            <div>
+                <div class="large-example">
+                    <div class="large-title">
+                        <i class="fas fa-sun"></i> 시간대별 라이팅 변화
+                    </div>
+                    <div style="position: relative;">
+                        <img src="https://www.photopills.com/sites/default/files/articles/natural-light/natural-light-en.webp" alt="시간대별 라이팅 변화" class="large-image">
+                        <div class="time-badge">Time Progression</div>
+                        <div class="interactive-sun"></div>
+                    </div>
+                    <p class="text-sm">하루 동안 변화하는 <span class="highlight">자연광의 특성</span>과 <span class="highlight">분위기</span> 변화</p>
+                </div>
+                
+                <div class="tips-container">
+                    <div class="tips-title">
+                        <i class="fas fa-palette"></i> 시간대별 특성
+                    </div>
+                    
+                    <div class="time-timeline">
+                        <div class="timeline-marker"></div>
+                    </div>
+                    <div class="timeline-labels">
+                        <span>새벽</span>
+                        <span>일출</span>
+                        <span>오전</span>
+                        <span>정오</span>
+                        <span>오후</span>
+                        <span>일몰</span>
+                        <span>밤</span>
+                    </div>
+                    
+                    <div class="color-temp-demo">
+                        <div class="temp-swatch golden">
+                            <div>Golden Hour</div>
+                            <div>2700K</div>
+                        </div>
+                        <div class="temp-swatch daylight">
+                            <div>Midday</div>
+                            <div>5600K</div>
+                        </div>
+                        <div class="temp-swatch blue">
+                            <div>Blue Hour</div>
+                            <div>8000K</div>
+                        </div>
+                        <div class="temp-swatch tungsten">
+                            <div>Artificial</div>
+                            <div>3200K</div>
+                        </div>
+                    </div>
+                    
+                    <div class="tip-item"><span class="highlight">골든 아워</span>: 따뜻하고 부드러운 빛, 긴 그림자</div>
+                    <div class="tip-item"><span class="highlight">블루 아워</span>: 차가운 푸른빛, 균등한 조명</div>
+                    <div class="tip-item"><span class="highlight">정오</span>: 강하고 수직적인 빛, 높은 대비</div>
+                    <div class="tip-item"><span class="highlight">야간</span>: 인공조명, 다양한 색온도</div>
+                </div>
+            </div>
+            
+            <div class="examples-grid">
+                <div class="example-item animation-highlight">
+                    <div style="position: relative;">
+                        <img src="https://iso.500px.com/wp-content/uploads/2019/10/ON-THE-LI-RIVER-BY-TOBIAS-HAGG.jpeg" alt="골든 아워" class="example-image">
+                        <div class="time-badge">Golden</div>
+                    </div>
+                    <div class="example-title">황금빛 시간 (Golden Hour)</div>
+                    <div class="example-desc"><span class="highlight">따뜻한 색온도</span>와 <span class="highlight">부드러운 그림자</span>로 로맨틱한 분위기</div>
+                </div>
+                
+                <div class="example-item">
+                    <div style="position: relative;">
+                        <img src="https://www.photopills.com/sites/default/files/articles/natural-light/blue-hour-kim.webp" alt="블루 아워" class="example-image">
+                        <div class="time-badge">Blue</div>
+                    </div>
+                    <div class="example-title">푸른 시간 (Blue Hour)</div>
+                    <div class="example-desc"><span class="highlight">차가운 색온도</span>와 <span class="highlight">균등한 조명</span>으로 신비로운 분위기</div>
+                </div>
+                
+                <div class="example-item">
+                    <div class="dynamic-sky">
+                        <div class="sky-elements">
+                            <div class="cloud cloud1"></div>
+                            <div class="cloud cloud2"></div>
+                        </div>
+                    </div>
+                    <div class="example-title">하늘 색상 변화</div>
+                    <div class="example-desc">시간에 따른 <span class="highlight">하늘색 변화</span>와 <span class="highlight">구름의 색감</span></div>
+                </div>
+                
+                <div class="example-item">
+                    <div class="time-period-grid">
+                        <div class="period-card">
+                            <i class="period-icon sunrise-icon fas fa-sun"></i>
+                            <div>일출</div>
+                            <div style="font-size: 0.7rem; color: #ff8c00;">따뜻함</div>
+                        </div>
+                        <div class="period-card">
+                            <i class="period-icon midday-icon fas fa-sun"></i>
+                            <div>정오</div>
+                            <div style="font-size: 0.7rem; color: #ffffff;">강렬함</div>
+                        </div>
+                        <div class="period-card">
+                            <i class="period-icon sunset-icon fas fa-sun"></i>
+                            <div>일몰</div>
+                            <div style="font-size: 0.7rem; color: #ff6b35;">드라마틱</div>
+                        </div>
+                        <div class="period-card">
+                            <i class="period-icon night-icon fas fa-moon"></i>
+                            <div>야간</div>
+                            <div style="font-size: 0.7rem; color: #4169e1;">신비로움</div>
+                        </div>
+                    </div>
+                    <div class="example-title">시간대별 특성</div>
+                    <div class="example-desc">각 시간대의 <span class="highlight">고유한 분위기</span>와 <span class="highlight">감성적 효과</span></div>
+                </div>
+                
+                <div class="example-item">
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.5rem;">
+                        <div class="shadow-demo morning-shadow">
+                            <div class="shadow-object"></div>
+                            <div class="mood-indicator">🌅</div>
+                        </div>
+                        <div class="shadow-demo noon-shadow">
+                            <div class="shadow-object"></div>
+                            <div class="mood-indicator">☀️</div>
+                        </div>
+                        <div class="shadow-demo evening-shadow">
+                            <div class="shadow-object"></div>
+                            <div class="mood-indicator">🌆</div>
+                        </div>
+                        <div class="shadow-demo night-shadow">
+                            <div class="shadow-object"></div>
+                            <div class="mood-indicator">🌙</div>
+                        </div>
+                    </div>
+                    <div class="example-title">그림자 변화 패턴</div>
+                    <div class="example-desc">시간에 따른 <span class="highlight">그림자 방향</span>과 <span class="highlight">길이 변화</span></div>
+                </div>
+                
+                <div class="example-item">
+                    <div style="position: relative;">
+                        <img src="https://meteoraphototour.com/wp-content/uploads/2025/01/Meteora-Photo-Tour-04021-1024x683.jpg" alt="매직 아워" class="example-image">
+                        <div class="time-badge">Magic</div>
+                    </div>
+                    <div class="example-title">매직 아워 (Magic Hour)</div>
+                    <div class="example-desc"><span class="highlight">골든 아워</span>와 <span class="highlight">블루 아워</span>의 완벽한 조합</div>
+                </div>
+                
+                <div class="example-item">
+                    <div style="position: relative;">
+                        <img src="https://thephototeacher.wordpress.com/wp-content/uploads/2017/01/14311241378_e7bf78617b_b.jpg" alt="시간 변화" class="example-image">
+                        <div class="time-badge">Transition</div>
+                    </div>
+                    <div class="example-title">시간 전환 효과</div>
+                    <div class="example-desc"><span class="highlight">점진적 변화</span>와 <span class="highlight">극적 전환</span> 순간 포착</div>
+                </div>
+                
+                <div class="example-item">
+                    <div style="position: relative;">
+                        <img src="https://www.photopills.com/sites/default/files/tutorials/2021/natural-light-cover-web.jpg" alt="자연광 활용" class="example-image">
+                        <div class="time-badge">Natural</div>
+                    </div>
+                    <div class="example-title">자연광 활용법</div>
+                    <div class="example-desc">시간대별 <span class="highlight">자연광 특성</span>을 활용한 <span class="highlight">효과적 라이팅</span></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            컴퓨터 그래픽스 라이팅 입문 | Time of Day(시간대별 라이팅) 심화 학습
+        </div>
+    </div>
+</body>
+</html>

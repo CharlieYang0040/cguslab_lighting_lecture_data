@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>측면광 활용 예시 - 영화 & 애니메이션</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+            overflow: hidden;
+        }
+        .slide {
+            width: 1280px;
+            min-height: 720px;
+            background: linear-gradient(135deg, #1a2a6c, #2a3c7f);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        .slide-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            border-bottom: 2px solid rgba(255,255,255,0.2);
+        }
+        .example-card {
+            background: rgba(255,255,255,0.08);
+            border-radius: 1rem;
+            padding: 1rem;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        .example-card:hover {
+            background: rgba(255,255,255,0.15);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        .image-container {
+            border-radius: 0.75rem;
+            overflow: hidden;
+            border: 2px solid rgba(255,255,255,0.2);
+            height: 180px;
+            position: relative;
+        }
+        .image-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            display: flex;
+            align-items: flex-end;
+            padding: 1rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .example-card:hover .image-overlay {
+            opacity: 1;
+        }
+        .technique-box {
+            background: linear-gradient(135deg, #f97316, #ea580c);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            margin-top: 1rem;
+        }
+        .technique-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.75rem;
+            background: rgba(255,255,255,0.1);
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        .technique-item:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateX(5px);
+        }
+        .technique-item:last-child {
+            margin-bottom: 0;
+        }
+        .technique-icon {
+            width: 32px;
+            height: 32px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 0.75rem;
+            flex-shrink: 0;
+        }
+        .page-number {
+            position: absolute;
+            bottom: 1rem;
+            right: 1rem;
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+        .studio-badge {
+            position: absolute;
+            top: 0.75rem;
+            left: 0.75rem;
+            background: rgba(255,255,255,0.9);
+            color: #1f2937;
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            z-index: 10;
+        }
+        .lighting-indicator {
+            position: absolute;
+            top: 0.75rem;
+            right: 0.75rem;
+            background: rgba(249, 115, 22, 0.9);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            z-index: 10;
+        }
+        .side-light-glow {
+            position: absolute;
+            left: -100px;
+            top: 0;
+            width: 200px;
+            height: 100%;
+            background: linear-gradient(90deg, rgba(249, 115, 22, 0.3), rgba(249, 115, 22, 0));
+            z-index: 0;
+        }
+        .cinema-badge {
+            background: linear-gradient(45deg, #dc2626, #b91c1c);
+        }
+        .animation-badge {
+            background: linear-gradient(45deg, #7c3aed, #5b21b6);
+        }
+    </style>
+</head>
+<body>
+    <div class="slide p-8 flex flex-col">
+        <!-- Side light visual effect -->
+        <div class="side-light-glow"></div>
+        
+        <!-- Slide Header -->
+        <div class="slide-title pb-4 mb-6 flex items-center relative z-10">
+            <i class="fas fa-camera-movie mr-4 text-orange-300"></i>
+            <span>측면광 활용 예시 - 영화 & 애니메이션</span>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex flex-1 space-x-6 relative z-10">
+            <!-- Left Column: Professional Examples -->
+            <div class="w-3/5 space-y-4">
+                <div class="text-lg font-semibold text-orange-200 mb-4 flex items-center">
+                    <i class="fas fa-film mr-3"></i>
+                    <span>전문 작품 사례</span>
+                </div>
+
+                <!-- Example Grid -->
+                <div class="grid grid-cols-2 gap-4">
+                    <!-- Blade Runner 2049 -->
+                    <div class="example-card">
+                        <div class="image-container relative">
+                            <img src="https://www.santiniphotography.com/wp-content/uploads/2019/03/blade-runner-2049-2560x1440-officer-k-hd-12826.jpg" alt="Blade Runner 2049 측면광" class="object-cover h-full w-full">
+                            <div class="studio-badge cinema-badge">BLADE RUNNER 2049</div>
+                            <div class="lighting-indicator">
+                                <i class="fas fa-arrows-alt-h"></i>
+                            </div>
+                            <div class="image-overlay">
+                                <span class="text-sm font-medium">시네마토그래피의 걸작</span>
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <h4 class="font-bold text-orange-200">블레이드 러너 2049</h4>
+                            <p class="text-sm text-gray-300 mt-1">강렬한 측면광으로 캐릭터의 내면과 미래적 분위기 표현</p>
+                        </div>
+                    </div>
+
+                    <!-- Incredibles 2 -->
+                    <div class="example-card">
+                        <div class="image-container relative">
+                            <img src="https://assets.renderman.pixar.com/Incredibles_2/Light-Quality-01.jpg" alt="인크레더블 2 라이팅" class="object-cover h-full w-full">
+                            <div class="studio-badge animation-badge">PIXAR</div>
+                            <div class="lighting-indicator">
+                                <i class="fas fa-magic"></i>
+                            </div>
+                            <div class="image-overlay">
+                                <span class="text-sm font-medium">인크레더블 2</span>
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <h4 class="font-bold text-orange-200">픽사 인크레더블 2</h4>
+                            <p class="text-sm text-gray-300 mt-1">측면광으로 슈퍼히어로의 강인함과 드라마틱한 액션 표현</p>
+                        </div>
+                    </div>
+
+                    <!-- Mad Max Example -->
+                    <div class="example-card">
+                        <div class="image-container relative">
+                            <img src="https://www.santiniphotography.com/wp-content/uploads/2019/05/mad-max.jpg" alt="Mad Max 측면광" class="object-cover h-full w-full">
+                            <div class="studio-badge cinema-badge">MAD MAX</div>
+                            <div class="lighting-indicator">
+                                <i class="fas fa-fire"></i>
+                            </div>
+                            <div class="image-overlay">
+                                <span class="text-sm font-medium">포스트 아포칼립스</span>
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <h4 class="font-bold text-orange-200">매드 맥스: 분노의 도로</h4>
+                            <p class="text-sm text-gray-300 mt-1">거친 환경과 캐릭터의 생존 의지를 측면광으로 극대화</p>
+                        </div>
+                    </div>
+
+                    <!-- Incredibles 2 Layout -->
+                    <div class="example-card">
+                        <div class="image-container relative">
+                            <img src="https://assets.renderman.pixar.com/Incredibles_2/layout_and_lighting_08.jpg" alt="인크레더블 2 레이아웃" class="object-cover h-full w-full">
+                            <div class="studio-badge animation-badge">PIXAR</div>
+                            <div class="lighting-indicator">
+                                <i class="fas fa-layer-group"></i>
+                            </div>
+                            <div class="image-overlay">
+                                <span class="text-sm font-medium">레이아웃 & 라이팅</span>
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <h4 class="font-bold text-orange-200">픽사 제작 과정</h4>
+                            <p class="text-sm text-gray-300 mt-1">측면광을 활용한 전문적인 레이아웃과 라이팅 워크플로우</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Technique Guide -->
+            <div class="w-2/5">
+                <div class="text-lg font-semibold text-orange-200 mb-4 flex items-center">
+                    <i class="fas fa-lightbulb mr-3"></i>
+                    <span>측면광 마스터하기</span>
+                </div>
+
+                <div class="technique-box">
+                    <h3 class="text-xl font-bold mb-4 flex items-center">
+                        <i class="fas fa-video mr-3"></i>
+                        <span>시네마틱 기법</span>
+                    </h3>
+
+                    <div class="space-y-3">
+                        <div class="technique-item">
+                            <div class="technique-icon">
+                                <i class="fas fa-angle-left"></i>
+                            </div>
+                            <div>
+                                <div class="font-bold">45도 각도</div>
+                                <div class="text-sm">피사체 측면 45도에서 조명 설정</div>
+                            </div>
+                        </div>
+
+                        <div class="technique-item">
+                            <div class="technique-icon">
+                                <i class="fas fa-adjust"></i>
+                            </div>
+                            <div>
+                                <div class="font-bold">명암 대비</div>
+                                <div class="text-sm">한쪽은 밝게, 다른 쪽은 어둡게 하여 드라마 효과 극대화</div>
+                            </div>
+                        </div>
+
+                        <div class="technique-item">
+                            <div class="technique-icon">
+                                <i class="fas fa-eye"></i>
+                            </div>
+                            <div>
+                                <div class="font-bold">캐치라이트</div>
+                                <div class="text-sm">눈에 생기를 주는 작은 반사광 추가</div>
+                            </div>
+                        </div>
+
+                        <div class="technique-item">
+                            <div class="technique-icon">
+                                <i class="fas fa-palette"></i>
+                            </div>
+                            <div>
+                                <div class="font-bold">색온도 활용</div>
+                                <div class="text-sm">따뜻한/차가운 색상으로 감정 표현 강화</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Advanced Tips -->
+                <div class="mt-4 bg-gray-800 bg-opacity-50 p-4 rounded-lg">
+                    <h4 class="font-bold text-orange-200 mb-3 flex items-center">
+                        <i class="fas fa-star mr-2"></i>
+                        <span>프로 팁</span>
+                    </h4>
+                    <div class="space-y-3 text-sm">
+                        <div class="flex items-start">
+                            <i class="fas fa-check-circle mr-2 text-green-400 mt-1"></i>
+                            <span><strong>블렌더:</strong> Sun Light + Area Light 조합으로 부드러운 측면광 연출</span>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fas fa-check-circle mr-2 text-green-400 mt-1"></i>
+                            <span><strong>질감 강조:</strong> Normal Map과 함께 사용하여 표면 디테일 극대화</span>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fas fa-check-circle mr-2 text-green-400 mt-1"></i>
+                            <span><strong>감정 연출:</strong> 빛의 색상과 각도로 캐릭터의 심리 상태 표현</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Reference -->
+                <div class="mt-4 bg-gradient-to-r from-orange-600 to-red-600 p-3 rounded-lg">
+                    <div class="font-bold text-center mb-2">빠른 참조</div>
+                    <div class="grid grid-cols-2 gap-2 text-xs">
+                        <div class="bg-black bg-opacity-30 p-2 rounded text-center">
+                            <div class="font-bold">드라마</div>
+                            <div>강한 대비</div>
+                        </div>
+                        <div class="bg-black bg-opacity-30 p-2 rounded text-center">
+                            <div class="font-bold">자연스러움</div>
+                            <div>부드러운 측면광</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Page Number -->
+        <div class="page-number">5 / 8</div>
+    </div>
+</body>
+</html>

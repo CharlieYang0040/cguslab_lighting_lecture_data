@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Value (명암)</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', 'Malgun Gothic', sans-serif;
+        }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            background: linear-gradient(135deg, #1a2a3a 0%, #0d1721 100%);
+            color: #ffffff;
+            overflow: hidden;
+            position: relative;
+        }
+        .header {
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 1.5rem 3rem;
+            border-bottom: 2px solid rgba(163, 198, 255, 0.4);
+            display: flex;
+            align-items: center;
+        }
+        .header-icon {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            color: #a3c6ff;
+            font-size: 1.5rem;
+        }
+        .content {
+            padding: 2rem 3rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+        .left-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .concept-box {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .concept-title {
+            font-weight: bold;
+            color: #ffcc66;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+        }
+        .concept-title i {
+            margin-right: 0.75rem;
+        }
+        .highlight {
+            color: #a3c6ff;
+            font-weight: bold;
+        }
+        .image-container {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .main-image {
+            width: 100%;
+            max-height: 300px;
+            object-fit: contain;
+            margin-bottom: 1rem;
+            border-radius: 4px;
+        }
+        .caption {
+            font-size: 0.9rem;
+            color: #a3c6ff;
+            text-align: center;
+            font-style: italic;
+        }
+        .examples-container {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .example-image {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+        .example-image:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+        .footer {
+            padding: 1rem 3rem;
+            text-align: right;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            box-sizing: border-box;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+        .value-scale {
+            display: flex;
+            height: 50px;
+            margin-top: 1.5rem;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .value-segment {
+            flex: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="header">
+            <div class="header-icon">
+                <i class="fas fa-adjust"></i>
+            </div>
+            <div>
+                <h1 class="text-3xl font-bold">Value (명암)</h1>
+                <p class="text-sm opacity-70 mt-1">라이팅을 위한 비주얼 언어 1</p>
+            </div>
+        </div>
+        
+        <div class="content">
+            <div class="left-content">
+                <div class="concept-box">
+                    <div class="concept-title">
+                        <i class="fas fa-lightbulb"></i> 핵심 개념
+                    </div>
+                    <p>이미지 내 <span class="highlight">밝은 부분</span>과 <span class="highlight">어두운 부분</span>의 상대적인 밝기 차이</p>
+                    <p class="mt-3">명암의 분포는 피사체의 <span class="highlight">입체감</span>, <span class="highlight">질감</span>, 그리고 전체적인 장면의 <span class="highlight">분위기</span>를 조성하는 핵심 요소</p>
+                    
+                    <div class="value-scale">
+                        <div class="value-segment" style="background-color: #000000;"></div>
+                        <div class="value-segment" style="background-color: #333333;"></div>
+                        <div class="value-segment" style="background-color: #666666;"></div>
+                        <div class="value-segment" style="background-color: #999999;"></div>
+                        <div class="value-segment" style="background-color: #cccccc;"></div>
+                        <div class="value-segment" style="background-color: #ffffff;"></div>
+                    </div>
+                </div>
+                
+                <div class="concept-box">
+                    <div class="concept-title">
+                        <i class="fas fa-info-circle"></i> 추가 설명
+                    </div>
+                    <p>Value의 적절한 조절은:</p>
+                    <ul class="mt-2 space-y-2">
+                        <li>• <span class="highlight">시각적 계층</span>을 만들고</li>
+                        <li>• 관객의 시선을 <span class="highlight">중요한 영역</span>으로 유도</li>
+                        <li>• 장면의 <span class="highlight">깊이</span>와 <span class="highlight">드라마</span>를 극대화</li>
+                        <li>• 감정적 <span class="highlight">반응 유도</span>와 <span class="highlight">메시지 전달</span> 강화</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div>
+                <div class="image-container">
+                    <img src="https://finearttutorials.com/wp-content/uploads/2022/04/Denman-Ross-Value-Scale-1200-%C3%97-600-px-1024x512.png" alt="명암 단계" class="main-image">
+                    <p class="caption">그레이스케일로 표현된 명암 단계와 톤 값의 범위</p>
+                    
+                    <div class="examples-container">
+                        <img src="https://www.watercoloraffair.com/wp-content/uploads/2023/05/munsell-value-scale.jpg" alt="명암 분석 예시" class="example-image">
+                        <img src="https://www.watercoloraffair.com/wp-content/uploads/2023/05/3-step-value-scale.jpg" alt="명암 단계 적용" class="example-image">
+                    </div>
+                </div>
+                
+                <div class="concept-box mt-4">
+                    <div class="concept-title">
+                        <i class="fas fa-paint-brush"></i> 실무 적용
+                    </div>
+                    <p>명암 대비를 통해 <span class="highlight">피사체 강조</span>와 <span class="highlight">공간감 표현</span>이 가능합니다. 빛을 설정할 때 장면 내 명암 분포를 고려하여 의도한 <span class="highlight">시각적 계층구조</span>를 구축하세요.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            컴퓨터 그래픽스 라이팅 입문 | Value(명암)
+        </div>
+    </div>
+</body>
+</html>

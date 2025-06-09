@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>프레젠테이션 뷰어</title>
+    <link rel="stylesheet" href="drawing.css">
+</head>
+<body>
+    <div id="presentation-container">
+        <iframe id="slide-content" src="" frameborder="0"></iframe>
+        <canvas id="drawing-canvas"></canvas>
+    </div>
+
+    <div id="toolbar">
+        <button id="prev-slide">이전</button>
+        <button id="next-slide">다음</button>
+        <hr>
+        <label for="color-picker">색상:</label>
+        <input type="color" id="color-picker" value="#000000">
+        <label for="line-width">굵기:</label>
+        <input type="range" id="line-width" min="1" max="20" value="5">
+        <button id="pen-tool">펜</button>
+        <button id="eraser-tool">지우개</button>
+        <button id="clear-canvas">모두 지우기</button>
+    </div>
+
+    <script src="drawing.js"></script>
+</body>
+</html> 

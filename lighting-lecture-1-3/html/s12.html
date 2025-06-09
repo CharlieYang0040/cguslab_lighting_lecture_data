@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Three-Point Lighting 기법</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(90deg, #f9a826, #ffbd2f);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 10px rgba(249, 168, 38, 0.3);
+            text-align: center;
+        }
+        .light-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(8px);
+            border-radius: 15px;
+            transition: all 0.4s ease;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+        .light-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        .key-light {
+            border-color: #f9a826;
+        }
+        .key-light:hover {
+            box-shadow: 0 20px 40px rgba(249, 168, 38, 0.4);
+        }
+        .fill-light {
+            border-color: #4cc9f0;
+        }
+        .fill-light:hover {
+            box-shadow: 0 20px 40px rgba(76, 201, 240, 0.4);
+        }
+        .rim-light {
+            border-color: #f72585;
+        }
+        .rim-light:hover {
+            box-shadow: 0 20px 40px rgba(247, 37, 133, 0.4);
+        }
+        .light-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-size: 1.8rem;
+            transition: all 0.3s ease;
+        }
+        .key-light .light-icon {
+            background: rgba(249, 168, 38, 0.2);
+            color: #f9a826;
+        }
+        .fill-light .light-icon {
+            background: rgba(76, 201, 240, 0.2);
+            color: #4cc9f0;
+        }
+        .rim-light .light-icon {
+            background: rgba(247, 37, 133, 0.2);
+            color: #f72585;
+        }
+        .light-card:hover .light-icon {
+            transform: rotate(360deg) scale(1.1);
+        }
+        .diagram-container {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+        }
+        .setup-note {
+            background: rgba(249, 168, 38, 0.1);
+            border-left: 4px solid #f9a826;
+            border-radius: 8px;
+        }
+        .floating-lights {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 1;
+        }
+        .light-beam {
+            position: absolute;
+            width: 2px;
+            height: 100px;
+            background: linear-gradient(to bottom, rgba(249, 168, 38, 0.6), transparent);
+            animation: lightPulse 3s infinite ease-in-out;
+        }
+        .light-beam:nth-child(1) { top: 20%; left: 15%; animation-delay: 0s; }
+        .light-beam:nth-child(2) { top: 30%; right: 20%; animation-delay: 1s; transform: rotate(45deg); }
+        .light-beam:nth-child(3) { bottom: 25%; left: 25%; animation-delay: 2s; transform: rotate(-30deg); }
+        @keyframes lightPulse {
+            0%, 100% { opacity: 0.3; transform: scaleY(1); }
+            50% { opacity: 0.8; transform: scaleY(1.5); }
+        }
+        .highlight-text {
+            color: #f9a826;
+            font-weight: 600;
+        }
+        .technique-point {
+            display: flex;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .technique-point:last-child {
+            border-bottom: none;
+        }
+        .point-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            font-size: 0.8rem;
+        }
+        .lighting-setup {
+            position: relative;
+            background: radial-gradient(circle at center, rgba(255, 255, 255, 0.03), transparent);
+            border-radius: 15px;
+            padding: 20px;
+        }
+        .character-silhouette {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            z-index: 10;
+        }
+        .light-source {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            animation: lightGlow 2s infinite ease-in-out;
+        }
+        .key-source {
+            top: 20%;
+            left: 20%;
+            background: #f9a826;
+        }
+        .fill-source {
+            top: 20%;
+            right: 20%;
+            background: #4cc9f0;
+        }
+        .rim-source {
+            bottom: 30%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #f72585;
+        }
+        @keyframes lightGlow {
+            0%, 100% { box-shadow: 0 0 10px currentColor; }
+            50% { box-shadow: 0 0 20px currentColor; }
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container p-8 relative">
+        <!-- 배경 라이팅 효과 -->
+        <div class="floating-lights">
+            <div class="light-beam"></div>
+            <div class="light-beam"></div>
+            <div class="light-beam"></div>
+        </div>
+        
+        <!-- 제목 섹션 -->
+        <div class="text-center mb-6 z-10 relative">
+            <h1 class="section-title mb-3">
+                <i class="fas fa-lightbulb mr-3 text-yellow-400"></i>
+                Three-Point Lighting 기법
+            </h1>
+            <p class="text-lg opacity-80">캐릭터 라이팅의 <span class="highlight-text">기본이자 핵심</span>인 3점 조명 시스템</p>
+        </div>
+        
+        <!-- 메인 콘텐츠 -->
+        <div class="grid grid-cols-12 gap-6 h-auto z-10 relative">
+            <!-- 왼쪽: 3가지 라이팅 설명 -->
+            <div class="col-span-8">
+                <div class="grid grid-cols-3 gap-4 mb-6">
+                    <!-- Key Light -->
+                    <div class="light-card key-light p-4 text-center">
+                        <div class="light-icon">
+                            <i class="fas fa-sun"></i>
+                        </div>
+                        <h3 class="font-bold text-lg mb-2">Key Light</h3>
+                        <h4 class="text-sm text-yellow-400 mb-3 font-semibold">주광 / 메인 라이트</h4>
+                        <div class="text-xs space-y-1">
+                            <div class="technique-point">
+                                <div class="point-icon bg-yellow-500 text-black">1</div>
+                                <span><span class="highlight-text">주된 조명원</span>으로 얼굴 형태 정의</span>
+                            </div>
+                            <div class="technique-point">
+                                <div class="point-icon bg-yellow-500 text-black">2</div>
+                                <span>그림자와 하이라이트 <span class="highlight-text">기본 구조</span> 형성</span>
+                            </div>
+                            <div class="technique-point">
+                                <div class="point-icon bg-yellow-500 text-black">3</div>
+                                <span>가장 밝고 <span class="highlight-text">방향성</span>이 있는 빛</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Fill Light -->
+                    <div class="light-card fill-light p-4 text-center">
+                        <div class="light-icon">
+                            <i class="fas fa-adjust"></i>
+                        </div>
+                        <h3 class="font-bold text-lg mb-2">Fill Light</h3>
+                        <h4 class="text-sm text-blue-400 mb-3 font-semibold">보조광 / 필 라이트</h4>
+                        <div class="text-xs space-y-1">
+                            <div class="technique-point">
+                                <div class="point-icon bg-blue-400 text-black">1</div>
+                                <span>Key Light로 생긴 <span class="highlight-text">그림자를 완화</span></span>
+                            </div>
+                            <div class="technique-point">
+                                <div class="point-icon bg-blue-400 text-black">2</div>
+                                <span>Key Light 반대편에서 <span class="highlight-text">부드럽게</span> 조명</span>
+                            </div>
+                            <div class="technique-point">
+                                <div class="point-icon bg-blue-400 text-black">3</div>
+                                <span>Key Light보다 <span class="highlight-text">50-75% 밝기</span></span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Rim Light -->
+                    <div class="light-card rim-light p-4 text-center">
+                        <div class="light-icon">
+                            <i class="fas fa-circle-notch"></i>
+                        </div>
+                        <h3 class="font-bold text-lg mb-2">Rim Light</h3>
+                        <h4 class="text-sm text-pink-400 mb-3 font-semibold">가장자리광 / 백라이트</h4>
+                        <div class="text-xs space-y-1">
+                            <div class="technique-point">
+                                <div class="point-icon bg-pink-500 text-black">1</div>
+                                <span>캐릭터 <span class="highlight-text">윤곽선을 강조</span>하는 역할</span>
+                            </div>
+                            <div class="technique-point">
+                                <div class="point-icon bg-pink-500 text-black">2</div>
+                                <span>배경과 캐릭터를 <span class="highlight-text">분리</span>시킴</span>
+                            </div>
+                            <div class="technique-point">
+                                <div class="point-icon bg-pink-500 text-black">3</div>
+                                <span>뒤쪽이나 옆에서 <span class="highlight-text">가장자리만</span> 조명</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 라이팅 셋업 다이어그램 -->
+                <div class="diagram-container p-4">
+                    <h3 class="font-bold text-center mb-4 flex items-center justify-center">
+                        <i class="fas fa-drafting-compass mr-2 text-yellow-400"></i>
+                        Three-Point Lighting 배치 다이어그램
+                    </h3>
+                    <div class="lighting-setup h-40 relative">
+                        <div class="character-silhouette"></div>
+                        <div class="light-source key-source" title="Key Light"></div>
+                        <div class="light-source fill-source" title="Fill Light"></div>
+                        <div class="light-source rim-source" title="Rim Light"></div>
+                        
+                        <!-- 라이팅 방향 표시 -->
+                        <div class="absolute top-6 left-6 text-xs text-yellow-400">
+                            <i class="fas fa-arrow-right"></i> Key Light
+                        </div>
+                        <div class="absolute top-6 right-6 text-xs text-blue-400">
+                            <i class="fas fa-arrow-left"></i> Fill Light
+                        </div>
+                        <div class="absolute bottom-6 left-1/2 transform -translate-x-1/2 text-xs text-pink-400">
+                            <i class="fas fa-arrow-up"></i> Rim Light
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 오른쪽: 실제 예시 이미지 -->
+            <div class="col-span-4">
+                <div class="space-y-4">
+                    <div class="diagram-container p-3">
+                        <h4 class="font-bold text-sm mb-3 text-center">
+                            <i class="fas fa-image mr-2"></i>
+                            실제 적용 예시
+                        </h4>
+                        <img src="https://academyofanimatedart.com/wp-content/uploads/2022/12/3p-lighting-1-1024x384.jpg" 
+                             alt="Three Point Lighting 예시" 
+                             class="w-full h-32 object-cover rounded-lg mb-3">
+                        <p class="text-xs opacity-80 text-center">3D 캐릭터에 적용된 Three-Point Lighting</p>
+                    </div>
+                    
+                    <div class="diagram-container p-3">
+                        <img src="https://f.vimeocdn.com/cms-images/2021/08/Guide-to-3-point-lighting_Option2-1.png" 
+                             alt="라이팅 셋업 가이드" 
+                             class="w-full h-32 object-cover rounded-lg mb-3">
+                        <p class="text-xs opacity-80 text-center">전문적인 라이팅 셋업 가이드</p>
+                    </div>
+                    
+                    <div class="setup-note p-3">
+                        <h4 class="font-bold text-sm mb-2 flex items-center">
+                            <i class="fas fa-exclamation-triangle mr-2 text-yellow-400"></i>
+                            실습 포인트
+                        </h4>
+                        <ul class="text-xs space-y-1">
+                            <li><i class="fas fa-check mr-2 text-green-400"></i> Key Light 먼저 설정</li>
+                            <li><i class="fas fa-check mr-2 text-green-400"></i> Fill Light로 그림자 조절</li>
+                            <li><i class="fas fa-check mr-2 text-green-400"></i> Rim Light로 윤곽 강조</li>
+                            <li><i class="fas fa-check mr-2 text-green-400"></i> 각 라이트의 <span class="highlight-text">밝기 균형</span> 조정</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 하단 활용 가이드 -->
+        <div class="mt-4 text-center z-10 relative">
+            <p class="text-sm opacity-70">
+                <i class="fas fa-info-circle mr-1 text-yellow-400"></i>
+                Three-Point Lighting은 <span class="highlight-text">모든 캐릭터 라이팅의 기초</span>가 되는 시스템으로, 다른 기법들과 조합하여 사용됩니다
+            </p>
+        </div>
+    </div>
+</body>
+</html>

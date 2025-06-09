@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>탑라이트 활용 예시 - 클래식 영화의 극적 조명</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+            overflow: hidden;
+        }
+        .slide {
+            width: 1280px;
+            min-height: 720px;
+            background: linear-gradient(180deg, #1e3a8a, #1e40af, #3730a3);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        .slide-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            border-bottom: 2px solid rgba(255,255,255,0.2);
+        }
+        .example-card {
+            background: rgba(255,255,255,0.08);
+            border-radius: 1rem;
+            padding: 1rem;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        .example-card:hover {
+            background: rgba(255,255,255,0.15);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        .image-container {
+            border-radius: 0.75rem;
+            overflow: hidden;
+            border: 2px solid rgba(255,255,255,0.2);
+            height: 180px;
+            position: relative;
+        }
+        .image-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
+            display: flex;
+            align-items: flex-start;
+            padding: 1rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .example-card:hover .image-overlay {
+            opacity: 1;
+        }
+        .technique-box {
+            background: linear-gradient(135deg, #3730a3, #1e40af);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            margin-top: 1rem;
+        }
+        .technique-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.75rem;
+            background: rgba(255,255,255,0.1);
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        .technique-item:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateX(5px);
+        }
+        .technique-item:last-child {
+            margin-bottom: 0;
+        }
+        .technique-icon {
+            width: 32px;
+            height: 32px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 0.75rem;
+            flex-shrink: 0;
+        }
+        .page-number {
+            position: absolute;
+            bottom: 1rem;
+            right: 1rem;
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+        .studio-badge {
+            position: absolute;
+            top: 0.75rem;
+            left: 0.75rem;
+            background: rgba(255,255,255,0.9);
+            color: #1f2937;
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            z-index: 10;
+        }
+        .lighting-indicator {
+            position: absolute;
+            top: 0.75rem;
+            right: 0.75rem;
+            background: rgba(59, 130, 246, 0.9);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            z-index: 10;
+        }
+        .toplight-glow {
+            position: absolute;
+            top: -100px;
+            left: 0;
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(180deg, rgba(59, 130, 246, 0.3), rgba(59, 130, 246, 0));
+            z-index: 0;
+        }
+        .classic-badge {
+            background: linear-gradient(45deg, #dc2626, #b91c1c);
+        }
+        .noir-badge {
+            background: linear-gradient(45deg, #374151, #1f2937);
+        }
+        .dramatic-effect {
+            animation: dramaticGlow 4s ease-in-out infinite alternate;
+        }
+        @keyframes dramaticGlow {
+            0% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.3); }
+            100% { box-shadow: 0 0 40px rgba(59, 130, 246, 0.6); }
+        }
+        .shadow-animation {
+            animation: shadowPlay 3s ease-in-out infinite;
+        }
+        @keyframes shadowPlay {
+            0%, 100% { transform: scaleY(1); }
+            50% { transform: scaleY(1.1); }
+        }
+    </style>
+</head>
+<body>
+    <div class="slide p-8 flex flex-col">
+        <!-- Top light visual effect -->
+        <div class="toplight-glow"></div>
+        
+        <!-- Slide Header -->
+        <div class="slide-title pb-4 mb-6 flex items-center relative z-10">
+            <i class="fas fa-crown mr-4 text-blue-300"></i>
+            <span>탑라이트 활용 예시 - 클래식 영화의 극적 조명</span>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex flex-1 space-x-6 relative z-10">
+            <!-- Left Column: Professional Examples -->
+            <div class="w-3/5 space-y-4">
+                <div class="text-lg font-semibold text-blue-200 mb-4 flex items-center">
+                    <i class="fas fa-film mr-3"></i>
+                    <span>전문 작품 사례</span>
+                </div>
+
+                <!-- Example Grid -->
+                <div class="grid grid-cols-2 gap-4">
+                    <!-- The Godfather -->
+                    <div class="example-card dramatic-effect">
+                        <div class="image-container relative">
+                            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi2HafXwInUXlbFgMDJ7HABNFrBgN_yUMUmNx92Ot_Xa6q7L7LXtwtbk3lkcQwPrRg2ebu2bTDS3R7wZnZKPGIHfitfI2r69Zc-YuD4lPyC_pw70G4zbq13rJC_s4xaQo8sI7TGcmPmlkQ/w1200-h630-p-k-no-nu/undertakers02.jpeg" alt="대부 탑라이트" class="object-cover h-full w-full">
+                            <div class="studio-badge classic-badge">THE GODFATHER</div>
+                            <div class="lighting-indicator">
+                                <i class="fas fa-sort-amount-down"></i>
+                            </div>
+                            <div class="image-overlay">
+                                <span class="text-sm font-medium">장례식장의 극적 탑라이트</span>
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <h4 class="font-bold text-blue-200">대부 (The Godfather)</h4>
+                            <p class="text-sm text-gray-300 mt-1">장례식장 장면에서 위에서 내려오는 빛으로 숙연함과 위엄 연출</p>
+                        </div>
+                    </div>
+
+                    <!-- Godfather Lighting Setup -->
+                    <div class="example-card">
+                        <div class="image-container relative">
+                            <img src="https://i.ytimg.com/vi/xfsSU5k4Mag/maxresdefault.jpg" alt="대부 라이팅 셋업" class="object-cover h-full w-full">
+                            <div class="studio-badge classic-badge">LIGHTING SETUP</div>
+                            <div class="lighting-indicator">
+                                <i class="fas fa-lightbulb"></i>
+                            </div>
+                            <div class="image-overlay">
+                                <span class="text-sm font-medium">프로페셔널 셋업</span>
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <h4 class="font-bold text-blue-200">대부 라이팅 기법</h4>
+                            <p class="text-sm text-gray-300 mt-1">탑라이트 셋업과 리깅 방법을 보여주는 전문 기법</p>
+                        </div>
+                    </div>
+
+                    <!-- Citizen Kane -->
+                    <div class="example-card">
+                        <div class="image-container relative">
+                            <img src="https://www.ecgprod.com/wp-content/uploads/2017/07/citizen-kane-lighting-contrast.jpg" alt="시민 케인 조명" class="object-cover h-full w-full">
+                            <div class="studio-badge noir-badge">CITIZEN KANE</div>
+                            <div class="lighting-indicator">
+                                <i class="fas fa-theater-masks"></i>
+                            </div>
+                            <div class="image-overlay">
+                                <span class="text-sm font-medium">필름 누아르의 명작</span>
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <h4 class="font-bold text-blue-200">시민 케인</h4>
+                            <p class="text-sm text-gray-300 mt-1">강한 명암 대비로 캐릭터의 내적 갈등과 권력을 시각화</p>
+                        </div>
+                    </div>
+
+                    <!-- Modern Cinematography -->
+                    <div class="example-card">
+                        <div class="image-container relative">
+                            <img src="https://colorculture.org/wp-content/uploads/2024/11/image-1.png" alt="현대 시네마토그래피" class="object-cover h-full w-full">
+                            <div class="studio-badge classic-badge">CINEMATOGRAPHY</div>
+                            <div class="lighting-indicator">
+                                <i class="fas fa-video"></i>
+                            </div>
+                            <div class="image-overlay">
+                                <span class="text-sm font-medium">현대적 해석</span>
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <h4 class="font-bold text-blue-200">현대 영화의 탑라이트</h4>
+                            <p class="text-sm text-gray-300 mt-1">클래식 기법을 현대적으로 재해석한 극적 조명 효과</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Technique Guide -->
+            <div class="w-2/5">
+                <div class="text-lg font-semibold text-blue-200 mb-4 flex items-center">
+                    <i class="fas fa-graduation-cap mr-3"></i>
+                    <span>탑라이트 마스터하기</span>
+                </div>
+
+                <div class="technique-box">
+                    <h3 class="text-xl font-bold mb-4 flex items-center">
+                        <i class="fas fa-sort-amount-down mr-3"></i>
+                        <span>클래식 기법</span>
+                    </h3>
+
+                    <div class="space-y-3">
+                        <div class="technique-item shadow-animation">
+                            <div class="technique-icon">
+                                <i class="fas fa-angle-down"></i>
+                            </div>
+                            <div>
+                                <div class="font-bold">90도 수직 배치</div>
+                                <div class="text-sm">피사체 정수리 위에서 수직으로 비춤</div>
+                            </div>
+                        </div>
+
+                        <div class="technique-item">
+                            <div class="technique-icon">
+                                <i class="fas fa-mask"></i>
+                            </div>
+                            <div>
+                                <div class="font-bold">극적 그림자</div>
+                                <div class="text-sm">눈과 뺨에 강한 그림자로 신비감 연출</div>
+                            </div>
+                        </div>
+
+                        <div class="technique-item">
+                            <div class="technique-icon">
+                                <i class="fas fa-adjust"></i>
+                            </div>
+                            <div>
+                                <div class="font-bold">명암 대비</div>
+                                <div class="text-sm">하이라이트와 섀도우의 극명한 대비</div>
+                            </div>
+                        </div>
+
+                        <div class="technique-item">
+                            <div class="technique-icon">
+                                <i class="fas fa-brain"></i>
+                            </div>
+                            <div>
+                                <div class="font-bold">심리적 효과</div>
+                                <div class="text-sm">위엄, 권위, 내적 갈등 표현에 효과적</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Advanced Tips -->
+                <div class="mt-4 bg-gray-800 bg-opacity-50 p-4 rounded-lg">
+                    <h4 class="font-bold text-blue-200 mb-3 flex items-center">
+                        <i class="fas fa-star mr-2"></i>
+                        <span>프로 팁</span>
+                    </h4>
+                    <div class="space-y-3 text-sm">
+                        <div class="flex items-start">
+                            <i class="fas fa-check-circle mr-2 text-green-400 mt-1"></i>
+                            <span><strong>블렌더:</strong> Area Light를 피사체 위에 배치하고 강도 조절</span>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fas fa-check-circle mr-2 text-green-400 mt-1"></i>
+                            <span><strong>각도 조절:</strong> 완전 수직보다 약간 기울여 자연스러운 효과</span>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fas fa-check-circle mr-2 text-green-400 mt-1"></i>
+                            <span><strong>보조광:</strong> 측면에서 약한 Fill Light로 그림자 완화</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Film Reference -->
+                <div class="mt-4 bg-gradient-to-r from-blue-600 to-indigo-600 p-3 rounded-lg">
+                    <div class="font-bold text-center mb-2">영화 참조</div>
+                    <div class="grid grid-cols-2 gap-2 text-xs">
+                        <div class="bg-black bg-opacity-30 p-2 rounded text-center">
+                            <div class="font-bold">The Godfather</div>
+                            <div>장례식장</div>
+                        </div>
+                        <div class="bg-black bg-opacity-30 p-2 rounded text-center">
+                            <div class="font-bold">Citizen Kane</div>
+                            <div>권력의 그림자</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Page Number -->
+        <div class="page-number">10 / 13</div>
+    </div>
+</body>
+</html>

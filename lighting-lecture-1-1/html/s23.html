@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chiaro Scuro (키아로스쿠로) - 추가 예시</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', 'Malgun Gothic', sans-serif;
+        }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            background: linear-gradient(135deg, #1a2a3a 0%, #0d1721 100%);
+            color: #ffffff;
+            overflow: hidden;
+            position: relative;
+        }
+        .header {
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 1.5rem 3rem;
+            border-bottom: 2px solid rgba(163, 198, 255, 0.4);
+            display: flex;
+            align-items: center;
+        }
+        .header-icon {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            color: #a3c6ff;
+            font-size: 1.5rem;
+        }
+        .content {
+            padding: 1.5rem 3rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            height: calc(100% - 120px);
+        }
+        .examples-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            height: 100%;
+        }
+        .example-item {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .example-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        .example-image {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-bottom: 0.75rem;
+        }
+        .example-title {
+            font-weight: bold;
+            color: #ffcc66;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        .example-desc {
+            font-size: 0.8rem;
+            color: #e0e0e0;
+            line-height: 1.4;
+            flex: 1;
+        }
+        .large-example {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .large-image {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+        .large-title {
+            font-weight: bold;
+            color: #ffcc66;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+        }
+        .large-title i {
+            margin-right: 0.75rem;
+        }
+        .highlight {
+            color: #a3c6ff;
+            font-weight: bold;
+        }
+        .tips-container {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .tips-title {
+            font-weight: bold;
+            color: #ffcc66;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+        }
+        .tips-title i {
+            margin-right: 0.75rem;
+        }
+        .tip-item {
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: flex-start;
+            font-size: 0.9rem;
+        }
+        .tip-item:before {
+            content: "▸";
+            color: #a3c6ff;
+            font-weight: bold;
+            margin-right: 0.75rem;
+            margin-top: 0.1rem;
+        }
+        .footer {
+            padding: 1rem 3rem;
+            text-align: right;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            box-sizing: border-box;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+        .animation-highlight {
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        @keyframes glow {
+            from {
+                box-shadow: 0 0 5px rgba(163, 198, 255, 0.5);
+            }
+            to {
+                box-shadow: 0 0 20px rgba(163, 198, 255, 0.8);
+            }
+        }
+        .technique-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(255, 204, 102, 0.9);
+            color: #1a2a3a;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+        .chiaroscuro-demo {
+            position: relative;
+            height: 120px;
+            background: linear-gradient(90deg, #000000 0%, #333333 30%, #ffffff 70%, #000000 100%);
+            border-radius: 4px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .demo-sphere {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 25% 25%, #ffffff, #666666, #000000);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .demo-sphere::before {
+            content: '';
+            position: absolute;
+            top: 15%;
+            left: 20%;
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(circle, rgba(255,255,255,0.8), transparent);
+            border-radius: 50%;
+        }
+        .chiaroscuro-demo:hover .demo-sphere {
+            transform: scale(1.1);
+            filter: contrast(1.5);
+        }
+        .contrast-scale {
+            display: flex;
+            height: 40px;
+            width: 100%;
+            margin: 0.75rem 0;
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+        .scale-dark {
+            background: linear-gradient(to right, #000000, #333333);
+            width: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: #fff;
+        }
+        .scale-light {
+            background: linear-gradient(to right, #cccccc, #ffffff);
+            width: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: #333;
+        }
+        .masters-gallery {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+        }
+        .master-work {
+            background-color: rgba(255, 255, 255, 0.08);
+            padding: 0.5rem;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 0.75rem;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .master-work:hover {
+            background-color: rgba(255, 204, 102, 0.2);
+            transform: scale(1.05);
+        }
+        .master-icon {
+            font-size: 1.2rem;
+            margin-bottom: 0.25rem;
+            color: #a3c6ff;
+        }
+        .master-name {
+            font-size: 0.7rem;
+            color: #e0e0e0;
+            margin-top: 0.25rem;
+        }
+        .modern-applications {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+        }
+        .app-item {
+            background-color: rgba(255, 255, 255, 0.08);
+            padding: 0.75rem 0.5rem;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 0.75rem;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .app-item:hover {
+            background-color: rgba(163, 198, 255, 0.2);
+            transform: translateY(-2px);
+        }
+        .app-icon {
+            font-size: 1.1rem;
+            margin-bottom: 0.25rem;
+            color: #ffcc66;
+        }
+        .lighting-setup {
+            position: relative;
+            height: 100px;
+            background: linear-gradient(45deg, #000000, #1a1a1a);
+            border-radius: 4px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        .setup-light {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: radial-gradient(circle, #ffdd44, transparent);
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+        .main-light {
+            top: 20%;
+            left: 20%;
+            z-index: 3;
+        }
+        .setup-subject {
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 50px;
+            background: linear-gradient(45deg, #ffffff 0%, #888888 50%, #000000 100%);
+            border-radius: 20px 20px 5px 5px;
+            z-index: 2;
+        }
+        .lighting-setup:hover .setup-light {
+            transform: scale(1.2);
+            filter: brightness(1.3);
+        }
+        .lighting-setup:hover .setup-subject {
+            filter: contrast(1.5);
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="header">
+            <div class="header-icon">
+                <i class="fas fa-palette"></i>
+            </div>
+            <div>
+                <h1 class="text-3xl font-bold">Chiaro Scuro (키아로스쿠로) - 추가 예시</h1>
+                <p class="text-sm opacity-70 mt-1">실무 적용 사례와 심화 학습</p>
+            </div>
+        </div>
+        
+        <div class="content">
+            <div>
+                <div class="large-example">
+                    <div class="large-title">
+                        <i class="fas fa-crown"></i> 거장들의 키아로스쿠로
+                    </div>
+                    <div style="position: relative;">
+                        <img src="https://trembelingart.com/wp-content/uploads/2024/09/Chiaroscuro-_The-Calling-of-St.-Matthew-.jpg" alt="카라바조 성 마태의 소명" class="large-image">
+                        <div class="technique-badge">Caravaggio</div>
+                    </div>
+                    <p class="text-sm"><span class="highlight">카라바조</span>의 '성 마태의 소명' - 극적인 빛과 어둠의 대비로 신성함과 일상성을 표현</p>
+                </div>
+                
+                <div class="tips-container">
+                    <div class="tips-title">
+                        <i class="fas fa-lightbulb"></i> 키아로스쿠로 구현 기법
+                    </div>
+                    
+                    <div class="contrast-scale">
+                        <div class="scale-dark">Scuro (어둠)</div>
+                        <div class="scale-light">Chiaro (빛)</div>
+                    </div>
+                    
+                    <div class="tip-item"><span class="highlight">단일 강광원</span>: 하나의 강한 빛으로 극적 대비 연출</div>
+                    <div class="tip-item"><span class="highlight">선택적 조명</span>: 중요한 요소만 빛으로 강조</div>
+                    <div class="tip-item"><span class="highlight">깊은 그림자</span>: 배경을 어둠으로 처리하여 주제 부각</div>
+                    <div class="tip-item"><span class="highlight">감정 표현</span>: 빛의 방향과 강도로 심리상태 전달</div>
+                    
+                    <div class="masters-gallery">
+                        <div class="master-work">
+                            <div class="master-icon"><i class="fas fa-paint-brush"></i></div>
+                            <div>카라바조</div>
+                            <div class="master-name">Caravaggio</div>
+                        </div>
+                        <div class="master-work">
+                            <div class="master-icon"><i class="fas fa-palette"></i></div>
+                            <div>렘브란트</div>
+                            <div class="master-name">Rembrandt</div>
+                        </div>
+                        <div class="master-work">
+                            <div class="master-icon"><i class="fas fa-brush"></i></div>
+                            <div>조르주 드 라투르</div>
+                            <div class="master-name">La Tour</div>
+                        </div>
+                        <div class="master-work">
+                            <div class="master-icon"><i class="fas fa-image"></i></div>
+                            <div>테네브리즘</div>
+                            <div class="master-name">Style</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="examples-grid">
+                <div class="example-item animation-highlight">
+                    <div style="position: relative;">
+                        <img src="https://finearttutorials.com/wp-content/uploads/2020/06/Caravaggio-Saint-Jerome-Writing.jpg" alt="카라바조 성 제롬" class="example-image">
+                        <div class="technique-badge">Classic</div>
+                    </div>
+                    <div class="example-title">카라바조의 성 제롬</div>
+                    <div class="example-desc"><span class="highlight">측면광</span>과 <span class="highlight">강한 명암</span>으로 인물의 집중과 경건함을 표현</div>
+                </div>
+                
+                <div class="example-item">
+                    <div style="position: relative;">
+                        <img src="https://www.virtualartacademy.com/wp-content/uploads/2021/03/Caravaggio-Salome.jpg" alt="카라바조 살로메" class="example-image">
+                        <div class="technique-badge">Drama</div>
+                    </div>
+                    <div class="example-title">살로메와 세례자 요한의 머리</div>
+                    <div class="example-desc"><span class="highlight">극적 순간</span>을 포착한 강렬한 빛의 대비와 <span class="highlight">심리적 긴장감</span></div>
+                </div>
+                
+                <div class="example-item">
+                    <div class="chiaroscuro-demo">
+                        <div class="demo-sphere"></div>
+                    </div>
+                    <div class="example-title mt-2">인터랙티브 데모</div>
+                    <div class="example-desc">마우스를 올려 <span class="highlight">빛과 그림자</span>의 극적 대비 효과 확인</div>
+                </div>
+                
+                <div class="example-item">
+                    <div class="lighting-setup">
+                        <div class="setup-light main-light"></div>
+                        <div class="setup-subject"></div>
+                    </div>
+                    <div class="example-title mt-2">조명 설정 예시</div>
+                    <div class="example-desc"><span class="highlight">단일 강광원</span>을 사용한 키아로스쿠로 라이팅 구성</div>
+                </div>
+                
+                <div class="example-item">
+                    <div style="position: relative;">
+                        <img src="https://images.ctfassets.net/3s5io6mnxfqz/66o4IDTO31ewQJyyOsVH6Y/92adcd308bf0ea8d0c68fb31d8dc3613/1024px-Circle_of_Rembrandt_-_Rembrandts_moeder_2.jpeg" alt="렘브란트 작품" class="example-image">
+                        <div class="technique-badge">Rembrandt</div>
+                    </div>
+                    <div class="example-title">렘브란트의 어머니</div>
+                    <div class="example-desc"><span class="highlight">부드러운 키아로스쿠로</span>로 인물의 <span class="highlight">내면적 깊이</span> 표현</div>
+                </div>
+                
+                <div class="example-item">
+                    <div class="modern-applications">
+                        <div class="app-item">
+                            <div class="app-icon"><i class="fas fa-film"></i></div>
+                            <div>영화</div>
+                        </div>
+                        <div class="app-item">
+                            <div class="app-icon"><i class="fas fa-camera"></i></div>
+                            <div>사진</div>
+                        </div>
+                        <div class="app-item">
+                            <div class="app-icon"><i class="fas fa-gamepad"></i></div>
+                            <div>게임</div>
+                        </div>
+                    </div>
+                    <div class="example-title mt-2">현대적 활용</div>
+                    <div class="example-desc"><span class="highlight">영화 누아르</span>, <span class="highlight">포트레이트</span>, <span class="highlight">게임 아트</span> 등에서 광범위하게 활용</div>
+                </div>
+                
+                <div class="example-item">
+                    <div style="position: relative;">
+                        <img src="https://drawpaintacademy.com/wp-content/uploads/2019/03/Caravaggio-David-with-the-Head-of-Goliath-1610.jpg" alt="다비드와 골리앗의 머리" class="example-image">
+                        <div class="technique-badge">Symbolic</div>
+                    </div>
+                    <div class="example-title">상징적 표현</div>
+                    <div class="example-desc"><span class="highlight">빛과 어둠</span>을 통한 선악, 생사, 희망과 절망의 <span class="highlight">이원론적 표현</span></div>
+                </div>
+                
+                <div class="example-item">
+                    <div style="position: relative;">
+                        <img src="https://distilennui.com/userfiles/image/serving-up-the-head-of-John-the-Baptist-by-Caravaggio-III.jpg" alt="세례자 요한의 머리" class="example-image">
+                        <div class="technique-badge">Technique</div>
+                    </div>
+                    <div class="example-title">기법적 완성도</div>
+                    <div class="example-desc"><span class="highlight">정교한 명암 처리</span>와 <span class="highlight">선택적 조명</span>으로 최고의 시각적 임팩트 달성</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            컴퓨터 그래픽스 라이팅 입문 | Chiaro Scuro(키아로스쿠로) 심화 학습
+        </div>
+    </div>
+</body>
+</html>

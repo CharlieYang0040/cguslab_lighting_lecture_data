@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Light & Shadow (빛과 그림자) - 추가 예시</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', 'Malgun Gothic', sans-serif;
+        }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            background: linear-gradient(135deg, #1a2a3a 0%, #0d1721 100%);
+            color: #ffffff;
+            overflow: hidden;
+            position: relative;
+        }
+        .header {
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 1.5rem 3rem;
+            border-bottom: 2px solid rgba(163, 198, 255, 0.4);
+            display: flex;
+            align-items: center;
+        }
+        .header-icon {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            color: #a3c6ff;
+            font-size: 1.5rem;
+        }
+        .content {
+            padding: 1.5rem 3rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            height: calc(100% - 120px);
+        }
+        .examples-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            height: 100%;
+        }
+        .example-item {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .example-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        .example-image {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-bottom: 0.75rem;
+        }
+        .example-title {
+            font-weight: bold;
+            color: #ffcc66;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        .example-desc {
+            font-size: 0.8rem;
+            color: #e0e0e0;
+            line-height: 1.4;
+            flex: 1;
+        }
+        .large-example {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .large-image {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+        .large-title {
+            font-weight: bold;
+            color: #ffcc66;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+        }
+        .large-title i {
+            margin-right: 0.75rem;
+        }
+        .highlight {
+            color: #a3c6ff;
+            font-weight: bold;
+        }
+        .tips-container {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .tips-title {
+            font-weight: bold;
+            color: #ffcc66;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+        }
+        .tips-title i {
+            margin-right: 0.75rem;
+        }
+        .tip-item {
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: flex-start;
+            font-size: 0.9rem;
+        }
+        .tip-item:before {
+            content: "▸";
+            color: #a3c6ff;
+            font-weight: bold;
+            margin-right: 0.75rem;
+            margin-top: 0.1rem;
+        }
+        .footer {
+            padding: 1rem 3rem;
+            text-align: right;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            box-sizing: border-box;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+        .animation-highlight {
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        @keyframes glow {
+            from {
+                box-shadow: 0 0 5px rgba(163, 198, 255, 0.5);
+            }
+            to {
+                box-shadow: 0 0 20px rgba(163, 198, 255, 0.8);
+            }
+        }
+        .shadow-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(255, 204, 102, 0.9);
+            color: #1a2a3a;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+        .hard-badge {
+            background-color: rgba(255, 102, 102, 0.9);
+        }
+        .soft-badge {
+            background-color: rgba(102, 204, 102, 0.9);
+        }
+        .cast-badge {
+            background-color: rgba(102, 204, 255, 0.9);
+        }
+        .form-badge {
+            background-color: rgba(255, 153, 102, 0.9);
+        }
+        .shadow-simulator {
+            position: relative;
+            height: 120px;
+            background: linear-gradient(45deg, #f0f0f0 0%, #e0e0e0 100%);
+            border-radius: 4px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.5s ease;
+            cursor: pointer;
+        }
+        .shadow-object {
+            width: 40px;
+            height: 40px;
+            background: #333;
+            border-radius: 50%;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        .shadow-cast {
+            position: absolute;
+            width: 60px;
+            height: 20px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 50%;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            transition: all 0.3s ease;
+        }
+        .shadow-simulator:hover .shadow-object {
+            transform: translateY(-10px);
+        }
+        .shadow-simulator:hover .shadow-cast {
+            transform: translateX(-50%) scale(1.2);
+            opacity: 0.6;
+        }
+        .shadow-simulator.soft {
+            background: linear-gradient(45deg, #f8f8f8 0%, #f0f0f0 100%);
+        }
+        .shadow-simulator.soft .shadow-cast {
+            filter: blur(3px);
+            background: rgba(0,0,0,0.2);
+        }
+        .shadow-types-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+        .shadow-type-item {
+            background-color: rgba(255, 255, 255, 0.08);
+            padding: 0.75rem;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+        }
+        .shadow-type-item:hover {
+            background-color: rgba(255, 204, 102, 0.2);
+            transform: scale(1.05);
+        }
+        .type-icon {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+        .hard-type { color: #ff6b6b; }
+        .soft-type { color: #66cc99; }
+        .cast-type { color: #66ccff; }
+        .form-type { color: #ffaa66; }
+        .comparison-container {
+            display: flex;
+            width: 100%;
+            margin-top: 1rem;
+            gap: 1rem;
+        }
+        .comparison-card {
+            flex: 1;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .comparison-title {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+        .comparison-image {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-bottom: 0.75rem;
+        }
+        .comparison-desc {
+            font-size: 0.85rem;
+            text-align: center;
+        }
+        .technical-demo {
+            position: relative;
+            height: 100px;
+            background: #1a1a1a;
+            border-radius: 4px;
+            overflow: hidden;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .demo-lights {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+        .demo-light {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            opacity: 0.7;
+            transition: all 0.3s ease;
+        }
+        .demo-hard {
+            background: #ff6b6b;
+            top: 20%;
+            left: 20%;
+            box-shadow: 0 0 10px #ff6b6b;
+        }
+        .demo-soft {
+            background: #66cc99;
+            top: 20%;
+            right: 20%;
+            box-shadow: 0 0 15px #66cc99;
+        }
+        .demo-subject {
+            width: 16px;
+            height: 16px;
+            background: rgba(255,255,255,0.9);
+            border-radius: 50%;
+            z-index: 10;
+        }
+        .technical-demo:hover .demo-light {
+            opacity: 1;
+            transform: scale(1.5);
+        }
+        .technical-demo:hover .demo-subject {
+            box-shadow: 0 0 20px rgba(255,255,255,0.8);
+        }
+        .analysis-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        .analysis-item {
+            background-color: rgba(255, 255, 255, 0.08);
+            padding: 0.5rem;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 0.75rem;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .analysis-item:hover {
+            background-color: rgba(163, 198, 255, 0.2);
+            transform: translateY(-2px);
+        }
+        .analysis-icon {
+            font-size: 1rem;
+            margin-bottom: 0.25rem;
+        }
+        .quality-icon { color: #ff9999; }
+        .mood-icon { color: #99ccff; }
+        .depth-icon { color: #99ff99; }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="header">
+            <div class="header-icon">
+                <i class="fas fa-mountain-sun"></i>
+            </div>
+            <div>
+                <h1 class="text-3xl font-bold">Light & Shadow (빛과 그림자) - 추가 예시</h1>
+                <p class="text-sm opacity-70 mt-1">실무 적용 사례와 심화 학습</p>
+            </div>
+        </div>
+        
+        <div class="content">
+            <div>
+                <div class="large-example">
+                    <div class="large-title">
+                        <i class="fas fa-shapes"></i> 그림자 유형 분석
+                    </div>
+                    <div style="position: relative;">
+                        <img src="https://images.squarespace-cdn.com/content/v1/5d557d99e99e5200016052b4/1612123189744-OY9KU4ITVDSLSB2W21XG/UnderstandingLightandShadowsforLearningtoPaint-1000-CastShadow.jpg" alt="그림자 유형 분석" class="large-image">
+                        <div class="shadow-badge cast-badge">Cast Shadow</div>
+                    </div>
+                    <p class="text-sm"><span class="highlight">캐스트 섀도우</span>와 <span class="highlight">폼 섀도우</span>의 구분과 실제 적용</p>
+                </div>
+                
+                <div class="tips-container">
+                    <div class="tips-title">
+                        <i class="fas fa-cogs"></i> 그림자 제어 기법
+                    </div>
+                    
+                    <div class="comparison-container">
+                        <div class="comparison-card">
+                            <div class="comparison-title" style="color: #ff6b6b;">Hard Shadow</div>
+                            <div class="shadow-simulator">
+                                <div class="shadow-object">
+                                    <div class="shadow-cast"></div>
+                                </div>
+                            </div>
+                            <div class="comparison-desc">작은 광원, 뚜렷한 경계</div>
+                        </div>
+                        <div class="comparison-card">
+                            <div class="comparison-title" style="color: #66cc99;">Soft Shadow</div>
+                            <div class="shadow-simulator soft">
+                                <div class="shadow-object">
+                                    <div class="shadow-cast"></div>
+                                </div>
+                            </div>
+                            <div class="comparison-desc">큰 광원, 부드러운 경계</div>
+                        </div>
+                    </div>
+                    
+                    <div class="tip-item"><span class="highlight">광원 크기</span>: 작을수록 하드, 클수록 소프트</div>
+                    <div class="tip-item"><span class="highlight">거리</span>: 광원이 가까울수록 소프트</div>
+                    <div class="tip-item"><span class="highlight">확산도</span>: 직접광 vs 확산광의 차이</div>
+                    <div class="tip-item"><span class="highlight">반사광</span>: 주변 환경이 그림자에 미치는 영향</div>
+                    
+                    <div class="shadow-types-grid">
+                        <div class="shadow-type-item">
+                            <div class="type-icon hard-type"><i class="fas fa-square"></i></div>
+                            <div>Hard</div>
+                        </div>
+                        <div class="shadow-type-item">
+                            <div class="type-icon soft-type"><i class="fas fa-cloud"></i></div>
+                            <div>Soft</div>
+                        </div>
+                        <div class="shadow-type-item">
+                            <div class="type-icon cast-type"><i class="fas fa-arrow-down"></i></div>
+                            <div>Cast</div>
+                        </div>
+                        <div class="shadow-type-item">
+                            <div class="type-icon form-type"><i class="fas fa-circle"></i></div>
+                            <div>Form</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="examples-grid">
+                <div class="example-item animation-highlight">
+                    <div style="position: relative;">
+                        <img src="https://willkempartschool.com/wp-content/uploads/2014/03/spherecoreshadow.jpg" alt="구체 그림자 연구" class="example-image">
+                        <div class="shadow-badge form-badge">Form Study</div>
+                    </div>
+                    <div class="example-title">기본 형태 연구</div>
+                    <div class="example-desc"><span class="highlight">구체</span>에서 나타나는 <span class="highlight">형태 그림자</span>와 <span class="highlight">코어 섀도우</span> 분석</div>
+                </div>
+                
+                <div class="example-item">
+                    <div style="position: relative;">
+                        <img src="https://bingedrawing.com/wp-content/uploads/2022/10/3-1-1024x733.png" alt="그림자 종류" class="example-image">
+                        <div class="shadow-badge">Types</div>
+                    </div>
+                    <div class="example-title">그림자 분류</div>
+                    <div class="example-desc">다양한 <span class="highlight">그림자 유형</span>과 각각의 <span class="highlight">특성</span> 및 <span class="highlight">활용법</span></div>
+                </div>
+                
+                <div class="example-item">
+                    <div class="technical-demo">
+                        <div class="demo-lights">
+                            <div class="demo-light demo-hard"></div>
+                            <div class="demo-light demo-soft"></div>
+                        </div>
+                        <div class="demo-subject"></div>
+                    </div>
+                    <div class="example-title mt-2">인터랙티브 데모</div>
+                    <div class="example-desc">마우스를 올려 <span class="highlight">하드/소프트</span> 라이팅의 <span class="highlight">그림자 차이</span> 체험</div>
+                </div>
+                
+                <div class="example-item">
+                    <div style="position: relative;">
+                        <img src="https://evolveartist.com/blog/wp-content/uploads/2019/06/shadows-1.jpg" alt="실제 적용" class="example-image">
+                        <div class="shadow-badge">Realistic</div>
+                    </div>
+                    <div class="example-title">실제 적용</div>
+                    <div class="example-desc"><span class="highlight">현실적인 렌더링</span>에서의 <span class="highlight">그림자 표현</span> 기법</div>
+                </div>
+                
+                <div class="example-item">
+                    <div class="analysis-grid">
+                        <div class="analysis-item">
+                            <div class="analysis-icon quality-icon"><i class="fas fa-star"></i></div>
+                            <div>Quality</div>
+                        </div>
+                        <div class="analysis-item">
+                            <div class="analysis-icon mood-icon"><i class="fas fa-heart"></i></div>
+                            <div>Mood</div>
+                        </div>
+                        <div class="analysis-item">
+                            <div class="analysis-icon depth-icon"><i class="fas fa-layer-group"></i></div>
+                            <div>Depth</div>
+                        </div>
+                    </div>
+                    <div class="example-title mt-2">그림자 효과</div>
+                    <div class="example-desc">그림자가 <span class="highlight">이미지 품질</span>, <span class="highlight">분위기</span>, <span class="highlight">깊이감</span>에 미치는 영향</div>
+                </div>
+                
+                <div class="example-item">
+                    <div style="position: relative;">
+                        <img src="https://www.peachpit.com/content/images/chap3_0321316312/elementLinks/dir2_03_22.jpg" alt="하드 섀도우" class="example-image">
+                        <div class="shadow-badge hard-badge">Hard</div>
+                    </div>
+                    <div class="example-title">하드 섀도우</div>
+                    <div class="example-desc"><span class="highlight">명확한 경계</span>와 <span class="highlight">강한 대비</span>로 만드는 극적인 효과</div>
+                </div>
+                
+                <div class="example-item">
+                    <div style="position: relative;">
+                        <img src="https://www.peachpit.com/content/images/chap3_0321316312/elementLinks/dir2_03_25.jpg" alt="소프트 섀도우" class="example-image">
+                        <div class="shadow-badge soft-badge">Soft</div>
+                    </div>
+                    <div class="example-title">소프트 섀도우</div>
+                    <div class="example-desc"><span class="highlight">부드러운 전환</span>과 <span class="highlight">자연스러운 표현</span>으로 만드는 현실감</div>
+                </div>
+                
+                <div class="example-item">
+                    <div style="position: relative;">
+                        <img src="https://static.wixstatic.com/media/acffc1_ea7a3b00b12840d0a6c3d9c25f068e79~mv2.jpg/v1/fill/w_1000,h_750,al_c,q_85,usm_0.66_1.00_0.01/acffc1_ea7a3b00b12840d0a6c3d9c25f068e79~mv2.jpg" alt="종합 가이드" class="example-image">
+                        <div class="shadow-badge">Guide</div>
+                    </div>
+                    <div class="example-title">종합 가이드</div>
+                    <div class="example-desc"><span class="highlight">빛과 그림자</span>의 <span class="highlight">기본 원리</span>부터 <span class="highlight">고급 기법</span>까지</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            컴퓨터 그래픽스 라이팅 입문 | Light & Shadow(빛과 그림자) 심화 학습
+        </div>
+    </div>
+</body>
+</html>

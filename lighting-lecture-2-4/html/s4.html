@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maya Python API 기초 활용</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        .code-font {
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .title-gradient {
+            background: linear-gradient(135deg, #0696d7 0%, #667eea 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .maya-blue { color: #0696d7; }
+        .code-bg {
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+        }
+        .syntax-keyword { color: #c678dd; }
+        .syntax-string { color: #98c379; }
+        .syntax-number { color: #d19a66; }
+        .syntax-comment { color: #5c6370; }
+        .syntax-function { color: #61afef; }
+        .api-card {
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+        .api-card:hover {
+            border-left-color: #0696d7;
+            transform: translateX(5px);
+            box-shadow: 0 10px 25px -5px rgba(6, 150, 215, 0.1);
+        }
+        .floating-maya {
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-8px) rotate(3deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container bg-gradient-to-br from-slate-50 to-cyan-50 flex flex-col">
+        
+        <!-- Header -->
+        <div class="bg-white shadow-lg px-16 py-5 border-b-4 border-cyan-500">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h1 class="text-4xl font-black title-gradient mb-1">Maya Python API 기초 활용</h1>
+                    <p class="text-gray-600 text-lg">maya.cmds 모듈로 시작하는 Maya 자동화</p>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="floating-maya">
+                        <div class="w-16 h-16 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-xl flex items-center justify-center">
+                            <i class="fas fa-cube text-white text-2xl"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 px-16 py-6">
+            <div class="grid grid-cols-5 gap-8 h-full">
+                
+                <!-- Left Column - API Concepts -->
+                <div class="col-span-2 space-y-4">
+                    <!-- Maya API Overview -->
+                    <div class="bg-white rounded-xl p-5 shadow-md api-card">
+                        <div class="flex items-center mb-3">
+                            <div class="w-10 h-10 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-full flex items-center justify-center mr-3">
+                                <i class="fas fa-code text-white"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-800">Maya Python API</h3>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-3">Maya의 모든 기능을 Python으로 제어할 수 있는 강력한 인터페이스</p>
+                        <div class="space-y-2 text-sm">
+                            <div class="flex items-center text-green-600">
+                                <i class="fas fa-check-circle mr-2"></i>
+                                <span>오브젝트 생성/삭제/수정</span>
+                            </div>
+                            <div class="flex items-center text-green-600">
+                                <i class="fas fa-check-circle mr-2"></i>
+                                <span>속성 및 변환 제어</span>
+                            </div>
+                            <div class="flex items-center text-green-600">
+                                <i class="fas fa-check-circle mr-2"></i>
+                                <span>씬 관리 및 렌더링</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- maya.cmds Module -->
+                    <div class="bg-white rounded-xl p-5 shadow-md api-card">
+                        <div class="flex items-center mb-3">
+                            <div class="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-600 rounded-full flex items-center justify-center mr-3">
+                                <span class="text-white font-bold text-sm">cmds</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-800">maya.cmds 모듈</h3>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-3">MEL 명령어의 Python 버전으로 가장 직관적이고 사용하기 쉬운 API</p>
+                        <div class="bg-gray-100 rounded-lg p-3 code-font text-xs">
+                            <span class="syntax-keyword">import</span> <span class="syntax-function">maya.cmds</span> <span class="syntax-keyword">as</span> <span class="syntax-function">cmds</span><br>
+                            <span class="syntax-comment"># 이제 모든 Maya 기능 사용 가능!</span>
+                        </div>
+                    </div>
+
+                    <!-- Core Functions -->
+                    <div class="bg-white rounded-xl p-5 shadow-md api-card">
+                        <h3 class="text-lg font-bold text-gray-800 mb-3">핵심 함수들</h3>
+                        <div class="grid grid-cols-2 gap-2 text-xs">
+                            <div class="bg-blue-50 rounded p-2">
+                                <div class="font-bold maya-blue">생성</div>
+                                <div class="code-font text-gray-600">polyCube()</div>
+                            </div>
+                            <div class="bg-green-50 rounded p-2">
+                                <div class="font-bold text-green-600">이동</div>
+                                <div class="code-font text-gray-600">move()</div>
+                            </div>
+                            <div class="bg-purple-50 rounded p-2">
+                                <div class="font-bold text-purple-600">선택</div>
+                                <div class="code-font text-gray-600">select()</div>
+                            </div>
+                            <div class="bg-red-50 rounded p-2">
+                                <div class="font-bold text-red-600">삭제</div>
+                                <div class="code-font text-gray-600">delete()</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Practice Benefits -->
+                    <div class="bg-gradient-to-r from-cyan-500 to-blue-600 rounded-xl p-4 text-white">
+                        <h3 class="text-lg font-bold mb-2 flex items-center">
+                            <i class="fas fa-lightbulb mr-2"></i>
+                            실습 효과
+                        </h3>
+                        <div class="text-sm space-y-1">
+                            <div>✓ 반복 작업 자동화 체험</div>
+                            <div>✓ 코드로 정확한 제어</div>
+                            <div>✓ 대량 작업 처리 능력</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column - Code Examples and Screenshots -->
+                <div class="col-span-3 space-y-4">
+                    <!-- Code Example -->
+                    <div class="code-bg rounded-xl p-5 shadow-xl text-white">
+                        <div class="flex items-center mb-3">
+                            <div class="flex space-x-2 mr-3">
+                                <div class="w-3 h-3 bg-red-500 rounded-full"></div>
+                                <div class="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                                <div class="w-3 h-3 bg-green-500 rounded-full"></div>
+                            </div>
+                            <span class="code-font text-gray-300 text-sm">maya_api_practice.py</span>
+                        </div>
+                        
+                        <div class="code-font text-sm space-y-1">
+                            <div><span class="syntax-comment"># Maya Python API 실습 - 오브젝트 생성과 제어</span></div>
+                            <div><span class="syntax-keyword">import</span> <span class="syntax-function">maya.cmds</span> <span class="syntax-keyword">as</span> <span class="syntax-function">cmds</span></div>
+                            
+                            <div class="mt-3"><span class="syntax-comment"># 1. 기본 오브젝트 생성</span></div>
+                            <div><span class="syntax-keyword">cube</span> = <span class="syntax-function">cmds.polyCube</span>(<span class="syntax-keyword">name</span>=<span class="syntax-string">"myCube"</span>, <span class="syntax-keyword">width</span>=<span class="syntax-number">2</span>)[<span class="syntax-number">0</span>]</div>
+                            <div><span class="syntax-keyword">sphere</span> = <span class="syntax-function">cmds.polySphere</span>(<span class="syntax-keyword">name</span>=<span class="syntax-string">"mySphere"</span>, <span class="syntax-keyword">radius</span>=<span class="syntax-number">1.5</span>)[<span class="syntax-number">0</span>]</div>
+                            
+                            <div class="mt-3"><span class="syntax-comment"># 2. 위치 변경</span></div>
+                            <div><span class="syntax-function">cmds.move</span>(<span class="syntax-number">0</span>, <span class="syntax-number">3</span>, <span class="syntax-number">0</span>, <span class="syntax-keyword">cube</span>)  <span class="syntax-comment"># 큐브를 위로</span></div>
+                            <div><span class="syntax-function">cmds.move</span>(<span class="syntax-number">4</span>, <span class="syntax-number">0</span>, <span class="syntax-number">0</span>, <span class="syntax-keyword">sphere</span>)  <span class="syntax-comment"># 구를 오른쪽으로</span></div>
+                            
+                            <div class="mt-3"><span class="syntax-comment"># 3. 회전 및 스케일</span></div>
+                            <div><span class="syntax-function">cmds.rotate</span>(<span class="syntax-number">45</span>, <span class="syntax-number">0</span>, <span class="syntax-number">45</span>, <span class="syntax-keyword">cube</span>)</div>
+                            <div><span class="syntax-function">cmds.scale</span>(<span class="syntax-number">1.5</span>, <span class="syntax-number">0.5</span>, <span class="syntax-number">1.5</span>, <span class="syntax-keyword">sphere</span>)</div>
+                            
+                            <div class="mt-3"><span class="syntax-comment"># 4. 속성 변경</span></div>
+                            <div><span class="syntax-function">cmds.setAttr</span>(<span class="syntax-keyword">cube</span> + <span class="syntax-string">".visibility"</span>, <span class="syntax-number">1</span>)</div>
+                            <div><span class="syntax-function">cmds.setAttr</span>(<span class="syntax-keyword">sphere</span> + <span class="syntax-string">".displayType"</span>, <span class="syntax-number">2</span>)  <span class="syntax-comment"># 템플릿 모드</span></div>
+                            
+                            <div class="mt-3"><span class="syntax-comment"># 5. 오브젝트 선택</span></div>
+                            <div><span class="syntax-function">cmds.select</span>([<span class="syntax-keyword">cube</span>, <span class="syntax-keyword">sphere</span>])</div>
+                            <div><span class="syntax-function">print</span>(<span class="syntax-string">"오브젝트 생성 및 조작 완료!"</span>)</div>
+                        </div>
+                    </div>
+
+                    <!-- Before/After Visualization -->
+                    <div class="grid grid-cols-2 gap-4">
+                        <!-- Maya Script Editor -->
+                        <div class="bg-white rounded-xl p-4 shadow-md">
+                            <h4 class="font-bold text-gray-800 mb-3 flex items-center">
+                                <i class="fas fa-terminal maya-blue mr-2"></i>
+                                Maya 스크립트 에디터
+                            </h4>
+                            <div class="bg-gray-900 rounded-lg p-3 text-green-400 code-font text-xs">
+                                <div># Result: myCube //</div>
+                                <div># Result: mySphere //</div>
+                                <div>오브젝트 생성 및 조작 완료!</div>
+                                <div class="text-yellow-400"># 성공적으로 실행됨</div>
+                            </div>
+                            <div class="mt-2 text-xs text-gray-600">
+                                <i class="fas fa-info-circle mr-1"></i>
+                                Script Editor에서 즉시 실행 가능
+                            </div>
+                        </div>
+
+                        <!-- Maya Viewport Result -->
+                        <div class="bg-white rounded-xl p-4 shadow-md">
+                            <h4 class="font-bold text-gray-800 mb-3 flex items-center">
+                                <i class="fas fa-eye maya-blue mr-2"></i>
+                                뷰포트 결과
+                            </h4>
+                            <div class="bg-gradient-to-b from-gray-700 to-gray-900 rounded-lg p-3 relative h-24 flex items-center justify-center">
+                                <!-- Simulated 3D objects -->
+                                <div class="absolute left-6 top-3">
+                                    <div class="w-8 h-8 bg-blue-400 transform rotate-12 rounded opacity-80"></div>
+                                    <div class="text-xs text-white mt-1">Cube</div>
+                                </div>
+                                <div class="absolute right-6 top-4">
+                                    <div class="w-6 h-6 bg-red-400 rounded-full opacity-60 transform scale-y-50"></div>
+                                    <div class="text-xs text-white mt-1">Sphere</div>
+                                </div>
+                                <div class="absolute bottom-2 left-1/2 transform -translate-x-1/2">
+                                    <div class="w-16 h-0.5 bg-gray-600"></div>
+                                </div>
+                            </div>
+                            <div class="mt-2 text-xs text-gray-600">
+                                <i class="fas fa-magic mr-1"></i>
+                                자동으로 생성된 3D 오브젝트들
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Practice -->
+                    <div class="bg-yellow-50 border-l-4 border-yellow-400 rounded-r-xl p-4">
+                        <div class="flex items-center mb-2">
+                            <i class="fas fa-hands text-yellow-600 mr-2"></i>
+                            <h4 class="font-bold text-gray-800">실습해보기</h4>
+                        </div>
+                        <p class="text-sm text-gray-700 mb-2">위 코드를 Maya Script Editor에 복사하여 실행해보세요!</p>
+                        <div class="text-xs text-gray-600">
+                            <span class="bg-gray-200 px-2 py-1 rounded mr-2">Windows/Script Editor</span>
+                            <span class="bg-gray-200 px-2 py-1 rounded">또는 Ctrl+Shift+;</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <div class="px-16 py-3 bg-white border-t">
+            <div class="flex justify-between items-center">
+                <div class="text-sm text-gray-600">
+                    <i class="fas fa-arrow-right text-cyan-500 mr-2"></i>
+                    다음: Python으로 오브젝트 자동 배치 실습
+                </div>
+                <div class="text-sm text-gray-600">
+                    4.2 / 4.4
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>셔터 속도와 모션 블러 예시</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        .slide {
+            width: 1280px;
+            min-height: 720px;
+            position: relative;
+            background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
+            color: white;
+            overflow: hidden;
+        }
+        .highlight {
+            color: #60a5fa;
+            font-weight: 600;
+        }
+        .movie-card {
+            background: rgba(15, 23, 42, 0.8);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            position: relative;
+        }
+        .movie-card:hover {
+            transform: translateY(-5px);
+            border-color: #3b82f6;
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3);
+        }
+        .movie-poster {
+            height: 120px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        .movie-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0,0,0,0.1), rgba(0,0,0,0.6));
+        }
+        .shutter-demo {
+            position: relative;
+            height: 100px;
+            background: #1e293b;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 2px solid #374151;
+            margin: 8px 0;
+        }
+        .demo-object {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            border-radius: 50%;
+            top: 50%;
+            transform: translateY(-50%);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        .motion-trail {
+            position: absolute;
+            height: 40px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: linear-gradient(to left, rgba(251, 191, 36, 0.8), rgba(251, 191, 36, 0));
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+        .technique-badge {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: rgba(0, 0, 0, 0.8);
+            color: #60a5fa;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+        .interactive-panel {
+            background: rgba(15, 23, 42, 0.7);
+            border-radius: 12px;
+            padding: 16px;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+        .speed-slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 8px;
+            background: linear-gradient(to right, #dc2626, #f59e0b, #10b981, #3b82f6);
+            outline: none;
+            border-radius: 4px;
+            margin: 12px 0;
+        }
+        .speed-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #fff;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+        }
+        .cinema-example {
+            background: rgba(37, 99, 235, 0.1);
+            border-left: 4px solid #3b82f6;
+            padding: 12px;
+            border-radius: 8px;
+            margin: 8px 0;
+            transition: all 0.3s ease;
+        }
+        .cinema-example:hover {
+            background: rgba(37, 99, 235, 0.2);
+            transform: translateX(5px);
+        }
+        @keyframes fastMove {
+            0% { left: -50px; }
+            100% { left: calc(100% + 50px); }
+        }
+        @keyframes mediumMove {
+            0% { left: -50px; }
+            100% { left: calc(100% + 50px); }
+        }
+        @keyframes slowMove {
+            0% { left: -50px; }
+            100% { left: calc(100% + 50px); }
+        }
+        .fast-motion {
+            animation: fastMove 1.5s linear infinite;
+        }
+        .medium-motion {
+            animation: mediumMove 2.5s linear infinite;
+        }
+        .slow-motion {
+            animation: slowMove 4s linear infinite;
+        }
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+    </style>
+</head>
+<body>
+    <div class="slide flex flex-col p-8 relative">
+        <!-- 헤더 -->
+        <div class="mb-4 relative z-10">
+            <h1 class="text-3xl font-bold text-white mb-2">셔터 속도와 모션 블러 예시</h1>
+            <div class="w-20 h-1 bg-blue-500 mb-1"></div>
+            <p class="text-gray-300">영화와 애니메이션에서의 카메라 기법 활용 사례</p>
+        </div>
+        
+        <!-- 메인 콘텐츠 -->
+        <div class="flex flex-row gap-6 z-10 flex-1">
+            <!-- 왼쪽: 인터랙티브 데모 -->
+            <div class="w-5/12">
+                <div class="interactive-panel mb-4">
+                    <h3 class="text-lg font-semibold text-blue-300 mb-3 flex items-center">
+                        <i class="fas fa-play-circle text-green-400 mr-2"></i>실시간 셔터 속도 체험
+                    </h3>
+                    
+                    <!-- 빠른 셔터 -->
+                    <div class="mb-3">
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="text-sm font-medium">1/500초 - 액션 장면</span>
+                            <span class="text-xs text-blue-300">선명한 포착</span>
+                        </div>
+                        <div class="shutter-demo">
+                            <div class="demo-object fast-motion"></div>
+                            <div class="motion-trail" style="width: 15px; left: 0;"></div>
+                            <div class="absolute bottom-1 right-2 text-xs text-gray-400">스파이더맨 액션</div>
+                        </div>
+                    </div>
+                    
+                    <!-- 중간 셔터 -->
+                    <div class="mb-3">
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="text-sm font-medium">1/60초 - 영화 표준</span>
+                            <span class="text-xs text-yellow-300">자연스러운 움직임</span>
+                        </div>
+                        <div class="shutter-demo">
+                            <div class="demo-object medium-motion"></div>
+                            <div class="motion-trail" style="width: 60px; left: 0;"></div>
+                            <div class="absolute bottom-1 right-2 text-xs text-gray-400">영화 일반 장면</div>
+                        </div>
+                    </div>
+                    
+                    <!-- 느린 셔터 -->
+                    <div class="mb-3">
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="text-sm font-medium">1/15초 - 드라마틱</span>
+                            <span class="text-xs text-orange-300">강한 모션 블러</span>
+                        </div>
+                        <div class="shutter-demo">
+                            <div class="demo-object slow-motion"></div>
+                            <div class="motion-trail" style="width: 120px; left: 0;"></div>
+                            <div class="absolute bottom-1 right-2 text-xs text-gray-400">꿈 시퀀스</div>
+                        </div>
+                    </div>
+                    
+                    <!-- 커스텀 슬라이더 -->
+                    <div class="mt-4 bg-gray-800 bg-opacity-50 p-3 rounded">
+                        <label class="block text-sm font-medium mb-2">직접 조절해보기:</label>
+                        <input type="range" min="15" max="500" value="60" class="speed-slider" id="customSlider">
+                        <div class="flex justify-between text-xs mt-1">
+                            <span>1/15초</span>
+                            <span id="sliderValue">1/60초</span>
+                            <span>1/500초</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 실무 팁 -->
+                <div class="bg-green-900 bg-opacity-30 p-3 rounded border-l-4 border-green-500">
+                    <h4 class="font-semibold text-sm mb-2 flex items-center">
+                        <i class="fas fa-lightbulb text-green-400 mr-2"></i>V-Ray 모션 블러 설정 팁
+                    </h4>
+                    <ul class="text-xs space-y-1">
+                        <li>• <span class="highlight">Shutter angle:</span> 180도가 영화 표준</li>
+                        <li>• <span class="highlight">샘플링:</span> 높은 값으로 노이즈 감소</li>
+                        <li>• <span class="highlight">렌더링 시간:</span> 모션 블러 활성화 시 증가</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- 중간: 영화 예시 -->
+            <div class="w-4/12">
+                <h3 class="text-lg font-semibold text-blue-300 mb-3 flex items-center">
+                    <i class="fas fa-film text-yellow-400 mr-2"></i>유명 영화 기법 사례
+                </h3>
+                
+                <div class="space-y-3">
+                    <!-- 매트릭스 -->
+                    <div class="movie-card">
+                        <div class="movie-poster" style="background-image: url('https://filmschoolrejects.com/wp-content/uploads/2021/01/Jaws-Dolly-Zoom.jpg');">
+                            <div class="movie-overlay"></div>
+                            <div class="technique-badge">돌리 줌</div>
+                        </div>
+                        <div class="p-3">
+                            <h4 class="font-bold text-sm">매트릭스 (1999)</h4>
+                            <p class="text-xs text-gray-300">불릿 타임 - 극초고속 셔터</p>
+                            <div class="text-xs text-blue-300 mt-1">1/2000초 + 멀티 카메라</div>
+                        </div>
+                    </div>
+                    
+                    <!-- 버티고 -->
+                    <div class="movie-card">
+                        <div class="movie-poster" style="background-image: url('https://s.studiobinder.com/wp-content/uploads/2021/01/What-is-the-Vertigo-Effect-The-Hitchcock-Zoom-Explained-StudioBinder.jpeg');">
+                            <div class="movie-overlay"></div>
+                            <div class="technique-badge">버티고 효과</div>
+                        </div>
+                        <div class="p-3">
+                            <h4 class="font-bold text-sm">버티고 (1958)</h4>
+                            <p class="text-xs text-gray-300">히치콕 줌 - 심리적 불안감</p>
+                            <div class="text-xs text-blue-300 mt-1">돌리 + 줌 동시 사용</div>
+                        </div>
+                    </div>
+                    
+                    <!-- 인크레더블 -->
+                    <div class="movie-card">
+                        <div class="movie-poster" style="background-image: url('https://assets.renderman.pixar.com/Incredibles_2/camera-types-02.jpg');">
+                            <div class="movie-overlay"></div>
+                            <div class="technique-badge">애니메이션</div>
+                        </div>
+                        <div class="p-3">
+                            <h4 class="font-bold text-sm">인크레더블 2 (2018)</h4>
+                            <p class="text-xs text-gray-300">Pixar 시네마토그래피</p>
+                            <div class="text-xs text-blue-300 mt-1">가상 카메라 기법</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 카메라 움직임 예시 -->
+                <div class="mt-4 bg-purple-900 bg-opacity-30 p-3 rounded border-l-4 border-purple-500">
+                    <h4 class="font-semibold text-sm mb-2 flex items-center">
+                        <i class="fas fa-video text-purple-400 mr-2"></i>카메라 움직임 종류
+                    </h4>
+                    <div class="grid grid-cols-2 gap-2 text-xs">
+                        <div>• <span class="highlight">팬:</span> 좌우 회전</div>
+                        <div>• <span class="highlight">틸트:</span> 상하 회전</div>
+                        <div>• <span class="highlight">돌리:</span> 전후 이동</div>
+                        <div>• <span class="highlight">크레인:</span> 상하 이동</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 오른쪽: 렌즈 효과 -->
+            <div class="w-3/12">
+                <h3 class="text-lg font-semibold text-blue-300 mb-3 flex items-center">
+                    <i class="fas fa-camera text-green-400 mr-2"></i>렌즈별 특성
+                </h3>
+                
+                <div class="space-y-3">
+                    <!-- 광각 렌즈 -->
+                    <div class="cinema-example">
+                        <div class="flex items-center justify-between mb-1">
+                            <h4 class="font-bold text-sm">광각 렌즈</h4>
+                            <span class="text-xs text-blue-300">14-35mm</span>
+                        </div>
+                        <div class="text-xs space-y-1">
+                            <p>✓ <span class="highlight">원근감 과장</span></p>
+                            <p>✓ 역동적인 <span class="highlight">왜곡 효과</span></p>
+                            <p>✓ 넓은 화각으로 <span class="highlight">공간감</span></p>
+                        </div>
+                        <div class="text-xs text-gray-400 mt-1">예: 트랜스포머 액션</div>
+                    </div>
+                    
+                    <!-- 표준 렌즈 -->
+                    <div class="cinema-example">
+                        <div class="flex items-center justify-between mb-1">
+                            <h4 class="font-bold text-sm">표준 렌즈</h4>
+                            <span class="text-xs text-blue-300">35-85mm</span>
+                        </div>
+                        <div class="text-xs space-y-1">
+                            <p>✓ <span class="highlight">자연스러운</span> 시야</p>
+                            <p>✓ 인물 촬영에 <span class="highlight">최적</span></p>
+                            <p>✓ 일반적인 <span class="highlight">영화 기본</span></p>
+                        </div>
+                        <div class="text-xs text-gray-400 mt-1">예: 라라랜드 대화</div>
+                    </div>
+                    
+                    <!-- 망원 렌즈 -->
+                    <div class="cinema-example">
+                        <div class="flex items-center justify-between mb-1">
+                            <h4 class="font-bold text-sm">망원 렌즈</h4>
+                            <span class="text-xs text-blue-300">85-200mm</span>
+                        </div>
+                        <div class="text-xs space-y-1">
+                            <p>✓ <span class="highlight">압축 효과</span></p>
+                            <p>✓ 배경과 전경 <span class="highlight">밀집</span></p>
+                            <p>✓ 강렬한 <span class="highlight">몰입감</span></p>
+                        </div>
+                        <div class="text-xs text-gray-400 mt-1">예: 미션 임파서블 추격</div>
+                    </div>
+                </div>
+                
+                <!-- 실습 과제 -->
+                <div class="mt-4 bg-yellow-900 bg-opacity-30 p-3 rounded border-l-4 border-yellow-500">
+                    <h4 class="font-semibold text-sm mb-2 flex items-center">
+                        <i class="fas fa-tasks text-yellow-400 mr-2"></i>따라해보기
+                    </h4>
+                    <ol class="text-xs space-y-1 list-decimal list-inside">
+                        <li>V-Ray Physical Camera 생성</li>
+                        <li>셔터 속도를 <span class="highlight">1/60초</span>로 설정</li>
+                        <li>움직이는 오브젝트 애니메이션</li>
+                        <li>모션 블러 효과 확인</li>
+                        <li>다양한 셔터 속도로 테스트</li>
+                    </ol>
+                </div>
+                
+                <!-- 버티고 효과 설명 -->
+                <div class="mt-3 bg-red-900 bg-opacity-30 p-3 rounded border-l-4 border-red-500">
+                    <h4 class="font-semibold text-sm mb-1 flex items-center">
+                        <i class="fas fa-exclamation-circle text-red-400 mr-2"></i>버티고 이펙트 구현
+                    </h4>
+                    <div class="text-xs space-y-1">
+                        <p>1. 카메라를 피사체에서 <span class="highlight">멀어지게</span></p>
+                        <p>2. 동시에 <span class="highlight">줌인</span> (초점거리 증가)</p>
+                        <p>3. 피사체 크기는 유지하되 <span class="highlight">배경 압축</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 하단 페이지 표시 -->
+        <div class="absolute bottom-6 right-6 text-sm text-gray-400">
+            7 / 11
+        </div>
+    </div>
+
+    <script>
+        // 커스텀 슬라이더 이벤트
+        const customSlider = document.getElementById('customSlider');
+        const sliderValue = document.getElementById('sliderValue');
+        
+        customSlider.addEventListener('input', function() {
+            const value = this.value;
+            sliderValue.textContent = `1/${value}초`;
+            
+            // 데모 오브젝트들의 트레일 길이 조정
+            const trailWidth = Math.max(10, 200 - (value - 15) * 2);
+            document.querySelectorAll('.motion-trail').forEach((trail, index) => {
+                if (index === 0) {
+                    trail.style.width = `${Math.max(5, trailWidth * 0.1)}px`;
+                } else if (index === 1) {
+                    trail.style.width = `${Math.max(20, trailWidth * 0.4)}px`;
+                } else if (index === 2) {
+                    trail.style.width = `${Math.max(40, trailWidth)}px`;
+                }
+            });
+        });
+        
+        // 영화 카드 호버 효과
+        const movieCards = document.querySelectorAll('.movie-card');
+        movieCards.forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.classList.add('pulse-animation');
+            });
+            card.addEventListener('mouseleave', function() {
+                this.classList.remove('pulse-animation');
+            });
+        });
+        
+        // 인터랙티브 데모 클릭 이벤트
+        const shutterDemos = document.querySelectorAll('.shutter-demo');
+        shutterDemos.forEach((demo, index) => {
+            demo.addEventListener('click', function() {
+                // 클릭한 데모 강조
+                shutterDemos.forEach(d => d.style.borderColor = '#374151');
+                this.style.borderColor = '#3b82f6';
+                
+                // 슬라이더 값 업데이트
+                const speeds = [500, 60, 15];
+                customSlider.value = speeds[index];
+                sliderValue.textContent = `1/${speeds[index]}초`;
+            });
+        });
+        
+        // 자동 애니메이션 리셋
+        setInterval(() => {
+            const objects = document.querySelectorAll('.demo-object');
+            objects.forEach(obj => {
+                obj.style.animation = 'none';
+                setTimeout(() => {
+                    if (obj.classList.contains('fast-motion')) {
+                        obj.style.animation = 'fastMove 1.5s linear infinite';
+                    } else if (obj.classList.contains('medium-motion')) {
+                        obj.style.animation = 'mediumMove 2.5s linear infinite';
+                    } else if (obj.classList.contains('slow-motion')) {
+                        obj.style.animation = 'slowMove 4s linear infinite';
+                    }
+                }, 50);
+            });
+        }, 10000);
+    </script>
+</body>
+</html>

@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Composition (구성) - 추가 예시</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', 'Malgun Gothic', sans-serif;
+        }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            background: linear-gradient(135deg, #1a2a3a 0%, #0d1721 100%);
+            color: #ffffff;
+            overflow: hidden;
+            position: relative;
+        }
+        .header {
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 1.5rem 3rem;
+            border-bottom: 2px solid rgba(163, 198, 255, 0.4);
+            display: flex;
+            align-items: center;
+        }
+        .header-icon {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            color: #a3c6ff;
+            font-size: 1.5rem;
+        }
+        .content {
+            padding: 1.5rem 3rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            height: calc(100% - 120px);
+        }
+        .examples-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            height: 100%;
+        }
+        .example-item {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .example-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        .example-image {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-bottom: 0.75rem;
+        }
+        .example-title {
+            font-weight: bold;
+            color: #ffcc66;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        .example-desc {
+            font-size: 0.8rem;
+            color: #e0e0e0;
+            line-height: 1.4;
+            flex: 1;
+        }
+        .large-example {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .large-image {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+        .large-title {
+            font-weight: bold;
+            color: #ffcc66;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+        }
+        .large-title i {
+            margin-right: 0.75rem;
+        }
+        .highlight {
+            color: #a3c6ff;
+            font-weight: bold;
+        }
+        .tips-container {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .tips-title {
+            font-weight: bold;
+            color: #ffcc66;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+        }
+        .tips-title i {
+            margin-right: 0.75rem;
+        }
+        .tip-item {
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: flex-start;
+            font-size: 0.9rem;
+        }
+        .tip-item:before {
+            content: "▸";
+            color: #a3c6ff;
+            font-weight: bold;
+            margin-right: 0.75rem;
+            margin-top: 0.1rem;
+        }
+        .footer {
+            padding: 1rem 3rem;
+            text-align: right;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            box-sizing: border-box;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+        .animation-highlight {
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        @keyframes glow {
+            from {
+                box-shadow: 0 0 5px rgba(163, 198, 255, 0.5);
+            }
+            to {
+                box-shadow: 0 0 20px rgba(163, 198, 255, 0.8);
+            }
+        }
+        .technique-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(255, 204, 102, 0.9);
+            color: #1a2a3a;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+        .grid-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .example-item:hover .grid-overlay {
+            opacity: 1;
+        }
+        .rule-of-thirds {
+            background-image: 
+                linear-gradient(90deg, rgba(255,255,255,0.3) 1px, transparent 1px),
+                linear-gradient(0deg, rgba(255,255,255,0.3) 1px, transparent 1px);
+            background-size: 33.33% 33.33%;
+        }
+        .golden-spiral {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M0,0 Q100,0 100,100' stroke='rgba(255,204,102,0.6)' stroke-width='2' fill='none'/%3E%3C/svg%3E");
+            background-size: cover;
+        }
+        .symmetry-line {
+            background-image: linear-gradient(90deg, transparent 49%, rgba(255,255,255,0.5) 50%, transparent 51%);
+        }
+        .composition-types {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+        }
+        .composition-type {
+            background-color: rgba(255, 255, 255, 0.08);
+            padding: 0.5rem;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+        .composition-type:hover {
+            background-color: rgba(255, 204, 102, 0.2);
+            transform: scale(1.05);
+        }
+        .type-icon {
+            font-size: 1.2rem;
+            margin-bottom: 0.25rem;
+            color: #a3c6ff;
+        }
+        .interactive-demo {
+            position: relative;
+            height: 120px;
+            background: linear-gradient(45deg, #1a2a3a, #2a3a4a);
+            border-radius: 4px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        .demo-element {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: #ffcc66;
+            border-radius: 50%;
+            transition: all 0.5s ease;
+        }
+        .demo-element.top-left { top: 33%; left: 33%; }
+        .demo-element.top-right { top: 33%; right: 33%; }
+        .demo-element.bottom-left { bottom: 33%; left: 33%; }
+        .demo-element.bottom-right { bottom: 33%; right: 33%; }
+        .interactive-demo:hover .demo-element {
+            background-color: #a3c6ff;
+            transform: scale(1.5);
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="header">
+            <div class="header-icon">
+                <i class="fas fa-object-group"></i>
+            </div>
+            <div>
+                <h1 class="text-3xl font-bold">Composition (구성) - 추가 예시</h1>
+                <p class="text-sm opacity-70 mt-1">실무 적용 사례와 심화 학습</p>
+            </div>
+        </div>
+        
+        <div class="content">
+            <div>
+                <div class="large-example">
+                    <div class="large-title">
+                        <i class="fas fa-th"></i> 구성 기법의 실제 적용
+                    </div>
+                    <div style="position: relative;">
+                        <img src="https://images.squarespace-cdn.com/content/v1/5013f4b2c4aaa4752ac69b17/76385be9-4ffa-4a7b-8b41-c443285096c0/Rule+of+Thirds%2C+Phi+Grid%2C+Symmetry%2C+Fibonacci+Spiral%2C+Golden+Triangle%2C+Vanishing+Point%2C.jpg" alt="구성 기법 종합" class="large-image">
+                        <div class="technique-badge">Master Guide</div>
+                    </div>
+                    <p class="text-sm">다양한 <span class="highlight">구성 원리</span>를 한눈에 보여주는 종합 가이드</p>
+                </div>
+                
+                <div class="tips-container">
+                    <div class="tips-title">
+                        <i class="fas fa-lightbulb"></i> 구성 기법 선택 가이드
+                    </div>
+                    <div class="composition-types">
+                        <div class="composition-type">
+                            <div class="type-icon">📐</div>
+                            <div>삼분할법</div>
+                            <div style="font-size: 0.7rem; color: #e0e0e0;">기본/안정감</div>
+                        </div>
+                        <div class="composition-type">
+                            <div class="type-icon">🌀</div>
+                            <div>황금비율</div>
+                            <div style="font-size: 0.7rem; color: #e0e0e0;">자연스러움</div>
+                        </div>
+                        <div class="composition-type">
+                            <div class="type-icon">⚖️</div>
+                            <div>대칭</div>
+                            <div style="font-size: 0.7rem; color: #e0e0e0;">균형/위엄</div>
+                        </div>
+                        <div class="composition-type">
+                            <div class="type-icon">🎯</div>
+                            <div>중심 구성</div>
+                            <div style="font-size: 0.7rem; color: #e0e0e0;">강조/집중</div>
+                        </div>
+                    </div>
+                    <div class="tip-item"><span class="highlight">인물 사진</span>: 삼분할법으로 눈의 위치를 교점에 배치</div>
+                    <div class="tip-item"><span class="highlight">풍경 사진</span>: 황금비율로 자연스러운 균형감 표현</div>
+                    <div class="tip-item"><span class="highlight">건축 사진</span>: 대칭 구성으로 안정감과 위엄 강조</div>
+                    <div class="tip-item"><span class="highlight">제품 사진</span>: 중심 구성으로 제품에 집중</div>
+                </div>
+            </div>
+            
+            <div class="examples-grid">
+                <div class="example-item animation-highlight">
+                    <div style="position: relative;">
+                        <img src="https://photoinsomnia.com/wp-content/uploads/2016/01/Buildings-Symmetry.jpg" alt="대칭 구성" class="example-image">
+                        <div class="grid-overlay symmetry-line"></div>
+                        <div class="technique-badge">Symmetry</div>
+                    </div>
+                    <div class="example-title">대칭 구성 (Symmetry)</div>
+                    <div class="example-desc">건축물의 <span class="highlight">완벽한 대칭</span>으로 안정감과 균형감 표현</div>
+                </div>
+                
+                <div class="example-item">
+                    <div style="position: relative;">
+                        <img src="https://antongorlin.com/wp-content/uploads/2018/07/dynamic-symmetry-grid.png" alt="동적 대칭" class="example-image">
+                        <div class="technique-badge">Dynamic Symmetry</div>
+                    </div>
+                    <div class="example-title">동적 대칭 (Dynamic Symmetry)</div>
+                    <div class="example-desc"><span class="highlight">기하학적 원리</span>를 활용한 고급 구성 기법</div>
+                </div>
+                
+                <div class="example-item">
+                    <div style="position: relative;">
+                        <img src="https://cdn.greatbigphotographyworld.com/wp-content/uploads/2022/04/Dynamic-Symmetry-Grid-01.png" alt="동적 대칭 그리드" class="example-image">
+                        <div class="technique-badge">Grid System</div>
+                    </div>
+                    <div class="example-title">동적 대칭 그리드</div>
+                    <div class="example-desc"><span class="highlight">대각선 구성</span>으로 역동적인 시각적 흐름 창조</div>
+                </div>
+                
+                <div class="example-item">
+                    <div style="position: relative;">
+                        <img src="https://www.picturecorrect.com/wp-content/uploads/2021/07/vertical-symmetry-1.jpg" alt="수직 대칭" class="example-image">
+                        <div class="technique-badge">Vertical Symmetry</div>
+                    </div>
+                    <div class="example-title">수직 대칭</div>
+                    <div class="example-desc"><span class="highlight">수직축</span>을 중심으로 한 대칭 구성</div>
+                </div>
+                
+                <div class="example-item">
+                    <div style="position: relative;">
+                        <img src="https://petapixel.com/assets/uploads/2016/09/compositiontechniqueshead.jpg" alt="구성 기법 모음" class="example-image">
+                        <div class="technique-badge">Techniques</div>
+                    </div>
+                    <div class="example-title">구성 기법 종합</div>
+                    <div class="example-desc">다양한 <span class="highlight">구성 원리</span>의 실제 적용 사례</div>
+                </div>
+                
+                <div class="example-item">
+                    <div class="interactive-demo">
+                        <div class="demo-element top-left"></div>
+                        <div class="demo-element top-right"></div>
+                        <div class="demo-element bottom-left"></div>
+                        <div class="demo-element bottom-right"></div>
+                    </div>
+                    <div class="example-title mt-2">삼분할법 인터랙티브</div>
+                    <div class="example-desc">마우스를 올려 <span class="highlight">교점의 중요성</span> 확인</div>
+                </div>
+                
+                <div class="example-item">
+                    <div style="position: relative;">
+                        <img src="https://www.picturecorrect.com/wp-content/uploads/2021/07/break-pattern.jpg" alt="패턴 깨기" class="example-image">
+                        <div class="technique-badge">Pattern Breaking</div>
+                    </div>
+                    <div class="example-title">패턴의 활용과 파괴</div>
+                    <div class="example-desc"><span class="highlight">반복 패턴</span> 중 하나를 변화시켜 강조 효과</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            컴퓨터 그래픽스 라이팅 입문 | Composition(구성) 심화 학습
+        </div>
+    </div>
+</body>
+</html>

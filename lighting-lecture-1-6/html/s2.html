@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>학습 목표 및 목차</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        .slide {
+            width: 1280px;
+            min-height: 720px;
+            position: relative;
+            background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
+            color: white;
+            overflow: hidden;
+        }
+        .objective-card {
+            background-color: rgba(30, 58, 138, 0.2);
+            border-left: 4px solid #3b82f6;
+            transition: all 0.3s ease;
+        }
+        .objective-card:hover {
+            transform: translateX(5px);
+            background-color: rgba(30, 58, 138, 0.3);
+        }
+        .outline-section {
+            background-color: rgba(30, 64, 175, 0.15);
+            border-radius: 8px;
+        }
+        .decorator {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: transparent;
+            border: 2px solid rgba(59, 130, 246, 0.1);
+            z-index: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide flex flex-col p-12 relative">
+        <!-- 배경 장식 요소 -->
+        <div class="decorator" style="top: -150px; right: -150px; width: 400px; height: 400px;"></div>
+        <div class="decorator" style="bottom: -200px; left: -100px; width: 500px; height: 500px;"></div>
+        <div class="decorator" style="top: 50%; left: 60%; width: 200px; height: 200px;"></div>
+        
+        <!-- 헤더 -->
+        <div class="mb-8 relative z-10">
+            <h1 class="text-4xl font-bold text-white mb-2">학습 목표 및 목차</h1>
+            <div class="w-24 h-1 bg-blue-500"></div>
+        </div>
+        
+        <!-- 메인 콘텐츠 -->
+        <div class="flex flex-row gap-8 z-10">
+            <!-- 왼쪽: 학습 목표 -->
+            <div class="w-1/2">
+                <div class="flex items-center mb-5">
+                    <i class="fas fa-bullseye text-blue-400 text-2xl mr-3"></i>
+                    <h2 class="text-2xl font-semibold text-blue-300">학습 목표</h2>
+                </div>
+                
+                <div class="space-y-4">
+                    <div class="objective-card p-4 rounded">
+                        <div class="flex items-start">
+                            <span class="bg-blue-500 text-white w-7 h-7 rounded-full flex items-center justify-center mr-3 mt-1 flex-shrink-0">1</span>
+                            <p><span class="font-bold text-blue-200">V-Ray Physical Camera</span>의 기본 개념 이해 및 활용 방법 습득</p>
+                        </div>
+                    </div>
+                    
+                    <div class="objective-card p-4 rounded">
+                        <div class="flex items-start">
+                            <span class="bg-blue-500 text-white w-7 h-7 rounded-full flex items-center justify-center mr-3 mt-1 flex-shrink-0">2</span>
+                            <p>주요 파라미터 <span class="font-bold text-blue-200">ISO, 셔터 속도, 조리개</span> 설정 방법 및 효과 이해</p>
+                        </div>
+                    </div>
+                    
+                    <div class="objective-card p-4 rounded">
+                        <div class="flex items-start">
+                            <span class="bg-blue-500 text-white w-7 h-7 rounded-full flex items-center justify-center mr-3 mt-1 flex-shrink-0">3</span>
+                            <p>적절한 <span class="font-bold text-blue-200">노출 제어 방법</span> 학습 및 실습</p>
+                        </div>
+                    </div>
+                    
+                    <div class="objective-card p-4 rounded">
+                        <div class="flex items-start">
+                            <span class="bg-blue-500 text-white w-7 h-7 rounded-full flex items-center justify-center mr-3 mt-1 flex-shrink-0">4</span>
+                            <p><span class="font-bold text-blue-200">조도 제어</span>와 노출의 관계 이해 및 적용 방법 습득</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 오른쪽: 목차 -->
+            <div class="w-1/2">
+                <div class="flex items-center mb-5">
+                    <i class="fas fa-list-ol text-blue-400 text-2xl mr-3"></i>
+                    <h2 class="text-2xl font-semibold text-blue-300">목차</h2>
+                </div>
+                
+                <div class="space-y-6">
+                    <div class="outline-section p-5">
+                        <div class="flex items-center mb-3">
+                            <div class="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center mr-4 flex-shrink-0">
+                                <span class="font-bold">1</span>
+                            </div>
+                            <h3 class="text-xl font-bold">V-Ray Physical Camera 기본 사용법</h3>
+                        </div>
+                        <ul class="list-disc ml-14 space-y-2 text-gray-300">
+                            <li>Physical Camera 개요 및 특징</li>
+                            <li>주요 파라미터 설정 방법</li>
+                            <li>ISO, 셔터 속도, 조리개 효과 관찰</li>
+                            <li>다양한 환경에 따른 설정 팁</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="outline-section p-5">
+                        <div class="flex items-center mb-3">
+                            <div class="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center mr-4 flex-shrink-0">
+                                <span class="font-bold">2</span>
+                            </div>
+                            <h3 class="text-xl font-bold">Exposure(노출) 및 조도 제어 실습</h3>
+                        </div>
+                        <ul class="list-disc ml-14 space-y-2 text-gray-300">
+                            <li>노출의 개념 및 중요성</li>
+                            <li>적정/과다/부족 노출 비교 분석</li>
+                            <li>조도 제어 방법 및 실습</li>
+                            <li>실전 환경에서의 최적 설정 가이드</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 하단 페이지 표시 -->
+        <div class="absolute bottom-6 right-6 text-sm text-gray-400">
+            2 / 10
+        </div>
+    </div>
+</body>
+</html>

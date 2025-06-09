@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>셔터 속도 설정 및 영향</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        .slide {
+            width: 1280px;
+            min-height: 720px;
+            position: relative;
+            background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
+            color: white;
+            overflow: hidden;
+        }
+        .highlight {
+            color: #60a5fa;
+            font-weight: 600;
+        }
+        .shutter-box {
+            background-color: rgba(37, 99, 235, 0.1);
+            border-left: 3px solid #3b82f6;
+            transition: all 0.3s ease;
+        }
+        .shutter-box:hover {
+            background-color: rgba(37, 99, 235, 0.2);
+            transform: translateX(5px);
+        }
+        .shutter-sample {
+            position: relative;
+            height: 180px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            background-color: #1e293b;
+        }
+        .shutter-label {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-weight: bold;
+            z-index: 3;
+        }
+        .motion-object {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background-color: #60a5fa;
+            border-radius: 50%;
+            top: 50%;
+            transform: translateY(-50%);
+            left: 0;
+            z-index: 2;
+        }
+        .motion-trail {
+            position: absolute;
+            height: 60px;
+            background: linear-gradient(to left, rgba(96, 165, 250, 0.8), rgba(96, 165, 250, 0));
+            border-radius: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1;
+        }
+        .shutter-slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 8px;
+            background: linear-gradient(to right, #f97316, #60a5fa);
+            outline: none;
+            border-radius: 4px;
+        }
+        .shutter-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #fff;
+            cursor: pointer;
+        }
+        @keyframes moveRight {
+            0% { left: -60px; }
+            100% { left: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="slide flex flex-col p-12 relative">
+        <!-- 헤더 -->
+        <div class="mb-6 relative z-10">
+            <h1 class="text-4xl font-bold text-white mb-2">셔터 속도 설정 및 영향</h1>
+            <div class="w-24 h-1 bg-blue-500 mb-2"></div>
+            <p class="text-gray-300 text-lg">이미지 노출 시간과 모션 블러를 조절하는 파라미터</p>
+        </div>
+        
+        <!-- 메인 콘텐츠 -->
+        <div class="flex flex-row gap-8 z-10 flex-1">
+            <!-- 왼쪽: 설명 -->
+            <div class="w-5/12">
+                <div class="mb-6">
+                    <h2 class="text-2xl font-semibold text-blue-300 mb-3">
+                        <i class="fas fa-stopwatch text-yellow-400 mr-2"></i>셔터 속도란?
+                    </h2>
+                    <p class="mb-3">
+                        <span class="highlight">셔터 속도</span>는 카메라가 빛을 받아들이는 
+                        시간을 의미하며, <span class="highlight">초 단위</span>로 표시합니다.
+                        (예: 1/30초, 1/125초)
+                    </p>
+                    <p>
+                        V-Ray에서는 실제 카메라처럼 셔터 속도가 
+                        <span class="highlight">이미지 밝기</span>와 <span class="highlight">모션 블러</span>에 
+                        직접적인 영향을 줍니다.
+                    </p>
+                </div>
+                
+                <div class="mb-6">
+                    <h3 class="text-xl font-semibold text-blue-200 mb-2">
+                        <i class="fas fa-info-circle text-blue-400 mr-2"></i>렌더링에 미치는 영향
+                    </h3>
+                    
+                    <div class="space-y-4 mt-4">
+                        <div class="shutter-box p-4 rounded">
+                            <h4 class="font-bold mb-1">빠른 셔터 속도 <small class="text-gray-400">(1/125초 이상)</small></h4>
+                            <p><i class="fas fa-check text-green-400 mr-1"></i> 움직임이 <span class="highlight">선명하게</span> 포착됨</p>
+                            <p><i class="fas fa-times text-red-400 mr-1"></i> 상대적으로 <span class="highlight">어두운</span> 이미지 (ISO 증가 필요)</p>
+                        </div>
+                        
+                        <div class="shutter-box p-4 rounded">
+                            <h4 class="font-bold mb-1">느린 셔터 속도 <small class="text-gray-400">(1/30초 이하)</small></h4>
+                            <p><i class="fas fa-check text-green-400 mr-1"></i> <span class="highlight">밝은</span> 이미지 (더 많은 빛 유입)</p>
+                            <p><i class="fas fa-check text-green-400 mr-1"></i> 움직임에 <span class="highlight">모션 블러</span> 효과 생성</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-semibold text-blue-200 mb-2">
+                        <i class="fas fa-check-circle text-green-400 mr-2"></i>V-Ray 활용 팁
+                    </h3>
+                    <ul class="list-disc list-inside space-y-2 pl-2">
+                        <li>애니메이션에서는 <span class="highlight">1/50 - 1/60초</span>가 영화적 모션 블러에 적합</li>
+                        <li>빠른 움직임 강조 시 <span class="highlight">1/125초 이상</span> 설정</li>
+                        <li><span class="highlight">셔터 속도 + ISO</span>를 함께 조절하여 밝기 조정</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- 오른쪽: 셔터 속도 예시 -->
+            <div class="w-7/12">
+                <h3 class="text-xl font-semibold text-blue-300 mb-4 text-center">
+                    <i class="fas fa-image mr-2"></i>셔터 속도에 따른 모션 블러 효과
+                </h3>
+                
+                <div class="space-y-6">
+                    <!-- 빠른 셔터 속도 예시 (1/500초) -->
+                    <div class="shutter-sample" id="fastShutter">
+                        <div class="motion-object" id="fastObject"></div>
+                        <div class="motion-trail" id="fastTrail" style="width: 20px;"></div>
+                        <div class="shutter-label">1/500초</div>
+                        <div class="absolute top-2 right-2 bg-black bg-opacity-70 px-3 py-1 rounded text-sm">
+                            <i class="fas fa-bolt text-yellow-400 mr-1"></i> 빠른 셔터 / 선명한 움직임
+                        </div>
+                    </div>
+                    
+                    <!-- 중간 셔터 속도 예시 (1/60초) -->
+                    <div class="shutter-sample" id="mediumShutter">
+                        <div class="motion-object" id="mediumObject"></div>
+                        <div class="motion-trail" id="mediumTrail" style="width: 120px;"></div>
+                        <div class="shutter-label">1/60초</div>
+                        <div class="absolute top-2 right-2 bg-black bg-opacity-70 px-3 py-1 rounded text-sm">
+                            <i class="fas fa-film text-yellow-300 mr-1"></i> 표준 셔터 / 적당한 모션 블러
+                        </div>
+                    </div>
+                    
+                    <!-- 느린 셔터 속도 예시 (1/15초) -->
+                    <div class="shutter-sample" id="slowShutter">
+                        <div class="motion-object" id="slowObject"></div>
+                        <div class="motion-trail" id="slowTrail" style="width: 300px;"></div>
+                        <div class="shutter-label">1/15초</div>
+                        <div class="absolute top-2 right-2 bg-black bg-opacity-70 px-3 py-1 rounded text-sm">
+                            <i class="fas fa-clock text-yellow-200 mr-1"></i> 느린 셔터 / 강한 모션 블러
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-6 bg-gray-800 bg-opacity-50 p-4 rounded">
+                    <h4 class="font-semibold mb-3">셔터 속도 조절하기:</h4>
+                    <input type="range" min="1" max="500" value="60" class="shutter-slider" id="shutterSlider">
+                    <div class="flex justify-between mt-2 text-sm">
+                        <span>1/1초 (느림)</span>
+                        <span id="shutterValue">1/60초</span>
+                        <span>1/500초 (빠름)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 하단 페이지 표시 -->
+        <div class="absolute bottom-6 right-6 text-sm text-gray-400">
+            5 / 10
+        </div>
+    </div>
+
+    <script>
+        // 모션 블러 애니메이션 설정
+        function startAnimation(objectId, trailId, duration) {
+            const object = document.getElementById(objectId);
+            const trail = document.getElementById(trailId);
+            
+            object.style.animation = `moveRight ${duration}s linear infinite`;
+            
+            // 잔상 효과 따라가기
+            setInterval(() => {
+                if (object.offsetLeft > 0) {
+                    trail.style.left = (object.offsetLeft - trail.offsetWidth) + 'px';
+                } else {
+                    trail.style.left = '-' + trail.offsetWidth + 'px';
+                }
+            }, 16);
+        }
+        
+        // 각 속도별 애니메이션 시작
+        startAnimation('fastObject', 'fastTrail', 2);
+        startAnimation('mediumObject', 'mediumTrail', 3);
+        startAnimation('slowObject', 'slowTrail', 4);
+        
+        // 셔터 속도 슬라이더
+        const slider = document.getElementById('shutterSlider');
+        const shutterValue = document.getElementById('shutterValue');
+        
+        slider.addEventListener('input', function() {
+            const value = this.value;
+            shutterValue.textContent = `1/${value}초`;
+            
+            // 모션 블러(트레일) 길이 조정
+            const trailWidth = 500 - value;
+            document.getElementById('fastTrail').style.width = (20 + (trailWidth/10)) + 'px';
+            document.getElementById('mediumTrail').style.width = (60 + (trailWidth/5)) + 'px';
+            document.getElementById('slowTrail').style.width = (100 + (trailWidth/2)) + 'px';
+        });
+    </script>
+</body>
+</html>

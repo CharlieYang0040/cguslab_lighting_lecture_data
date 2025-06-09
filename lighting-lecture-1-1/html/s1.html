@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>컴퓨터 그래픽스 라이팅 입문</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Noto Sans KR', sans-serif;
+            overflow: hidden;
+        }
+        .slide-container {
+            position: relative;
+            width: 1280px;
+            min-height: 720px;
+            overflow: hidden;
+            background-color: #121212;
+            color: white;
+        }
+        .overlay-gradient {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.6) 50%, rgba(0,0,0,0.8) 100%);
+            z-index: 1;
+        }
+        .bg-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.7;
+            filter: blur(2px);
+        }
+        .content {
+            position: relative;
+            z-index: 2;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+        .title-container {
+            text-align: center;
+            max-width: 80%;
+        }
+        .main-title {
+            font-size: 3.5rem;
+            font-weight: 900;
+            letter-spacing: -1px;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+            background: linear-gradient(90deg, #ffffff, #a3c6ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.2;
+        }
+        .subtitle {
+            font-size: 1.8rem;
+            font-weight: 300;
+            margin-bottom: 3rem;
+            color: #a3c6ff;
+            text-shadow: 0 1px 5px rgba(0,0,0,0.5);
+        }
+        .instructor {
+            margin-top: 3rem;
+            font-size: 1.5rem;
+            font-weight: 400;
+            opacity: 0.9;
+        }
+        .light-effect {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(163,198,255,0.2) 0%, rgba(163,198,255,0) 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+        }
+        .icon-light {
+            margin-bottom: 1.5rem;
+            font-size: 2.5rem;
+            color: #a3c6ff;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <img src="https://blog.kakaocdn.net/dn/b6j9Ch/btrBf8BW9mh/3VZZ49s1WYhGkQcVq0QrI0/img.png" alt="컴퓨터 그래픽스 라이팅" class="bg-image">
+        <div class="overlay-gradient"></div>
+        <div class="light-effect"></div>
+        
+        <div class="content">
+            <div class="icon-light">
+                <i class="fas fa-lightbulb"></i>
+            </div>
+            <div class="title-container">
+                <h1 class="main-title">컴퓨터 그래픽스 라이팅 입문</h1>
+                <h2 class="subtitle">빛과 그림자의 이해와 활용</h2>
+            </div>
+            <div class="instructor">
+                강사: 양현철
+            </div>
+        </div>
+    </div>
+</body>
+</html><script src='https://www.genspark.ai/slide-inner.js?_v=1'></script>
+    <script id="html_badge_script1">
+        window.__genspark_remove_badge_link = "https://www.genspark.ai/api/html_badge/" +
+            "remove_badge?token=To%2FBnjzloZ3UfQdcSaYfDliXMHsCztYPFrTwpeZNTe0kF1fQhqRI3yR0gCk65atg%2BKGdtoZsAJTMfPTgTaAFaPgeYb%2FpTQxj2z2zq7may40kWhnBclQ79FPng0%2Ba6k5L7n9XD4jq%2BHwKQPSvvcVboBTAdgeFg7DrhSwhLwqA%2FBXMES3cMjA6UyHx%2FK%2FT8ZW7xG%2FVWUVjQnAB4wHE6FchMACKwteYNHywFjmwTj1YI2DCUil%2BQe%2Br%2Fg6UDv26xkb9Rw7l4E4m1oteDpMwz4RpW8diIVsl8pzLGOhHx9cu2WLdbkgoszziLkgB9eM8FEAWJWRRBqkZiVZz2A%2BijQUYgYdorT0JJAJdmS%2Bpy1YC4SINdjyyfrrRaNfQ8Xzrj9wqOBymBmtMqC2yghbYyzpMC3xpSyTOiSoJ1BVJTulbEI8PY98cFXfmxxs2OXI%2BzZP9IIqki6juM9j16SwYwiRDJ0SeTMLj9UhPEHZoTgZjdc0MeQWD10GFB7z%2BFRWABztWyfpC4xeFPNKg%2FiW52kDIF9bAgX1gu3O8wW0yQO0516r5mnF94RuJpIbw2lojrmkqq7sWL6LIp%2FErIvMEl%2BmtzJhfDI7NzNnI5udItPXG8Y470wNTuExxAXkexmYT%2FQklBgLnRQedSmlz9p6LkKTt3N7whffAuRs%2FRGppJGEQYnqQ3TKJXoQh9ySkjX4L4AO1fTx%2Ba4srTRAo8nIOCmCR5olKMGJ%2F%2B5oc9%2FPjujUwdFE%2FWCkUAnYSjC0TTRz1IXyK";
+        window.__genspark_locale = "ko-KR";
+        window.__genspark_token = "To/BnjzloZ3UfQdcSaYfDliXMHsCztYPFrTwpeZNTe0kF1fQhqRI3yR0gCk65atg+KGdtoZsAJTMfPTgTaAFaPgeYb/pTQxj2z2zq7may40kWhnBclQ79FPng0+a6k5L7n9XD4jq+HwKQPSvvcVboBTAdgeFg7DrhSwhLwqA/BXMES3cMjA6UyHx/K/T8ZW7xG/VWUVjQnAB4wHE6FchMACKwteYNHywFjmwTj1YI2DCUil+Qe+r/g6UDv26xkb9Rw7l4E4m1oteDpMwz4RpW8diIVsl8pzLGOhHx9cu2WLdbkgoszziLkgB9eM8FEAWJWRRBqkZiVZz2A+ijQUYgYdorT0JJAJdmS+py1YC4SINdjyyfrrRaNfQ8Xzrj9wqOBymBmtMqC2yghbYyzpMC3xpSyTOiSoJ1BVJTulbEI8PY98cFXfmxxs2OXI+zZP9IIqki6juM9j16SwYwiRDJ0SeTMLj9UhPEHZoTgZjdc0MeQWD10GFB7z+FRWABztWyfpC4xeFPNKg/iW52kDIF9bAgX1gu3O8wW0yQO0516r5mnF94RuJpIbw2lojrmkqq7sWL6LIp/ErIvMEl+mtzJhfDI7NzNnI5udItPXG8Y470wNTuExxAXkexmYT/QklBgLnRQedSmlz9p6LkKTt3N7whffAuRs/RGppJGEQYnqQ3TKJXoQh9ySkjX4L4AO1fTx+a4srTRAo8nIOCmCR5olKMGJ/+5oc9/PjujUwdFE/WCkUAnYSjC0TTRz1IXyK";
+    </script>
+    
+        
+        

@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>렌즈 특성과 영화 기법 마스터클래스</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        .slide {
+            width: 1280px;
+            min-height: 720px;
+            position: relative;
+            background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 50%, #16213e 100%);
+            color: white;
+            overflow: hidden;
+        }
+        .highlight {
+            color: #60a5fa;
+            font-weight: 600;
+        }
+        .lens-card {
+            background: rgba(59, 130, 246, 0.1);
+            border: 2px solid rgba(59, 130, 246, 0.3);
+            transition: all 0.4s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        .lens-card:hover {
+            background: rgba(59, 130, 246, 0.2);
+            transform: translateY(-8px) scale(1.02);
+            border-color: rgba(59, 130, 246, 0.6);
+            box-shadow: 0 15px 30px rgba(59, 130, 246, 0.3);
+        }
+        .lens-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+        .lens-card:hover::before {
+            left: 100%;
+        }
+        .movie-technique {
+            background: rgba(139, 92, 246, 0.1);
+            border-left: 4px solid #8b5cf6;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+        .movie-technique:hover {
+            background: rgba(139, 92, 246, 0.2);
+            transform: translateX(10px);
+            border-left-width: 6px;
+        }
+        .effect-demo {
+            background: rgba(16, 185, 129, 0.1);
+            border: 2px dashed rgba(16, 185, 129, 0.5);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .effect-demo:hover {
+            border-style: solid;
+            background: rgba(16, 185, 129, 0.2);
+            transform: scale(1.05);
+        }
+        .floating-element {
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            33% { transform: translateY(-10px) rotate(2deg); }
+            66% { transform: translateY(-5px) rotate(-1deg); }
+        }
+        .lens-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            margin: 0 auto 15px;
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            box-shadow: 0 5px 15px rgba(59, 130, 246, 0.3);
+        }
+        .technique-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(239, 68, 68, 0.8);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: bold;
+        }
+        .distortion-effect {
+            perspective: 1000px;
+            transform-style: preserve-3d;
+        }
+        .distortion-effect:hover {
+            animation: wiggle 0.5s ease-in-out;
+        }
+        @keyframes wiggle {
+            0%, 100% { transform: perspective(400px) rotateY(0deg); }
+            25% { transform: perspective(400px) rotateY(-5deg); }
+            75% { transform: perspective(400px) rotateY(5deg); }
+        }
+        .compression-demo {
+            background: linear-gradient(45deg, #ef4444, #f59e0b);
+            background-size: 400% 400%;
+            animation: gradient 3s ease infinite;
+        }
+        @keyframes gradient {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        .interactive-preview {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        .interactive-preview:hover {
+            transform: scale(1.1);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+        }
+        .preview-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(59, 130, 246, 0.8), rgba(139, 92, 246, 0.8));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .interactive-preview:hover .preview-overlay {
+            opacity: 1;
+        }
+        .vray-tip {
+            background: rgba(245, 158, 11, 0.1);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            border-radius: 8px;
+            padding: 12px;
+            margin: 8px 0;
+            transition: all 0.3s ease;
+        }
+        .vray-tip:hover {
+            background: rgba(245, 158, 11, 0.2);
+            border-color: rgba(245, 158, 11, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <div class="slide flex flex-col p-6 relative">
+        <!-- 배경 장식 요소들 -->
+        <div class="absolute top-8 right-8 text-blue-400 opacity-15 floating-element">
+            <i class="fas fa-video text-7xl"></i>
+        </div>
+        <div class="absolute bottom-16 left-8 text-purple-400 opacity-10 floating-element" style="animation-delay: -3s;">
+            <i class="fas fa-camera-movie text-6xl"></i>
+        </div>
+        <div class="absolute top-32 left-16 text-yellow-400 opacity-10 floating-element" style="animation-delay: -1s;">
+            <i class="fas fa-magic text-5xl"></i>
+        </div>
+        
+        <!-- 헤더 -->
+        <div class="mb-5 relative z-10">
+            <h1 class="text-3xl font-bold text-white mb-2">렌즈 특성과 영화 기법 마스터클래스</h1>
+            <div class="w-40 h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-red-500 mb-2"></div>
+            <p class="text-gray-300 text-base">광각과 망원렌즈의 특성, 달리줌 효과, 그리고 명작 영화들의 카메라 기법</p>
+        </div>
+        
+        <!-- 메인 콘텐츠 -->
+        <div class="flex flex-row gap-5 z-10 flex-1">
+            <!-- 왼쪽: 렌즈 특성 비교 -->
+            <div class="w-1/2">
+                <h2 class="text-xl font-semibold text-blue-300 mb-3">
+                    <i class="fas fa-search text-blue-400 mr-2"></i>렌즈별 특성 및 효과
+                </h2>
+                
+                <!-- 광각 렌즈 -->
+                <div class="lens-card p-4 rounded-lg mb-3" onclick="demonstrateLens('wide')">
+                    <div class="technique-badge">WIDE</div>
+                    <div class="lens-icon">
+                        <i class="fas fa-expand-arrows-alt"></i>
+                    </div>
+                    <h3 class="font-bold text-center mb-2 text-blue-300">광각 렌즈 (14-35mm)</h3>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex items-center">
+                            <i class="fas fa-eye text-green-400 mr-2"></i>
+                            <span><span class="highlight">넓은 시야각</span> - 공간감 확대</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-arrows-alt-h text-yellow-400 mr-2"></i>
+                            <span><span class="highlight">원근감 과장</span> - 역동적 구성</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-exclamation-triangle text-red-400 mr-2"></i>
+                            <span><span class="highlight">배럴 왜곡</span> - 주변부 곡선화</span>
+                        </div>
+                        <div class="text-xs text-gray-400 mt-2">
+                            <strong>활용:</strong> 건축 시각화, 실내 공간, 액션 시퀀스
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 망원 렌즈 -->
+                <div class="lens-card p-4 rounded-lg mb-3" onclick="demonstrateLens('tele')">
+                    <div class="technique-badge">TELE</div>
+                    <div class="lens-icon">
+                        <i class="fas fa-compress-arrows-alt"></i>
+                    </div>
+                    <h3 class="font-bold text-center mb-2 text-purple-300">망원 렌즈 (85-200mm)</h3>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex items-center">
+                            <i class="fas fa-compress text-blue-400 mr-2"></i>
+                            <span><span class="highlight">압축 효과</span> - 배경과 전경 압축</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-user text-green-400 mr-2"></i>
+                            <span><span class="highlight">인물 왜곡 최소</span> - 자연스러운 비율</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-circle text-purple-400 mr-2"></i>
+                            <span><span class="highlight">강한 보케</span> - 배경 분리</span>
+                        </div>
+                        <div class="text-xs text-gray-400 mt-2">
+                            <strong>활용:</strong> 인물 촬영, 감정적 장면, 시네마틱 컷
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- V-Ray 설정 팁 -->
+                <div class="vray-tip">
+                    <h3 class="font-bold text-yellow-300 mb-2">
+                        <i class="fas fa-lightbulb text-yellow-400 mr-2"></i>V-Ray 렌즈 설정 가이드
+                    </h3>
+                    <div class="grid grid-cols-2 gap-2 text-xs">
+                        <div>
+                            <strong class="text-blue-400">광각 설정:</strong>
+                            <ul class="list-disc list-inside mt-1 space-y-1">
+                                <li>Focal Length: 14-35mm</li>
+                                <li>Distortion: -0.1 ~ -0.2</li>
+                                <li>Vignetting: 0.8 ~ 1.0</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <strong class="text-purple-400">망원 설정:</strong>
+                            <ul class="list-disc list-inside mt-1 space-y-1">
+                                <li>Focal Length: 85-200mm</li>
+                                <li>F-Number: 1.4 ~ 2.8</li>
+                                <li>Bokeh Quality: High</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 오른쪽: 영화 기법들 -->
+            <div class="w-1/2">
+                <h2 class="text-xl font-semibold text-purple-300 mb-3">
+                    <i class="fas fa-film text-purple-400 mr-2"></i>명작 영화 속 카메라 기법
+                </h2>
+                
+                <!-- 달리 줌 (버티고 효과) -->
+                <div class="movie-technique p-3 rounded mb-3" onclick="showMovieTechnique('vertigo')">
+                    <div class="flex items-start gap-3">
+                        <div class="interactive-preview w-16 h-12 flex-shrink-0">
+                            <img src="https://s.studiobinder.com/wp-content/uploads/2021/01/What-is-the-Vertigo-Effect-The-Hitchcock-Zoom-Explained-StudioBinder.jpeg" alt="버티고 효과" class="w-full h-full object-cover">
+                            <div class="preview-overlay">
+                                <i class="fas fa-play text-white text-lg"></i>
+                            </div>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="font-bold text-red-300 mb-1">달리 줌 (Dolly Zoom)</h3>
+                            <p class="text-sm mb-1">카메라 이동 + 줌 조절로 <span class="highlight">배경은 변하고 피사체는 고정</span></p>
+                            <div class="text-xs text-gray-400">
+                                <i class="fas fa-film mr-1"></i>대표작: 버티고 (1958), 조스 (1975)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 매트릭스 불릿 타임 -->
+                <div class="movie-technique p-3 rounded mb-3" onclick="showMovieTechnique('matrix')">
+                    <div class="flex items-start gap-3">
+                        <div class="interactive-preview w-16 h-12 flex-shrink-0">
+                            <img src="https://cdn.theasc.com/The-Matrix-Bullet-Time.jpg" alt="매트릭스 불릿타임" class="w-full h-full object-cover">
+                            <div class="preview-overlay">
+                                <i class="fas fa-play text-white text-lg"></i>
+                            </div>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="font-bold text-green-300 mb-1">불릿 타임 (Bullet Time)</h3>
+                            <p class="text-sm mb-1"><span class="highlight">360도 다중 카메라</span>로 시간 정지 효과 구현</p>
+                            <div class="text-xs text-gray-400">
+                                <i class="fas fa-magic mr-1"></i>혁신: 시간과 공간의 독립적 조작
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 굿펠라스 트래킹 샷 -->
+                <div class="movie-technique p-3 rounded mb-3" onclick="showMovieTechnique('goodfellas')">
+                    <div class="flex items-start gap-3">
+                        <div class="interactive-preview w-16 h-12 flex-shrink-0">
+                            <img src="https://ichef.bbci.co.uk/images/ic/480xn/p08rw5qt.jpg.webp" alt="굿펠라스 트래킹샷" class="w-full h-full object-cover">
+                            <div class="preview-overlay">
+                                <i class="fas fa-play text-white text-lg"></i>
+                            </div>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="font-bold text-blue-300 mb-1">스테디캠 트래킹 샷</h3>
+                            <p class="text-sm mb-1"><span class="highlight">3분간 원테이크</span>로 코파카바나 클럽 입장</p>
+                            <div class="text-xs text-gray-400">
+                                <i class="fas fa-video mr-1"></i>효과: 몰입감, 리얼타임 경험
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 픽사 애니메이션 기법 -->
+                <div class="movie-technique p-3 rounded mb-3" onclick="showMovieTechnique('pixar')">
+                    <div class="flex items-start gap-3">
+                        <div class="interactive-preview w-16 h-12 flex-shrink-0">
+                            <img src="https://assets.renderman.pixar.com/Incredibles_2/camera-types-02.jpg" alt="픽사 시네마토그래피" class="w-full h-full object-cover">
+                            <div class="preview-overlay">
+                                <i class="fas fa-play text-white text-lg"></i>
+                            </div>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="font-bold text-yellow-300 mb-1">픽사 가상 시네마토그래피</h3>
+                            <p class="text-sm mb-1">애니메이션에서도 <span class="highlight">실사 같은 카메라 워크</span> 구현</p>
+                            <div class="text-xs text-gray-400">
+                                <i class="fas fa-heart mr-1"></i>특징: 감정적 카메라 앵글
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 렌즈 효과 데모 -->
+                <div class="effect-demo p-3 rounded mb-3" onclick="startLensDemo()">
+                    <h3 class="font-bold text-green-300 mb-2">
+                        <i class="fas fa-cogs text-green-400 mr-2"></i>인터랙티브 렌즈 효과 데모
+                    </h3>
+                    <div class="grid grid-cols-2 gap-2">
+                        <div class="distortion-effect bg-gray-800 bg-opacity-50 p-2 rounded text-center text-sm cursor-pointer" onclick="activateEffect('wide')">
+                            <i class="fas fa-expand text-blue-400 mb-1"></i>
+                            <div>광각 왜곡</div>
+                        </div>
+                        <div class="compression-demo p-2 rounded text-center text-sm cursor-pointer" onclick="activateEffect('tele')">
+                            <i class="fas fa-compress text-white mb-1"></i>
+                            <div>망원 압축</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 실습 가이드 -->
+                <div class="bg-gray-800 bg-opacity-50 p-3 rounded">
+                    <h3 class="font-bold text-white mb-2">
+                        <i class="fas fa-clipboard-check text-blue-400 mr-2"></i>실습 과제
+                    </h3>
+                    <div class="text-sm space-y-2">
+                        <div class="flex items-start gap-2">
+                            <span class="text-blue-400 font-bold">1.</span>
+                            <span>광각과 망원렌즈로 같은 씬을 렌더링하여 <span class="highlight">시각적 차이</span> 비교</span>
+                        </div>
+                        <div class="flex items-start gap-2">
+                            <span class="text-green-400 font-bold">2.</span>
+                            <span>달리 줌 효과를 <span class="highlight">애니메이션</span>으로 구현해보기</span>
+                        </div>
+                        <div class="flex items-start gap-2">
+                            <span class="text-purple-400 font-bold">3.</span>
+                            <span>좋아하는 영화 장면을 <span class="highlight">모작</span>하여 포트폴리오 제작</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 하단 요약 -->
+        <div class="mt-4 bg-gradient-to-r from-blue-900 to-purple-900 bg-opacity-30 p-3 rounded-lg text-center z-10">
+            <p class="text-sm text-gray-300">
+                <i class="fas fa-star text-yellow-400 mr-2"></i>
+                각 렌즈의 특성을 이해하고 적절한 상황에 활용하여 <span class="highlight">스토리텔링을 강화</span>하는 것이 핵심입니다
+            </p>
+        </div>
+        
+        <!-- 하단 페이지 표시 -->
+        <div class="absolute bottom-4 right-6 text-sm text-gray-400">
+            15 / 15
+        </div>
+    </div>
+
+    <script>
+        function demonstrateLens(type) {
+            const message = type === 'wide' ? 
+                '광각 렌즈: 넓은 시야각과 원근감 과장으로 역동적인 장면 연출' :
+                '망원 렌즈: 압축 효과와 강한 보케로 영화적 분위기 조성';
+            
+            // 시각적 피드백
+            event.currentTarget.style.transform = 'scale(1.1)';
+            setTimeout(() => {
+                event.currentTarget.style.transform = '';
+                alert(message);
+            }, 200);
+        }
+
+        function showMovieTechnique(technique) {
+            const techniques = {
+                'vertigo': '버티고 효과: 카메라를 뒤로 이동하며 동시에 줌인하여 심리적 불안감 조성',
+                'matrix': '불릿 타임: 360도 다중 카메라로 시간 정지 효과를 구현한 혁신적 기법',
+                'goodfellas': '스테디캠 트래킹: 끊김 없는 3분 원테이크로 몰입감 극대화',
+                'pixar': '픽사 시네마토그래피: 애니메이션에서도 실사 영화 같은 감정적 카메라 워크'
+            };
+            
+            alert(techniques[technique]);
+        }
+
+        function activateEffect(effect) {
+            const effects = {
+                'wide': '광각 렌즈 효과가 활성화되었습니다. 배럴 왜곡과 넓은 시야각을 확인하세요!',
+                'tele': '망원 렌즈 효과가 활성화되었습니다. 압축 효과와 보케를 확인하세요!'
+            };
+            
+            // 시각적 효과
+            const element = event.currentTarget;
+            element.style.animation = 'pulse 0.5s ease';
+            
+            setTimeout(() => {
+                element.style.animation = '';
+                alert(effects[effect]);
+            }, 500);
+        }
+
+        function startLensDemo() {
+            alert('인터랙티브 렌즈 데모를 시작합니다!\n\n각 효과 버튼을 클릭하여 렌즈별 특성을 체험해보세요.');
+        }
+
+        // 호버 효과 강화
+        document.querySelectorAll('.lens-card, .movie-technique').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.boxShadow = '0 20px 40px rgba(59, 130, 246, 0.4)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.boxShadow = '';
+            });
+        });
+    </script>
+</body>
+</html>

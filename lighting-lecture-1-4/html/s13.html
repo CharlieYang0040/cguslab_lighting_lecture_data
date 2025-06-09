@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>요약 및 다음 차시 안내</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11.6.0/dist/mermaid.min.js"></script>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+            overflow: hidden;
+        }
+        .slide {
+            width: 1280px;
+            min-height: 720px;
+            background: linear-gradient(135deg, #1a2a6c, #2a3c7f);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        .slide-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            border-bottom: 2px solid rgba(255,255,255,0.2);
+        }
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #a0c0ff;
+            margin-bottom: 1rem;
+        }
+        .summary-item {
+            padding: 0.6rem 1rem;
+            margin-bottom: 0.5rem;
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            background-color: rgba(255,255,255,0.08);
+            transition: all 0.3s ease;
+        }
+        .summary-item:hover {
+            background-color: rgba(255,255,255,0.15);
+            transform: translateX(5px);
+        }
+        .next-topic {
+            background-color: rgba(79, 70, 229, 0.2);
+            border-left: 4px solid #6366f1;
+            padding: 0.75rem 1rem;
+            margin-bottom: 0.75rem;
+            border-radius: 0 0.5rem 0.5rem 0;
+            transition: all 0.3s ease;
+        }
+        .next-topic:hover {
+            background-color: rgba(79, 70, 229, 0.3);
+            transform: translateX(5px);
+        }
+        .qa-box {
+            background-color: rgba(59, 130, 246, 0.2);
+            border-radius: 0.75rem;
+            padding: 1rem;
+            border: 1px dashed rgba(255,255,255,0.3);
+        }
+        .page-number {
+            position: absolute;
+            bottom: 1rem;
+            right: 1rem;
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+        .light-direction-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 1rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-shrink: 0;
+            position: relative;
+        }
+        .light-ray {
+            position: absolute;
+            background-color: rgba(255,255,255,0.8);
+            width: 16px;
+            height: 2px;
+        }
+        .floating-light {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 70%);
+            z-index: 0;
+            animation: float 8s infinite ease-in-out;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="slide p-10 flex flex-col">
+        <!-- Floating light effects -->
+        <div class="floating-light" style="top: 100px; left: 200px;"></div>
+        <div class="floating-light" style="top: 300px; right: 150px; animation-delay: -2s;"></div>
+        <div class="floating-light" style="bottom: 120px; left: 300px; animation-delay: -5s;"></div>
+        
+        <!-- Slide Header -->
+        <div class="slide-title pb-4 mb-6 flex items-center relative z-10">
+            <i class="fas fa-check-circle mr-4 text-green-300"></i>
+            <span>요약 및 다음 차시 안내</span>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex flex-1 space-x-6 relative z-10">
+            <!-- Left Column: Summary -->
+            <div class="w-3/5 space-y-4">
+                <div class="section-title flex items-center">
+                    <i class="fas fa-list-alt mr-3 text-blue-300"></i>
+                    <span>빛의 방향별 특징 요약</span>
+                </div>
+                
+                <p class="text-lg mb-3">빛의 방향은 시각적 표현의 중요한 요소입니다</p>
+                
+                <div class="space-y-2">
+                    <div class="summary-item">
+                        <div class="light-direction-icon bg-yellow-600">
+                            <i class="fas fa-arrow-down text-white"></i>
+                            <div class="light-ray" style="top: -10px; left: 50%; transform: translateX(-50%) rotate(90deg);"></div>
+                        </div>
+                        <div>
+                            <span class="font-bold text-yellow-300">정면광:</span> 균일한 조명, 디테일 표현에 적합
+                        </div>
+                    </div>
+
+                    <div class="summary-item">
+                        <div class="light-direction-icon bg-orange-600">
+                            <i class="fas fa-arrow-right text-white"></i>
+                            <div class="light-ray" style="top: 50%; left: -10px; transform: translateY(-50%);"></div>
+                        </div>
+                        <div>
+                            <span class="font-bold text-orange-300">측면광:</span> 입체감과 질감 강조, 드라마틱한 효과
+                        </div>
+                    </div>
+
+                    <div class="summary-item">
+                        <div class="light-direction-icon bg-purple-600">
+                            <i class="fas fa-arrow-up text-white"></i>
+                            <div class="light-ray" style="bottom: -10px; left: 50%; transform: translateX(-50%) rotate(90deg);"></div>
+                        </div>
+                        <div>
+                            <span class="font-bold text-purple-300">역광:</span> 윤곽선 강조, 신비로운 분위기 연출
+                        </div>
+                    </div>
+
+                    <div class="summary-item">
+                        <div class="light-direction-icon bg-blue-600">
+                            <i class="fas fa-angle-double-down text-white"></i>
+                            <div class="light-ray" style="top: -15px; left: 50%; transform: translateX(-50%) rotate(110deg);"></div>
+                            <div class="light-ray" style="top: -15px; left: 50%; transform: translateX(-50%) rotate(70deg);"></div>
+                        </div>
+                        <div>
+                            <span class="font-bold text-blue-300">탑라이트:</span> 강한 그림자, 극적인 효과
+                        </div>
+                    </div>
+
+                    <div class="summary-item">
+                        <div class="light-direction-icon bg-red-600">
+                            <i class="fas fa-angle-double-up text-white"></i>
+                            <div class="light-ray" style="bottom: -15px; left: 50%; transform: translateX(-50%) rotate(110deg);"></div>
+                            <div class="light-ray" style="bottom: -15px; left: 50%; transform: translateX(-50%) rotate(70deg);"></div>
+                        </div>
+                        <div>
+                            <span class="font-bold text-red-300">아래광:</span> 비현실적 효과, 공포감이나 특수 효과에 활용
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Next Class and Q&A -->
+            <div class="w-2/5 space-y-8">
+                <!-- Next Class Preview -->
+                <div>
+                    <div class="section-title flex items-center">
+                        <i class="fas fa-forward mr-3 text-blue-300"></i>
+                        <span>다음 차시 예고</span>
+                    </div>
+                    
+                    <div class="p-4 bg-indigo-900 bg-opacity-30 rounded-lg mb-4">
+                        <h3 class="text-xl font-bold text-pink-300 mb-2">5강: 빛의 색상과 감정 표현</h3>
+                    </div>
+                    
+                    <div class="space-y-2">
+                        <div class="next-topic flex items-center">
+                            <i class="fas fa-temperature-high text-indigo-300 mr-3"></i>
+                            <span>색온도(Color Temperature)의 이해와 활용</span>
+                        </div>
+                        
+                        <div class="next-topic flex items-center">
+                            <i class="fas fa-palette text-indigo-300 mr-3"></i>
+                            <span>색상 조화를 통한 감정 전달 기법</span>
+                        </div>
+                        
+                        <div class="next-topic flex items-center">
+                            <i class="fas fa-laptop-code text-indigo-300 mr-3"></i>
+                            <span>색상 조절 파라미터를 활용한 실습</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Q&A Guide -->
+                <div>
+                    <div class="section-title flex items-center">
+                        <i class="fas fa-question-circle mr-3 text-blue-300"></i>
+                        <span>Q&A 안내</span>
+                    </div>
+                    
+                    <div class="qa-box">
+                        <div class="flex items-start mb-3">
+                            <i class="fas fa-envelope text-blue-300 mt-1 mr-3"></i>
+                            <div>
+                                <div class="font-medium">질문사항은 강의 이메일로 문의해주세요:</div>
+                                <div class="text-blue-300">cgraphics@example.edu</div>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start mb-3">
+                            <i class="fas fa-reply text-blue-300 mt-1 mr-3"></i>
+                            <div>다음 수업 전까지 질문에 답변해 드리겠습니다.</div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <i class="fas fa-pencil-alt text-blue-300 mt-1 mr-3"></i>
+                            <div class="font-medium">실습 과제: 다양한 빛의 방향을 활용한 간단한 장면 렌더링</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Page Number -->
+        <div class="page-number">8 / 8</div>
+    </div>
+    
+    <script>
+        // Initialize mermaid if needed
+        mermaid.initialize({ startOnLoad: true });
+    </script>
+</body>
+</html>

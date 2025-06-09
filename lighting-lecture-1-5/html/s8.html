@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>라이팅 접근법 실제 적용 예시 및 영화/애니메이션 사례</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        .slide {
+            width: 1280px;
+            min-height: 720px;
+            background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        .content {
+            position: relative;
+            z-index: 10;
+        }
+        .glass-card {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(8px);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            transition: all 0.3s ease;
+        }
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .movie-example {
+            background: rgba(15, 23, 42, 0.8);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+            height: 280px;
+        }
+        .movie-example:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(52, 211, 153, 0.4);
+        }
+        .movie-image {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            transition: all 0.5s ease;
+        }
+        .movie-example:hover .movie-image {
+            transform: scale(1.1);
+            filter: brightness(1.1) contrast(1.1);
+        }
+        .movie-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(transparent 40%, rgba(0, 0, 0, 0.9));
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            transform: translateY(100%);
+            transition: all 0.4s ease;
+        }
+        .movie-example:hover .movie-overlay {
+            transform: translateY(0);
+        }
+        .movie-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 10px;
+            transition: all 0.3s ease;
+        }
+        .movie-example:hover .movie-info {
+            background: rgba(0, 0, 0, 0.95);
+        }
+        .technique-badge {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.7em;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        .motivated-badge {
+            background: rgba(251, 191, 36, 0.9);
+            color: black;
+        }
+        .simulation-badge {
+            background: rgba(96, 165, 250, 0.9);
+            color: white;
+        }
+        .studio-badge {
+            background: rgba(34, 197, 94, 0.9);
+            color: white;
+        }
+        .heading-underline {
+            position: relative;
+            display: inline-block;
+        }
+        .heading-underline::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #34D399, transparent);
+            border-radius: 2px;
+        }
+        .highlight-text {
+            color: #34D399;
+            font-weight: bold;
+            text-shadow: 0 0 8px rgba(52, 211, 153, 0.4);
+        }
+        .comparison-container {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            height: 200px;
+            transition: all 0.3s ease;
+        }
+        .comparison-container:hover {
+            transform: scale(1.02);
+        }
+        .split-view {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        .split-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.5s ease;
+        }
+        .split-motivated {
+            clip-path: polygon(0 0, 50% 0, 50% 100%, 0 100%);
+        }
+        .split-simulation {
+            clip-path: polygon(50% 0, 100% 0, 100% 100%, 50% 100%);
+        }
+        .split-divider {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(to bottom, #34D399, #60A5FA);
+            transform: translateX(-50%);
+            z-index: 10;
+            box-shadow: 0 0 10px rgba(52, 211, 153, 0.6);
+        }
+        .split-label {
+            position: absolute;
+            top: 10px;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 0.8em;
+            font-weight: bold;
+            z-index: 5;
+        }
+        .split-label-left {
+            left: 10px;
+            background: rgba(251, 191, 36, 0.9);
+            color: black;
+        }
+        .split-label-right {
+            right: 10px;
+            background: rgba(96, 165, 250, 0.9);
+            color: white;
+        }
+        .tech-details {
+            background: rgba(0, 0, 0, 0.6);
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 0.75em;
+            margin-top: 5px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+        .tech-details:hover {
+            background: rgba(0, 0, 0, 0.8);
+            border-color: rgba(52, 211, 153, 0.4);
+        }
+        .workflow-step {
+            background: rgba(15, 23, 42, 0.5);
+            border-left: 4px solid #34D399;
+            padding: 8px 12px;
+            margin-bottom: 6px;
+            border-radius: 0 8px 8px 0;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .workflow-step:hover {
+            background: rgba(15, 23, 42, 0.7);
+            transform: translateX(5px);
+            border-left-color: #60A5FA;
+        }
+        .workflow-step::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, #34D399, #60A5FA);
+            transform: scaleY(0);
+            transition: transform 0.3s ease;
+        }
+        .workflow-step:hover::before {
+            transform: scaleY(1);
+        }
+        .step-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 18px;
+            height: 18px;
+            background: #34D399;
+            color: white;
+            border-radius: 50%;
+            font-weight: bold;
+            font-size: 9px;
+            margin-right: 8px;
+            transition: all 0.3s ease;
+        }
+        .workflow-step:hover .step-icon {
+            background: #60A5FA;
+            transform: scale(1.1);
+        }
+        .animated-pulse {
+            animation: pulse 4s infinite alternate ease-in-out;
+        }
+        .floating {
+            animation: float 6s infinite ease-in-out;
+        }
+        .glow-text {
+            text-shadow: 0 0 10px currentColor;
+        }
+        .light-particle {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(52, 211, 153, 0.4) 0%, rgba(52, 211, 153, 0) 70%);
+            animation: particleFloat 8s infinite ease-in-out;
+            filter: blur(2px);
+        }
+        .industry-tag {
+            display: inline-block;
+            padding: 2px 6px;
+            border-radius: 10px;
+            font-size: 0.6em;
+            margin: 2px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        .industry-tag:hover {
+            transform: scale(1.1);
+        }
+        .pixar-tag { background: rgba(255, 107, 107, 0.8); color: white; }
+        .disney-tag { background: rgba(79, 172, 254, 0.8); color: white; }
+        .cinema-tag { background: rgba(255, 193, 7, 0.8); color: black; }
+        .game-tag { background: rgba(156, 39, 176, 0.8); color: white; }
+        .main-title {
+            text-shadow: 0 0 15px rgba(52, 211, 153, 0.5);
+        }
+        @keyframes pulse {
+            0% { transform: scale(0.95); opacity: 0.8; }
+            100% { transform: scale(1.05); opacity: 1; }
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+        @keyframes particleFloat {
+            0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.3; }
+            25% { transform: translate(20px, -15px) scale(1.2); opacity: 0.6; }
+            50% { transform: translate(-15px, -10px) scale(0.8); opacity: 0.4; }
+            75% { transform: translate(-10px, 15px) scale(1.1); opacity: 0.7; }
+        }
+    </style>
+</head>
+<body>
+    <div class="slide">
+        <!-- Floating Light Particles -->
+        <div class="light-particle" style="width: 50px; height: 50px; top: 80px; left: 200px;"></div>
+        <div class="light-particle" style="width: 30px; height: 30px; top: 200px; right: 250px; animation-delay: -2s;"></div>
+        <div class="light-particle" style="width: 40px; height: 40px; bottom: 150px; left: 350px; animation-delay: -4s;"></div>
+        <div class="light-particle" style="width: 35px; height: 35px; top: 350px; right: 150px; animation-delay: -6s;"></div>
+        
+        <div class="content px-12 py-8">
+            <div class="mb-4">
+                <h1 class="text-3xl font-bold text-white main-title">
+                    <i class="fas fa-star text-green-300 mr-3 animated-pulse"></i>
+                    <span class="heading-underline">라이팅 접근법 실제 적용 예시 및 영화/애니메이션 사례</span>
+                </h1>
+                <p class="text-lg text-gray-300 mt-2">세계적인 스튜디오와 영화에서 활용되는 전문 라이팅 기법들</p>
+            </div>
+            
+            <div class="grid grid-cols-4 gap-4 mt-4">
+                <!-- Motivated Light 예시들 -->
+                <div class="movie-example">
+                    <div class="technique-badge motivated-badge">MOTIVATED</div>
+                    <img src="https://s.studiobinder.com/wp-content/uploads/2021/03/Motivated-lighting-examples-%E2%80%94-Skyfall.jpg" alt="Skyfall Motivated Lighting" class="movie-image">
+                    <div class="movie-info">
+                        <h3 class="text-sm font-bold text-yellow-300">007 Skyfall</h3>
+                        <div class="industry-tag cinema-tag">CINEMA</div>
+                        <p class="text-xs text-gray-300">창문 빛을 활용한 극적 실루엣</p>
+                    </div>
+                    <div class="movie-overlay">
+                        <div class="tech-details">
+                            <i class="fas fa-lightbulb mr-1 text-yellow-400"></i>
+                            <strong>기법:</strong> Window Light Motivation
+                        </div>
+                        <div class="tech-details">
+                            <i class="fas fa-target mr-1 text-green-400"></i>
+                            <strong>목적:</strong> 캐릭터 감정과 긴장감 강조
+                        </div>
+                        <div class="tech-details">
+                            <i class="fas fa-cog mr-1 text-blue-400"></i>
+                            <strong>설정:</strong> Single Key Light + Rim Light
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="movie-example">
+                    <div class="technique-badge motivated-badge">MOTIVATED</div>
+                    <img src="https://www.fxguide.com/wp-content/uploads/2018/03/coco1.jpg" alt="Coco Lighting" class="movie-image">
+                    <div class="movie-info">
+                        <h3 class="text-sm font-bold text-yellow-300">Pixar Coco</h3>
+                        <div class="industry-tag pixar-tag">PIXAR</div>
+                        <p class="text-xs text-gray-300">촛불과 마리골드 조명</p>
+                    </div>
+                    <div class="movie-overlay">
+                        <div class="tech-details">
+                            <i class="fas fa-lightbulb mr-1 text-yellow-400"></i>
+                            <strong>기법:</strong> Candle Light Motivation
+                        </div>
+                        <div class="tech-details">
+                            <i class="fas fa-target mr-1 text-green-400"></i>
+                            <strong>목적:</strong> 따뜻한 가족애와 전통 표현
+                        </div>
+                        <div class="tech-details">
+                            <i class="fas fa-palette mr-1 text-orange-400"></i>
+                            <strong>색감:</strong> Warm Orange + Golden Yellow
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="movie-example">
+                    <div class="technique-badge simulation-badge">SIMULATION</div>
+                    <img src="https://research.nvidia.com/labs/toronto-ai/inverse-rendering-3d-lighting/assets/qual3.png" alt="Indoor GI Simulation" class="movie-image">
+                    <div class="movie-info">
+                        <h3 class="text-sm font-bold text-blue-300">Indoor GI Simulation</h3>
+                        <div class="industry-tag game-tag">TECH</div>
+                        <p class="text-xs text-gray-300">물리 기반 실내 조명</p>
+                    </div>
+                    <div class="movie-overlay">
+                        <div class="tech-details">
+                            <i class="fas fa-atom mr-1 text-blue-400"></i>
+                            <strong>기법:</strong> Physically Based Lighting
+                        </div>
+                        <div class="tech-details">
+                            <i class="fas fa-calculator mr-1 text-purple-400"></i>
+                            <strong>연산:</strong> Global Illumination + IBL
+                        </div>
+                        <div class="tech-details">
+                            <i class="fas fa-eye mr-1 text-green-400"></i>
+                            <strong>결과:</strong> 사실적인 빛의 산란과 반사
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="movie-example">
+                    <div class="technique-badge simulation-badge">SIMULATION</div>
+                    <img src="https://cdn.theasc.com/Avatar-Featured.jpg" alt="Avatar Lighting Simulation" class="movie-image">
+                    <div class="movie-info">
+                        <h3 class="text-sm font-bold text-blue-300">Avatar (Cameron)</h3>
+                        <div class="industry-tag cinema-tag">CINEMA</div>
+                        <p class="text-xs text-gray-300">판도라 생물발광 시뮬레이션</p>
+                    </div>
+                    <div class="movie-overlay">
+                        <div class="tech-details">
+                            <i class="fas fa-seedling mr-1 text-green-400"></i>
+                            <strong>기법:</strong> Bioluminescence Simulation
+                        </div>
+                        <div class="tech-details">
+                            <i class="fas fa-flask mr-1 text-blue-400"></i>
+                            <strong>기술:</strong> Subsurface Scattering + Emission
+                        </div>
+                        <div class="tech-details">
+                            <i class="fas fa-globe mr-1 text-purple-400"></i>
+                            <strong>환경:</strong> Alien Ecosystem Lighting
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-3 gap-4 mt-4">
+                <!-- 왼쪽: 추가 영화 사례들 -->
+                <div class="glass-card">
+                    <h2 class="text-xl font-semibold text-yellow-300 mb-3 glow-text">
+                        <i class="fas fa-film mr-2 floating"></i>Motivated Light 명작들
+                    </h2>
+                    
+                    <div class="space-y-2">
+                        <div class="movie-example" style="height: 120px;">
+                            <div class="technique-badge motivated-badge">FILM NOIR</div>
+                            <img src="https://images-prod.dazeddigital.com/900/azure/dazed-prod/1220/2/1222959.jpg" alt="Blade Runner Lighting" class="movie-image" style="height: 80px;">
+                            <div class="movie-info" style="padding: 4px 8px;">
+                                <h4 class="text-xs font-bold text-yellow-300">Blade Runner 2049</h4>
+                                <p class="text-xs text-gray-300">네온 사인 동기 조명</p>
+                            </div>
+                        </div>
+                        
+                        <div class="movie-example" style="height: 120px;">
+                            <div class="technique-badge motivated-badge">DISNEY</div>
+                            <img src="https://i.ytimg.com/vi/y-_S2iKNdDQ/maxresdefault.jpg" alt="Frozen 2 Lighting" class="movie-image" style="height: 80px;">
+                            <div class="movie-info" style="padding: 4px 8px;">
+                                <h4 class="text-xs font-bold text-yellow-300">Frozen 2</h4>
+                                <p class="text-xs text-gray-300">마법적 얼음 조명</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 중간: 비교 시연 -->
+                <div class="glass-card">
+                    <h2 class="text-xl font-semibold text-purple-300 mb-3 glow-text">
+                        <i class="fas fa-balance-scale mr-2 floating"></i>실시간 비교
+                    </h2>
+                    
+                    <div class="comparison-container">
+                        <div class="split-view">
+                            <img src="https://www.premiumbeat.com/blog/wp-content/uploads/2022/09/comparison.jpg" alt="Motivated Lighting" class="split-image split-motivated">
+                            <img src="https://professional3dservices.com/img/blog/before-and-after-lighting.webp" alt="Lighting Simulation" class="split-image split-simulation">
+                            <div class="split-divider"></div>
+                            <div class="split-label split-label-left">Motivated</div>
+                            <div class="split-label split-label-right">Simulation</div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-3 text-sm">
+                        <div class="flex justify-between">
+                            <div class="text-yellow-300">
+                                <i class="fas fa-palette mr-1"></i>예술적 표현
+                            </div>
+                            <div class="text-blue-300">
+                                <i class="fas fa-atom mr-1"></i>물리적 정확성
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 오른쪽: 실습 워크플로우 -->
+                <div class="glass-card">
+                    <h2 class="text-xl font-semibold text-green-300 mb-3 glow-text">
+                        <i class="fas fa-clipboard-list mr-2 floating"></i>프로덕션 워크플로우
+                    </h2>
+                    
+                    <div class="space-y-1">
+                        <div class="workflow-step">
+                            <span class="step-icon">1</span>
+                            <span>장면 분석 및 <span class="highlight-text">접근법 선택</span></span>
+                        </div>
+                        <div class="workflow-step">
+                            <span class="step-icon">2</span>
+                            <span><span class="highlight-text">Key Light</span> 배치 및 동기 설정</span>
+                        </div>
+                        <div class="workflow-step">
+                            <span class="step-icon">3</span>
+                            <span>보조 조명으로 <span class="highlight-text">밸런스</span> 조정</span>
+                        </div>
+                        <div class="workflow-step">
+                            <span class="step-icon">4</span>
+                            <span><span class="highlight-text">색온도</span> 및 강도 미세조정</span>
+                        </div>
+                        <div class="workflow-step">
+                            <span class="step-icon">5</span>
+                            <span>최종 <span class="highlight-text">렌더 테스트</span> 및 검증</span>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-3 p-2 bg-green-900 bg-opacity-20 rounded-lg border border-green-500 border-opacity-30 text-xs">
+                        <p class="font-bold text-green-300 mb-1">
+                            <i class="fas fa-trophy mr-1 animated-pulse"></i>업계 표준 팁
+                        </p>
+                        <p class="text-gray-300">대형 스튜디오에서는 프리프로덕션 단계에서 라이팅 컨셉을 확정한 후, 기술적 제약과 예술적 비전의 균형을 맞춰 최적화합니다.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 하단: 소프트웨어별 구현 예시 -->
+            <div class="grid grid-cols-4 gap-3 mt-4">
+                <div class="glass-card text-center" style="padding: 8px;">
+                    <h3 class="text-sm font-bold text-red-300 mb-2">
+                        <i class="fas fa-cube mr-1"></i>Maya/Arnold
+                    </h3>
+                    <img src="https://i.ytimg.com/vi/BiRZkkooq3M/maxresdefault.jpg" alt="Maya Lighting" class="w-full h-16 object-cover rounded mb-2">
+                    <p class="text-xs text-gray-300">시네마틱 캐릭터 라이팅</p>
+                </div>
+                
+                <div class="glass-card text-center" style="padding: 8px;">
+                    <h3 class="text-sm font-bold text-orange-300 mb-2">
+                        <i class="fas fa-blender mr-1"></i>Blender
+                    </h3>
+                    <img src="https://i.ytimg.com/vi/cj9VDW1sU1Q/maxresdefault.jpg" alt="Blender Lighting" class="w-full h-16 object-cover rounded mb-2">
+                    <p class="text-xs text-gray-300">디테일드 캐릭터 라이팅</p>
+                </div>
+                
+                <div class="glass-card text-center" style="padding: 8px;">
+                    <h3 class="text-sm font-bold text-purple-300 mb-2">
+                        <i class="fas fa-gamepad mr-1"></i>Unreal Engine
+                    </h3>
+                    <img src="https://dreamfarmstudios.com/wp-content/uploads/2021/04/Skydome-vs-skydome-GI-1500x844.jpg" alt="Unreal Lighting" class="w-full h-16 object-cover rounded mb-2">
+                    <p class="text-xs text-gray-300">실시간 글로벌 일루미네이션</p>
+                </div>
+                
+                <div class="glass-card text-center" style="padding: 8px;">
+                    <h3 class="text-sm font-bold text-green-300 mb-2">
+                        <i class="fas fa-camera mr-1"></i>Studio Setup
+                    </h3>
+                    <img src="https://courses.cs.washington.edu/courses/cse458/06au/reading/lighting_tutorial/3ptFill.jpg" alt="Studio Setup" class="w-full h-16 object-cover rounded mb-2">
+                    <p class="text-xs text-gray-300">3포인트 라이팅 실습</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

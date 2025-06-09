@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>피사계 심도 마스터클래스</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        .slide {
+            width: 1280px;
+            min-height: 720px;
+            position: relative;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+            color: white;
+            overflow: hidden;
+        }
+        .highlight {
+            color: #60a5fa;
+            font-weight: 600;
+        }
+        .aperture-card {
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            transition: all 0.4s ease;
+            cursor: pointer;
+        }
+        .aperture-card:hover {
+            background: rgba(59, 130, 246, 0.2);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3);
+        }
+        .movie-example {
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+        .movie-example:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+        }
+        .movie-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+            padding: 15px;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+        .movie-example:hover .movie-overlay {
+            transform: translateY(0);
+        }
+        .lens-comparison {
+            background: rgba(16, 185, 129, 0.1);
+            border-left: 4px solid #10b981;
+            transition: all 0.3s ease;
+        }
+        .lens-comparison:hover {
+            background: rgba(16, 185, 129, 0.2);
+            transform: translateX(10px);
+        }
+        .interactive-demo {
+            background: rgba(139, 92, 246, 0.1);
+            border: 2px dashed rgba(139, 92, 246, 0.5);
+            transition: all 0.3s ease;
+        }
+        .interactive-demo:hover {
+            border-style: solid;
+            background: rgba(139, 92, 246, 0.2);
+        }
+        .floating-element {
+            animation: float 4s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+        }
+        .aperture-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #3b82f6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            margin: 0 auto 10px;
+        }
+        .depth-indicator {
+            height: 6px;
+            background: linear-gradient(90deg, #ef4444, #f59e0b, #10b981);
+            border-radius: 3px;
+            margin: 8px 0;
+        }
+        .blur-effect {
+            filter: blur(2px);
+            opacity: 0.7;
+        }
+        .sharp-focus {
+            filter: none;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide flex flex-col p-8 relative">
+        <!-- 배경 장식 요소 -->
+        <div class="absolute top-10 right-10 text-blue-400 opacity-20 floating-element">
+            <i class="fas fa-camera text-8xl"></i>
+        </div>
+        <div class="absolute bottom-20 left-10 text-purple-400 opacity-15 floating-element" style="animation-delay: -2s;">
+            <i class="fas fa-adjust text-6xl"></i>
+        </div>
+        
+        <!-- 헤더 -->
+        <div class="mb-6 relative z-10">
+            <h1 class="text-4xl font-bold text-white mb-2">피사계 심도 마스터클래스</h1>
+            <div class="w-32 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mb-2"></div>
+            <p class="text-gray-300 text-lg">조리개가 만들어내는 시각적 마법과 영화 속 DOF 기법</p>
+        </div>
+        
+        <!-- 메인 콘텐츠 -->
+        <div class="flex flex-row gap-6 z-10 flex-1">
+            <!-- 왼쪽: F값별 비교 및 기법 -->
+            <div class="w-5/12">
+                <h2 class="text-2xl font-semibold text-blue-300 mb-4">
+                    <i class="fas fa-eye text-blue-400 mr-2"></i>F값별 피사계 심도 비교
+                </h2>
+                
+                <!-- F값 카드들 -->
+                <div class="grid grid-cols-2 gap-3 mb-6">
+                    <div class="aperture-card p-3 rounded-lg">
+                        <div class="aperture-icon">f/1.4</div>
+                        <h3 class="font-bold text-center mb-1">극도로 얕은 심도</h3>
+                        <div class="depth-indicator" style="background: linear-gradient(90deg, #10b981 30%, #ef4444 70%);"></div>
+                        <ul class="text-xs space-y-1">
+                            <li><i class="fas fa-dot-circle text-green-400 mr-1"></i> 피사체만 선명</li>
+                            <li><i class="fas fa-blur text-yellow-400 mr-1"></i> 강한 보케 효과</li>
+                            <li><i class="fas fa-heart text-red-400 mr-1"></i> 감정적 몰입</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="aperture-card p-3 rounded-lg">
+                        <div class="aperture-icon">f/2.8</div>
+                        <h3 class="font-bold text-center mb-1">얕은 심도</h3>
+                        <div class="depth-indicator" style="background: linear-gradient(90deg, #10b981 50%, #f59e0b 80%, #ef4444 90%);"></div>
+                        <ul class="text-xs space-y-1">
+                            <li><i class="fas fa-user text-blue-400 mr-1"></i> 인물 촬영에 최적</li>
+                            <li><i class="fas fa-palette text-purple-400 mr-1"></i> 자연스러운 분리</li>
+                            <li><i class="fas fa-camera text-green-400 mr-1"></i> 영화적 느낌</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="aperture-card p-3 rounded-lg">
+                        <div class="aperture-icon">f/5.6</div>
+                        <h3 class="font-bold text-center mb-1">중간 심도</h3>
+                        <div class="depth-indicator" style="background: linear-gradient(90deg, #10b981 70%, #f59e0b 90%, #ef4444 95%);"></div>
+                        <ul class="text-xs space-y-1">
+                            <li><i class="fas fa-balance-scale text-blue-400 mr-1"></i> 균형잡힌 구성</li>
+                            <li><i class="fas fa-building text-gray-400 mr-1"></i> 건축 시각화</li>
+                            <li><i class="fas fa-eye text-green-400 mr-1"></i> 자연스러운 시야</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="aperture-card p-3 rounded-lg">
+                        <div class="aperture-icon">f/11</div>
+                        <h3 class="font-bold text-center mb-1">깊은 심도</h3>
+                        <div class="depth-indicator" style="background: linear-gradient(90deg, #10b981 90%, #f59e0b 95%, #ef4444 98%);"></div>
+                        <ul class="text-xs space-y-1">
+                            <li><i class="fas fa-mountain text-green-400 mr-1"></i> 전체 선명도</li>
+                            <li><i class="fas fa-info-circle text-blue-400 mr-1"></i> 정보 전달 중시</li>
+                            <li><i class="fas fa-landscape text-purple-400 mr-1"></i> 풍경 렌더링</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- 렌즈 특성 비교 -->
+                <h2 class="text-xl font-semibold text-green-300 mb-3">
+                    <i class="fas fa-search text-green-400 mr-2"></i>렌즈별 특성 비교
+                </h2>
+                
+                <div class="space-y-3">
+                    <div class="lens-comparison p-3 rounded">
+                        <h3 class="font-bold flex items-center">
+                            <i class="fas fa-expand-arrows-alt text-blue-400 mr-2"></i>광각 렌즈 (14-35mm)
+                        </h3>
+                        <p class="text-sm mt-1">
+                            <span class="highlight">넓은 시야각</span>, 원근감 과장, 공간감 확대, 역동적 구성
+                        </p>
+                    </div>
+                    
+                    <div class="lens-comparison p-3 rounded">
+                        <h3 class="font-bold flex items-center">
+                            <i class="fas fa-compress-arrows-alt text-purple-400 mr-2"></i>망원 렌즈 (85-200mm)
+                        </h3>
+                        <p class="text-sm mt-1">
+                            <span class="highlight">압축 효과</span>, 배경 분리, 인물 왜곡 최소화, 영화적 프레이밍
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- V-Ray 실습 팁 -->
+                <div class="interactive-demo p-4 rounded-lg mt-4">
+                    <h3 class="font-bold text-purple-300 mb-2">
+                        <i class="fas fa-cogs text-purple-400 mr-2"></i>V-Ray에서 DOF 구현하기
+                    </h3>
+                    <ol class="list-decimal list-inside space-y-1 text-sm">
+                        <li><span class="highlight">VRayPhysicalCamera</span> 활성화</li>
+                        <li><span class="highlight">f-number</span> 값 조절 (낮을수록 얕은 심도)</li>
+                        <li><span class="highlight">Focus distance</span> 설정으로 초점 위치 결정</li>
+                        <li><span class="highlight">Subdivs</span> 값으로 보케 품질 조절</li>
+                        <li>렌더링 테스트로 결과 확인 및 미세 조정</li>
+                    </ol>
+                </div>
+            </div>
+            
+            <!-- 오른쪽: 영화 예시 및 기법 -->
+            <div class="w-7/12">
+                <h2 class="text-2xl font-semibold text-blue-300 mb-4">
+                    <i class="fas fa-film text-blue-400 mr-2"></i>명작 영화 속 DOF 기법
+                </h2>
+                
+                <!-- 영화 예시들 -->
+                <div class="grid grid-cols-2 gap-4 mb-6">
+                    <!-- 블레이드 러너 2049 -->
+                    <div class="movie-example">
+                        <img src="https://www.santiniphotography.com/wp-content/uploads/2019/03/blade-runner-2049-2560x1440-officer-k-hd-12826.jpg" alt="블레이드 러너 2049" class="w-full h-32 object-cover">
+                        <div class="movie-overlay">
+                            <h3 class="font-bold text-sm">블레이드 러너 2049</h3>
+                            <p class="text-xs mt-1">극도로 얕은 심도로 미래적 분위기 연출, 네온 보케 효과가 인상적</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 라라랜드 -->
+                    <div class="movie-example">
+                        <img src="https://www.kodak.com/content/blog-news/_3600x2389_crop_center-center_50_line/la-la-land-9.jpeg" alt="라라랜드" class="w-full h-32 object-cover">
+                        <div class="movie-overlay">
+                            <h3 class="font-bold text-sm">라라랜드</h3>
+                            <p class="text-xs mt-1">로맨틱한 얕은 심도로 꿈같은 분위기, 따뜻한 색감의 보케</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 픽사 인크레더블 -->
+                    <div class="movie-example">
+                        <img src="https://assets.renderman.pixar.com/Incredibles_2/camera-types-02.jpg" alt="인크레더블 2" class="w-full h-32 object-cover">
+                        <div class="movie-overlay">
+                            <h3 class="font-bold text-sm">인크레더블 2 (픽사)</h3>
+                            <p class="text-xs mt-1">애니메이션에서도 실사 같은 DOF 효과로 몰입감 증대</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 광각 vs 망원 비교 -->
+                    <div class="movie-example">
+                        <img src="https://www.premiumbeat.com/blog/wp-content/uploads/2016/04/Wide-and-Telephoto.jpg" alt="렌즈 비교" class="w-full h-32 object-cover">
+                        <div class="movie-overlay">
+                            <h3 class="font-bold text-sm">렌즈별 원근감 비교</h3>
+                            <p class="text-xs mt-1">광각과 망원렌즈가 만드는 서로 다른 시각적 임팩트</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 고급 기법 설명 -->
+                <h2 class="text-xl font-semibold text-yellow-300 mb-3">
+                    <i class="fas fa-magic text-yellow-400 mr-2"></i>고급 시네마틱 기법
+                </h2>
+                
+                <div class="grid grid-cols-2 gap-4">
+                    <!-- 달리 줌 -->
+                    <div class="bg-gray-800 bg-opacity-50 p-4 rounded-lg">
+                        <h3 class="font-bold text-red-300 mb-2">
+                            <i class="fas fa-arrows-alt-h text-red-400 mr-1"></i>달리 줌 (Dolly Zoom)
+                        </h3>
+                        <p class="text-sm mb-2">카메라를 뒤로 이동하며 동시에 줌인하여 <span class="highlight">배경은 변하고 피사체는 그대로</span> 유지</p>
+                        <div class="text-xs space-y-1">
+                            <div><i class="fas fa-film mr-1 text-yellow-400"></i> 대표작: 버티고, 조스</div>
+                            <div><i class="fas fa-brain mr-1 text-purple-400"></i> 효과: 심리적 불안감, 현실 왜곡</div>
+                        </div>
+                    </div>
+                    
+                    <!-- 보케 효과 -->
+                    <div class="bg-gray-800 bg-opacity-50 p-4 rounded-lg">
+                        <h3 class="font-bold text-green-300 mb-2">
+                            <i class="fas fa-circle text-green-400 mr-1"></i>보케 (Bokeh) 효과
+                        </h3>
+                        <p class="text-sm mb-2"><span class="highlight">아웃포커스 영역</span>의 부드러운 흐림 효과로 피사체 강조</p>
+                        <div class="text-xs space-y-1">
+                            <div><i class="fas fa-heart mr-1 text-red-400"></i> 활용: 로맨스, 꿈같은 장면</div>
+                            <div><i class="fas fa-lightbulb mr-1 text-yellow-400"></i> 팁: 점광원이 원형으로 흐려짐</div>
+                        </div>
+                    </div>
+                    
+                    <!-- 랙 포커스 -->
+                    <div class="bg-gray-800 bg-opacity-50 p-4 rounded-lg">
+                        <h3 class="font-bold text-blue-300 mb-2">
+                            <i class="fas fa-exchange-alt text-blue-400 mr-1"></i>랙 포커스 (Rack Focus)
+                        </h3>
+                        <p class="text-sm mb-2">촬영 중 <span class="highlight">초점을 이동</span>하여 관객의 시선을 유도</p>
+                        <div class="text-xs space-y-1">
+                            <div><i class="fas fa-eye mr-1 text-green-400"></i> 효과: 시선 유도, 긴장감 조성</div>
+                            <div><i class="fas fa-clock mr-1 text-purple-400"></i> 타이밍: 대화나 반전 순간</div>
+                        </div>
+                    </div>
+                    
+                    <!-- 틸트시프트 -->
+                    <div class="bg-gray-800 bg-opacity-50 p-4 rounded-lg">
+                        <h3 class="font-bold text-purple-300 mb-2">
+                            <i class="fas fa-sliders-h text-purple-400 mr-1"></i>틸트-시프트 효과
+                        </h3>
+                        <p class="text-sm mb-2">선택적 포커스로 <span class="highlight">미니어처 같은 효과</span> 연출</p>
+                        <div class="text-xs space-y-1">
+                            <div><i class="fas fa-city mr-1 text-blue-400"></i> 활용: 도시 전경, 특별한 시점</div>
+                            <div><i class="fas fa-magic mr-1 text-yellow-400"></i> 느낌: 동화적, 환상적 분위기</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 실습 과제 -->
+                <div class="mt-4 bg-gradient-to-r from-purple-900 to-blue-900 bg-opacity-50 p-4 rounded-lg">
+                    <h3 class="font-bold text-white mb-2">
+                        <i class="fas fa-clipboard-check text-green-400 mr-2"></i>실습 과제
+                    </h3>
+                    <div class="grid grid-cols-2 gap-4 text-sm">
+                        <div>
+                            <h4 class="font-semibold text-blue-300">기본 실습</h4>
+                            <ul class="list-disc list-inside text-xs space-y-1 mt-1">
+                                <li>f/1.4, f/5.6, f/11로 같은 장면 렌더링</li>
+                                <li>각 설정의 시각적 차이 관찰</li>
+                                <li>최적의 설정 찾기</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-purple-300">고급 실습</h4>
+                            <ul class="list-disc list-inside text-xs space-y-1 mt-1">
+                                <li>영화 장면 모작하기</li>
+                                <li>랙 포커스 애니메이션 제작</li>
+                                <li>창의적 보케 효과 실험</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 하단 페이지 표시 -->
+        <div class="absolute bottom-6 right-6 text-sm text-gray-400">
+            19 / 19
+        </div>
+    </div>
+</body>
+</html>

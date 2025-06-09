@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1개월차 종합 리뷰 및 과제 제출</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            overflow: hidden;
+        }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            position: relative;
+            background-color: #f8fafc;
+            overflow: hidden;
+        }
+        .title-bar {
+            background: linear-gradient(90deg, #1e3a8a, #3b82f6);
+        }
+        .review-card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transition: all 0.3s ease;
+        }
+        .review-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .qa-box {
+            background: linear-gradient(135deg, #3b82f6, #1e3a8a);
+            border-radius: 10px;
+        }
+        .assignment-card {
+            border-left: 4px solid #3b82f6;
+            background-color: #f1f5f9;
+        }
+        .progress-ring-container {
+            position: relative;
+            width: 120px;
+            height: 120px;
+        }
+        .progress-ring-bg {
+            fill: none;
+            stroke: #e2e8f0;
+            stroke-width: 8;
+        }
+        .progress-ring {
+            fill: none;
+            stroke: #3b82f6;
+            stroke-width: 8;
+            stroke-linecap: round;
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+            transition: stroke-dashoffset 0.5s ease;
+        }
+        .progress-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 24px;
+            font-weight: bold;
+            color: #3b82f6;
+        }
+        .key-concept {
+            border-bottom: 2px dashed #e2e8f0;
+            transition: all 0.3s ease;
+        }
+        .key-concept:hover {
+            background-color: #f1f5f9;
+            border-bottom-color: #3b82f6;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container flex flex-col">
+        <!-- 제목 바 -->
+        <div class="title-bar w-full py-4 px-12 flex items-center">
+            <h1 class="text-3xl font-bold text-white">1개월차 종합 리뷰, Q&A 및 과제 제출</h1>
+            <div class="ml-auto text-white text-opacity-80 text-sm">
+                컴퓨터 그래픽스 라이팅 과정 | 7강
+            </div>
+        </div>
+        
+        <!-- 메인 콘텐츠 -->
+        <div class="flex-1 px-12 py-6">
+            <div class="flex gap-6 h-full">
+                <!-- 왼쪽 컬럼: 학습 내용 요약 -->
+                <div class="w-1/2 flex flex-col">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4">
+                        <i class="fas fa-book text-blue-600 mr-2"></i>1개월차 학습 내용 요약
+                    </h2>
+                    
+                    <div class="review-card p-5 mb-4 flex-1">
+                        <!-- 진행률 표시 -->
+                        <div class="flex items-center justify-between mb-6">
+                            <h3 class="text-lg font-bold text-gray-700">학습 진행률</h3>
+                            <div class="progress-ring-container">
+                                <svg width="120" height="120" viewBox="0 0 120 120">
+                                    <circle class="progress-ring-bg" cx="60" cy="60" r="54"></circle>
+                                    <circle class="progress-ring" cx="60" cy="60" r="54" stroke-dasharray="339.3" stroke-dashoffset="0"></circle>
+                                </svg>
+                                <div class="progress-text">100%</div>
+                            </div>
+                        </div>
+                        
+                        <!-- 핵심 개념 요약 -->
+                        <h3 class="text-lg font-bold text-gray-700 mb-3">핵심 개념</h3>
+                        <div class="space-y-3 max-h-56 overflow-y-auto pr-2">
+                            <div class="key-concept py-2">
+                                <div class="flex items-center">
+                                    <div class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center mr-3">
+                                        <i class="fas fa-lightbulb"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-gray-800">라이팅 기초 이론</h4>
+                                        <p class="text-sm text-gray-600">빛의 물리적 특성과 시각적 표현</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="key-concept py-2">
+                                <div class="flex items-center">
+                                    <div class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center mr-3">
+                                        <i class="fas fa-vector-square"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-gray-800">3 Point Lighting 시스템</h4>
+                                        <p class="text-sm text-gray-600">Key, Fill, Back Light의 설정과 활용</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="key-concept py-2">
+                                <div class="flex items-center">
+                                    <div class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center mr-3">
+                                        <i class="fas fa-adjust"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-gray-800">색온도와 감성 표현</h4>
+                                        <p class="text-sm text-gray-600">색상과 온도를 통한 분위기 연출</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="key-concept py-2">
+                                <div class="flex items-center">
+                                    <div class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center mr-3">
+                                        <i class="fas fa-drafting-compass"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-gray-800">V-Ray 렌더링 파이프라인</h4>
+                                        <p class="text-sm text-gray-600">고품질 렌더링을 위한 설정과 최적화</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="key-concept py-2">
+                                <div class="flex items-center">
+                                    <div class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center mr-3">
+                                        <i class="fas fa-camera"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-gray-800">카메라 제어와 구도</h4>
+                                        <p class="text-sm text-gray-600">시각적 스토리텔링을 위한 카메라 설정</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="key-concept py-2">
+                                <div class="flex items-center">
+                                    <div class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center mr-3">
+                                        <i class="fas fa-pen-fancy"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-gray-800">비주얼 언어와 스토리텔링</h4>
+                                        <p class="text-sm text-gray-600">라이팅을 통한 내러티브 강화</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 과제 제출 안내 -->
+                    <div class="assignment-card p-5 rounded-r-lg">
+                        <h3 class="text-lg font-bold text-gray-800 mb-3">
+                            <i class="fas fa-tasks text-blue-600 mr-2"></i>과제 제출 안내
+                        </h3>
+                        <div class="space-y-3">
+                            <div class="flex items-start">
+                                <div class="w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center mr-3 flex-shrink-0 mt-0.5">1</div>
+                                <div>
+                                    <h4 class="font-bold text-gray-700">최종 결과물 준비</h4>
+                                    <p class="text-sm text-gray-600">프로젝트 1, 2의 결과물과 작업 과정 기록</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center mr-3 flex-shrink-0 mt-0.5">2</div>
+                                <div>
+                                    <h4 class="font-bold text-gray-700">제출 형식</h4>
+                                    <p class="text-sm text-gray-600">렌더링 이미지(JPG/PNG) + 작업 파일(프로젝트 소스)</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center mr-3 flex-shrink-0 mt-0.5">3</div>
+                                <div>
+                                    <h4 class="font-bold text-gray-700">온라인 제출</h4>
+                                    <p class="text-sm text-gray-600">학습 관리 시스템(LMS)에 업로드 (마감: 다음 수업 전)</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 오른쪽 컬럼: Q&A 및 다음 단계 -->
+                <div class="w-1/2 flex flex-col">
+                    <!-- Q&A 세션 안내 -->
+                    <div class="qa-box p-6 text-white mb-4">
+                        <div class="flex items-center mb-4">
+                            <i class="fas fa-question-circle text-4xl mr-4"></i>
+                            <h2 class="text-2xl font-bold">Q&A 세션</h2>
+                        </div>
+                        
+                        <p class="mb-4">1개월차 학습 내용에 대한 질문과 답변 시간입니다. 지금까지 배운 내용 중 궁금한 점이나 추가 설명이 필요한 부분에 대해 질문해 주세요.</p>
+                        
+                        <div class="bg-white bg-opacity-10 p-4 rounded-lg mb-4">
+                            <h3 class="font-bold mb-2">질문 준비 가이드</h3>
+                            <ul class="space-y-1 text-sm">
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle mt-1 mr-2"></i>
+                                    <span>특정 기술적 문제나 개념에 대한 구체적인 질문</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle mt-1 mr-2"></i>
+                                    <span>자신의 프로젝트에 적용하면서 발생한 어려움</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle mt-1 mr-2"></i>
+                                    <span>추가 학습 자료나 심화 내용에 대한 문의</span>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div class="flex justify-center">
+                            <img src="https://slideuplift.com/wp-content/uploads/2020/05/ItemID5520-768x579.jpg" alt="Q&A 세션" class="w-64 rounded-lg opacity-80">
+                        </div>
+                    </div>
+                    
+                    <!-- 다음 단계 준비 -->
+                    <div class="review-card p-5 flex-1">
+                        <h3 class="text-lg font-bold text-gray-800 mb-3">
+                            <i class="fas fa-road text-blue-600 mr-2"></i>다음 단계 준비
+                        </h3>
+                        
+                        <div class="space-y-4">
+                            <div class="p-3 bg-blue-50 rounded-lg">
+                                <h4 class="font-bold text-blue-700 mb-1">2개월차 주요 학습 내용 미리보기</h4>
+                                <p class="text-sm text-gray-600">• 고급 라이팅 기법과 환경 설정</p>
+                                <p class="text-sm text-gray-600">• 특수 효과 및 애니메이션 라이팅</p>
+                                <p class="text-sm text-gray-600">• 실제 프로덕션 워크플로우 적용</p>
+                            </div>
+                            
+                            <div class="p-3 bg-green-50 rounded-lg">
+                                <h4 class="font-bold text-green-700 mb-1">학습 심화를 위한 권장 활동</h4>
+                                <p class="text-sm text-gray-600">• 개인 프로젝트 지속적 발전</p>
+                                <p class="text-sm text-gray-600">• 온라인 커뮤니티 참여 및 포트폴리오 구축</p>
+                                <p class="text-sm text-gray-600">• 관련 튜토리얼 및 추가 자료 학습</p>
+                            </div>
+                            
+                            <div class="mt-4">
+                                <h4 class="font-bold text-gray-700 mb-2">학습 만족도 조사</h4>
+                                <p class="text-sm text-gray-600 mb-2">1개월차 수업에 대한 피드백을 제공해 주세요. 여러분의 의견은 향후 수업 개선에 중요한 역할을 합니다.</p>
+                                <div class="bg-gray-100 p-3 rounded-lg text-center">
+                                    <p class="text-blue-600 font-medium">
+                                        <i class="fas fa-link mr-1"></i>
+                                        survey.computergraphicslighting.edu/month1
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 하단 푸터 -->
+        <div class="py-3 px-12 bg-gray-100 flex justify-between items-center text-gray-600 text-sm">
+            <div>1개월차 종합 리뷰, Q&A 및 과제 제출</div>
+            <div>컴퓨터 그래픽스 라이팅 과정 | 7강</div>
+        </div>
+    </div>
+    
+    <script>
+        // 진행률 원형 그래프 애니메이션
+        document.addEventListener('DOMContentLoaded', function() {
+            const circle = document.querySelector('.progress-ring');
+            const radius = circle.r.baseVal.value;
+            const circumference = 2 * Math.PI * radius;
+            
+            // 원의 둘레 설정
+            circle.style.strokeDasharray = `${circumference} ${circumference}`;
+            
+            // 초기 상태 (0%)
+            circle.style.strokeDashoffset = circumference;
+            
+            // 애니메이션 효과를 위한 지연 설정
+            setTimeout(() => {
+                // 100% 완료 상태
+                const progress = 100;
+                const offset = circumference - (progress / 100 * circumference);
+                circle.style.strokeDashoffset = offset;
+            }, 300);
+        });
+    </script>
+</body>
+</html>

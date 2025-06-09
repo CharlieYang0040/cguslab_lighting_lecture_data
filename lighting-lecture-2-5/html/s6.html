@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2개월 전체 과정 마무리 및 축하 메시지</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        .celebration-element {
+            animation: celebrate 8s ease-in-out infinite;
+        }
+        @keyframes celebrate {
+            0%, 100% { transform: translateY(0px) rotate(0deg) scale(1); opacity: 0.7; }
+            12% { transform: translateY(-30px) rotate(15deg) scale(1.1); opacity: 1; }
+            25% { transform: translateY(-50px) rotate(30deg) scale(1.2); opacity: 0.9; }
+            37% { transform: translateY(-35px) rotate(45deg) scale(1.15); opacity: 1; }
+            50% { transform: translateY(-60px) rotate(60deg) scale(1.3); opacity: 0.8; }
+            62% { transform: translateY(-40px) rotate(75deg) scale(1.1); opacity: 1; }
+            75% { transform: translateY(-25px) rotate(90deg) scale(1.05); opacity: 0.9; }
+            87% { transform: translateY(-15px) rotate(105deg) scale(1); opacity: 0.8; }
+        }
+        .confetti {
+            animation: confetti 6s linear infinite;
+        }
+        @keyframes confetti {
+            0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(800px) rotate(720deg); opacity: 0; }
+        }
+        .backdrop-celebration {
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(255, 215, 0, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 90% 80%, rgba(255, 105, 180, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 20% 80%, rgba(50, 205, 50, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(138, 43, 226, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.05) 0%, transparent 70%);
+        }
+        .golden-badge {
+            background: linear-gradient(135deg, #ffd700, #ffb347);
+            animation: golden-glow 3s ease-in-out infinite alternate;
+        }
+        @keyframes golden-glow {
+            from { 
+                box-shadow: 0 0 30px rgba(255, 215, 0, 0.6);
+                transform: scale(1);
+            }
+            to { 
+                box-shadow: 0 0 50px rgba(255, 215, 0, 0.9);
+                transform: scale(1.1);
+            }
+        }
+        .rainbow-text {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: rainbow 4s ease-in-out infinite;
+        }
+        @keyframes rainbow {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        .achievement-showcase {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.1));
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+        .floating-heart {
+            animation: floating-heart 5s ease-in-out infinite;
+        }
+        @keyframes floating-heart {
+            0%, 100% { transform: translateY(0px) scale(1); }
+            50% { transform: translateY(-20px) scale(1.2); }
+        }
+        .success-ribbon {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            transform: rotate(-5deg);
+            animation: ribbon-wave 4s ease-in-out infinite;
+        }
+        @keyframes ribbon-wave {
+            0%, 100% { transform: rotate(-5deg) scale(1); }
+            50% { transform: rotate(5deg) scale(1.05); }
+        }
+        .firework {
+            animation: firework 2s ease-out infinite;
+        }
+        @keyframes firework {
+            0% { transform: scale(0); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.8; }
+            100% { transform: scale(2); opacity: 0; }
+        }
+        .journey-timeline {
+            background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
+            height: 6px;
+            border-radius: 3px;
+            animation: progress-fill 3s ease-in-out infinite;
+        }
+        @keyframes progress-fill {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container backdrop-celebration">
+        <!-- Confetti Animation Elements -->
+        <div class="absolute top-0 left-1/4 confetti" style="animation-delay: 0s;">
+            <i class="fas fa-star text-yellow-400 text-2xl"></i>
+        </div>
+        <div class="absolute top-0 left-1/2 confetti" style="animation-delay: 1s;">
+            <i class="fas fa-heart text-red-400 text-xl"></i>
+        </div>
+        <div class="absolute top-0 left-3/4 confetti" style="animation-delay: 2s;">
+            <i class="fas fa-gem text-purple-400 text-2xl"></i>
+        </div>
+        <div class="absolute top-0 left-1/3 confetti" style="animation-delay: 3s;">
+            <i class="fas fa-trophy text-yellow-500 text-xl"></i>
+        </div>
+        <div class="absolute top-0 left-2/3 confetti" style="animation-delay: 4s;">
+            <i class="fas fa-medal text-orange-400 text-2xl"></i>
+        </div>
+        
+        <!-- Background Celebration Elements -->
+        <div class="absolute top-12 right-12 celebration-element">
+            <i class="fas fa-crown text-yellow-300 text-7xl opacity-25"></i>
+        </div>
+        <div class="absolute bottom-12 left-12 celebration-element" style="animation-delay: -2s;">
+            <i class="fas fa-trophy text-gold text-6xl opacity-30"></i>
+        </div>
+        <div class="absolute top-1/3 left-12 celebration-element" style="animation-delay: -4s;">
+            <i class="fas fa-graduation-cap text-purple-300 text-5xl opacity-25"></i>
+        </div>
+        <div class="absolute bottom-1/3 right-12 celebration-element" style="animation-delay: -6s;">
+            <i class="fas fa-rocket text-green-300 text-6xl opacity-30"></i>
+        </div>
+        <div class="absolute top-20 left-1/3 floating-heart">
+            <i class="fas fa-heart text-pink-400 text-4xl opacity-40"></i>
+        </div>
+        <div class="absolute bottom-20 right-1/3 floating-heart" style="animation-delay: -2.5s;">
+            <i class="fas fa-heart text-red-400 text-3xl opacity-35"></i>
+        </div>
+        
+        <!-- Firework Effects -->
+        <div class="absolute top-16 right-1/4 firework" style="animation-delay: 0s;">
+            <i class="fas fa-sparkles text-yellow-300 text-3xl"></i>
+        </div>
+        <div class="absolute bottom-16 left-1/4 firework" style="animation-delay: 1s;">
+            <i class="fas fa-sparkles text-purple-300 text-3xl"></i>
+        </div>
+        
+        <!-- Header Section with Success Ribbon -->
+        <div class="relative pt-6 pb-4">
+            <div class="success-ribbon absolute top-8 left-8 right-8 h-12 flex items-center justify-center mb-6">
+                <span class="text-white font-bold text-lg">
+                    <i class="fas fa-flag-checkered mr-2"></i>
+                    CONGRATULATIONS ON YOUR AMAZING JOURNEY!
+                    <i class="fas fa-flag-checkered ml-2"></i>
+                </span>
+            </div>
+            
+            <div class="pt-16 text-center">
+                <div class="inline-flex items-center bg-white bg-opacity-30 backdrop-blur-sm rounded-full px-8 py-3 mb-4">
+                    <i class="fas fa-calendar-check mr-3 text-white text-xl"></i>
+                    <span class="text-white font-medium text-lg">2-Month Journey Complete</span>
+                </div>
+                
+                <h1 class="rainbow-text text-5xl font-black mb-3">
+                    **축하합니다!**
+                </h1>
+                <h2 class="text-white text-3xl font-bold mb-4">
+                    **2개월간의 놀라운 여정을**
+                </h2>
+                <h3 class="text-yellow-300 text-4xl font-bold mb-4">
+                    **성공적으로 완주하셨습니다!**
+                </h3>
+                
+                <!-- Journey Progress Bar -->
+                <div class="max-w-2xl mx-auto mb-4">
+                    <div class="bg-white bg-opacity-20 rounded-full h-6 relative overflow-hidden">
+                        <div class="journey-timeline absolute top-0 left-0 h-full"></div>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <span class="text-white font-bold text-sm">2개월 완주 100% 달성!</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Main Achievement Celebration -->
+        <div class="px-8 pb-6">
+            <div class="max-w-6xl mx-auto">
+                
+                <!-- Golden Achievement Badge -->
+                <div class="text-center mb-6">
+                    <div class="golden-badge w-32 h-32 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <div class="text-center">
+                            <i class="fas fa-trophy text-white text-4xl mb-2"></i>
+                            <div class="text-white font-bold text-sm">MASTER</div>
+                            <div class="text-white font-bold text-xs">ACHIEVED</div>
+                        </div>
+                    </div>
+                    <h3 class="text-white text-2xl font-bold mb-2">
+                        **컴퓨터 그래픽스 마스터 인증**
+                    </h3>
+                    <p class="text-white text-lg opacity-90">
+                        기술과 예술의 완벽한 조화를 이루어낸 여러분을 진심으로 축하합니다
+                    </p>
+                </div>
+                
+                <!-- Achievement Highlights -->
+                <div class="grid grid-cols-3 gap-6 mb-6">
+                    
+                    <!-- Technical Mastery -->
+                    <div class="achievement-showcase rounded-xl p-5 text-center">
+                        <div class="w-16 h-16 bg-gradient-to-br from-blue-400 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-3">
+                            <i class="fas fa-cogs text-white text-2xl"></i>
+                        </div>
+                        <h4 class="text-white text-lg font-bold mb-2">**기술적 혁신**</h4>
+                        <div class="space-y-2">
+                            <div class="bg-white bg-opacity-15 rounded-lg p-2">
+                                <span class="text-blue-300 font-semibold text-sm">고급 라이팅 마스터</span>
+                            </div>
+                            <div class="bg-white bg-opacity-15 rounded-lg p-2">
+                                <span class="text-purple-300 font-semibold text-sm">USD 파이프라인 구축</span>
+                            </div>
+                            <div class="bg-white bg-opacity-15 rounded-lg p-2">
+                                <span class="text-green-300 font-semibold text-sm">Python 자동화 개발</span>
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <div class="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-3 py-1 rounded-full text-sm font-bold">
+                                <i class="fas fa-star mr-1"></i>EXPERT LEVEL
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Creative Achievement -->
+                    <div class="achievement-showcase rounded-xl p-5 text-center">
+                        <div class="w-16 h-16 bg-gradient-to-br from-pink-400 to-red-600 rounded-full flex items-center justify-center mx-auto mb-3">
+                            <i class="fas fa-palette text-white text-2xl"></i>
+                        </div>
+                        <h4 class="text-white text-lg font-bold mb-2">**창의적 성장**</h4>
+                        <div class="space-y-2">
+                            <div class="bg-white bg-opacity-15 rounded-lg p-2">
+                                <span class="text-pink-300 font-semibold text-sm">독창적 스타일 개발</span>
+                            </div>
+                            <div class="bg-white bg-opacity-15 rounded-lg p-2">
+                                <span class="text-red-300 font-semibold text-sm">예술적 비전 구현</span>
+                            </div>
+                            <div class="bg-white bg-opacity-15 rounded-lg p-2">
+                                <span class="text-orange-300 font-semibold text-sm">혁신적 문제 해결</span>
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <div class="bg-gradient-to-r from-pink-500 to-red-600 text-white px-3 py-1 rounded-full text-sm font-bold">
+                                <i class="fas fa-crown mr-1"></i>ARTIST BORN
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Future Ready -->
+                    <div class="achievement-showcase rounded-xl p-5 text-center">
+                        <div class="w-16 h-16 bg-gradient-to-br from-green-400 to-teal-600 rounded-full flex items-center justify-center mx-auto mb-3">
+                            <i class="fas fa-rocket text-white text-2xl"></i>
+                        </div>
+                        <h4 class="text-white text-lg font-bold mb-2">**미래 준비**</h4>
+                        <div class="space-y-2">
+                            <div class="bg-white bg-opacity-15 rounded-lg p-2">
+                                <span class="text-green-300 font-semibold text-sm">포트폴리오 완성</span>
+                            </div>
+                            <div class="bg-white bg-opacity-15 rounded-lg p-2">
+                                <span class="text-teal-300 font-semibold text-sm">실무 역량 확보</span>
+                            </div>
+                            <div class="bg-white bg-opacity-15 rounded-lg p-2">
+                                <span class="text-cyan-300 font-semibold text-sm">네트워크 구축</span>
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <div class="bg-gradient-to-r from-green-500 to-teal-600 text-white px-3 py-1 rounded-full text-sm font-bold">
+                                <i class="fas fa-infinity mr-1"></i>UNLIMITED
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Final Inspirational Message -->
+                <div class="achievement-showcase rounded-xl p-6 text-center">
+                    <div class="flex items-center justify-center mb-4">
+                        <i class="fas fa-heart text-red-400 text-3xl mr-3 floating-heart"></i>
+                        <h3 class="text-white text-2xl font-bold">**당신은 이미 성공한 아티스트입니다**</h3>
+                        <i class="fas fa-heart text-red-400 text-3xl ml-3 floating-heart" style="animation-delay: -1s;"></i>
+                    </div>
+                    
+                    <p class="text-white text-lg mb-4 leading-relaxed max-w-4xl mx-auto">
+                        **2개월이라는 시간 동안**, 여러분은 단순한 기술 습득을 넘어서<br>
+                        **진정한 창작자**로 거듭났습니다. 끊임없는 도전정신과 열정으로<br>
+                        **불가능을 가능으로 만드는 힘**을 기르셨습니다.
+                    </p>
+                    
+                    <div class="grid grid-cols-3 gap-4 mb-6">
+                        <div class="bg-gradient-to-r from-indigo-500 to-purple-600 text-white py-3 px-4 rounded-xl">
+                            <i class="fas fa-magic text-2xl mb-2"></i>
+                            <div class="font-bold text-sm">창조의 마법사</div>
+                        </div>
+                        <div class="bg-gradient-to-r from-emerald-500 to-teal-600 text-white py-3 px-4 rounded-xl">
+                            <i class="fas fa-lightbulb text-2xl mb-2"></i>
+                            <div class="font-bold text-sm">혁신의 개척자</div>
+                        </div>
+                        <div class="bg-gradient-to-r from-rose-500 to-pink-600 text-white py-3 px-4 rounded-xl">
+                            <i class="fas fa-star text-2xl mb-2"></i>
+                            <div class="font-bold text-sm">꿈의 실현자</div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-gradient-to-r from-violet-600 via-purple-600 to-blue-600 text-white px-8 py-6 rounded-2xl mb-4">
+                        <h4 class="text-2xl font-bold mb-3">
+                            <i class="fas fa-infinity mr-3"></i>
+                            **여러분의 여정은 이제 시작입니다**
+                        </h4>
+                        <p class="text-lg">
+                            배운 것들을 바탕으로 더 큰 꿈을 향해 나아가세요.<br>
+                            **세상을 변화시킬 여러분의 창작물을 기대합니다!**
+                        </p>
+                    </div>
+                    
+                    <div class="flex items-center justify-center space-x-6">
+                        <div class="text-center">
+                            <i class="fas fa-thumbs-up text-green-400 text-3xl mb-2"></i>
+                            <div class="text-white font-bold">훌륭했습니다!</div>
+                        </div>
+                        <div class="text-center">
+                            <i class="fas fa-fire text-orange-400 text-3xl mb-2"></i>
+                            <div class="text-white font-bold">열정적이었습니다!</div>
+                        </div>
+                        <div class="text-center">
+                            <i class="fas fa-gem text-purple-400 text-3xl mb-2"></i>
+                            <div class="text-white font-bold">보석 같습니다!</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Bottom Celebration Banner -->
+        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-r from-yellow-300 via-orange-400 via-red-400 via-pink-400 via-purple-400 via-blue-400 to-green-400 h-3 opacity-80"></div>
+    </div>
+</body>
+</html>

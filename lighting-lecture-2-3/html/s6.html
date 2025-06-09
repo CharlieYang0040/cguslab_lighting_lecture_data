@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3강 마무리 및 다음 차시 예고</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+            overflow-x: hidden;
+        }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            margin: 0 auto;
+            position: relative;
+        }
+        .animated-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 80%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(168, 85, 247, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 40% 40%, rgba(34, 197, 94, 0.05) 0%, transparent 50%);
+            animation: pulse 4s ease-in-out infinite alternate;
+        }
+        @keyframes pulse {
+            0% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+        .title-gradient {
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .summary-card {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(168, 85, 247, 0.1) 100%);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+        .summary-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(59, 130, 246, 0.5);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.2);
+        }
+        .next-session-card {
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.1) 0%, rgba(59, 130, 246, 0.1) 100%);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            border-left: 4px solid #22c55e;
+        }
+        .qa-card {
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.1) 0%, rgba(236, 72, 153, 0.1) 100%);
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            border-left: 4px solid #a855f7;
+        }
+        .icon-glow {
+            filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.5));
+        }
+        .check-icon {
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+            box-shadow: 0 2px 8px rgba(34, 197, 94, 0.3);
+        }
+        .progress-dots {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(156, 163, 175, 0.3);
+        }
+        .dot.active {
+            background: #3b82f6;
+            box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+        }
+        .geometric-shape {
+            position: absolute;
+            border: 2px solid rgba(59, 130, 246, 0.3);
+            border-radius: 8px;
+            animation: float 6s ease-in-out infinite;
+        }
+        .shape-1 {
+            width: 40px;
+            height: 40px;
+            top: 20%;
+            right: 15%;
+            animation-delay: 0s;
+        }
+        .shape-2 {
+            width: 30px;
+            height: 30px;
+            top: 60%;
+            right: 8%;
+            animation-delay: -2s;
+            border-color: rgba(168, 85, 247, 0.3);
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-8px) rotate(180deg); }
+        }
+        .celebration-icon {
+            animation: bounce 2s infinite;
+        }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-8px); }
+            60% { transform: translateY(-4px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container relative">
+        <div class="animated-bg"></div>
+        
+        <!-- Geometric Shapes -->
+        <div class="geometric-shape shape-1"></div>
+        <div class="geometric-shape shape-2"></div>
+        
+        <!-- Main Content -->
+        <div class="relative z-10 px-12 py-8">
+            
+            <!-- Header Section -->
+            <div class="mb-8 text-center">
+                <div class="flex items-center justify-center mb-4">
+                    <i class="fas fa-flag-checkered celebration-icon text-3xl text-green-400 mr-4"></i>
+                    <h1 class="title-gradient text-5xl font-black">3강 마무리</h1>
+                    <i class="fas fa-star celebration-icon text-3xl text-yellow-400 ml-4"></i>
+                </div>
+                <p class="text-gray-400 text-xl">3D 데이터 구조와 USD 파이프라인 핵심 정리</p>
+            </div>
+            
+            <!-- Main Content Grid -->
+            <div class="grid grid-cols-3 gap-8 mb-8">
+                
+                <!-- Summary Section -->
+                <div class="summary-card rounded-xl p-6">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-clipboard-check icon-glow text-2xl text-blue-400 mr-3"></i>
+                        <h2 class="text-xl font-bold text-white">학습 내용 요약</h2>
+                    </div>
+                    
+                    <div class="space-y-3">
+                        <div class="flex items-start">
+                            <div class="check-icon rounded-full w-6 h-6 flex items-center justify-center mr-3 mt-0.5">
+                                <i class="fas fa-check text-white text-xs"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-white font-semibold text-sm">3D 데이터 구조</h3>
+                                <p class="text-gray-400 text-xs">Float3, Normal 등 기본 데이터 타입</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="check-icon rounded-full w-6 h-6 flex items-center justify-center mr-3 mt-0.5">
+                                <i class="fas fa-check text-white text-xs"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-white font-semibold text-sm">USD 파이프라인</h3>
+                                <p class="text-gray-400 text-xs">Pixar 표준, 익스포트 및 분석</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="check-icon rounded-full w-6 h-6 flex items-center justify-center mr-3 mt-0.5">
+                                <i class="fas fa-check text-white text-xs"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-white font-semibold text-sm">실무 워크플로우</h3>
+                                <p class="text-gray-400 text-xs">Maya → USD → USDView 실습</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Key Technologies -->
+                    <div class="mt-4 pt-4 border-t border-gray-600">
+                        <h3 class="text-white font-semibold text-sm mb-2">핵심 기술</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-blue-500 bg-opacity-20 text-blue-300 px-2 py-1 rounded text-xs">Float3</span>
+                            <span class="bg-purple-500 bg-opacity-20 text-purple-300 px-2 py-1 rounded text-xs">Normal Vector</span>
+                            <span class="bg-green-500 bg-opacity-20 text-green-300 px-2 py-1 rounded text-xs">USD Format</span>
+                            <span class="bg-yellow-500 bg-opacity-20 text-yellow-300 px-2 py-1 rounded text-xs">USDView</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Next Session Preview -->
+                <div class="next-session-card rounded-xl p-6">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-arrow-right icon-glow text-2xl text-green-400 mr-3"></i>
+                        <h2 class="text-xl font-bold text-white">다음 차시 예고</h2>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h3 class="text-green-400 font-bold text-lg mb-2">4강: 렌더링 파이프라인 최적화</h3>
+                        <p class="text-gray-300 text-sm mb-3">실시간 렌더링과 오프라인 렌더링의 차이점과 최적화 기법</p>
+                    </div>
+                    
+                    <div class="space-y-2">
+                        <div class="flex items-center text-gray-300 text-sm">
+                            <i class="fas fa-play text-green-400 mr-2"></i>
+                            <span>GPU 렌더링 최적화</span>
+                        </div>
+                        <div class="flex items-center text-gray-300 text-sm">
+                            <i class="fas fa-play text-green-400 mr-2"></i>
+                            <span>메모리 관리 기법</span>
+                        </div>
+                        <div class="flex items-center text-gray-300 text-sm">
+                            <i class="fas fa-play text-green-400 mr-2"></i>
+                            <span>프로덕션 워크플로우</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Preview Image -->
+                    <div class="mt-4 relative">
+                        <img src="https://assets.renderman.pixar.com/images-pixar/pipeline-renderman-usd.jpg" 
+                             alt="Rendering Pipeline Preview" 
+                             class="w-full h-16 object-cover rounded-lg opacity-75">
+                        <div class="absolute inset-0 bg-gradient-to-r from-transparent to-green-500 opacity-20 rounded-lg"></div>
+                    </div>
+                </div>
+                
+                <!-- Q&A Section -->
+                <div class="qa-card rounded-xl p-6">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-comments icon-glow text-2xl text-purple-400 mr-3"></i>
+                        <h2 class="text-xl font-bold text-white">Q&A 및 과제</h2>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <!-- Q&A Guidelines -->
+                        <div>
+                            <h3 class="text-purple-400 font-semibold text-sm mb-2">질문 & 답변</h3>
+                            <div class="space-y-1 text-xs text-gray-300">
+                                <p>• 강의 후 10분간 Q&A 시간</p>
+                                <p>• 실습 관련 문제 우선 해결</p>
+                                <p>• 온라인 포럼에서 추가 질문 가능</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Assignment -->
+                        <div class="bg-gray-800 bg-opacity-50 rounded-lg p-3">
+                            <h3 class="text-white font-semibold text-sm mb-2 flex items-center">
+                                <i class="fas fa-tasks text-purple-400 mr-2"></i>
+                                실습 과제
+                            </h3>
+                            <p class="text-gray-300 text-xs mb-2">개인 3D 모델을 USD로 익스포트하고 구조 분석 리포트 작성</p>
+                            <div class="flex items-center text-xs text-gray-400">
+                                <i class="far fa-calendar mr-1"></i>
+                                <span>제출 기한: 다음 주 강의 전</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Contact Info -->
+                        <div class="bg-gray-800 bg-opacity-50 rounded-lg p-3">
+                            <h3 class="text-white font-semibold text-sm mb-2 flex items-center">
+                                <i class="fas fa-envelope text-blue-400 mr-2"></i>
+                                연락처
+                            </h3>
+                            <div class="text-xs text-gray-300 space-y-1">
+                                <p>이메일: cg.course@university.ac.kr</p>
+                                <p>오피스아워: 화/목 14:00-16:00</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Thank You Message -->
+            <div class="text-center bg-gradient-to-r from-blue-500 to-purple-600 bg-opacity-10 rounded-xl p-6 border border-blue-500 border-opacity-30">
+                <div class="flex items-center justify-center mb-3">
+                    <i class="fas fa-heart text-red-400 mr-2"></i>
+                    <h2 class="text-2xl font-bold text-white">수고하셨습니다!</h2>
+                    <i class="fas fa-thumbs-up text-green-400 ml-2"></i>
+                </div>
+                <p class="text-gray-300">3D 데이터 구조와 USD 파이프라인의 기초를 완료했습니다. 다음 시간에는 더욱 심화된 렌더링 최적화를 학습하겠습니다.</p>
+            </div>
+            
+        </div>
+        
+        <!-- Footer -->
+        <div class="absolute bottom-6 left-12 right-12 flex justify-between items-center text-gray-400">
+            <div class="flex items-center">
+                <i class="fas fa-university mr-2"></i>
+                <span class="text-sm">Computer Graphics & Data Management Course</span>
+            </div>
+            <div class="flex items-center space-x-4">
+                <div class="progress-dots">
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot active"></div>
+                </div>
+                <span class="text-sm">Slide 6 of 6</span>
+            </div>
+        </div>
+        
+    </div>
+</body>
+</html>

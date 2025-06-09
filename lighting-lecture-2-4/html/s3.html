@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python 기초 문법</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        .code-font {
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .title-gradient {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .python-yellow { color: #ffde57; }
+        .code-bg {
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+        }
+        .syntax-keyword { color: #c678dd; }
+        .syntax-string { color: #98c379; }
+        .syntax-number { color: #d19a66; }
+        .syntax-comment { color: #5c6370; }
+        .syntax-function { color: #61afef; }
+        .concept-card {
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+        .concept-card:hover {
+            border-left-color: #667eea;
+            transform: translateX(5px);
+        }
+        .floating-element {
+            animation: float 4s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container bg-gradient-to-br from-slate-50 to-blue-50 flex flex-col">
+        
+        <!-- Header -->
+        <div class="bg-white shadow-lg px-16 py-6 border-b-4 border-blue-500">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h1 class="text-4xl font-black title-gradient mb-1">Python 기초 문법</h1>
+                    <p class="text-gray-600 text-lg">3D 아티스트를 위한 Python 프로그래밍 기초</p>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="floating-element">
+                        <div class="w-16 h-16 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-full flex items-center justify-center">
+                            <i class="fab fa-python text-white text-2xl"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 px-16 py-8">
+            <div class="grid grid-cols-2 gap-12 h-full">
+                
+                <!-- Left Column - Concepts -->
+                <div class="space-y-6">
+                    <!-- Python Role -->
+                    <div class="bg-white rounded-xl p-6 shadow-md concept-card">
+                        <div class="flex items-center mb-4">
+                            <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center mr-4">
+                                <i class="fas fa-magic text-white"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-800">Python의 역할</h3>
+                        </div>
+                        <ul class="text-gray-600 space-y-2">
+                            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Maya 작업 자동화의 핵심 도구</li>
+                            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>반복 작업 효율성 극대화</li>
+                            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>사용자 정의 도구 및 UI 제작</li>
+                        </ul>
+                    </div>
+
+                    <!-- Variables -->
+                    <div class="bg-white rounded-xl p-6 shadow-md concept-card">
+                        <div class="flex items-center mb-4">
+                            <div class="w-10 h-10 bg-gradient-to-br from-green-500 to-teal-600 rounded-full flex items-center justify-center mr-4">
+                                <span class="text-white font-bold">1</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-800">변수 (Variables)</h3>
+                        </div>
+                        <p class="text-gray-600 mb-3">데이터를 저장하고 관리하는 기본 단위</p>
+                        <div class="bg-gray-100 rounded-lg p-3 code-font text-sm">
+                            <span class="syntax-keyword">object_name</span> = <span class="syntax-string">"pCube1"</span><br>
+                            <span class="syntax-keyword">position</span> = [<span class="syntax-number">0, 5, 0</span>]
+                        </div>
+                    </div>
+
+                    <!-- Conditionals -->
+                    <div class="bg-white rounded-xl p-6 shadow-md concept-card">
+                        <div class="flex items-center mb-4">
+                            <div class="w-10 h-10 bg-gradient-to-br from-orange-500 to-red-600 rounded-full flex items-center justify-center mr-4">
+                                <span class="text-white font-bold">2</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-800">조건문 (If/Else)</h3>
+                        </div>
+                        <p class="text-gray-600 mb-3">조건에 따른 다른 작업 실행</p>
+                        <div class="bg-gray-100 rounded-lg p-3 code-font text-sm">
+                            <span class="syntax-keyword">if</span> selected_objects:<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="syntax-comment"># 선택된 오브젝트 처리</span>
+                        </div>
+                    </div>
+
+                    <!-- Loops -->
+                    <div class="bg-white rounded-xl p-6 shadow-md concept-card">
+                        <div class="flex items-center mb-4">
+                            <div class="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-600 rounded-full flex items-center justify-center mr-4">
+                                <span class="text-white font-bold">3</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-800">반복문 (For/While)</h3>
+                        </div>
+                        <p class="text-gray-600 mb-3">반복 작업의 자동화 핵심</p>
+                        <div class="bg-gray-100 rounded-lg p-3 code-font text-sm">
+                            <span class="syntax-keyword">for</span> i <span class="syntax-keyword">in</span> <span class="syntax-function">range</span>(<span class="syntax-number">10</span>):<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="syntax-comment"># 10개 오브젝트 생성</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column - Code Examples -->
+                <div class="space-y-6">
+                    <!-- Complete Example -->
+                    <div class="code-bg rounded-xl p-6 shadow-xl text-white">
+                        <div class="flex items-center mb-4">
+                            <div class="flex space-x-2 mr-4">
+                                <div class="w-3 h-3 bg-red-500 rounded-full"></div>
+                                <div class="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                                <div class="w-3 h-3 bg-green-500 rounded-full"></div>
+                            </div>
+                            <span class="code-font text-gray-300">maya_basics.py</span>
+                        </div>
+                        
+                        <div class="code-font text-sm space-y-2">
+                            <div><span class="syntax-comment"># Python으로 Maya 자동화 시작!</span></div>
+                            <div><span class="syntax-keyword">import</span> <span class="syntax-function">maya.cmds</span> <span class="syntax-keyword">as</span> <span class="syntax-function">cmds</span></div>
+                            <div class="mt-4"><span class="syntax-comment"># 1. 변수 선언</span></div>
+                            <div><span class="syntax-keyword">cube_name</span> = <span class="syntax-string">"myCube"</span></div>
+                            <div><span class="syntax-keyword">cube_size</span> = <span class="syntax-number">2.0</span></div>
+                            <div><span class="syntax-keyword">positions</span> = [<span class="syntax-number">0, 2, 4, 6, 8</span>]</div>
+                            
+                            <div class="mt-4"><span class="syntax-comment"># 2. 조건문 활용</span></div>
+                            <div><span class="syntax-keyword">if</span> <span class="syntax-function">cmds.objExists</span>(<span class="syntax-keyword">cube_name</span>):</div>
+                            <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="syntax-function">cmds.delete</span>(<span class="syntax-keyword">cube_name</span>)</div>
+                            <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="syntax-function">print</span>(<span class="syntax-string">"기존 큐브 삭제됨"</span>)</div>
+                            
+                            <div class="mt-4"><span class="syntax-comment"># 3. 반복문으로 다중 오브젝트 생성</span></div>
+                            <div><span class="syntax-keyword">for</span> <span class="syntax-keyword">i</span>, <span class="syntax-keyword">pos</span> <span class="syntax-keyword">in</span> <span class="syntax-function">enumerate</span>(<span class="syntax-keyword">positions</span>):</div>
+                            <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="syntax-comment"># 큐브 생성</span></div>
+                            <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="syntax-keyword">new_cube</span> = <span class="syntax-function">cmds.polyCube</span>(</div>
+                            <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="syntax-keyword">name</span>=<span class="syntax-string">f"</span><span class="syntax-keyword">{cube_name}</span><span class="syntax-string">_</span><span class="syntax-keyword">{i}</span><span class="syntax-string">"</span>,</div>
+                            <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="syntax-keyword">width</span>=<span class="syntax-keyword">cube_size</span>,</div>
+                            <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="syntax-keyword">height</span>=<span class="syntax-keyword">cube_size</span>,</div>
+                            <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="syntax-keyword">depth</span>=<span class="syntax-keyword">cube_size</span></div>
+                            <div>&nbsp;&nbsp;&nbsp;&nbsp;)[<span class="syntax-number">0</span>]</div>
+                            
+                            <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="syntax-comment"># 위치 설정</span></div>
+                            <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="syntax-function">cmds.move</span>(<span class="syntax-keyword">pos</span>, <span class="syntax-number">0</span>, <span class="syntax-number">0</span>, <span class="syntax-keyword">new_cube</span>)</div>
+                            
+                            <div class="mt-4"><span class="syntax-function">print</span>(<span class="syntax-string">"자동화 완료! 🎉"</span>)</div>
+                        </div>
+                    </div>
+
+                    <!-- Key Benefits -->
+                    <div class="bg-gradient-to-r from-indigo-500 to-purple-600 rounded-xl p-6 text-white">
+                        <h3 class="text-xl font-bold mb-4 flex items-center">
+                            <i class="fas fa-rocket mr-3"></i>
+                            자동화의 장점
+                        </h3>
+                        <div class="grid grid-cols-2 gap-4 text-sm">
+                            <div class="flex items-center">
+                                <i class="fas fa-clock mr-2"></i>
+                                <span>시간 절약</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-sync mr-2"></i>
+                                <span>반복 작업 제거</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-bug mr-2"></i>
+                                <span>실수 방지</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-expand-arrows-alt mr-2"></i>
+                                <span>확장성</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <div class="px-16 py-4 bg-white border-t">
+            <div class="flex justify-between items-center">
+                <div class="text-sm text-gray-600">
+                    <i class="fas fa-info-circle mr-2"></i>
+                    다음: Maya Python API 기초 활용
+                </div>
+                <div class="text-sm text-gray-600">
+                    4.1 / 4.4
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

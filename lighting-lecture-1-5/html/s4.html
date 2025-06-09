@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Falloff 실제 적용 예시 및 애니메이션 사례</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        .slide {
+            width: 1280px;
+            min-height: 720px;
+            background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        .content {
+            position: relative;
+            z-index: 10;
+        }
+        .glass-card {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(8px);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .example-card {
+            background: rgba(15, 23, 42, 0.7);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+        .example-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(251, 191, 36, 0.4);
+        }
+        .example-image {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            transition: all 0.5s ease;
+        }
+        .example-card:hover .example-image {
+            transform: scale(1.1);
+            filter: brightness(1.1) contrast(1.1);
+        }
+        .example-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+            padding: 15px;
+            transform: translateY(100%);
+            transition: all 0.3s ease;
+        }
+        .example-card:hover .example-overlay {
+            transform: translateY(0);
+        }
+        .example-title {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 8px 12px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        .example-card:hover .example-title {
+            background: rgba(251, 191, 36, 0.8);
+            color: black;
+        }
+        .highlight-text {
+            color: #FBBF24;
+            font-weight: bold;
+            text-shadow: 0 0 8px rgba(251, 191, 36, 0.4);
+        }
+        .heading-underline {
+            position: relative;
+            display: inline-block;
+        }
+        .heading-underline::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #FBBF24, transparent);
+            border-radius: 2px;
+        }
+        .light-particle {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 70%);
+            animation: float 8s infinite ease-in-out;
+            filter: blur(2px);
+        }
+        .floating-light {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background: radial-gradient(circle, rgba(251, 191, 36, 0.4) 0%, rgba(251, 191, 36, 0) 70%);
+            border-radius: 50%;
+            filter: blur(8px);
+            animation: pulse 6s infinite alternate ease-in-out;
+        }
+        .tutorial-step {
+            background: rgba(30, 58, 138, 0.2);
+            border-left: 4px solid #60A5FA;
+            padding: 10px 15px;
+            margin-bottom: 8px;
+            border-radius: 0 8px 8px 0;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .tutorial-step:hover {
+            background: rgba(30, 58, 138, 0.3);
+            transform: translateX(5px);
+            border-left-color: #FBBF24;
+        }
+        .tutorial-step::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, #60A5FA, #FBBF24);
+            transform: scaleY(0);
+            transition: transform 0.3s ease;
+        }
+        .tutorial-step:hover::before {
+            transform: scaleY(1);
+        }
+        .step-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            background: #60A5FA;
+            color: white;
+            border-radius: 50%;
+            font-weight: bold;
+            font-size: 12px;
+            margin-right: 10px;
+            transition: all 0.3s ease;
+        }
+        .tutorial-step:hover .step-number {
+            background: #FBBF24;
+            color: black;
+            transform: scale(1.1);
+        }
+        .brand-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.7em;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        .pixar-badge {
+            background: rgba(255, 107, 107, 0.8);
+            color: white;
+        }
+        .disney-badge {
+            background: rgba(59, 130, 246, 0.8);
+            color: white;
+        }
+        .film-badge {
+            background: rgba(236, 201, 75, 0.8);
+            color: black;
+        }
+        .software-badge {
+            background: rgba(34, 197, 94, 0.8);
+            color: white;
+        }
+        .glow-text {
+            text-shadow: 0 0 10px currentColor;
+        }
+        .animated-pulse {
+            animation: pulse 4s infinite alternate ease-in-out;
+        }
+        .grid-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 20px 20px;
+            pointer-events: none;
+            opacity: 0.3;
+        }
+        .tech-info {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 0.8em;
+            margin-top: 5px;
+            border: 1px solid rgba(96, 165, 250, 0.3);
+        }
+        .falloff-demo {
+            position: relative;
+            height: 40px;
+            background: linear-gradient(to right, rgba(251, 191, 36, 0.8), rgba(251, 191, 36, 0.4), rgba(251, 191, 36, 0.1), transparent);
+            border-radius: 20px;
+            margin: 5px 0;
+            overflow: hidden;
+        }
+        .falloff-label {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.7em;
+            font-weight: bold;
+            color: black;
+            text-shadow: 1px 1px 2px rgba(255,255,255,0.5);
+        }
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); opacity: 0.6; }
+            25% { transform: translate(10px, -15px) rotate(90deg); opacity: 1; }
+            50% { transform: translate(-5px, -10px) rotate(180deg); opacity: 0.8; }
+            75% { transform: translate(-10px, 5px) rotate(270deg); opacity: 0.9; }
+        }
+        @keyframes pulse {
+            0% { transform: scale(0.9); opacity: 0.6; }
+            100% { transform: scale(1.1); opacity: 0.9; }
+        }
+        .main-title {
+            text-shadow: 0 0 15px rgba(251, 191, 36, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <div class="slide">
+        <div class="grid-overlay"></div>
+        
+        <!-- Floating Light Particles -->
+        <div class="floating-light" style="top: 80px; left: 100px;"></div>
+        <div class="floating-light" style="top: 200px; right: 150px; animation-delay: -2s;"></div>
+        <div class="floating-light" style="bottom: 150px; left: 200px; animation-delay: -4s;"></div>
+        
+        <div class="light-particle" style="width: 8px; height: 8px; top: 150px; left: 300px; animation-delay: -1s;"></div>
+        <div class="light-particle" style="width: 12px; height: 12px; top: 300px; right: 200px; animation-delay: -3s;"></div>
+        <div class="light-particle" style="width: 6px; height: 6px; bottom: 200px; left: 500px; animation-delay: -5s;"></div>
+        
+        <div class="content px-16 py-12">
+            <div class="mb-5">
+                <h1 class="text-4xl font-bold text-white main-title">
+                    <i class="fas fa-star text-yellow-300 mr-3 animated-pulse"></i>
+                    <span class="heading-underline">Falloff 실제 적용 예시 및 애니메이션 사례</span>
+                </h1>
+                <p class="text-lg text-gray-300 mt-2">세계적인 스튜디오와 영화에서 활용된 빛 감쇠 기법들</p>
+            </div>
+            
+            <div class="grid grid-cols-3 gap-6 mt-6">
+                <!-- 왼쪽 컬럼: 픽사/디즈니 애니메이션 예시 -->
+                <div>
+                    <div class="glass-card mb-4">
+                        <h2 class="text-2xl font-semibold text-yellow-300 mb-4 glow-text">
+                            <i class="fas fa-magic mr-2"></i>픽사/디즈니 사례
+                        </h2>
+                        
+                        <div class="space-y-4">
+                            <div class="example-card">
+                                <div class="brand-badge pixar-badge">PIXAR</div>
+                                <img src="https://www.fxguide.com/wp-content/uploads/2018/03/cocofeatured.jpg" alt="Coco Lighting" class="example-image">
+                                <div class="example-title">Coco - 촛불 Falloff</div>
+                                <div class="example-overlay">
+                                    <p class="text-sm text-yellow-200">멕시코 전통 촛불의 따뜻한 Falloff로 가족애와 향수 표현</p>
+                                    <div class="tech-info">
+                                        <i class="fas fa-cog mr-1"></i>RenderMan Quadratic Falloff
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="example-card">
+                                <div class="brand-badge pixar-badge">PIXAR</div>
+                                <img src="https://seemomclick.com/wp-content/uploads/2015/05/Before-Lighting.jpg" alt="Inside Out Lighting" class="example-image">
+                                <div class="example-title">Inside Out - 감정 표현</div>
+                                <div class="example-overlay">
+                                    <p class="text-sm text-yellow-200">각 감정 캐릭터마다 다른 Falloff 패턴으로 개성 부여</p>
+                                    <div class="tech-info">
+                                        <i class="fas fa-palette mr-1"></i>Character-specific Light Curves
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="example-card">
+                                <div class="brand-badge disney-badge">DISNEY</div>
+                                <img src="https://ireneobrien22.wordpress.com/wp-content/uploads/2014/04/frozen-disney-elsa-idina-menzel-ice-palace1.jpg" alt="Frozen Ice Palace" class="example-image">
+                                <div class="example-title">Frozen - 얼음 궁전</div>
+                                <div class="example-overlay">
+                                    <p class="text-sm text-blue-200">크리스탈 반사광의 부드러운 Falloff로 마법적 분위기</p>
+                                    <div class="tech-info">
+                                        <i class="fas fa-snowflake mr-1"></i>Subsurface Scattering + Falloff
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 중간 컬럼: 영화 라이팅 예시 -->
+                <div>
+                    <div class="glass-card mb-4">
+                        <h2 class="text-2xl font-semibold text-blue-300 mb-4 glow-text">
+                            <i class="fas fa-film mr-2"></i>영화 라이팅 기법
+                        </h2>
+                        
+                        <div class="space-y-4">
+                            <div class="example-card">
+                                <div class="brand-badge film-badge">FILM</div>
+                                <img src="https://www.santiniphotography.com/wp-content/uploads/2019/06/111251.jpg" alt="Blade Runner 2049" class="example-image">
+                                <div class="example-title">Blade Runner 2049</div>
+                                <div class="example-overlay">
+                                    <p class="text-sm text-orange-200">네온사인과 홀로그램의 급격한 Falloff로 사이버펑크 표현</p>
+                                    <div class="tech-info">
+                                        <i class="fas fa-bolt mr-1"></i>Exponential Falloff Pattern
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="example-card">
+                                <div class="brand-badge film-badge">CAMERON</div>
+                                <img src="https://www.nyfa.edu/wp-content/uploads/2024/01/avatarfilm.jpg" alt="Avatar Cinematography" class="example-image">
+                                <div class="example-title">Avatar - 판도라 생명체</div>
+                                <div class="example-overlay">
+                                    <p class="text-sm text-blue-200">바이오루미네센스의 자연스러운 Falloff로 신비로운 생태계</p>
+                                    <div class="tech-info">
+                                        <i class="fas fa-leaf mr-1"></i>Organic Light Simulation
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="example-card">
+                                <div class="brand-badge film-badge">MILLER</div>
+                                <img src="https://lowepost.com/uploads/monthly_2015_10/mad_max_intro.jpg.ecabbdf9f80720ece12f2563815520f3.jpg" alt="Mad Max Fury Road" class="example-image">
+                                <div class="example-title">Mad Max: Fury Road</div>
+                                <div class="example-overlay">
+                                    <p class="text-sm text-red-200">태양광과 폭발의 강한 Falloff로 극한 상황 연출</p>
+                                    <div class="tech-info">
+                                        <i class="fas fa-fire mr-1"></i>High Contrast Lighting
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 오른쪽 컬럼: 3D 소프트웨어 실습 -->
+                <div>
+                    <div class="glass-card mb-4">
+                        <h2 class="text-2xl font-semibold text-green-300 mb-4 glow-text">
+                            <i class="fas fa-code mr-2"></i>3D 소프트웨어 실습
+                        </h2>
+                        
+                        <div class="space-y-4">
+                            <div class="example-card">
+                                <div class="brand-badge software-badge">MAYA</div>
+                                <img src="https://i.ytimg.com/vi/BiRZkkooq3M/maxresdefault.jpg" alt="Maya Character Lighting" class="example-image">
+                                <div class="example-title">Maya - 캐릭터 라이팅</div>
+                                <div class="example-overlay">
+                                    <p class="text-sm text-green-200">Arnold 렌더러에서 Falloff 설정으로 포트레이트 조명</p>
+                                    <div class="tech-info">
+                                        <i class="fas fa-cogs mr-1"></i>Arnold Light Decay
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="example-card">
+                                <div class="brand-badge software-badge">BLENDER</div>
+                                <img src="https://i.ytimg.com/vi/cj9VDW1sU1Q/maxresdefault.jpg" alt="Blender Character Lighting" class="example-image">
+                                <div class="example-title">Blender - 상세 라이팅</div>
+                                <div class="example-overlay">
+                                    <p class="text-sm text-green-200">Cycles 엔진의 Physical Light Falloff 활용법</p>
+                                    <div class="tech-info">
+                                        <i class="fas fa-cube mr-1"></i>Cycles Render Engine
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="example-card">
+                                <div class="brand-badge software-badge">TUTORIAL</div>
+                                <img src="https://cdn.conceptartempire.com/images/05/8148/falloff-examples.jpg" alt="Falloff Examples" class="example-image">
+                                <div class="example-title">Falloff 맵 활용법</div>
+                                <div class="example-overlay">
+                                    <p class="text-sm text-green-200">텍스처와 연계한 고급 Falloff 기법들</p>
+                                    <div class="tech-info">
+                                        <i class="fas fa-map mr-1"></i>Procedural Falloff Maps
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 하단: 실습 가이드 -->
+            <div class="grid grid-cols-2 gap-6 mt-6">
+                <div class="glass-card">
+                    <h3 class="text-xl font-semibold text-purple-300 mb-3 glow-text">
+                        <i class="fas fa-graduation-cap mr-2"></i>단계별 실습 가이드
+                    </h3>
+                    <div class="space-y-2">
+                        <div class="tutorial-step">
+                            <span class="step-number">1</span>
+                            <span>참조 이미지 분석 및 <span class="highlight-text">조명 방향 파악</span></span>
+                        </div>
+                        <div class="tutorial-step">
+                            <span class="step-number">2</span>
+                            <span>주조명 설정 후 <span class="highlight-text">Falloff 값 조정</span></span>
+                        </div>
+                        <div class="tutorial-step">
+                            <span class="step-number">3</span>
+                            <span>캐릭터/오브젝트에 미치는 <span class="highlight-text">영향 범위 확인</span></span>
+                        </div>
+                        <div class="tutorial-step">
+                            <span class="step-number">4</span>
+                            <span>보조 조명으로 <span class="highlight-text">밸런스 조정</span></span>
+                        </div>
+                        <div class="tutorial-step">
+                            <span class="step-number">5</span>
+                            <span>최종 렌더링 후 <span class="highlight-text">결과 비교 분석</span></span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="glass-card">
+                    <h3 class="text-xl font-semibold text-red-300 mb-3 glow-text">
+                        <i class="fas fa-chart-line mr-2"></i>Falloff 패턴 비교
+                    </h3>
+                    <div class="space-y-3">
+                        <div>
+                            <p class="text-sm text-yellow-200 mb-1">Linear Falloff</p>
+                            <div class="falloff-demo">
+                                <div class="falloff-label">일정한 감소</div>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="text-sm text-blue-200 mb-1">Quadratic Falloff (현실적)</p>
+                            <div class="falloff-demo" style="background: linear-gradient(to right, rgba(96, 165, 250, 0.8), rgba(96, 165, 250, 0.2), transparent 60%);">
+                                <div class="falloff-label" style="color: white;">자연스러운 감소</div>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="text-sm text-red-200 mb-1">Exponential Falloff</p>
+                            <div class="falloff-demo" style="background: linear-gradient(to right, rgba(239, 68, 68, 0.8), rgba(239, 68, 68, 0.1), transparent 40%);">
+                                <div class="falloff-label" style="color: white;">급격한 감소</div>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="text-sm text-green-200 mb-1">Custom Curve</p>
+                            <div class="falloff-demo" style="background: linear-gradient(to right, rgba(34, 197, 94, 0.9), rgba(34, 197, 94, 0.6), rgba(34, 197, 94, 0.2), transparent 80%);">
+                                <div class="falloff-label" style="color: white;">예술적 제어</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-3 p-2 bg-purple-900 bg-opacity-20 rounded text-sm text-purple-200">
+                        <i class="fas fa-lightbulb mr-1 text-yellow-300"></i>
+                        <span class="font-bold">TIP:</span> 스토리와 감정에 맞는 Falloff 패턴 선택이 핵심
+                    </div>
+                </div>
+            </div>
+            
+            <div class="absolute bottom-4 right-16 bg-yellow-900 bg-opacity-40 rounded-lg px-4 py-2 text-sm text-yellow-200">
+                <p><i class="fas fa-arrow-right mr-1"></i> 다음: 그림자의 이해 (Soft Shadow와 Hard Shadow)</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

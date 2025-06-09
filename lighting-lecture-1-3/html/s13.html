@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rim Light/Back Light 기법</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(90deg, #f72585, #ff8cc8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 10px rgba(247, 37, 133, 0.3);
+            text-align: center;
+        }
+        .definition-card {
+            background: rgba(247, 37, 133, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            border: 2px solid rgba(247, 37, 133, 0.3);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .definition-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(247, 37, 133, 0.4);
+            border-color: #f72585;
+        }
+        .effect-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(8px);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+            position: relative;
+        }
+        .effect-card:hover {
+            transform: translateX(10px);
+            background: rgba(255, 255, 255, 0.12);
+        }
+        .effect-separation {
+            border-left-color: #ff6b9d;
+        }
+        .effect-depth {
+            border-left-color: #ff8cc8;
+        }
+        .effect-drama {
+            border-left-color: #ffb3d1;
+        }
+        .effect-mood {
+            border-left-color: #f72585;
+        }
+        .image-container {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        .image-container:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        .technique-tip {
+            background: rgba(247, 37, 133, 0.15);
+            border-radius: 10px;
+            border: 1px solid rgba(247, 37, 133, 0.3);
+            position: relative;
+        }
+        .highlight-text {
+            color: #ff8cc8;
+            font-weight: 600;
+        }
+        .rim-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(247, 37, 133, 0.2);
+            color: #f72585;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin: 0 auto 15px;
+            transition: all 0.3s ease;
+        }
+        .definition-card:hover .rim-icon {
+            transform: rotate(360deg) scale(1.2);
+            background: rgba(247, 37, 133, 0.4);
+        }
+        .floating-rim-lights {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 1;
+        }
+        .rim-beam {
+            position: absolute;
+            width: 3px;
+            height: 150px;
+            background: linear-gradient(to bottom, rgba(247, 37, 133, 0.8), transparent);
+            border-radius: 50%;
+            animation: rimPulse 4s infinite ease-in-out;
+            filter: blur(2px);
+        }
+        .rim-beam:nth-child(1) { top: 10%; right: 15%; animation-delay: 0s; }
+        .rim-beam:nth-child(2) { bottom: 20%; left: 10%; animation-delay: 1.5s; transform: rotate(45deg); }
+        .rim-beam:nth-child(3) { top: 40%; right: 8%; animation-delay: 3s; transform: rotate(-30deg); }
+        .rim-beam:nth-child(4) { bottom: 30%; right: 25%; animation-delay: 2s; height: 100px; }
+        @keyframes rimPulse {
+            0%, 100% { opacity: 0.2; transform: scaleY(1); }
+            50% { opacity: 0.9; transform: scaleY(1.3); }
+        }
+        .setup-step {
+            display: flex;
+            align-items: center;
+            padding: 8px 0;
+            transition: all 0.2s ease;
+        }
+        .setup-step:hover {
+            background: rgba(247, 37, 133, 0.1);
+            border-radius: 8px;
+            padding-left: 10px;
+        }
+        .step-number {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: #f72585;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        .silhouette-demo {
+            position: relative;
+            background: radial-gradient(circle at center, rgba(247, 37, 133, 0.1), transparent);
+            border-radius: 15px;
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .character-outline {
+            width: 60px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 30px 30px 10px 10px;
+            position: relative;
+            border: 2px solid #f72585;
+            animation: outlineGlow 3s infinite ease-in-out;
+        }
+        .character-outline::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: 15px;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 2px solid #f72585;
+            background: rgba(255, 255, 255, 0.05);
+        }
+        @keyframes outlineGlow {
+            0%, 100% { box-shadow: 0 0 10px rgba(247, 37, 133, 0.5); }
+            50% { box-shadow: 0 0 25px rgba(247, 37, 133, 0.8); }
+        }
+        .practical-note {
+            background: linear-gradient(45deg, rgba(247, 37, 133, 0.1), rgba(255, 140, 200, 0.1));
+            border-radius: 8px;
+            border: 1px solid rgba(247, 37, 133, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container p-8 relative">
+        <!-- 배경 림 라이팅 효과 -->
+        <div class="floating-rim-lights">
+            <div class="rim-beam"></div>
+            <div class="rim-beam"></div>
+            <div class="rim-beam"></div>
+            <div class="rim-beam"></div>
+        </div>
+        
+        <!-- 제목 섹션 -->
+        <div class="text-center mb-6 z-10 relative">
+            <h1 class="section-title mb-3">
+                <i class="fas fa-circle-notch mr-3 text-pink-400"></i>
+                Rim Light / Back Light 기법
+            </h1>
+            <p class="text-lg opacity-80">캐릭터의 <span class="highlight-text">윤곽을 강조</span>하고 <span class="highlight-text">배경과 분리</span>시키는 고급 라이팅 기법</p>
+        </div>
+        
+        <!-- 메인 콘텐츠 -->
+        <div class="grid grid-cols-12 gap-6 z-10 relative">
+            <!-- 왼쪽: 정의 및 효과 -->
+            <div class="col-span-7">
+                <!-- 정의 카드 -->
+                <div class="definition-card p-6 mb-6">
+                    <div class="rim-icon">
+                        <i class="fas fa-adjust"></i>
+                    </div>
+                    <h2 class="text-xl font-bold text-center mb-4">
+                        <span class="highlight-text">Rim Light</span> 정의 및 효과
+                    </h2>
+                    <p class="text-center text-sm mb-4 opacity-90">
+                        캐릭터나 오브젝트의 <span class="highlight-text">가장자리를 따라 배치</span>되는 조명으로, 
+                        <span class="highlight-text">윤곽선을 강조</span>하여 입체감과 분리감을 만드는 기법
+                    </p>
+                    <div class="grid grid-cols-2 gap-4 text-xs">
+                        <div class="text-center">
+                            <div class="w-8 h-8 mx-auto bg-pink-500 bg-opacity-20 rounded-full flex items-center justify-center mb-2">
+                                <i class="fas fa-eye text-pink-400"></i>
+                            </div>
+                            <p><span class="highlight-text">시각적 분리</span><br>배경과 피사체 구분</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="w-8 h-8 mx-auto bg-pink-500 bg-opacity-20 rounded-full flex items-center justify-center mb-2">
+                                <i class="fas fa-cube text-pink-400"></i>
+                            </div>
+                            <p><span class="highlight-text">입체감 증대</span><br>3차원적 깊이감 강화</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 효과 및 특징 -->
+                <div class="space-y-3">
+                    <h3 class="text-lg font-bold mb-4 flex items-center">
+                        <i class="fas fa-magic mr-2 text-pink-400"></i>
+                        주요 효과 및 특징
+                    </h3>
+                    
+                    <div class="effect-card effect-separation p-4">
+                        <div class="flex items-center">
+                            <div class="w-8 h-8 bg-pink-500 bg-opacity-20 rounded-full flex items-center justify-center mr-3">
+                                <i class="fas fa-cut text-pink-400 text-sm"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-sm">피사체 분리 (Subject Separation)</h4>
+                                <p class="text-xs opacity-80">배경과 캐릭터를 명확히 구분하여 <span class="highlight-text">시각적 계층</span> 형성</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="effect-card effect-depth p-4">
+                        <div class="flex items-center">
+                            <div class="w-8 h-8 bg-pink-500 bg-opacity-20 rounded-full flex items-center justify-center mr-3">
+                                <i class="fas fa-layer-group text-pink-400 text-sm"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-sm">깊이감 강화 (Depth Enhancement)</h4>
+                                <p class="text-xs opacity-80">윤곽선 강조로 <span class="highlight-text">3차원적 볼륨감</span> 극대화</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="effect-card effect-drama p-4">
+                        <div class="flex items-center">
+                            <div class="w-8 h-8 bg-pink-500 bg-opacity-20 rounded-full flex items-center justify-center mr-3">
+                                <i class="fas fa-theater-masks text-pink-400 text-sm"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-sm">극적 효과 (Dramatic Impact)</h4>
+                                <p class="text-xs opacity-80">신비롭고 <span class="highlight-text">드라마틱한 분위기</span> 연출</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="effect-card effect-mood p-4">
+                        <div class="flex items-center">
+                            <div class="w-8 h-8 bg-pink-500 bg-opacity-20 rounded-full flex items-center justify-center mr-3">
+                                <i class="fas fa-palette text-pink-400 text-sm"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-sm">분위기 조성 (Mood Creation)</h4>
+                                <p class="text-xs opacity-80">조명 색상과 강도로 <span class="highlight-text">감정적 톤</span> 설정</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 오른쪽: 실습 가이드 및 예시 -->
+            <div class="col-span-5 space-y-4">
+                <!-- 실제 예시 이미지 -->
+                <div class="image-container p-3">
+                    <h4 class="font-bold text-sm mb-3 text-center">
+                        <i class="fas fa-image mr-2"></i>
+                        Rim Light 적용 예시
+                    </h4>
+                    <img src="https://petapixel.com/assets/uploads/2023/05/rim-lighting-guide.jpg" 
+                         alt="Rim Light 예시" 
+                         class="w-full h-28 object-cover rounded-lg mb-2">
+                    <p class="text-xs opacity-80 text-center">전문적인 Rim Light 적용 사례</p>
+                </div>
+                
+                <!-- 캐릭터 윤곽 데모 -->
+                <div class="technique-tip p-4">
+                    <h4 class="font-bold text-sm mb-3 text-center">
+                        <i class="fas fa-user mr-2"></i>
+                        캐릭터 윤곽 강조 효과
+                    </h4>
+                    <div class="silhouette-demo">
+                        <div class="character-outline"></div>
+                    </div>
+                    <p class="text-xs text-center mt-2 opacity-80">
+                        Rim Light가 만드는 <span class="highlight-text">윤곽선 효과</span>
+                    </p>
+                </div>
+                
+                <!-- 실습 단계 -->
+                <div class="technique-tip p-4">
+                    <h4 class="font-bold text-sm mb-3 flex items-center">
+                        <i class="fas fa-list-ol mr-2 text-pink-400"></i>
+                        실습 단계
+                    </h4>
+                    <div class="space-y-2 text-xs">
+                        <div class="setup-step">
+                            <div class="step-number">1</div>
+                            <span>캐릭터 <span class="highlight-text">뒤쪽 또는 측면</span>에 라이트 배치</span>
+                        </div>
+                        <div class="setup-step">
+                            <div class="step-number">2</div>
+                            <span>조명 각도를 조정하여 <span class="highlight-text">가장자리만</span> 조명</span>
+                        </div>
+                        <div class="setup-step">
+                            <div class="step-number">3</div>
+                            <span>조명 강도를 조절해 <span class="highlight-text">자연스러운 윤곽</span> 형성</span>
+                        </div>
+                        <div class="setup-step">
+                            <div class="step-number">4</div>
+                            <span>필요시 조명 색상으로 <span class="highlight-text">분위기</span> 조절</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 추가 예시 이미지 -->
+                <div class="image-container p-3">
+                    <img src="https://shotkit.com/wp-content/uploads/2022/09/Rim-light-portrait.jpg" 
+                         alt="Rim Light Portrait" 
+                         class="w-full h-24 object-cover rounded-lg mb-2">
+                    <p class="text-xs opacity-80 text-center">인물 사진에서의 Rim Light 활용</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 하단 실용적 팁 -->
+        <div class="mt-6 z-10 relative">
+            <div class="practical-note p-4">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h4 class="font-bold text-sm mb-2 flex items-center">
+                            <i class="fas fa-lightbulb mr-2 text-yellow-400"></i>
+                            실용적 활용 팁
+                        </h4>
+                        <div class="grid grid-cols-3 gap-4 text-xs">
+                            <div class="flex items-center">
+                                <i class="fas fa-check mr-2 text-green-400"></i>
+                                <span>어두운 배경에서 <span class="highlight-text">효과 극대화</span></span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-check mr-2 text-green-400"></i>
+                                <span>조명 각도는 <span class="highlight-text">90-135도</span> 권장</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-check mr-2 text-green-400"></i>
+                                <span>과도한 사용 시 <span class="highlight-text">부자연스러움</span> 주의</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-right text-xs opacity-70">
+                        <i class="fas fa-info-circle mr-1 text-pink-400"></i>
+                        다른 라이팅 기법과 <span class="highlight-text">조합</span>하여 사용하면 더욱 효과적
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

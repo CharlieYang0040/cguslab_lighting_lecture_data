@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Palette (색상 팔레트) - 추가 예시</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', 'Malgun Gothic', sans-serif;
+        }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            background: linear-gradient(135deg, #1a2a3a 0%, #0d1721 100%);
+            color: #ffffff;
+            overflow: hidden;
+            position: relative;
+        }
+        .header {
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 1.5rem 3rem;
+            border-bottom: 2px solid rgba(163, 198, 255, 0.4);
+            display: flex;
+            align-items: center;
+        }
+        .header-icon {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            color: #a3c6ff;
+            font-size: 1.5rem;
+        }
+        .content {
+            padding: 1.5rem 3rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            height: calc(100% - 120px);
+        }
+        .examples-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            height: 100%;
+        }
+        .example-item {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .example-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        .example-image {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-bottom: 0.75rem;
+        }
+        .example-title {
+            font-weight: bold;
+            color: #ffcc66;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        .example-desc {
+            font-size: 0.8rem;
+            color: #e0e0e0;
+            line-height: 1.4;
+            flex: 1;
+        }
+        .large-example {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .large-image {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+        .large-title {
+            font-weight: bold;
+            color: #ffcc66;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+        }
+        .large-title i {
+            margin-right: 0.75rem;
+        }
+        .highlight {
+            color: #a3c6ff;
+            font-weight: bold;
+        }
+        .tips-container {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .tips-title {
+            font-weight: bold;
+            color: #ffcc66;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+        }
+        .tips-title i {
+            margin-right: 0.75rem;
+        }
+        .tip-item {
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: flex-start;
+            font-size: 0.9rem;
+        }
+        .tip-item:before {
+            content: "▸";
+            color: #a3c6ff;
+            font-weight: bold;
+            margin-right: 0.75rem;
+            margin-top: 0.1rem;
+        }
+        .footer {
+            padding: 1rem 3rem;
+            text-align: right;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            box-sizing: border-box;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+        .animation-highlight {
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        @keyframes glow {
+            from {
+                box-shadow: 0 0 5px rgba(163, 198, 255, 0.5);
+            }
+            to {
+                box-shadow: 0 0 20px rgba(163, 198, 255, 0.8);
+            }
+        }
+        .color-wheel {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: conic-gradient(
+                #ff0000 0deg,
+                #ffff00 60deg,
+                #00ff00 120deg,
+                #00ffff 180deg,
+                #0000ff 240deg,
+                #ff00ff 300deg,
+                #ff0000 360deg
+            );
+            margin: 0 auto;
+            transition: all 0.5s ease;
+            cursor: pointer;
+        }
+        .color-wheel:hover {
+            transform: rotate(45deg) scale(1.1);
+        }
+        .color-scheme-demo {
+            display: flex;
+            height: 40px;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 0.5rem 0;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .color-scheme-demo:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        .color-segment {
+            flex: 1;
+            transition: all 0.3s ease;
+        }
+        .color-segment:hover {
+            flex: 2;
+        }
+        .complementary {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+        }
+        .analogous {
+            background: linear-gradient(45deg, #ff6b6b, #ffa726, #ffee58);
+        }
+        .triadic {
+            background: linear-gradient(45deg, #ff6b6b, #4caf50, #2196f3);
+        }
+        .monochromatic {
+            background: linear-gradient(45deg, #1976d2, #42a5f5, #90caf9, #e3f2fd);
+        }
+        .palette-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(255, 204, 102, 0.9);
+            color: #1a2a3a;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+        .color-theory-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+        .theory-item {
+            background-color: rgba(255, 255, 255, 0.08);
+            padding: 0.75rem;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .theory-item:hover {
+            background-color: rgba(255, 204, 102, 0.2);
+            transform: translateY(-2px);
+        }
+        .mood-palette {
+            height: 80px;
+            border-radius: 4px;
+            margin: 0.5rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 0.9rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .mood-palette:hover {
+            transform: scale(1.02);
+        }
+        .warm-palette {
+            background: linear-gradient(135deg, #ff4757, #ff6348, #ff7675, #fdcb6e);
+        }
+        .cool-palette {
+            background: linear-gradient(135deg, #74b9ff, #0984e3, #6c5ce7, #a29bfe);
+        }
+        .neutral-palette {
+            background: linear-gradient(135deg, #636e72, #2d3436, #ddd, #b2bec3);
+        }
+        .vibrant-palette {
+            background: linear-gradient(135deg, #e17055, #00b894, #fdcb6e, #e84393);
+        }
+        .interactive-selector {
+            position: relative;
+            height: 100px;
+            background: #2a2a2a;
+            border-radius: 4px;
+            overflow: hidden;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid rgba(163, 198, 255, 0.3);
+        }
+        .interactive-selector:hover {
+            border-color: rgba(255, 204, 102, 0.6);
+        }
+        .selector-text {
+            color: #a3c6ff;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+        .film-examples {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        .film-card {
+            background-color: rgba(255, 255, 255, 0.08);
+            padding: 0.5rem;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 0.75rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .film-card:hover {
+            background-color: rgba(163, 198, 255, 0.2);
+            transform: translateY(-2px);
+        }
+        .film-icon {
+            font-size: 1.2rem;
+            margin-bottom: 0.25rem;
+        }
+        .matrix-style { color: #00ff41; }
+        .blade-runner-style { color: #ff6b35; }
+        .tron-style { color: #00d4ff; }
+        .her-style { color: #ff9999; }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="header">
+            <div class="header-icon">
+                <i class="fas fa-swatchbook"></i>
+            </div>
+            <div>
+                <h1 class="text-3xl font-bold">Color Palette (색상 팔레트) - 추가 예시</h1>
+                <p class="text-sm opacity-70 mt-1">실무 적용 사례와 심화 학습</p>
+            </div>
+        </div>
+        
+        <div class="content">
+            <div>
+                <div class="large-example">
+                    <div class="large-title">
+                        <i class="fas fa-palette"></i> 색상 조화 이론 실습
+                    </div>
+                    <div style="position: relative;">
+                        <img src="https://graf1x.com/wp-content/uploads/2014/09/color-scheme.jpg" alt="색상 스키마 유형" class="large-image">
+                        <div class="palette-badge">Color Theory</div>
+                    </div>
+                    <p class="text-sm"><span class="highlight">체계적인 색상 조합</span>을 통한 <span class="highlight">시각적 조화</span> 구현</p>
+                </div>
+                
+                <div class="tips-container">
+                    <div class="tips-title">
+                        <i class="fas fa-magic"></i> 색상 팔레트 구성 기법
+                    </div>
+                    
+                    <div class="color-theory-grid">
+                        <div class="theory-item">
+                            <div class="color-scheme-demo complementary"></div>
+                            <div>보색 (Complementary)</div>
+                        </div>
+                        <div class="theory-item">
+                            <div class="color-scheme-demo analogous"></div>
+                            <div>유사색 (Analogous)</div>
+                        </div>
+                        <div class="theory-item">
+                            <div class="color-scheme-demo triadic"></div>
+                            <div>삼각 배색 (Triadic)</div>
+                        </div>
+                        <div class="theory-item">
+                            <div class="color-scheme-demo monochromatic"></div>
+                            <div>단색 (Monochromatic)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="tip-item"><span class="highlight">60-30-10 법칙</span>: 주조색 60%, 보조색 30%, 강조색 10%</div>
+                    <div class="tip-item"><span class="highlight">색온도 일관성</span>: 따뜻한/차가운 톤의 조화로운 조합</div>
+                    <div class="tip-item"><span class="highlight">명도 대비</span>: 밝기 차이로 시각적 계층 구조 형성</div>
+                    <div class="tip-item"><span class="highlight">채도 조절</span>: 과도한 채도는 피로감, 적절한 채도로 균형</div>
+                    
+                    <div class="color-wheel"></div>
+                    <div class="text-center text-xs text-blue-300 mt-2">인터랙티브 컬러 휠 (호버해보세요)</div>
+                </div>
+            </div>
+            
+            <div class="examples-grid">
+                <div class="example-item animation-highlight">
+                    <div style="position: relative;">
+                        <img src="https://public-images.interaction-design.org/literature/articles/materials/2-ixdf-triadic-color-combinations.jpg" alt="삼각 배색" class="example-image">
+                        <div class="palette-badge">Triadic</div>
+                    </div>
+                    <div class="example-title">삼각 배색 실습</div>
+                    <div class="example-desc"><span class="highlight">120도 간격</span>의 세 색상으로 <span class="highlight">활기차고 균형잡힌</span> 조합</div>
+                </div>
+                
+                <div class="example-item">
+                    <div class="mood-palette warm-palette">따뜻한 팔레트</div>
+                    <div class="example-title">감정별 색상 팔레트</div>
+                    <div class="example-desc"><span class="highlight">따뜻함</span>, <span class="highlight">활기</span>, <span class="highlight">편안함</span>을 표현하는 색상 조합</div>
+                </div>
+                
+                <div class="example-item">
+                    <div class="mood-palette cool-palette">차가운 팔레트</div>
+                    <div class="example-title">시원하고 차분한 분위기</div>
+                    <div class="example-desc"><span class="highlight">신뢰감</span>, <span class="highlight">평온함</span>, <span class="highlight">전문성</span>을 나타내는 색상</div>
+                </div>
+                
+                <div class="example-item">
+                    <div class="interactive-selector">
+                        <div class="selector-text">
+                            <i class="fas fa-eye-dropper" style="font-size: 2rem; margin-bottom: 0.5rem;"></i><br>
+                            색상 추출 도구
+                        </div>
+                    </div>
+                    <div class="example-title">실무 도구 활용</div>
+                    <div class="example-desc">이미지에서 <span class="highlight">색상 추출</span>하여 <span class="highlight">일관된 팔레트</span> 구성</div>
+                </div>
+                
+                <div class="example-item">
+                    <div class="film-examples">
+                        <div class="film-card">
+                            <div class="film-icon matrix-style"><i class="fas fa-film"></i></div>
+                            <div>Matrix</div>
+                        </div>
+                        <div class="film-card">
+                            <div class="film-icon blade-runner-style"><i class="fas fa-video"></i></div>
+                            <div>Blade Runner</div>
+                        </div>
+                        <div class="film-card">
+                            <div class="film-icon tron-style"><i class="fas fa-gamepad"></i></div>
+                            <div>Tron</div>
+                        </div>
+                        <div class="film-card">
+                            <div class="film-icon her-style"><i class="fas fa-heart"></i></div>
+                            <div>Her</div>
+                        </div>
+                    </div>
+                    <div class="example-title">영화 속 색상 팔레트</div>
+                    <div class="example-desc">각 영화의 <span class="highlight">고유한 색상 테마</span>와 <span class="highlight">스토리텔링</span> 연결</div>
+                </div>
+                
+                <div class="example-item">
+                    <div style="position: relative;">
+                        <img src="https://cdn.prod.website-files.com/64fa82cbdeed167ebaefef84/64fa86b59936a3de7141afbf_5f8e083a4b0b267fc71446e6_Mpj8Bp8bdx4_oNGZEVDnKcbEll7C2HdthR1raB-MLb8b-Ezkgv7-YOeULEQqxnnpR8g4me0W54z5_i6YSciNIB2BMdUVi_C72mTOEb994b3aNuY9_LgwQu8R6uF60kfsVeBKuSV6.jpeg" alt="색상 이론" class="example-image">
+                        <div class="palette-badge">Theory</div>
+                    </div>
+                    <div class="example-title">색상 이론 기초</div>
+                    <div class="example-desc"><span class="highlight">기본 색상환</span>과 <span class="highlight">조화 원리</span>의 실제 적용</div>
+                </div>
+                
+                <div class="example-item">
+                    <div class="mood-palette neutral-palette">중성 팔레트</div>
+                    <div class="example-title">중성색 활용</div>
+                    <div class="example-desc"><span class="highlight">세련되고 절제된</span> 분위기의 <span class="highlight">고급스러운</span> 색상 조합</div>
+                </div>
+                
+                <div class="example-item">
+                    <div class="mood-palette vibrant-palette">생동감 있는 팔레트</div>
+                    <div class="example-title">활기찬 색상 조합</div>
+                    <div class="example-desc"><span class="highlight">에너지</span>와 <span class="highlight">창의성</span>을 표현하는 역동적 색상</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            컴퓨터 그래픽스 라이팅 입문 | Color Palette(색상 팔레트) 심화 학습
+        </div>
+    </div>
+</body>
+</html>

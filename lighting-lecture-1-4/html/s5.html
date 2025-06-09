@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Side Light (측면광)</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+            overflow: hidden;
+        }
+        .slide {
+            width: 1280px;
+            min-height: 720px;
+            background: linear-gradient(135deg, #1a2a6c, #2a3c7f);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        .slide-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            border-bottom: 2px solid rgba(255,255,255,0.2);
+        }
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #a0c0ff;
+            margin-bottom: 1rem;
+        }
+        .feature-item, .usage-item {
+            padding: 0.5rem 1rem;
+            margin-bottom: 0.5rem;
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            background-color: rgba(255,255,255,0.08);
+            transition: all 0.3s ease;
+        }
+        .feature-item:hover, .usage-item:hover {
+            background-color: rgba(255,255,255,0.15);
+        }
+        .icon-circle {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
+        .image-container {
+            border-radius: 0.5rem;
+            overflow: hidden;
+            border: 2px solid rgba(255,255,255,0.2);
+        }
+        .page-number {
+            position: absolute;
+            bottom: 1rem;
+            right: 1rem;
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+        .light-diagram {
+            width: 180px;
+            height: 180px;
+            margin: 0 auto;
+            position: relative;
+            background-color: rgba(255,255,255,0.05);
+            border-radius: 0.5rem;
+        }
+        .subject {
+            width: 40px;
+            height: 60px;
+            background-color: #6b7280;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 4px;
+        }
+        .light-source {
+            width: 30px;
+            height: 30px;
+            background-color: #f59e0b;
+            border-radius: 50%;
+            position: absolute;
+            box-shadow: 0 0 20px 10px rgba(245, 158, 11, 0.4);
+        }
+        .light-ray {
+            position: absolute;
+            height: 2px;
+            background: linear-gradient(to right, rgba(245, 158, 11, 0.8), rgba(245, 158, 11, 0));
+            transform-origin: left center;
+        }
+        .side-light-effect {
+            position: absolute;
+            width: 300px;
+            height: 720px;
+            background: linear-gradient(90deg, rgba(245, 158, 11, 0.1), rgba(245, 158, 11, 0));
+            left: -150px;
+            top: 0;
+            z-index: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide p-10 flex flex-col">
+        <!-- Side light visual effect -->
+        <div class="side-light-effect"></div>
+        
+        <!-- Slide Header -->
+        <div class="slide-title pb-4 mb-6 flex items-center relative z-10">
+            <i class="fas fa-lightbulb mr-4 text-yellow-500"></i>
+            <span>Side Light (측면광)</span>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex flex-1 space-x-6 relative z-10">
+            <!-- Left Column: Definition, Features, Uses -->
+            <div class="w-1/2 space-y-6">
+                <!-- Definition -->
+                <div>
+                    <div class="section-title flex items-center">
+                        <i class="fas fa-info-circle mr-3 text-blue-300"></i>
+                        <span>정의</span>
+                    </div>
+                    <div class="bg-blue-900 bg-opacity-30 p-4 rounded-lg text-lg">
+                        <span class="font-bold text-yellow-300">측면에서 비추어</span> 입체감과 질감을 강조하며, 극적인 그림자를 형성합니다.
+                    </div>
+                </div>
+
+                <!-- Features -->
+                <div>
+                    <div class="section-title flex items-center">
+                        <i class="fas fa-list-ul mr-3 text-blue-300"></i>
+                        <span>특징</span>
+                    </div>
+                    
+                    <div class="space-y-2">
+                        <div class="feature-item">
+                            <div class="icon-circle bg-orange-600">
+                                <i class="fas fa-cube text-white"></i>
+                            </div>
+                            <span><strong>입체감 강조</strong>: 물체의 형태와 볼륨을 뚜렷하게 보여줌</span>
+                        </div>
+
+                        <div class="feature-item">
+                            <div class="icon-circle bg-orange-600">
+                                <i class="fas fa-fingerprint text-white"></i>
+                            </div>
+                            <span><strong>질감 표현</strong>: 표면의 질감과 세부 특징이 강조됨</span>
+                        </div>
+
+                        <div class="feature-item">
+                            <div class="icon-circle bg-orange-600">
+                                <i class="fas fa-adjust text-white"></i>
+                            </div>
+                            <span><strong>명암 대비</strong>: 빛과 그림자의 강한 대비를 만들어냄</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Uses -->
+                <div>
+                    <div class="section-title flex items-center">
+                        <i class="fas fa-tasks mr-3 text-blue-300"></i>
+                        <span>주요 용도/효과</span>
+                    </div>
+                    
+                    <div class="space-y-2">
+                        <div class="usage-item">
+                            <div class="icon-circle bg-yellow-600">
+                                <i class="fas fa-theater-masks text-white"></i>
+                            </div>
+                            <span><strong>드라마틱한 효과</strong>와 깊이감을 부여</span>
+                        </div>
+
+                        <div class="usage-item">
+                            <div class="icon-circle bg-yellow-600">
+                                <i class="fas fa-user-alt text-white"></i>
+                            </div>
+                            <span>캐릭터의 <strong>성격이나 감정 표현</strong>에 효과적</span>
+                        </div>
+
+                        <div class="usage-item">
+                            <div class="icon-circle bg-yellow-600">
+                                <i class="fas fa-film text-white"></i>
+                            </div>
+                            <span>영화나 드라마에서 <strong>긴장감 조성</strong>에 활용</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Visual Materials -->
+            <div class="w-1/2 flex flex-col space-y-4">
+                <!-- Lighting Diagram -->
+                <div class="bg-gray-800 bg-opacity-50 p-4 rounded-lg">
+                    <div class="text-center mb-2 text-lg font-medium text-yellow-200">조명 위치 다이어그램</div>
+                    <div class="light-diagram">
+                        <div class="subject"></div>
+                        <div class="light-source" style="top: 50%; left: 20px; transform: translateY(-50%);"></div>
+                        <div class="light-ray" style="top: 50%; left: 35px; width: 60px; height: 2px; transform: translateY(-50%) rotate(0deg);"></div>
+                        <div class="light-ray" style="top: 40%; left: 35px; width: 70px; height: 2px; transform: translateY(-50%) rotate(10deg);"></div>
+                        <div class="light-ray" style="top: 60%; left: 35px; width: 70px; height: 2px; transform: translateY(-50%) rotate(-10deg);"></div>
+                        <div class="text-center absolute bottom-2 left-0 right-0 text-xs text-yellow-200">측면에서 빛이 비춤</div>
+                    </div>
+                </div>
+
+                <!-- Example Images -->
+                <div class="flex space-x-4 flex-1">
+                    <div class="w-1/2 flex flex-col">
+                        <div class="text-center mb-2 text-sm font-medium text-yellow-200">인물 측면광</div>
+                        <div class="image-container flex-1 bg-gray-700 flex items-center justify-center">
+                            <img src="https://images.squarespace-cdn.com/content/v1/51a39504e4b093105c265c24/1560882623381-M3Z7YS5U793AT9JQF0BX/myanmar-novice-monks-portrait.jpg" alt="인물 측면광 예시" class="object-cover h-full w-full">
+                        </div>
+                    </div>
+                    
+                    <div class="w-1/2 flex flex-col">
+                        <div class="text-center mb-2 text-sm font-medium text-yellow-200">영화 측면광</div>
+                        <div class="image-container flex-1 bg-gray-700 flex items-center justify-center">
+                            <img src="https://s.studiobinder.com/wp-content/uploads/2021/11/Side-lighting-Example.png" alt="영화 측면광 예시" class="object-cover h-full w-full">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Page Number -->
+        <div class="page-number">4 / 8</div>
+    </div>
+</body>
+</html>

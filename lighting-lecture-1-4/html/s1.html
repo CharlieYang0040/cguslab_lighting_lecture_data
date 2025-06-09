@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>4강: 빛의 방향별 특징 이해</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Noto Sans KR', sans-serif;
+            overflow: hidden;
+        }
+        .slide {
+            width: 1280px;
+            min-height: 720px;
+            background: linear-gradient(135deg, #1a2a6c, #2a3c7f);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        .title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(90deg, #ffffff, #f0f0f0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .subtitle {
+            font-size: 2rem;
+            font-weight: 500;
+            margin-bottom: 2rem;
+            color: #a0c0ff;
+        }
+        .date {
+            font-size: 1.2rem;
+            font-weight: 300;
+            opacity: 0.8;
+        }
+        .light-source {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            background: #fff;
+            border-radius: 50%;
+            box-shadow: 0 0 80px 40px rgba(255,255,255,0.8);
+        }
+        .light-ray {
+            position: absolute;
+            background: linear-gradient(to right, rgba(255,255,255,0.8), rgba(255,255,255,0));
+            transform-origin: left center;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide flex flex-col justify-between p-16">
+        <!-- Light Effects -->
+        <div class="absolute inset-0 opacity-20">
+            <div class="light-source" style="top: 100px; right: 200px;"></div>
+            <div class="light-ray" style="top: 140px; right: 240px; width: 400px; height: 4px; transform: rotate(30deg);"></div>
+            <div class="light-ray" style="top: 140px; right: 240px; width: 500px; height: 4px; transform: rotate(45deg);"></div>
+            <div class="light-ray" style="top: 140px; right: 240px; width: 450px; height: 4px; transform: rotate(60deg);"></div>
+            <div class="light-ray" style="top: 140px; right: 240px; width: 380px; height: 4px; transform: rotate(75deg);"></div>
+            <div class="light-ray" style="top: 140px; right: 240px; width: 420px; height: 4px; transform: rotate(90deg);"></div>
+        </div>
+
+        <!-- Content -->
+        <div class="z-10">
+            <div class="mb-2 text-blue-200"><i class="fas fa-university mr-2"></i>컴퓨터 그래픽스 라이팅</div>
+            <h1 class="title">4강: 빛의 방향별 특징 이해</h1>
+            <div class="subtitle flex items-center">
+                <i class="fas fa-lightbulb text-yellow-300 mr-3"></i>
+                <span>빛의 방향이 만드는 시각적 효과</span>
+            </div>
+        </div>
+
+        <div class="z-10 flex justify-center items-center my-8">
+            <div class="relative w-96 h-96">
+                <!-- Simple light direction diagram -->
+                <div class="absolute w-20 h-20 bg-gray-700 rounded-md left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2"></div>
+                
+                <!-- Front Light -->
+                <div class="absolute left-1/2 top-0 transform -translate-x-1/2 text-center">
+                    <div class="w-4 h-16 bg-gradient-to-b from-yellow-200 to-transparent mx-auto"></div>
+                    <div class="mt-1 text-sm text-blue-200">정면광</div>
+                </div>
+                
+                <!-- Side Light -->
+                <div class="absolute left-0 top-1/2 transform -translate-y-1/2 text-center">
+                    <div class="w-16 h-4 bg-gradient-to-r from-yellow-200 to-transparent"></div>
+                    <div class="mt-1 text-sm text-blue-200">측면광</div>
+                </div>
+                
+                <!-- Back Light -->
+                <div class="absolute left-1/2 bottom-0 transform -translate-x-1/2 text-center">
+                    <div class="w-4 h-16 bg-gradient-to-t from-yellow-200 to-transparent mx-auto"></div>
+                    <div class="mt-1 text-sm text-blue-200">역광</div>
+                </div>
+                
+                <!-- Top Light -->
+                <div class="absolute right-20 top-20 transform rotate-45 text-center">
+                    <div class="w-4 h-16 bg-gradient-to-b from-yellow-200 to-transparent mx-auto"></div>
+                    <div class="mt-1 text-sm text-blue-200 transform -rotate-45">탑라이트</div>
+                </div>
+                
+                <!-- Under Light -->
+                <div class="absolute left-20 bottom-20 transform rotate-45 text-center">
+                    <div class="w-4 h-16 bg-gradient-to-t from-yellow-200 to-transparent mx-auto"></div>
+                    <div class="mt-1 text-sm text-blue-200 transform -rotate-45">아래광</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="z-10 flex justify-between items-end">
+            <div class="date">2025.05.13</div>
+            <div class="flex items-center text-sm text-blue-200">
+                <i class="fas fa-user-tie mr-2"></i>
+                컴퓨터 그래픽스 학과
+            </div>
+        </div>
+    </div>
+</body>
+</html>

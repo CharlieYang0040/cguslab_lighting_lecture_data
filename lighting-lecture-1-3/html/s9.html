@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Broad Light</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            position: relative;
+            display: inline-block;
+        }
+        .section-title::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -5px;
+            width: 70%;
+            height: 3px;
+            background: linear-gradient(90deg, #f9a826, transparent);
+        }
+        .feature-box {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(5px);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+        .feature-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        .highlight {
+            color: #f9a826;
+            font-weight: 600;
+        }
+        .image-container {
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        .image-container:hover {
+            transform: scale(1.02);
+        }
+        .broad-light-decoration {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, rgba(249, 168, 38, 0.05) 0%, transparent 60%);
+            z-index: 0;
+        }
+        .practice-note {
+            background: rgba(249, 168, 38, 0.1);
+            border-left: 3px solid #f9a826;
+        }
+        .comparison-diagram {
+            position: relative;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 10px;
+        }
+        .tag {
+            display: inline-block;
+            padding: 3px 10px;
+            background-color: rgba(249, 168, 38, 0.7);
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container flex p-10 relative">
+        <div class="broad-light-decoration"></div>
+        
+        <!-- 좌측 텍스트 섹션 -->
+        <div class="w-1/2 pr-8 flex flex-col justify-center z-10">
+            <h1 class="section-title mb-8">Broad Light</h1>
+            
+            <div class="feature-box p-5 mb-5">
+                <h3 class="text-xl font-bold mb-2">
+                    <i class="fas fa-expand-alt text-yellow-400 mr-2"></i>정의 및 효과
+                </h3>
+                <p class="text-lg">얼굴의 <span class="highlight">넓은 쪽</span>을 밝게 처리해 <span class="highlight">부드럽고 개방적인</span> 느낌을 줍니다.</p>
+            </div>
+            
+            <div class="feature-box p-5 mb-5">
+                <h3 class="text-xl font-bold mb-2">
+                    <i class="fas fa-smile-beam text-yellow-400 mr-2"></i>특징 및 활용
+                </h3>
+                <p class="text-lg mb-2"><span class="highlight">친근하고 자연스러운</span> 인상 연출에 적합합니다.</p>
+                <div class="mt-3 space-y-1 text-gray-300">
+                    <p class="flex items-center"><i class="fas fa-check-circle text-yellow-400 mr-2"></i> 얼굴을 더 넓고 풍성하게 표현</p>
+                    <p class="flex items-center"><i class="fas fa-check-circle text-yellow-400 mr-2"></i> 상업용 인물 사진이나 우호적인 캐릭터에 적합</p>
+                    <p class="flex items-center"><i class="fas fa-check-circle text-yellow-400 mr-2"></i> 입체감은 줄이고 전체적인 밝은 톤 강조</p>
+                </div>
+                
+                <div class="mt-4 flex flex-wrap gap-2">
+                    <span class="tag">광고</span>
+                    <span class="tag">패션</span>
+                    <span class="tag">우호적 캐릭터</span>
+                    <span class="tag">자연스러운 연출</span>
+                </div>
+            </div>
+            
+            <div class="practice-note p-4 rounded-lg mt-4">
+                <p class="flex items-center">
+                    <i class="fas fa-pencil-alt mr-3 text-yellow-400"></i>
+                    <span>실습 팁: 카메라를 향해 약간 회전된 얼굴의 넓은 쪽(카메라에 더 많이 보이는 쪽)에 주 광원을 배치하세요.</span>
+                </p>
+            </div>
+        </div>
+        
+        <!-- 우측 이미지 섹션 -->
+        <div class="w-1/2 pl-8 flex flex-col items-center justify-center space-y-5 z-10">
+            <!-- Broad Light 예시 이미지 -->
+            <div class="image-container w-full">
+                <img src="https://thelenslounge.com/wp-content/uploads/2023/08/broad-lighting-photography.jpg" 
+                     alt="Broad Light 적용 예시" 
+                     class="w-full h-56 object-cover rounded-lg border-2 border-gray-700">
+                <p class="text-center mt-2 text-sm opacity-80"><i class="fas fa-image mr-1"></i> Broad Light 적용 예시 - 얼굴의 넓은 부분이 밝게 표현됨</p>
+            </div>
+            
+            <!-- Broad Light 다이어그램 -->
+            <div class="comparison-diagram w-full">
+                <div class="flex justify-between items-center">
+                    <img src="https://thelenslounge.com/wp-content/uploads/2023/08/broad-lighting-setup.jpg" 
+                         alt="Broad Light 셋업 다이어그램" 
+                         class="w-full rounded-lg border-2 border-gray-700">
+                </div>
+                <p class="text-center mt-2 text-sm opacity-80"><i class="fas fa-diagram-project mr-1"></i> Broad Light 조명 셋업 다이어그램</p>
+            </div>
+            
+            <!-- 적용 결과 설명 -->
+            <div class="bg-opacity-20 bg-gray-800 p-3 rounded-lg w-full">
+                <h4 class="font-bold text-yellow-400 mb-2"><i class="fas fa-lightbulb mr-2"></i> 활용 효과</h4>
+                <p class="text-sm">Broad Light는 Short Light의 반대 개념으로, 얼굴을 넓고 부드럽게 표현하여 친근감과 개방적인 느낌을 강조합니다. 특히 날카로운 얼굴 특징을 부드럽게 만들거나, 자연스러운 인물 표현에 효과적입니다.</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

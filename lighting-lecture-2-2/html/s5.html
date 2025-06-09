@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Render Elements (AOVs) 개념과 활용</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans KR', 'Roboto', sans-serif;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+        }
+        .tech-grid {
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+        .slide-in-up {
+            animation: slideInUp 0.8s ease-out;
+        }
+        @keyframes slideInUp {
+            0% { transform: translateY(30px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+        .slide-in-left {
+            animation: slideInLeft 0.8s ease-out;
+        }
+        @keyframes slideInLeft {
+            0% { transform: translateX(-50px); opacity: 0; }
+            100% { transform: translateX(0); opacity: 1; }
+        }
+        .slide-in-right {
+            animation: slideInRight 0.8s ease-out;
+        }
+        @keyframes slideInRight {
+            0% { transform: translateX(50px); opacity: 0; }
+            100% { transform: translateX(0); opacity: 1; }
+        }
+        .aov-card {
+            transition: all 0.3s ease;
+        }
+        .aov-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+        .compositing-flow {
+            animation: compositingPulse 3s ease-in-out infinite;
+        }
+        @keyframes compositingPulse {
+            0%, 100% { opacity: 0.7; }
+            50% { opacity: 1; }
+        }
+    </style>
+</head>
+<body class="m-0 p-0">
+    <div class="w-full gradient-bg tech-grid relative overflow-hidden" style="width: 1280px; min-height: 720px;">
+        <!-- Header -->
+        <div class="relative z-10 pt-8 pb-6 px-12">
+            <div class="slide-in-up">
+                <h1 class="text-3xl font-bold text-white mb-2">Render Elements (AOVs) 개념과 활용</h1>
+                <p class="text-green-300 text-base">렌더 패스 분리와 효율적인 컴포지팅 워크플로우</p>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="relative z-10 px-12 pb-8">
+            <!-- AOV Concept Overview -->
+            <div class="slide-in-left" style="animation-delay: 0.2s;">
+                <div class="bg-white bg-opacity-10 backdrop-blur-lg rounded-xl p-6 border border-white border-opacity-20 mb-6">
+                    <h2 class="text-xl font-bold text-white mb-4 flex items-center">
+                        <i class="fas fa-layer-group text-green-400 mr-3"></i>
+                        AOV (Arbitrary Output Variable) 핵심 개념
+                    </h2>
+                    
+                    <div class="grid grid-cols-3 gap-6">
+                        <!-- Definition -->
+                        <div class="aov-card bg-blue-600 bg-opacity-20 rounded-lg p-4 border border-blue-400 border-opacity-30">
+                            <div class="flex items-center mb-3">
+                                <i class="fas fa-puzzle-piece text-blue-400 text-lg mr-3"></i>
+                                <h3 class="text-white font-semibold">정의</h3>
+                            </div>
+                            <p class="text-blue-100 text-sm leading-relaxed">
+                                렌더링 과정에서 각 조명 성분을 별도의 이미지 레이어로 분리하여 출력하는 기술
+                            </p>
+                        </div>
+                        
+                        <!-- Purpose -->
+                        <div class="aov-card bg-purple-600 bg-opacity-20 rounded-lg p-4 border border-purple-400 border-opacity-30">
+                            <div class="flex items-center mb-3">
+                                <i class="fas fa-bullseye text-purple-400 text-lg mr-3"></i>
+                                <h3 class="text-white font-semibold">목적</h3>
+                            </div>
+                            <p class="text-purple-100 text-sm leading-relaxed">
+                                후반 작업에서 각 요소를 독립적으로 조정하여 렌더링 시간을 절약하고 유연성 확보
+                            </p>
+                        </div>
+                        
+                        <!-- Benefits -->
+                        <div class="aov-card bg-green-600 bg-opacity-20 rounded-lg p-4 border border-green-400 border-opacity-30">
+                            <div class="flex items-center mb-3">
+                                <i class="fas fa-chart-line text-green-400 text-lg mr-3"></i>
+                                <h3 class="text-white font-semibold">이점</h3>
+                            </div>
+                            <p class="text-green-100 text-sm leading-relaxed">
+                                재렌더링 없이 조명, 그림자, 반사 등을 실시간으로 조정 가능
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-8">
+                <!-- AOV Types and Examples -->
+                <div class="slide-in-left" style="animation-delay: 0.4s;">
+                    <div class="bg-white bg-opacity-10 backdrop-blur-lg rounded-xl p-6 border border-white border-opacity-20 h-full">
+                        <h3 class="text-lg font-bold text-white mb-4 flex items-center">
+                            <i class="fas fa-list-ul text-yellow-400 mr-3"></i>
+                            주요 AOV 종류
+                        </h3>
+                        
+                        <div class="space-y-3">
+                            <div class="aov-card bg-red-600 bg-opacity-15 rounded-lg p-3 border border-red-400 border-opacity-25">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center">
+                                        <div class="w-3 h-3 bg-red-400 rounded-full mr-2"></div>
+                                        <span class="text-white font-semibold text-sm">Beauty Pass</span>
+                                    </div>
+                                    <span class="text-red-200 text-xs">완성된 최종 이미지</span>
+                                </div>
+                            </div>
+                            
+                            <div class="aov-card bg-orange-600 bg-opacity-15 rounded-lg p-3 border border-orange-400 border-opacity-25">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center">
+                                        <div class="w-3 h-3 bg-orange-400 rounded-full mr-2"></div>
+                                        <span class="text-white font-semibold text-sm">Diffuse</span>
+                                    </div>
+                                    <span class="text-orange-200 text-xs">난반사 조명 성분</span>
+                                </div>
+                            </div>
+                            
+                            <div class="aov-card bg-yellow-600 bg-opacity-15 rounded-lg p-3 border border-yellow-400 border-opacity-25">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center">
+                                        <div class="w-3 h-3 bg-yellow-400 rounded-full mr-2"></div>
+                                        <span class="text-white font-semibold text-sm">Specular</span>
+                                    </div>
+                                    <span class="text-yellow-200 text-xs">정반사 하이라이트</span>
+                                </div>
+                            </div>
+                            
+                            <div class="aov-card bg-green-600 bg-opacity-15 rounded-lg p-3 border border-green-400 border-opacity-25">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center">
+                                        <div class="w-3 h-3 bg-green-400 rounded-full mr-2"></div>
+                                        <span class="text-white font-semibold text-sm">Reflection</span>
+                                    </div>
+                                    <span class="text-green-200 text-xs">환경 반사</span>
+                                </div>
+                            </div>
+                            
+                            <div class="aov-card bg-blue-600 bg-opacity-15 rounded-lg p-3 border border-blue-400 border-opacity-25">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center">
+                                        <div class="w-3 h-3 bg-blue-400 rounded-full mr-2"></div>
+                                        <span class="text-white font-semibold text-sm">Shadow</span>
+                                    </div>
+                                    <span class="text-blue-200 text-xs">그림자 정보</span>
+                                </div>
+                            </div>
+                            
+                            <div class="aov-card bg-purple-600 bg-opacity-15 rounded-lg p-3 border border-purple-400 border-opacity-25">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center">
+                                        <div class="w-3 h-3 bg-purple-400 rounded-full mr-2"></div>
+                                        <span class="text-white font-semibold text-sm">Z-Depth</span>
+                                    </div>
+                                    <span class="text-purple-200 text-xs">깊이 정보</span>
+                                </div>
+                            </div>
+                            
+                            <div class="aov-card bg-pink-600 bg-opacity-15 rounded-lg p-3 border border-pink-400 border-opacity-25">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center">
+                                        <div class="w-3 h-3 bg-pink-400 rounded-full mr-2"></div>
+                                        <span class="text-white font-semibold text-sm">Normal</span>
+                                    </div>
+                                    <span class="text-pink-200 text-xs">표면 법선 벡터</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- VFX Compositing Workflow -->
+                <div class="slide-in-right" style="animation-delay: 0.6s;">
+                    <div class="bg-white bg-opacity-10 backdrop-blur-lg rounded-xl p-6 border border-white border-opacity-20 h-full">
+                        <h3 class="text-lg font-bold text-white mb-4 flex items-center">
+                            <i class="fas fa-film text-cyan-400 mr-3"></i>
+                            VFX 컴포지팅 활용
+                        </h3>
+                        
+                        <!-- AOV Breakdown Visual -->
+                        <div class="relative bg-gray-900 rounded-lg p-3 mb-4">
+                            <img src="https://compositingmentor.com/wp-content/uploads/2021/12/contactsheet_tabledivision_v02.jpg" 
+                                 alt="AOV Render Passes Breakdown" 
+                                 class="w-full h-24 object-cover rounded-lg">
+                            <div class="absolute bottom-1 left-1 bg-black bg-opacity-60 rounded px-2 py-1">
+                                <span class="text-white text-xs">다양한 렌더 패스들의 분리된 구성</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Compositing Benefits -->
+                        <div class="space-y-3">
+                            <div class="compositing-flow bg-cyan-600 bg-opacity-20 rounded-lg p-3 border border-cyan-400 border-opacity-30">
+                                <h4 class="text-white font-semibold text-sm mb-2 flex items-center">
+                                    <i class="fas fa-magic text-cyan-300 mr-2"></i>
+                                    실시간 조정 가능
+                                </h4>
+                                <ul class="text-cyan-100 text-xs space-y-1">
+                                    <li>• 조명 강도 개별 조절</li>
+                                    <li>• 그림자 농도 미세 조정</li>
+                                    <li>• 반사 강도 실시간 변경</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="compositing-flow bg-indigo-600 bg-opacity-20 rounded-lg p-3 border border-indigo-400 border-opacity-30" style="animation-delay: 1s;">
+                                <h4 class="text-white font-semibold text-sm mb-2 flex items-center">
+                                    <i class="fas fa-clock text-indigo-300 mr-2"></i>
+                                    효율성 극대화
+                                </h4>
+                                <ul class="text-indigo-100 text-xs space-y-1">
+                                    <li>• 재렌더링 시간 절약</li>
+                                    <li>• 빠른 룩 데브 이터레이션</li>
+                                    <li>• 클라이언트 피드백 즉시 반영</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="compositing-flow bg-violet-600 bg-opacity-20 rounded-lg p-3 border border-violet-400 border-opacity-30" style="animation-delay: 2s;">
+                                <h4 class="text-white font-semibold text-sm mb-2 flex items-center">
+                                    <i class="fas fa-palette text-violet-300 mr-2"></i>
+                                    창의적 제어
+                                </h4>
+                                <ul class="text-violet-100 text-xs space-y-1">
+                                    <li>• 예술적 룩 개발</li>
+                                    <li>• 색상 그레이딩 정밀 제어</li>
+                                    <li>• 다양한 버전 생성</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Industry Applications -->
+            <div class="mt-6 slide-in-up" style="animation-delay: 0.8s;">
+                <div class="bg-white bg-opacity-10 backdrop-blur-lg rounded-xl p-4 border border-white border-opacity-20">
+                    <h3 class="text-lg font-bold text-white mb-3 flex items-center">
+                        <i class="fas fa-industry text-orange-400 mr-3"></i>
+                        산업별 AOV 활용 사례
+                    </h3>
+                    
+                    <div class="grid grid-cols-4 gap-4">
+                        <div class="text-center bg-red-600 bg-opacity-15 rounded-lg p-3 border border-red-400 border-opacity-25">
+                            <i class="fas fa-video text-red-400 text-lg mb-2"></i>
+                            <div class="text-white font-semibold text-sm">영화 VFX</div>
+                            <div class="text-red-200 text-xs">복잡한 조명 시뮬레이션</div>
+                        </div>
+                        
+                        <div class="text-center bg-blue-600 bg-opacity-15 rounded-lg p-3 border border-blue-400 border-opacity-25">
+                            <i class="fas fa-gamepad text-blue-400 text-lg mb-2"></i>
+                            <div class="text-white font-semibold text-sm">게임 개발</div>
+                            <div class="text-blue-200 text-xs">실시간 라이팅 최적화</div>
+                        </div>
+                        
+                        <div class="text-center bg-green-600 bg-opacity-15 rounded-lg p-3 border border-green-400 border-opacity-25">
+                            <i class="fas fa-tv text-green-400 text-lg mb-2"></i>
+                            <div class="text-white font-semibold text-sm">TV/방송</div>
+                            <div class="text-green-200 text-xs">빠른 턴어라운드</div>
+                        </div>
+                        
+                        <div class="text-center bg-purple-600 bg-opacity-15 rounded-lg p-3 border border-purple-400 border-opacity-25">
+                            <i class="fas fa-cubes text-purple-400 text-lg mb-2"></i>
+                            <div class="text-white font-semibold text-sm">건축 시각화</div>
+                            <div class="text-purple-200 text-xs">포토리얼리스틱 렌더링</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Technical Tips -->
+            <div class="mt-4 slide-in-up" style="animation-delay: 1s;">
+                <div class="bg-gradient-to-r from-orange-600 via-red-600 to-pink-600 bg-opacity-20 backdrop-blur-lg rounded-xl p-4 border border-white border-opacity-20">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                            <i class="fas fa-tools text-yellow-400 text-lg mr-3"></i>
+                            <span class="text-white font-semibold">실무 핵심 팁</span>
+                        </div>
+                        <div class="flex space-x-6 text-sm">
+                            <div class="text-center">
+                                <div class="text-orange-300 font-semibold">렌더 시간 관리</div>
+                                <div class="text-orange-100">필요한 패스만 선택</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-red-300 font-semibold">파일 크기 최적화</div>
+                                <div class="text-red-100">EXR 압축 활용</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-pink-300 font-semibold">네이밍 컨벤션</div>
+                                <div class="text-pink-100">일관된 명명 규칙</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Decorative Elements -->
+        <div class="absolute top-16 right-16 w-20 h-20 border-2 border-green-300 opacity-20 rotate-45"></div>
+        <div class="absolute bottom-16 left-16 w-12 h-12 border-2 border-cyan-300 opacity-20 rotate-12"></div>
+        <div class="absolute top-1/2 right-8 w-16 h-16 border-2 border-purple-300 opacity-15 rotate-45"></div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Low Key & High Key (로우키 & 하이키) - 추가 예시</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', 'Malgun Gothic', sans-serif;
+        }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            background: linear-gradient(135deg, #1a2a3a 0%, #0d1721 100%);
+            color: #ffffff;
+            overflow: hidden;
+            position: relative;
+        }
+        .header {
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 1.5rem 3rem;
+            border-bottom: 2px solid rgba(163, 198, 255, 0.4);
+            display: flex;
+            align-items: center;
+        }
+        .header-icon {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            color: #a3c6ff;
+            font-size: 1.5rem;
+        }
+        .content {
+            padding: 1.5rem 3rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            height: calc(100% - 120px);
+        }
+        .examples-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            height: 100%;
+        }
+        .example-item {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .example-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        .example-image {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-bottom: 0.75rem;
+        }
+        .example-title {
+            font-weight: bold;
+            color: #ffcc66;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        .example-desc {
+            font-size: 0.8rem;
+            color: #e0e0e0;
+            line-height: 1.4;
+            flex: 1;
+        }
+        .large-example {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .large-image {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+        .large-title {
+            font-weight: bold;
+            color: #ffcc66;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+        }
+        .large-title i {
+            margin-right: 0.75rem;
+        }
+        .highlight {
+            color: #a3c6ff;
+            font-weight: bold;
+        }
+        .tips-container {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .tips-title {
+            font-weight: bold;
+            color: #ffcc66;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+        }
+        .tips-title i {
+            margin-right: 0.75rem;
+        }
+        .tip-item {
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: flex-start;
+            font-size: 0.9rem;
+        }
+        .tip-item:before {
+            content: "▸";
+            color: #a3c6ff;
+            font-weight: bold;
+            margin-right: 0.75rem;
+            margin-top: 0.1rem;
+        }
+        .footer {
+            padding: 1rem 3rem;
+            text-align: right;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            box-sizing: border-box;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+        .animation-highlight {
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        @keyframes glow {
+            from {
+                box-shadow: 0 0 5px rgba(163, 198, 255, 0.5);
+            }
+            to {
+                box-shadow: 0 0 20px rgba(163, 198, 255, 0.8);
+            }
+        }
+        .technique-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(255, 204, 102, 0.9);
+            color: #1a2a3a;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+        .low-key-badge {
+            background-color: rgba(255, 107, 107, 0.9);
+        }
+        .high-key-badge {
+            background-color: rgba(102, 204, 255, 0.9);
+        }
+        .key-demo {
+            position: relative;
+            height: 120px;
+            background: linear-gradient(90deg, #000000 0%, #333333 50%, #ffffff 100%);
+            border-radius: 4px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .demo-slider {
+            position: absolute;
+            width: 4px;
+            height: 100%;
+            background: #ffcc66;
+            left: 50%;
+            transform: translateX(-50%);
+            transition: all 0.3s ease;
+        }
+        .key-demo:hover .demo-slider {
+            left: 25%;
+            background: #ff6b6b;
+        }
+        .key-demo:hover {
+            filter: contrast(1.5);
+        }
+        .mood-indicators {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+        }
+        .mood-item {
+            background-color: rgba(255, 255, 255, 0.08);
+            padding: 0.5rem;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 0.75rem;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .mood-item:hover {
+            background-color: rgba(255, 204, 102, 0.2);
+            transform: scale(1.05);
+        }
+        .mood-icon {
+            font-size: 1.2rem;
+            margin-bottom: 0.25rem;
+        }
+        .low-key-mood {
+            color: #ff6b6b;
+        }
+        .high-key-mood {
+            color: #66ccff;
+        }
+        .technical-setup {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+        }
+        .setup-item {
+            background-color: rgba(255, 255, 255, 0.08);
+            padding: 0.75rem 0.5rem;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 0.75rem;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .setup-item:hover {
+            background-color: rgba(163, 198, 255, 0.2);
+            transform: translateY(-2px);
+        }
+        .setup-icon {
+            font-size: 1.1rem;
+            margin-bottom: 0.25rem;
+            color: #ffcc66;
+        }
+        .histogram-demo {
+            position: relative;
+            height: 60px;
+            background: #1a1a1a;
+            border-radius: 4px;
+            overflow: hidden;
+            display: flex;
+            align-items: end;
+            padding: 0.5rem;
+            gap: 2px;
+        }
+        .histogram-bar {
+            background: linear-gradient(to top, #666666, #cccccc);
+            width: 4px;
+            transition: all 0.3s ease;
+        }
+        .low-key-histogram .histogram-bar {
+            background: linear-gradient(to top, #ff6b6b, #ff9999);
+        }
+        .high-key-histogram .histogram-bar {
+            background: linear-gradient(to top, #66ccff, #99ddff);
+        }
+        .histogram-demo:hover .histogram-bar {
+            transform: scaleY(1.2);
+        }
+        .comparison-slider {
+            position: relative;
+            height: 100px;
+            background: linear-gradient(90deg, #000000 0%, #111111 20%, #888888 50%, #eeeeee 80%, #ffffff 100%);
+            border-radius: 4px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        .slider-handle {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 2px;
+            height: 100%;
+            background: #ffcc66;
+            transform: translateX(-50%);
+            transition: all 0.3s ease;
+        }
+        .slider-label {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+        }
+        .low-label {
+            left: 10%;
+            color: #ff6b6b;
+        }
+        .high-label {
+            right: 10%;
+            color: #66ccff;
+        }
+        .comparison-slider:hover .slider-handle {
+            left: 25%;
+            background: #ff6b6b;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="header">
+            <div class="header-icon">
+                <i class="fas fa-adjust"></i>
+            </div>
+            <div>
+                <h1 class="text-3xl font-bold">Low Key & High Key (로우키 & 하이키) - 추가 예시</h1>
+                <p class="text-sm opacity-70 mt-1">실무 적용 사례와 심화 학습</p>
+            </div>
+        </div>
+        
+        <div class="content">
+            <div>
+                <div class="large-example">
+                    <div class="large-title">
+                        <i class="fas fa-camera"></i> 로우키 vs 하이키 비교
+                    </div>
+                    <div style="position: relative;">
+                        <img src="https://learn.corel.com/wp-content/uploads/2022/02/low_key_flower-scaled.jpg" alt="로우키 하이키 비교" class="large-image">
+                        <div class="technique-badge">Comparison</div>
+                    </div>
+                    <p class="text-sm"><span class="highlight">로우키</span>와 <span class="highlight">하이키</span>의 극명한 차이와 각각의 감정적 효과</p>
+                </div>
+                
+                <div class="tips-container">
+                    <div class="tips-title">
+                        <i class="fas fa-lightbulb"></i> 기법별 구현 방법
+                    </div>
+                    
+                    <div class="comparison-slider">
+                        <div class="slider-handle"></div>
+                        <div class="slider-label low-label">Low Key</div>
+                        <div class="slider-label high-label">High Key</div>
+                    </div>
+                    
+                    <div class="tip-item"><span class="highlight">로우키</span>: 단일 강광원, 최소 보조광, 어두운 배경</div>
+                    <div class="tip-item"><span class="highlight">하이키</span>: 다중 소프트 라이트, 반사판 활용, 밝은 배경</div>
+                    <div class="tip-item"><span class="highlight">노출 조절</span>: 로우키는 언더노출, 하이키는 오버노출 경향</div>
+                    <div class="tip-item"><span class="highlight">후처리</span>: 곡선 조절과 선택적 마스킹으로 효과 극대화</div>
+                    
+                    <div class="technical-setup">
+                        <div class="setup-item">
+                            <div class="setup-icon"><i class="fas fa-lightbulb"></i></div>
+                            <div>광원 설정</div>
+                        </div>
+                        <div class="setup-item">
+                            <div class="setup-icon"><i class="fas fa-adjust"></i></div>
+                            <div>노출 조절</div>
+                        </div>
+                        <div class="setup-item">
+                            <div class="setup-icon"><i class="fas fa-palette"></i></div>
+                            <div>후처리</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="examples-grid">
+                <div class="example-item animation-highlight">
+                    <div style="position: relative;">
+                        <img src="https://shotkit.com/wp-content/uploads/2020/08/lowkey-1.jpg" alt="로우키 인물사진" class="example-image">
+                        <div class="technique-badge low-key-badge">Low Key</div>
+                    </div>
+                    <div class="example-title">로우키 인물 사진</div>
+                    <div class="example-desc"><span class="highlight">극적인 조명</span>과 <span class="highlight">깊은 그림자</span>로 신비롭고 강렬한 분위기 연출</div>
+                </div>
+                
+                <div class="example-item">
+                    <div style="position: relative;">
+                        <img src="https://d26oc3sg82pgk3.cloudfront.net/files/media/edit/image/49836/article_full%403x.jpg" alt="하이키 라이팅" class="example-image">
+                        <div class="technique-badge high-key-badge">High Key</div>
+                    </div>
+                    <div class="example-title">하이키 상업 사진</div>
+                    <div class="example-desc"><span class="highlight">밝고 깨끗한</span> 분위기로 <span class="highlight">제품의 순수함</span>과 신뢰감 표현</div>
+                </div>
+                
+                <div class="example-item">
+                    <div class="key-demo">
+                        <div class="demo-slider"></div>
+                    </div>
+                    <div class="example-title mt-2">인터랙티브 비교</div>
+                    <div class="example-desc">마우스를 올려 <span class="highlight">톤 분포</span>의 차이를 시각적으로 확인</div>
+                </div>
+                
+                <div class="example-item">
+                    <div class="histogram-demo low-key-histogram">
+                        <div class="histogram-bar" style="height: 20%"></div>
+                        <div class="histogram-bar" style="height: 35%"></div>
+                        <div class="histogram-bar" style="height: 60%"></div>
+                        <div class="histogram-bar" style="height: 40%"></div>
+                        <div class="histogram-bar" style="height: 25%"></div>
+                        <div class="histogram-bar" style="height: 15%"></div>
+                        <div class="histogram-bar" style="height: 10%"></div>
+                        <div class="histogram-bar" style="height: 5%"></div>
+                    </div>
+                    <div class="example-title mt-2">로우키 히스토그램</div>
+                    <div class="example-desc"><span class="highlight">어두운 톤</span>에 집중된 분포로 <span class="highlight">제한된 색조 범위</span></div>
+                </div>
+                
+                <div class="example-item">
+                    <div style="position: relative;">
+                        <img src="https://media.greatbigphotographyworld.com/wp-content/uploads/2022/04/low-key-face.jpg" alt="로우키 감정 표현" class="example-image">
+                        <div class="technique-badge">Emotion</div>
+                    </div>
+                    <div class="example-title">감정적 표현력</div>
+                    <div class="example-desc"><span class="highlight">로우키</span>의 극적 대비로 <span class="highlight">내면의 깊이</span>와 복잡성 표현</div>
+                </div>
+                
+                <div class="example-item">
+                    <div class="mood-indicators">
+                        <div class="mood-item">
+                            <div class="mood-icon low-key-mood"><i class="fas fa-theater-masks"></i></div>
+                            <div>드라마틱</div>
+                        </div>
+                        <div class="mood-item">
+                            <div class="mood-icon low-key-mood"><i class="fas fa-moon"></i></div>
+                            <div>신비로움</div>
+                        </div>
+                        <div class="mood-item">
+                            <div class="mood-icon high-key-mood"><i class="fas fa-sun"></i></div>
+                            <div>밝음</div>
+                        </div>
+                        <div class="mood-item">
+                            <div class="mood-icon high-key-mood"><i class="fas fa-heart"></i></div>
+                            <div>순수함</div>
+                        </div>
+                    </div>
+                    <div class="example-title mt-2">감정 표현 범위</div>
+                    <div class="example-desc">각 기법의 <span class="highlight">고유한 분위기</span>와 <span class="highlight">심리적 효과</span></div>
+                </div>
+                
+                <div class="example-item">
+                    <div style="position: relative;">
+                        <img src="https://cdn.expertphotography.com/wp-content/uploads/2018/12/low-key-photography-woman-drama.jpg" alt="극적 로우키" class="example-image">
+                        <div class="technique-badge">Professional</div>
+                    </div>
+                    <div class="example-title">전문적 활용</div>
+                    <div class="example-desc"><span class="highlight">포트레이트</span>, <span class="highlight">패션</span>, <span class="highlight">제품 사진</span> 등 분야별 특화 적용</div>
+                </div>
+                
+                <div class="example-item">
+                    <div class="histogram-demo high-key-histogram">
+                        <div class="histogram-bar" style="height: 5%"></div>
+                        <div class="histogram-bar" style="height: 10%"></div>
+                        <div class="histogram-bar" style="height: 15%"></div>
+                        <div class="histogram-bar" style="height: 25%"></div>
+                        <div class="histogram-bar" style="height: 40%"></div>
+                        <div class="histogram-bar" style="height: 60%"></div>
+                        <div class="histogram-bar" style="height: 35%"></div>
+                        <div class="histogram-bar" style="height: 20%"></div>
+                    </div>
+                    <div class="example-title mt-2">하이키 히스토그램</div>
+                    <div class="example-desc"><span class="highlight">밝은 톤</span>에 집중된 분포로 <span class="highlight">넓은 색조 범위</span></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            컴퓨터 그래픽스 라이팅 입문 | Low Key & High Key(로우키 & 하이키) 심화 학습
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python으로 오브젝트 자동 배치 실습</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        .code-font {
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .title-gradient {
+            background: linear-gradient(135deg, #8b5cf6 0%, #06b6d4 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .code-bg {
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+        }
+        .syntax-keyword { color: #c678dd; }
+        .syntax-string { color: #98c379; }
+        .syntax-number { color: #d19a66; }
+        .syntax-comment { color: #5c6370; }
+        .syntax-function { color: #61afef; }
+        .practice-card {
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+        .practice-card:hover {
+            border-left-color: #8b5cf6;
+            transform: translateX(5px);
+        }
+        .object-animation {
+            animation: placeObjects 3s ease-in-out infinite;
+        }
+        @keyframes placeObjects {
+            0% { transform: scale(0.8) rotate(0deg); opacity: 0.7; }
+            50% { transform: scale(1.1) rotate(5deg); opacity: 1; }
+            100% { transform: scale(0.8) rotate(0deg); opacity: 0.7; }
+        }
+        .efficiency-pulse {
+            animation: pulse 2s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container bg-gradient-to-br from-slate-50 to-purple-50 flex flex-col">
+        
+        <!-- Header -->
+        <div class="bg-white shadow-lg px-16 py-4 border-b-4 border-purple-500">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h1 class="text-4xl font-black title-gradient mb-1">Python으로 오브젝트 자동 배치 실습</h1>
+                    <p class="text-gray-600 text-lg">for 루프와 함수로 대량 오브젝트 배치 자동화</p>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <div class="object-animation">
+                        <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-cyan-500 rounded-xl flex items-center justify-center">
+                            <i class="fas fa-th text-white text-2xl"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 px-16 py-5">
+            <div class="grid grid-cols-12 gap-6 h-full">
+                
+                <!-- Left Column - Theory & Benefits -->
+                <div class="col-span-4 space-y-4">
+                    <!-- Automation Concept -->
+                    <div class="bg-white rounded-xl p-4 shadow-md practice-card">
+                        <div class="flex items-center mb-3">
+                            <div class="w-10 h-10 bg-gradient-to-br from-purple-500 to-purple-700 rounded-full flex items-center justify-center mr-3">
+                                <i class="fas fa-magic text-white"></i>
+                            </div>
+                            <h3 class="text-lg font-bold text-gray-800">자동 배치의 핵심</h3>
+                        </div>
+                        <div class="space-y-2 text-sm">
+                            <div class="flex items-center text-green-600">
+                                <i class="fas fa-cogs mr-2"></i>
+                                <span><strong>for 루프</strong>로 반복 생성</span>
+                            </div>
+                            <div class="flex items-center text-blue-600">
+                                <i class="fas fa-ruler-combined mr-2"></i>
+                                <span><strong>수학적 계산</strong>으로 정확한 위치</span>
+                            </div>
+                            <div class="flex items-center text-purple-600">
+                                <i class="fas fa-layer-group mr-2"></i>
+                                <span><strong>패턴 적용</strong>으로 일관성 유지</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Before/After Efficiency -->
+                    <div class="bg-gradient-to-r from-red-500 to-green-500 rounded-xl p-4 text-white">
+                        <h3 class="text-lg font-bold mb-3 flex items-center">
+                            <i class="fas fa-stopwatch mr-2"></i>
+                            작업 시간 비교
+                        </h3>
+                        <div class="grid grid-cols-2 gap-3 text-sm">
+                            <div class="bg-white bg-opacity-20 rounded-lg p-3 text-center">
+                                <div class="text-xl font-bold">🚶‍♂️ 수동</div>
+                                <div>100개 오브젝트</div>
+                                <div class="text-lg font-bold mt-1">30분</div>
+                            </div>
+                            <div class="bg-white bg-opacity-20 rounded-lg p-3 text-center">
+                                <div class="text-xl font-bold">🚀 자동</div>
+                                <div>100개 오브젝트</div>
+                                <div class="text-lg font-bold mt-1">3초</div>
+                            </div>
+                        </div>
+                        <div class="text-center mt-2 efficiency-pulse">
+                            <span class="bg-yellow-400 text-gray-800 px-3 py-1 rounded-full text-sm font-bold">
+                                600배 빨라짐! ⚡
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Key Pattern Types -->
+                    <div class="bg-white rounded-xl p-4 shadow-md practice-card">
+                        <h3 class="text-lg font-bold text-gray-800 mb-3">배치 패턴 유형</h3>
+                        <div class="grid grid-cols-2 gap-2 text-xs">
+                            <div class="bg-blue-50 rounded-lg p-2 text-center">
+                                <div class="w-full h-6 flex items-center justify-center">
+                                    <div class="flex space-x-1">
+                                        <div class="w-2 h-2 bg-blue-500 rounded"></div>
+                                        <div class="w-2 h-2 bg-blue-500 rounded"></div>
+                                        <div class="w-2 h-2 bg-blue-500 rounded"></div>
+                                    </div>
+                                </div>
+                                <div class="font-bold text-blue-600 mt-1">선형 배치</div>
+                            </div>
+                            <div class="bg-green-50 rounded-lg p-2 text-center">
+                                <div class="w-full h-6 flex items-center justify-center">
+                                    <div class="grid grid-cols-3 gap-1">
+                                        <div class="w-1.5 h-1.5 bg-green-500 rounded"></div>
+                                        <div class="w-1.5 h-1.5 bg-green-500 rounded"></div>
+                                        <div class="w-1.5 h-1.5 bg-green-500 rounded"></div>
+                                        <div class="w-1.5 h-1.5 bg-green-500 rounded"></div>
+                                        <div class="w-1.5 h-1.5 bg-green-500 rounded"></div>
+                                        <div class="w-1.5 h-1.5 bg-green-500 rounded"></div>
+                                    </div>
+                                </div>
+                                <div class="font-bold text-green-600 mt-1">그리드 배치</div>
+                            </div>
+                            <div class="bg-purple-50 rounded-lg p-2 text-center">
+                                <div class="w-full h-6 flex items-center justify-center">
+                                    <div class="relative w-6 h-6">
+                                        <div class="absolute top-0 left-3 w-1.5 h-1.5 bg-purple-500 rounded-full"></div>
+                                        <div class="absolute top-2 left-1 w-1.5 h-1.5 bg-purple-500 rounded-full"></div>
+                                        <div class="absolute top-2 right-1 w-1.5 h-1.5 bg-purple-500 rounded-full"></div>
+                                        <div class="absolute bottom-0 left-3 w-1.5 h-1.5 bg-purple-500 rounded-full"></div>
+                                    </div>
+                                </div>
+                                <div class="font-bold text-purple-600 mt-1">원형 배치</div>
+                            </div>
+                            <div class="bg-yellow-50 rounded-lg p-2 text-center">
+                                <div class="w-full h-6 flex items-center justify-center">
+                                    <div class="relative w-6 h-6">
+                                        <div class="absolute top-1 left-2 w-1.5 h-1.5 bg-yellow-600 rounded"></div>
+                                        <div class="absolute top-3 left-4 w-1.5 h-1.5 bg-yellow-600 rounded"></div>
+                                        <div class="absolute top-0 left-5 w-1.5 h-1.5 bg-yellow-600 rounded"></div>
+                                        <div class="absolute bottom-1 left-1 w-1.5 h-1.5 bg-yellow-600 rounded"></div>
+                                    </div>
+                                </div>
+                                <div class="font-bold text-yellow-600 mt-1">랜덤 배치</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Middle Column - Code Example -->
+                <div class="col-span-5 space-y-4">
+                    <!-- Main Code Example -->
+                    <div class="code-bg rounded-xl p-4 shadow-xl text-white h-full">
+                        <div class="flex items-center mb-3">
+                            <div class="flex space-x-2 mr-3">
+                                <div class="w-3 h-3 bg-red-500 rounded-full"></div>
+                                <div class="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                                <div class="w-3 h-3 bg-green-500 rounded-full"></div>
+                            </div>
+                            <span class="code-font text-gray-300 text-sm">auto_placement.py</span>
+                        </div>
+                        
+                        <div class="code-font text-sm space-y-1 overflow-y-auto" style="max-height: 500px;">
+                            <div><span class="syntax-comment"># Python으로 오브젝트 자동 배치 실습</span></div>
+                            <div><span class="syntax-keyword">import</span> <span class="syntax-function">maya.cmds</span> <span class="syntax-keyword">as</span> <span class="syntax-function">cmds</span></div>
+                            <div><span class="syntax-keyword">import</span> <span class="syntax-function">math</span></div>
+                            
+                            <div class="mt-3"><span class="syntax-comment"># 1. 선형 배치 - 큐브 10개를 일렬로</span></div>
+                            <div><span class="syntax-keyword">def</span> <span class="syntax-function">create_linear_cubes</span>():</div>
+                            <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="syntax-keyword">spacing</span> = <span class="syntax-number">3.0</span>  <span class="syntax-comment"># 간격</span></div>
+                            <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="syntax-keyword">for</span> <span class="syntax-keyword">i</span> <span class="syntax-keyword">in</span> <span class="syntax-function">range</span>(<span class="syntax-number">10</span>):</div>
+                            <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="syntax-comment"># 큐브 생성</span></div>
+                            <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="syntax-keyword">cube</span> = <span class="syntax-function">cmds.polyCube</span>(<span class="syntax-keyword">name</span>=<span class="syntax-string">f"cube_</span><span class="syntax-keyword">{i}</span><span class="syntax-string">"</span>)[<span class="syntax-number">0</span>]</div>
+                            <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="syntax-comment"># X축 방향으로 배치</span></div>
+                            <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="syntax-function">cmds.move</span>(<span class="syntax-keyword">i</span> * <span class="syntax-keyword">spacing</span>, <span class="syntax-number">0</span>, <span class="syntax-number">0</span>, <span class="syntax-keyword">cube</span>)</div>
+                            
+                            <div class="mt-3"><span class="syntax-comment"># 2. 그리드 배치 - 5x5 격자 패턴</span></div>
+                            <div><span class="syntax-keyword">def</span> <span class="syntax-function">create_grid_spheres</span>():</div>
+                            <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="syntax-keyword">rows</span>, <span class="syntax-keyword">cols</span> = <span class="syntax-number">5</span>, <span class="syntax-number">5</span></div>
+                            <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="syntax-keyword">spacing</span> = <span class="syntax-number">2.5</span></div>
+                            <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                            <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="syntax-keyword">for</span> <span class="syntax-keyword">row</span> <span class="syntax-keyword">in</span> <span class="syntax-function">range</span>(<span class="syntax-keyword">rows</span>):</div>
+                            <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="syntax-keyword">for</span> <span class="syntax-keyword">col</span> <span class="syntax-keyword">in</span> <span class="syntax-function">range</span>(<span class="syntax-keyword">cols</span>):</div>
+                            <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="syntax-comment"># 구 생성</span></div>
+                            <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="syntax-keyword">sphere</span> = <span class="syntax-function">cmds.polySphere</span>(</div>
+                            <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="syntax-keyword">name</span>=<span class="syntax-string">f"sphere_</span><span class="syntax-keyword">{row}</span><span class="syntax-string">_</span><span class="syntax-keyword">{col}</span><span class="syntax-string">"</span>,</div>
+                            <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="syntax-keyword">radius</span>=<span class="syntax-number">0.8</span></div>
+                            <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)[<span class="syntax-number">0</span>]</div>
+                            <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                            <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="syntax-comment"># 격자 위치 계산</span></div>
+                            <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="syntax-keyword">x</span> = <span class="syntax-keyword">col</span> * <span class="syntax-keyword">spacing</span></div>
+                            <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="syntax-keyword">z</span> = <span class="syntax-keyword">row</span> * <span class="syntax-keyword">spacing</span></div>
+                            <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="syntax-function">cmds.move</span>(<span class="syntax-keyword">x</span>, <span class="syntax-number">0</span>, <span class="syntax-keyword">z</span>, <span class="syntax-keyword">sphere</span>)</div>
+                            
+                            <div class="mt-3"><span class="syntax-comment"># 3. 원형 배치 - 원 둘레에 배치</span></div>
+                            <div><span class="syntax-keyword">def</span> <span class="syntax-function">create_circle_cylinders</span>():</div>
+                            <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="syntax-keyword">count</span> = <span class="syntax-number">12</span>  <span class="syntax-comment"># 12개 실린더</span></div>
+                            <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="syntax-keyword">radius</span> = <span class="syntax-number">8.0</span>  <span class="syntax-comment"># 원의 반지름</span></div>
+                            <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                            <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="syntax-keyword">for</span> <span class="syntax-keyword">i</span> <span class="syntax-keyword">in</span> <span class="syntax-function">range</span>(<span class="syntax-keyword">count</span>):</div>
+                            <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="syntax-comment"># 각도 계산 (360도를 count로 나눔)</span></div>
+                            <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="syntax-keyword">angle</span> = (<span class="syntax-keyword">i</span> / <span class="syntax-keyword">count</span>) * <span class="syntax-number">360.0</span></div>
+                            <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="syntax-keyword">radian</span> = <span class="syntax-function">math.radians</span>(<span class="syntax-keyword">angle</span>)</div>
+                            <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                            <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="syntax-comment"># 실린더 생성</span></div>
+                            <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="syntax-keyword">cylinder</span> = <span class="syntax-function">cmds.polyCylinder</span>(</div>
+                            <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="syntax-keyword">name</span>=<span class="syntax-string">f"cylinder_</span><span class="syntax-keyword">{i}</span><span class="syntax-string">"</span>,</div>
+                            <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="syntax-keyword">height</span>=<span class="syntax-number">3.0</span></div>
+                            <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)[<span class="syntax-number">0</span>]</div>
+                            <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                            <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="syntax-comment"># 원형 좌표 계산</span></div>
+                            <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="syntax-keyword">x</span> = <span class="syntax-function">math.cos</span>(<span class="syntax-keyword">radian</span>) * <span class="syntax-keyword">radius</span></div>
+                            <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="syntax-keyword">z</span> = <span class="syntax-function">math.sin</span>(<span class="syntax-keyword">radian</span>) * <span class="syntax-keyword">radius</span></div>
+                            <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="syntax-function">cmds.move</span>(<span class="syntax-keyword">x</span>, <span class="syntax-number">0</span>, <span class="syntax-keyword">z</span>, <span class="syntax-keyword">cylinder</span>)</div>
+                            
+                            <div class="mt-3"><span class="syntax-comment"># 실행!</span></div>
+                            <div><span class="syntax-function">create_linear_cubes</span>()</div>
+                            <div><span class="syntax-function">create_grid_spheres</span>()</div>
+                            <div><span class="syntax-function">create_circle_cylinders</span>()</div>
+                            <div><span class="syntax-function">print</span>(<span class="syntax-string">"자동 배치 완료! 총 47개 오브젝트 생성됨 🎯"</span>)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column - Visual Results -->
+                <div class="col-span-3 space-y-4">
+                    <!-- Execution Result -->
+                    <div class="bg-white rounded-xl p-4 shadow-md">
+                        <h4 class="font-bold text-gray-800 mb-3 flex items-center">
+                            <i class="fas fa-play-circle text-green-500 mr-2"></i>
+                            실행 결과
+                        </h4>
+                        <div class="bg-gradient-to-b from-gray-800 to-gray-900 rounded-lg p-4 relative h-36">
+                            <!-- Linear cubes -->
+                            <div class="absolute top-2 left-2 flex space-x-1">
+                                <div class="w-3 h-3 bg-blue-400 rounded"></div>
+                                <div class="w-3 h-3 bg-blue-400 rounded"></div>
+                                <div class="w-3 h-3 bg-blue-400 rounded"></div>
+                                <div class="w-3 h-3 bg-blue-400 rounded"></div>
+                                <div class="w-3 h-3 bg-blue-400 rounded"></div>
+                            </div>
+                            
+                            <!-- Grid spheres -->
+                            <div class="absolute top-8 left-2">
+                                <div class="grid grid-cols-5 gap-1">
+                                    <div class="w-2 h-2 bg-red-400 rounded-full"></div>
+                                    <div class="w-2 h-2 bg-red-400 rounded-full"></div>
+                                    <div class="w-2 h-2 bg-red-400 rounded-full"></div>
+                                    <div class="w-2 h-2 bg-red-400 rounded-full"></div>
+                                    <div class="w-2 h-2 bg-red-400 rounded-full"></div>
+                                    <div class="w-2 h-2 bg-red-400 rounded-full"></div>
+                                    <div class="w-2 h-2 bg-red-400 rounded-full"></div>
+                                    <div class="w-2 h-2 bg-red-400 rounded-full"></div>
+                                    <div class="w-2 h-2 bg-red-400 rounded-full"></div>
+                                    <div class="w-2 h-2 bg-red-400 rounded-full"></div>
+                                </div>
+                            </div>
+                            
+                            <!-- Circle cylinders -->
+                            <div class="absolute bottom-4 right-4">
+                                <div class="relative w-16 h-16">
+                                    <div class="absolute top-0 left-7 w-2 h-2 bg-yellow-400 rounded"></div>
+                                    <div class="absolute top-2 right-0 w-2 h-2 bg-yellow-400 rounded"></div>
+                                    <div class="absolute bottom-2 right-0 w-2 h-2 bg-yellow-400 rounded"></div>
+                                    <div class="absolute bottom-0 left-7 w-2 h-2 bg-yellow-400 rounded"></div>
+                                    <div class="absolute bottom-2 left-0 w-2 h-2 bg-yellow-400 rounded"></div>
+                                    <div class="absolute top-2 left-0 w-2 h-2 bg-yellow-400 rounded"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="absolute bottom-2 left-2 text-gray-400 text-xs">
+                                Maya Viewport - 47개 오브젝트 자동 생성
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Performance Metrics -->
+                    <div class="bg-gradient-to-r from-green-500 to-emerald-600 rounded-xl p-4 text-white">
+                        <h4 class="font-bold mb-3 flex items-center">
+                            <i class="fas fa-chart-line mr-2"></i>
+                            효율성 지표
+                        </h4>
+                        <div class="space-y-2 text-sm">
+                            <div class="flex justify-between">
+                                <span>생성 속도:</span>
+                                <span class="font-bold">즉석 ⚡</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>정확도:</span>
+                                <span class="font-bold">100% 🎯</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>확장성:</span>
+                                <span class="font-bold">무제한 ∞</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>재사용성:</span>
+                                <span class="font-bold">완벽 ♻️</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Practice Steps -->
+                    <div class="bg-white rounded-xl p-4 shadow-md practice-card">
+                        <h4 class="font-bold text-gray-800 mb-3 flex items-center">
+                            <i class="fas fa-list-ol text-purple-500 mr-2"></i>
+                            실습 단계
+                        </h4>
+                        <div class="space-y-2 text-sm">
+                            <div class="flex items-start space-x-2">
+                                <div class="w-5 h-5 bg-purple-500 text-white rounded-full flex items-center justify-center text-xs font-bold mt-0.5">1</div>
+                                <span>Maya Script Editor 열기</span>
+                            </div>
+                            <div class="flex items-start space-x-2">
+                                <div class="w-5 h-5 bg-purple-500 text-white rounded-full flex items-center justify-center text-xs font-bold mt-0.5">2</div>
+                                <span>Python 코드 복사 & 붙여넣기</span>
+                            </div>
+                            <div class="flex items-start space-x-2">
+                                <div class="w-5 h-5 bg-purple-500 text-white rounded-full flex items-center justify-center text-xs font-bold mt-0.5">3</div>
+                                <span>실행 버튼 클릭 (Ctrl+Enter)</span>
+                            </div>
+                            <div class="flex items-start space-x-2">
+                                <div class="w-5 h-5 bg-green-500 text-white rounded-full flex items-center justify-center text-xs font-bold mt-0.5">✓</div>
+                                <span>결과 확인 및 수정</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pro Tips -->
+                    <div class="bg-gradient-to-r from-amber-400 to-orange-500 rounded-xl p-4 text-white">
+                        <h4 class="font-bold mb-3 flex items-center">
+                            <i class="fas fa-lightbulb mr-2"></i>
+                            Pro Tips 💡
+                        </h4>
+                        <div class="space-y-2 text-sm">
+                            <div class="flex items-start space-x-2">
+                                <i class="fas fa-star text-yellow-200 mt-1"></i>
+                                <span><strong>변수 활용:</strong> spacing, count 값을 변경해보세요</span>
+                            </div>
+                            <div class="flex items-start space-x-2">
+                                <i class="fas fa-star text-yellow-200 mt-1"></i>
+                                <span><strong>함수 확장:</strong> 매개변수를 추가해 더 유연하게</span>
+                            </div>
+                            <div class="flex items-start space-x-2">
+                                <i class="fas fa-star text-yellow-200 mt-1"></i>
+                                <span><strong>오류 처리:</strong> try-except로 안전하게</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Section - Key Takeaways -->
+        <div class="bg-gradient-to-r from-purple-600 to-cyan-600 px-16 py-4 text-white">
+            <div class="flex items-center justify-between">
+                <div class="flex-1">
+                    <h3 class="text-xl font-bold mb-2">핵심 요약 🎯</h3>
+                    <div class="grid grid-cols-3 gap-4 text-sm">
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-code text-cyan-300"></i>
+                            <span><strong>for 루프</strong>로 반복 자동화</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-calculator text-green-300"></i>
+                            <span><strong>수학 함수</strong>로 정확한 위치</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-rocket text-yellow-300"></i>
+                            <span><strong>600배 빠른</strong> 작업 속도</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="text-right">
+                        <div class="text-lg font-bold">다음 실습</div>
+                        <div class="text-sm opacity-90">머티리얼 자동 적용</div>
+                    </div>
+                    <div class="w-12 h-12 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
+                        <i class="fas fa-arrow-right text-2xl"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="bg-gray-800 px-16 py-3 text-gray-400 text-sm">
+            <div class="flex items-center justify-between">
+                <div>
+                    <span>🎓 CGuslab 조명 및 렌더링 강의 | Slide 5/12</span>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <span>⌨️ Python 자동화 실습</span>
+                    <span>📊 Maya Script Editor</span>
+                    <span>🚀 Production Ready</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript for Animation -->
+    <script>
+        // Object placement animation
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add smooth transitions
+            const cards = document.querySelectorAll('.practice-card');
+            cards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(20px)';
+                    card.offsetHeight; // Force reflow
+                    card.style.transition = 'all 0.6s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 200);
+            });
+
+            // Performance metrics animation
+            const metrics = document.querySelectorAll('.efficiency-pulse');
+            setInterval(() => {
+                metrics.forEach(metric => {
+                    metric.style.transform = 'scale(1.05)';
+                    setTimeout(() => {
+                        metric.style.transform = 'scale(1)';
+                    }, 300);
+                });
+            }, 2000);
+        });
+    </script>
+</body>
+</html>

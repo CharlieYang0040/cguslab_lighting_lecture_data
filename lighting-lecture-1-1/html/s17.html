@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linear Motif (선적 모티프) - 추가 예시</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', 'Malgun Gothic', sans-serif;
+        }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            background: linear-gradient(135deg, #1a2a3a 0%, #0d1721 100%);
+            color: #ffffff;
+            overflow: hidden;
+            position: relative;
+        }
+        .header {
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 1.5rem 3rem;
+            border-bottom: 2px solid rgba(163, 198, 255, 0.4);
+            display: flex;
+            align-items: center;
+        }
+        .header-icon {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            color: #a3c6ff;
+            font-size: 1.5rem;
+        }
+        .content {
+            padding: 1.5rem 3rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            height: calc(100% - 120px);
+        }
+        .examples-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            height: 100%;
+        }
+        .example-item {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .example-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        .example-image {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-bottom: 0.75rem;
+        }
+        .example-title {
+            font-weight: bold;
+            color: #ffcc66;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        .example-desc {
+            font-size: 0.8rem;
+            color: #e0e0e0;
+            line-height: 1.4;
+            flex: 1;
+        }
+        .large-example {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .large-image {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+        .large-title {
+            font-weight: bold;
+            color: #ffcc66;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+        }
+        .large-title i {
+            margin-right: 0.75rem;
+        }
+        .highlight {
+            color: #a3c6ff;
+            font-weight: bold;
+        }
+        .tips-container {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .tips-title {
+            font-weight: bold;
+            color: #ffcc66;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+        }
+        .tips-title i {
+            margin-right: 0.75rem;
+        }
+        .tip-item {
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: flex-start;
+            font-size: 0.9rem;
+        }
+        .tip-item:before {
+            content: "▸";
+            color: #a3c6ff;
+            font-weight: bold;
+            margin-right: 0.75rem;
+            margin-top: 0.1rem;
+        }
+        .footer {
+            padding: 1rem 3rem;
+            text-align: right;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            box-sizing: border-box;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+        .animation-highlight {
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        @keyframes glow {
+            from {
+                box-shadow: 0 0 5px rgba(163, 198, 255, 0.5);
+            }
+            to {
+                box-shadow: 0 0 20px rgba(163, 198, 255, 0.8);
+            }
+        }
+        .technique-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(255, 204, 102, 0.9);
+            color: #1a2a3a;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+        .line-types {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+        }
+        .line-type {
+            background-color: rgba(255, 255, 255, 0.08);
+            padding: 0.5rem;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .line-type:hover {
+            background-color: rgba(255, 204, 102, 0.2);
+            transform: scale(1.05);
+        }
+        .line-icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.25rem;
+            color: #a3c6ff;
+        }
+        .line-effect {
+            font-size: 0.7rem;
+            color: #e0e0e0;
+            margin-top: 0.25rem;
+        }
+        .interactive-demo {
+            position: relative;
+            height: 120px;
+            background: linear-gradient(45deg, #1a2a3a, #2a3a4a);
+            border-radius: 4px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        .demo-line {
+            position: absolute;
+            background-color: #ffcc66;
+            transition: all 0.5s ease;
+        }
+        .demo-line.horizontal {
+            width: 80%;
+            height: 3px;
+            top: 50%;
+            left: 10%;
+            transform: translateY(-50%);
+        }
+        .demo-line.vertical {
+            width: 3px;
+            height: 80%;
+            top: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .demo-line.diagonal {
+            width: 100px;
+            height: 3px;
+            top: 20%;
+            left: 20%;
+            transform: rotate(45deg);
+        }
+        .demo-line.curved {
+            width: 60px;
+            height: 60px;
+            border: 3px solid #ffcc66;
+            border-radius: 50%;
+            background: transparent;
+            top: 30%;
+            right: 20%;
+        }
+        .interactive-demo:hover .demo-line {
+            background-color: #a3c6ff;
+            border-color: #a3c6ff;
+            transform: scale(1.2);
+        }
+        .interactive-demo:hover .demo-line.horizontal {
+            transform: translateY(-50%) scale(1.2);
+        }
+        .interactive-demo:hover .demo-line.vertical {
+            transform: translateX(-50%) scale(1.2);
+        }
+        .interactive-demo:hover .demo-line.diagonal {
+            transform: rotate(45deg) scale(1.2);
+        }
+        .arrow-flow {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: rgba(255, 204, 102, 0.7);
+            clip-path: polygon(0 0, 100% 50%, 0 100%);
+            animation: flow 3s ease-in-out infinite;
+        }
+        @keyframes flow {
+            0%, 100% { opacity: 0; transform: translateX(0); }
+            50% { opacity: 1; transform: translateX(50px); }
+        }
+        .flow-path {
+            position: relative;
+            height: 40px;
+            background: linear-gradient(90deg, transparent, rgba(255, 204, 102, 0.3), transparent);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            margin: 0.5rem 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="header">
+            <div class="header-icon">
+                <i class="fas fa-vector-square"></i>
+            </div>
+            <div>
+                <h1 class="text-3xl font-bold">Linear Motif (선적 모티프) - 추가 예시</h1>
+                <p class="text-sm opacity-70 mt-1">실무 적용 사례와 심화 학습</p>
+            </div>
+        </div>
+        
+        <div class="content">
+            <div>
+                <div class="large-example">
+                    <div class="large-title">
+                        <i class="fas fa-route"></i> 유도선의 다양한 활용
+                    </div>
+                    <div style="position: relative;">
+                        <img src="https://images.squarespace-cdn.com/content/v1/5c797c3b5239581bca07268a/1585259292693-5PSHNQ0WSPQCQ1HUAFWU/Screen+Shot+2020-03-26+at+21.39.14.png" alt="유도선 기법 종합" class="large-image">
+                        <div class="technique-badge">Leading Lines</div>
+                    </div>
+                    <p class="text-sm">다양한 <span class="highlight">유도선 기법</span>을 통한 시선 유도와 공간감 표현</p>
+                </div>
+                
+                <div class="tips-container">
+                    <div class="tips-title">
+                        <i class="fas fa-compass"></i> 선의 방향성과 효과
+                    </div>
+                    <div class="line-types">
+                        <div class="line-type">
+                            <div class="line-icon">➡️</div>
+                            <div>수평선</div>
+                            <div class="line-effect">안정감, 평온</div>
+                        </div>
+                        <div class="line-type">
+                            <div class="line-icon">⬆️</div>
+                            <div>수직선</div>
+                            <div class="line-effect">웅장함, 힘</div>
+                        </div>
+                        <div class="line-type">
+                            <div class="line-icon">↗️</div>
+                            <div>대각선</div>
+                            <div class="line-effect">역동성, 긴장</div>
+                        </div>
+                        <div class="line-type">
+                            <div class="line-icon">〰️</div>
+                            <div>곡선</div>
+                            <div class="line-effect">우아함, 자연</div>
+                        </div>
+                    </div>
+                    <div class="tip-item"><span class="highlight">수렴선</span>: 소실점으로 향하는 선들로 깊이감 극대화</div>
+                    <div class="tip-item"><span class="highlight">반복 패턴</span>: 규칙적인 선의 반복으로 리듬감 조성</div>
+                    <div class="tip-item"><span class="highlight">대비 활용</span>: 굵은 선과 가는 선의 조합으로 계층 구조</div>
+                    <div class="tip-item"><span class="highlight">빛과 조합</span>: 조명으로 선의 존재감과 방향성 강조</div>
+                </div>
+            </div>
+            
+            <div class="examples-grid">
+                <div class="example-item animation-highlight">
+                    <div style="position: relative;">
+                        <img src="https://www.picturecorrect.com/wp-content/uploads/2017/11/diagonal-leading-lines.jpg" alt="대각선 유도선" class="example-image">
+                        <div class="technique-badge">Diagonal</div>
+                    </div>
+                    <div class="example-title">대각선 유도선</div>
+                    <div class="example-desc"><span class="highlight">역동적인 대각선</span>으로 시선을 강력하게 유도하고 긴장감 조성</div>
+                </div>
+                
+                <div class="example-item">
+                    <div style="position: relative;">
+                        <img src="https://media.macphun.com/img/uploads/macphun/blog/2377/1_FindYourInspirationInTheArtOfCurvedLinePhotography.jpg" alt="곡선 구성" class="example-image">
+                        <div class="technique-badge">Curved Lines</div>
+                    </div>
+                    <div class="example-title">곡선의 우아함</div>
+                    <div class="example-desc"><span class="highlight">자연스러운 곡선</span>으로 부드럽고 유기적인 흐름 표현</div>
+                </div>
+                
+                <div class="example-item">
+                    <div style="position: relative;">
+                        <img src="https://media.greatbigphotographyworld.com/wp-content/uploads/2021/07/abstract-image-showing-leading-lines.jpg" alt="추상적 유도선" class="example-image">
+                        <div class="technique-badge">Abstract</div>
+                    </div>
+                    <div class="example-title">추상적 선 구성</div>
+                    <div class="example-desc"><span class="highlight">기하학적 패턴</span>으로 현대적이고 미니멀한 시각 효과</div>
+                </div>
+                
+                <div class="example-item">
+                    <div style="position: relative;">
+                        <img src="https://media.greatbigphotographyworld.com/wp-content/uploads/2022/11/diagonal-lines-863x1024.jpg" alt="강력한 대각선" class="example-image">
+                        <div class="technique-badge">Dynamic</div>
+                    </div>
+                    <div class="example-title">강력한 선적 대비</div>
+                    <div class="example-desc"><span class="highlight">대조적인 선들</span>의 충돌로 강렬한 시각적 임팩트</div>
+                </div>
+                
+                <div class="example-item">
+                    <div style="position: relative;">
+                        <img src="https://s.studiobinder.com/wp-content/uploads/2020/05/What-Are-Leading-Lines-%E2%80%94-Composition-in-Photography-Film-Featured.jpg" alt="유도선 종합" class="example-image">
+                        <div class="technique-badge">Composition</div>
+                    </div>
+                    <div class="example-title">구성의 기본 원리</div>
+                    <div class="example-desc"><span class="highlight">다양한 선 요소</span>들의 조화로운 배치와 균형</div>
+                </div>
+                
+                <div class="example-item">
+                    <div class="interactive-demo">
+                        <div class="demo-line horizontal"></div>
+                        <div class="demo-line vertical"></div>
+                        <div class="demo-line diagonal"></div>
+                        <div class="demo-line curved"></div>
+                        <div class="flow-path">
+                            <div class="arrow-flow"></div>
+                        </div>
+                    </div>
+                    <div class="example-title mt-2">선의 상호작용</div>
+                    <div class="example-desc">마우스를 올려 <span class="highlight">다양한 선 요소</span>들의 시각적 효과 확인</div>
+                </div>
+                
+                <div class="example-item">
+                    <div style="position: relative;">
+                        <img src="https://media.greatbigphotographyworld.com/wp-content/uploads/2018/05/leading-lines-in-photography-composition.jpg" alt="자연스러운 유도선" class="example-image">
+                        <div class="technique-badge">Natural Flow</div>
+                    </div>
+                    <div class="example-title">자연스러운 흐름</div>
+                    <div class="example-desc"><span class="highlight">자연 요소</span>를 활용한 유기적이고 자연스러운 시선 유도</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            컴퓨터 그래픽스 라이팅 입문 | Linear Motif(선적 모티프) 심화 학습
+        </div>
+    </div>
+</body>
+</html>
