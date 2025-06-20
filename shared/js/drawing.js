@@ -1,13 +1,13 @@
 // drawing.js - 그리기 로직, 도구 제어, 슬라이드 간 그리기 내용 저장/복원 
 
 (function() { // IIFE to encapsulate the drawing logic
-    if (!document.getElementById('drawing-canvas')) {
-        // If canvas doesn't exist (e.g. on a page not using this feature), do nothing.
+    // DOM Elements
+    const canvas = document.getElementById('drawing-canvas');
+    if (!canvas) {
+        console.log('[drawing.js] Canvas element not found. Drawing functionality disabled.');
         return;
     }
 
-    // DOM Elements
-    const canvas = document.getElementById('drawing-canvas');
     const ctx = canvas.getContext('2d');
     const drawingToolbar = document.getElementById('drawing-toolbar');
     const toggleDrawModeBtn = document.getElementById('toggle-draw-mode');
@@ -18,6 +18,13 @@
     const colorPicker = document.getElementById('color-picker');
     const lineWidthRange = document.getElementById('line-width');
     const clearCanvasBtn = document.getElementById('clear-canvas');
+
+    // Check if all required elements exist
+    if (!drawingToolbar || !toggleDrawModeBtn || !closeDrawingToolbarBtn || 
+        !penToolBtn || !eraserToolBtn || !colorPicker || !lineWidthRange || !clearCanvasBtn) {
+        console.log('[drawing.js] Required toolbar elements not found. Drawing functionality disabled.');
+        return;
+    }
 
     // Drawing state
     let isDrawingModeActive = false;
@@ -87,17 +94,23 @@
         if (isDrawingModeActive) {
             setupCanvas(); // Setup canvas dimensions and context when activating
             canvas.style.display = 'block';
-            drawingToolbar.style.display = 'flex'; // Use flex as per CSS
-            toggleDrawModeBtn.classList.add('active'); // Indicate active state
+            canvas.classList.add('active'); // 클릭 이벤트 활성화
+            if (drawingToolbar) drawingToolbar.style.display = 'flex'; // Use flex as per CSS
+            if (toggleDrawModeBtn) toggleDrawModeBtn.classList.add('active'); // Indicate active state
         } else {
             canvas.style.display = 'none';
-            drawingToolbar.style.display = 'none';
-            toggleDrawModeBtn.classList.remove('active');
+            canvas.classList.remove('active'); // 클릭 이벤트 비활성화
+            if (drawingToolbar) drawingToolbar.style.display = 'none';
+            if (toggleDrawModeBtn) toggleDrawModeBtn.classList.remove('active');
         }
     }
 
-    toggleDrawModeBtn.addEventListener('click', () => toggleDrawMode());
-    closeDrawingToolbarBtn.addEventListener('click', () => toggleDrawMode(false));
+    if (toggleDrawModeBtn) {
+        toggleDrawModeBtn.addEventListener('click', () => toggleDrawMode());
+    }
+    if (closeDrawingToolbarBtn) {
+        closeDrawingToolbarBtn.addEventListener('click', () => toggleDrawMode(false));
+    }
 
     // --- Drawing Event Handlers ---
     function getMousePos(e) {
@@ -205,13 +218,13 @@
     function setActiveTool(tool) {
         currentTool = tool;
         if (tool === 'pen') {
-            penToolBtn.classList.add('active');
-            eraserToolBtn.classList.remove('active');
+            if (penToolBtn) penToolBtn.classList.add('active');
+            if (eraserToolBtn) eraserToolBtn.classList.remove('active');
             ctx.globalCompositeOperation = 'source-over';
             ctx.strokeStyle = currentColor; // Apply current color for pen
         } else if (tool === 'eraser') {
-            penToolBtn.classList.remove('active');
-            eraserToolBtn.classList.add('active');
+            if (penToolBtn) penToolBtn.classList.remove('active');
+            if (eraserToolBtn) eraserToolBtn.classList.add('active');
             ctx.globalCompositeOperation = 'destination-out';
             // Eraser doesn't use strokeStyle for color, but its "color" is effectively transparent
             // The lineWidth still applies to the eraser size
@@ -219,39 +232,49 @@
         ctx.lineWidth = currentLineWidth; // Ensure lineWidth is up-to-date for the tool
     }
 
-    penToolBtn.addEventListener('click', () => setActiveTool('pen'));
-    eraserToolBtn.addEventListener('click', () => setActiveTool('eraser'));
+    if (penToolBtn) {
+        penToolBtn.addEventListener('click', () => setActiveTool('pen'));
+    }
+    if (eraserToolBtn) {
+        eraserToolBtn.addEventListener('click', () => setActiveTool('eraser'));
+    }
 
-    colorPicker.addEventListener('input', (e) => {
-        currentColor = e.target.value;
-        if (currentTool === 'pen') { // Only change strokeStyle if pen is active
-            ctx.strokeStyle = currentColor;
-        }
-    });
+    if (colorPicker) {
+        colorPicker.addEventListener('input', (e) => {
+            currentColor = e.target.value;
+            if (currentTool === 'pen') { // Only change strokeStyle if pen is active
+                ctx.strokeStyle = currentColor;
+            }
+        });
+    }
 
-    lineWidthRange.addEventListener('input', (e) => {
-        currentLineWidth = parseInt(e.target.value, 10);
-        ctx.lineWidth = currentLineWidth;
-    });
+    if (lineWidthRange) {
+        lineWidthRange.addEventListener('input', (e) => {
+            currentLineWidth = parseInt(e.target.value, 10);
+            ctx.lineWidth = currentLineWidth;
+        });
+    }
 
-    clearCanvasBtn.addEventListener('click', () => {
-        if (isDrawingModeActive) {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            // Also remove the saved drawing for the current slide if one exists
-            if (window.drawingUtils && typeof window.drawingUtils.getCurrentSlideId === 'function') {
-                const currentSlideId = window.drawingUtils.getCurrentSlideId();
-                if (currentSlideId) {
-                    slideDrawings.delete(currentSlideId);
-                    // console.log(`Cleared drawing and removed saved data for ${currentSlideId}`);
+    if (clearCanvasBtn) {
+        clearCanvasBtn.addEventListener('click', () => {
+            if (isDrawingModeActive) {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                // Also remove the saved drawing for the current slide if one exists
+                if (window.drawingUtils && typeof window.drawingUtils.getCurrentSlideId === 'function') {
+                    const currentSlideId = window.drawingUtils.getCurrentSlideId();
+                    if (currentSlideId) {
+                        slideDrawings.delete(currentSlideId);
+                        // console.log(`Cleared drawing and removed saved data for ${currentSlideId}`);
+                    }
                 }
             }
-        }
-    });
+        });
+    }
 
     // Initialize default tool state
     setActiveTool('pen');
-    colorPicker.value = currentColor; // Ensure UI matches state
-    lineWidthRange.value = currentLineWidth; // Ensure UI matches state
+    if (colorPicker) colorPicker.value = currentColor; // Ensure UI matches state
+    if (lineWidthRange) lineWidthRange.value = currentLineWidth; // Ensure UI matches state
 
     // --- Save and Load Drawings ---
     function saveDrawing(slideId) {
@@ -294,6 +317,7 @@
     // --- Expose functions for external use (e.g., by index.html) ---
     window.drawingUtils = {
         setupCanvas: setupCanvas, // Expose setupCanvas function
+        toggleDrawMode: toggleDrawMode, // Expose toggleDrawMode function for keyboard shortcuts
         isDrawingActive: () => isDrawingModeActive, // Expose a way to check if drawing mode is active
         clearCanvasForSlideChange: () => {
              if (isDrawingModeActive) {
@@ -305,6 +329,9 @@
         loadDrawingForSlide: loadDrawing,      // Expose loadDrawing
         // getCurrentSlideId will be provided by index.html when calling these.
     };
+
+    // 호환성을 위해 글로벌 함수로도 노출
+    window.toggleDrawMode = toggleDrawMode;
 
 })(); // End of IIFE
 
